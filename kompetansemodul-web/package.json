@@ -1,0 +1,23 @@
+{
+  "name": "kompetansemodul-web",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "@sveltejs/vite-plugin-svelte": "^1.0.2",
+    "svelte": "^3.49.0",
+    "vite": "^3.1.0"
+  },
+  "dependencies": {
+    "@azure/msal-browser": "^2.28.2",
+    "axios": "^0.27.2",
+    "svelte-icon": "^1.2.4",
+    "svelte-icons": "^2.1.0",
+    "svelte-navigator": "^3.2.2"
+  }
+}
