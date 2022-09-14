@@ -6,9 +6,12 @@
   import { onMount } from 'svelte';
 
   // let show_content = 'personalia'
-  
-  let user = Login()
+  let user
   $: user
+  const login = async () => {
+    user = await Login()
+  }
+  login()
   
 </script>
 
