@@ -1,43 +1,28 @@
 import axios from 'axios'
-// import { PublicClientApplication } from '@azure/msal-browser'
-// import config from '../Auth/authConfig'
+import { api } from '../../../config'
 import { get } from 'svelte/store';
-import { myMsalStore } from './store';
-
-const value = get(myMsalStore)
-
-console.log(value)
-
-const accessToken = ''
-
-const apiUrl = import.meta.env.VITE_API_URL
-
-const axiosApi = axios.create({
-    baseURL : apiUrl
-})
+import { msalClientStore } from './store';
 
 // Implement method to execute requets
-const apiRequest = async (method, endpoint, request) => {
-   
+const apiRequest = async (method, endpoint, body) => {
+    const msalClient = get(msalClientStore)
+    const { accessToken } = await msalClient.acquireTokenSilent({ scopes: api.scopes });
+
+    console.log('halla: ', accessToken)
+
     const headers = {
         "authorization": `Bearer ${accessToken}`
     }
-    // Use the axios instance to performe the request
-    return axiosApi({
-        method,
-        url: apiUrl+endpoint,
-        data: request,
-        headers
-    }).then(res => {
-        return Promise.resolve(res.data)
-    }).catch(err => {
-        return Promise.reject(err)
-    })
+    if (['get', 'delete'].includes(method)) {
+        const res = await axios[method](`${api.url}/${endpoint}`, { headers })
+        return res.data
+    } else {
+        const res = await axios[method](`${api.url}/${endpoint}`, body, { headers })
+        return res.data
+    }
 }
 
 // Get me 
-const getMe = async() => apiRequest("get", '/me')
-console.log(getMe)
-
+const getMe = async() => await apiRequest("get", 'me')
 
 export default getMe

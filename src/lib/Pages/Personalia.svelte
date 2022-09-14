@@ -5,7 +5,13 @@
 	let name = 'Personalia';
 
 	onMount(async () => {
-		getMe()
+		try {
+			const test = await getMe()
+			console.log(test)
+			name = test.fornavn
+		} catch (error) {
+			console.log(error)
+		}
 	})
 </script>
 
