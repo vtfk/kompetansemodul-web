@@ -11,10 +11,7 @@
     import Personalia from './Pages/Personalia.svelte';
 
     export let show_content = 'personalia'
-
 </script>
-
-<Route path="/" component={Personalia}/>
 
 <Router>
     <body class="main">
@@ -44,6 +41,15 @@
                     </button>
                 </ul>
             </div>      
+        </div>
+        <div class="content">
+            { #if show_content === 'personalia'}
+                <Personalia />
+            { :else if show_content === 'orgstruktur' }
+                <Orgstruktur />
+            { :else if show_content === 'hjelp' }
+                <Hjelp />
+            {/if }
         </div>      
     </body>
 </Router>
@@ -96,8 +102,7 @@ body {
 }
 
 .main {
-    border-style: solid;
-    margin-left: 11rem; /* Same as the width of the sidenav */
+    margin-left: 11rem; 
 }
 
 .icon {
@@ -114,6 +119,24 @@ body {
     width: 3rem;
     margin: auto;
     margin-top: 2rem;
+}
+
+.content {
+    background-color: #F8F6F0;
+    width: 100vw;
+    height: 100vh;
+}
+
+button {
+    all:unset
+}
+
+.icon-active {
+    background-color: red;
+}
+
+button:active {
+  outline: #EBF6F9 0.01rem auto;
 }
 
 @media screen and (max-height: 450px) {

@@ -1,6 +1,7 @@
 
   import { PublicClientApplication } from '@azure/msal-browser'
   import config from './authConfig'
+  import { myMsalStore } from '../services/store';
   // import authProvider from './authProvider.js'
 
   const scope = import.meta.env.VITE_API_SCOPE
@@ -26,7 +27,7 @@
         scopes: [scope]
       });
 
-      console.log(customApiToken.accessToken) //Denne skal sendes til et API for validering 
+      myMsalStore.set(myMsal) //Denne skal sendes til et API for validering 
     
     })
     .catch(function (error) {

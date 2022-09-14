@@ -5,7 +5,7 @@
   import SideNav from './lib/SideNav.svelte'
   import { onMount } from 'svelte';
 
-  let show_content = 'personalia'
+  // let show_content = 'personalia'
   
   let user = Login()
   $: user
@@ -17,7 +17,7 @@
   {#if user === undefined}
     <main>
       <Header title='Kompetansemodul' avatar={'RE'} name={'Robin Ellingsen'}/>
-      <SideNav bind:show_content />
+      <SideNav />
     </main>
   {:else if user !== undefined}
     <main>

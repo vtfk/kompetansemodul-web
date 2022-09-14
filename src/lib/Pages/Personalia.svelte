@@ -1,5 +1,12 @@
 <script>
+  	import { onMount } from "svelte/internal";
+	import getMe  from '../services/useApi'
+
 	let name = 'Personalia';
+
+	onMount(async () => {
+		getMe()
+	})
 </script>
 
 <div>

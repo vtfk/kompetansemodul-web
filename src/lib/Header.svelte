@@ -34,7 +34,7 @@
 <style>
     .header {
         margin-left: 11rem;
-        width: 100vh;
+        width: 75vw;
         height: 5rem;
         display: flex;
         position: relative;
