@@ -1,9 +1,9 @@
 // Config object to be passed to MSAL on creation
 const msalConfig = {
   auth: {
-    clientId: '',
-    authority: 'https://login.microsoftonline.com/',
-    redirectUri: 'http://localhost:5173/',
+    clientId: import.meta.env.VITE_CLIENT_ID,
+    authority: import.meta.env.VITE_CLIENT_ISS,
+    redirectUri: import.meta.env.VITE_REDIRECT_URI,
   },
   cache: {
     cacheLocation: "sessionStorage", // This configures where your cache will be stored
