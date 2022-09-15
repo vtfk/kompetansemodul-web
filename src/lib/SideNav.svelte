@@ -1,7 +1,6 @@
 <script>
     import Logo from '../assets/Logo.svelte'
     import IoMdHelpCircle from 'svelte-icons/io/IoMdHelpCircle.svelte'
-    import { Router, Link, Route } from 'svelte-navigator'; 
     import IconStudents from '../assets/Icon/icon-students.svelte'
     import GiOrganigram from 'svelte-icons/gi/GiOrganigram.svelte'
     import { displayedPage } from './services/store';
@@ -12,41 +11,37 @@
     }
 
 </script>
-
-<Router>
-    <div class="sidenav">
-        <div class="logoContainer">
-            <Logo />
-        </div>
-        <div>
-            <ul class="sidenav-list">
-                <button on:click={() => { displayedPage.set('personalia'); updateUrl('?personalia'); console.log(window.location.pathname) } } class="sidenav-item">
-                    <div class="icon">
-                        <IconStudents/>
-                    </div>
-                    <p>Personalia</p>
-                </button>
-                <button  on:click={() => { displayedPage.set('orgstruktur'); updateUrl('?orgstruktur') } } class="sidenav-item">
-                    <div class="icon">
-                        <GiOrganigram/>
-                    </div>
-                    <p>Organiasasjons Struktur</p>
-                </button>
-                <button on:click={() => { displayedPage.set('hjelp'); updateUrl('?hjeeeelp') } } class="sidenav-item">
-                    <div class="icon">
-                        <IoMdHelpCircle/>
-                    </div>
-                    <p>Hjelp</p>
-                </button>
-            </ul>
-        </div>      
+      
+<div class="sidenav">
+    <div class="logoContainer">
+        <Logo />
     </div>
-</Router>
+    <div>
+        <ul class="sidenav-list">
+            <button on:click={() => { displayedPage.set('personalia'); updateUrl('?personalia'); console.log(window.location.pathname) } } class="sidenav-item">
+                <div class="icon">
+                    <IconStudents/>
+                </div>
+                <p>Personalia</p>
+            </button>
+            <button  on:click={() => { displayedPage.set('orgstruktur'); updateUrl('?orgstruktur') } } class="sidenav-item">
+                <div class="icon">
+                    <GiOrganigram/>
+                </div>
+                <p>Organiasasjons Struktur</p>
+            </button>
+            <button on:click={() => { displayedPage.set('hjelp'); updateUrl('?hjeeeelp') } } class="sidenav-item">
+                <div class="icon">
+                    <IoMdHelpCircle/>
+                </div>
+                <p>Hjelp</p>
+            </button>
+        </ul>
+    </div>      
+</div>
+
 
 <style>
-body {
-    font-family: 'Nunito Sans', Lato, 'Trebuchet MS', sans-serif;
-}
 
 .sidenav {
     height: 100%;
@@ -114,8 +109,13 @@ button:active {
   outline: #EBF6F9 0.01rem auto;
 }
 
-@media screen and (max-height: 450px) {
-  .sidenav {padding-top: 15px;}
-  .sidenav p {font-size: 18px;}
+@media screen and (max-height: 600px) {
+  .sidenav p {font-size: 12px;}
+}
+
+@media screen and (max-width: 1024px) {
+    .sidenav {
+        width: 8rem;
+    }
 }
 </style>

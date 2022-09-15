@@ -29,20 +29,20 @@
   {#await Login()}
     Loading...
   {:then response}
-    <div class="main">
-      <div class="content">
-        <Header title='Kompetansemodul' avatar={getInitials(response.account.name)} name={response.account.name} />
-        <SideNav />
-        { #if page === 'personalia'}
-            <Personalia />
-        { :else if page === 'orgstruktur' }
-            <Orgstruktur />
-        { :else if page === 'hjelp' }
-            <Hjelp />
-        { :else if page === '' }
-            <h1>Ingenting</h1>
-        {/if }
-      </div>
+  <div class="header">
+  <Header title='Kompetansemodul' avatar={getInitials(response.account.name)} name={response.account.name} />
+  </div>
+  <div class="content">
+      <SideNav />
+      { #if page === 'personalia'}
+          <Personalia />
+      { :else if page === 'orgstruktur' }
+          <Orgstruktur />
+      { :else if page === 'hjelp' }
+          <Hjelp />
+      { :else if page === '' }
+          <h1>Ingenting</h1>
+      {/if }
     </div>
   {:catch error}
     <h1>Stapp oppi: {error}</h1>
@@ -51,20 +51,37 @@
 </main>
 
 <style>
-  p {
+  h1{
     font-family: 'Nunito Sans', Lato, 'Trebuchet MS', sans-serif;
     padding: 0.25rem 0.25rem 0.25rem 0.5rem;
     text-decoration: none;
-    font-size: 16px;
+    font-size: 32px;
   }
 
-  .main {
-    /* margin-left: 11em; */
+  .header {
+    margin-left: 11rem;
   }
 
   .content {
     background-color: #F8F6F0;
-    /* width: 100vw; */
+    margin-left: 11em;
     height: 100vh;
-}
-</style>
+  }
+
+  @media screen and (max-width: 1024px) {
+    .content {
+      margin-left: 8rem;
+      margin-right: 3em;
+    }
+
+    .header {
+      margin-left: 8rem;
+    }
+  }
+
+  @media screen and (max-height: 600px) { 
+    .content {
+      margin-right: 17rem;
+    }
+  }
+  </style>

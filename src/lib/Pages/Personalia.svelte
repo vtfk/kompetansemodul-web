@@ -14,7 +14,7 @@
 	})
 </script>
 
-<div>
+<div class="content">
 	<h1>Ditt navn: {name}, om du lurte.</h1>
 	<p>Dette er informasjon om deg</p>
 </div>
@@ -22,6 +22,10 @@
 <style>
 	h1 {
 		color: var(--deepSeaGreen);
+	}
+
+	.content {
+		padding-top: 1rem
 	}
 
 </style>
