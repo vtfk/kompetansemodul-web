@@ -5,6 +5,12 @@
     import IconStudents from '../assets/Icon/icon-students.svelte'
     import GiOrganigram from 'svelte-icons/gi/GiOrganigram.svelte'
     import { displayedPage } from './services/store';
+
+    const updateUrl = (appendix) => {
+        window.history.replaceState(null, null, appendix)
+        // window.history.pushState(new XMLSerializer().serializeToString(document), "Title", appendix);
+    }
+
 </script>
 
 <Router>
@@ -14,19 +20,19 @@
         </div>
         <div>
             <ul class="sidenav-list">
-                <button on:click={() => displayedPage.set('personalia')} class="sidenav-item">
+                <button on:click={() => { displayedPage.set('personalia'); updateUrl('?personalia'); console.log(window.location.pathname) } } class="sidenav-item">
                     <div class="icon">
                         <IconStudents/>
                     </div>
                     <p>Personalia</p>
                 </button>
-                <button  on:click={() => displayedPage.set('orgstruktur')} class="sidenav-item">
+                <button  on:click={() => { displayedPage.set('orgstruktur'); updateUrl('?orgstruktur') } } class="sidenav-item">
                     <div class="icon">
                         <GiOrganigram/>
                     </div>
                     <p>Organiasasjons Struktur</p>
                 </button>
-                <button on:click={() => displayedPage.set('hjelp')} class="sidenav-item">
+                <button on:click={() => { displayedPage.set('hjelp'); updateUrl('?hjeeeelp') } } class="sidenav-item">
                     <div class="icon">
                         <IoMdHelpCircle/>
                     </div>
