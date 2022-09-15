@@ -18,19 +18,19 @@
     </div>
     <div>
         <ul class="sidenav-list">
-            <button on:click={() => { displayedPage.set('personalia'); updateUrl('?personalia'); console.log(window.location.pathname) } } class="sidenav-item">
+            <button on:click={() => { displayedPage.set('personalia'); updateUrl('personalia') } } class="sidenav-item">
                 <div class="icon">
                     <IconStudents/>
                 </div>
                 <p>Personalia</p>
             </button>
-            <button  on:click={() => { displayedPage.set('orgstruktur'); updateUrl('?orgstruktur') } } class="sidenav-item">
+            <button  on:click={() => { displayedPage.set('orgstruktur'); updateUrl('orgstruktur') } } class="sidenav-item">
                 <div class="icon">
                     <GiOrganigram/>
                 </div>
                 <p>Organiasasjons Struktur</p>
             </button>
-            <button on:click={() => { displayedPage.set('hjelp'); updateUrl('?hjeeeelp') } } class="sidenav-item">
+            <button on:click={() => { displayedPage.set('hjelp'); updateUrl('hjeeeelp') } } class="sidenav-item">
                 <div class="icon">
                     <IoMdHelpCircle/>
                 </div>

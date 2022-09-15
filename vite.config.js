@@ -8,5 +8,5 @@ export default defineConfig({
     port: 5173
   },
   // svelte-naviagator
-	optimizeDeps: { exclude: ["svelte-navigator"] },
+  optimizeDeps: { exclude: ['svelte-navigator'] }
 })

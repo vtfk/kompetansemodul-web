@@ -1,4 +1,4 @@
-import { writable } from "svelte/store";
+import { writable } from 'svelte/store'
 
-export const msalClientStore = writable({})
+export const msalClientStore = writable(null)
 export const displayedPage = writable('')

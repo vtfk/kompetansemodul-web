@@ -1,20 +1,20 @@
 
-  import { PublicClientApplication } from '@azure/msal-browser'
-  import { authConfig } from '../../../config'
-  import { msalClientStore } from '../services/store';
-  // import authProvider from './authProvider.js'
+import { PublicClientApplication, InteractionStatus } from '@azure/msal-browser'
+import { authConfig } from '../../../config'
+import { msalClientStore } from '../services/store'
+import { get } from 'svelte/store'
+// import authProvider from './authProvider.js'
 
-  const login = async () => {
-    const msalClient = new PublicClientApplication(authConfig);
-    try {
-      const loginResponse = await msalClient.loginPopup({ scopes: ["User.Read "] })
-      msalClient.setActiveAccount(loginResponse.account)
-      msalClientStore.set(msalClient)
-
-      return loginResponse
-    } catch (error) {
-      throw error
-    }
+const login = async () => {
+  const msalClient = get(msalClientStore) || new PublicClientApplication(authConfig)
+  const accounts = msalClient.getAllAccounts()
+  if (accounts.length === 0) {
+    const loginResponse = await msalClient.loginPopup({ scopes: ['User.Read '] })
+    msalClient.setActiveAccount(loginResponse.account)
+    msalClientStore.set(msalClient)
+    return loginResponse.account
+  }
+  return accounts[0]
 }
 
 export default login

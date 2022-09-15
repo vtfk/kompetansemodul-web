@@ -30,7 +30,7 @@
     Loading...
   {:then response}
   <div class="header">
-  <Header title='Kompetansemodul' avatar={getInitials(response.account.name)} name={response.account.name} />
+  <Header title='Kompetansemodul' avatar={getInitials(response.name)} name={response.name} />
   </div>
   <div class="content">
       <SideNav />
