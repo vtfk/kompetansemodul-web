@@ -2,11 +2,21 @@ import axios from 'axios'
 import { api } from '../../../config'
 import { get } from 'svelte/store'
 import { msalClientStore } from './store'
+import login from '../Auth/Login'
 
 // Implement method to execute requets
 const apiRequest = async (method, endpoint, body) => {
-  const msalClient = get(msalClientStore)
-  const { accessToken } = await msalClient.acquireTokenSilent({ scopes: api.scopes })
+    //console.log("NÅÅÅÅ KJØRER JEG: ", method, endpoint) // om du er redd for at den spinner api-kall kan du teste dette ;)
+  let accessToken
+  try {
+    const msalClient = get(msalClientStore)
+    accessToken = (await msalClient.acquireTokenSilent({ scopes: api.scopes })).accessToken
+  } catch (error) {
+    // If acquireTokenSilent failed - we assume the user has been logged out or the refresh token has expired - simply log in again :)
+   await login(true)
+   const msalClient = get(msalClientStore)
+   accessToken = (await msalClient.acquireTokenSilent({ scopes: api.scopes })).accessToken
+  }
 
   const headers = {
     authorization: `Bearer ${accessToken}`
@@ -21,6 +31,11 @@ const apiRequest = async (method, endpoint, body) => {
 }
 
 // Get me
-const getMe = async () => await apiRequest('get', 'me')
+export const getMe = async () => await apiRequest('get', 'me')
 
-export default getMe
+// Get user
+export const getPerson = async (upn) => await apiRequest('get', `GetEmployee/${upn}`)
+
+// Get org
+export const getOrg = async () => await apiRequest('get', 'GetOrg')
+

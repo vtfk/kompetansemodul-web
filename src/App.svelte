@@ -10,6 +10,7 @@
   import Hjelp from './lib/Pages/Hjelp.svelte';
   import Orgstruktur from './lib/Pages/Orgstruktur.svelte';
   import Personalia from './lib/Pages/Personalia.svelte';
+  import Person from './lib/Pages/Person.svelte';
   import login from './lib/Auth/Login';
 
   let page = get(displayedPage)
@@ -36,6 +37,8 @@
       <SideNav />
       { #if page === 'personalia'}
           <Personalia />
+      { :else if page === 'person' }
+          <Person />
       { :else if page === 'orgstruktur' }
           <Orgstruktur />
       { :else if page === 'hjelp' }

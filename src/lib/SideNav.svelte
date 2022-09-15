@@ -3,7 +3,7 @@
     import IoMdHelpCircle from 'svelte-icons/io/IoMdHelpCircle.svelte'
     import IconStudents from '../assets/Icon/icon-students.svelte'
     import GiOrganigram from 'svelte-icons/gi/GiOrganigram.svelte'
-    import { displayedPage } from './services/store';
+    import { displayedPage } from './services/store'
 
     const updateUrl = (appendix) => {
         window.history.replaceState(null, null, appendix)
@@ -23,6 +23,12 @@
                     <IconStudents/>
                 </div>
                 <p>Personalia</p>
+            </button>
+            <button on:click={() => { displayedPage.set('person'); updateUrl('person') } } class="sidenav-item">
+                <div class="icon">
+                    <IconStudents/>
+                </div>
+                <p>Personsøk</p>
             </button>
             <button  on:click={() => { displayedPage.set('orgstruktur'); updateUrl('orgstruktur') } } class="sidenav-item">
                 <div class="icon">
