@@ -33,7 +33,7 @@
 
 <style>
     .header {
-        margin-left: 11rem;
+        margin-left: 16px;
         width: 75vw;
         height: 5rem;
         display: flex;

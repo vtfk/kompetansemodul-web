@@ -7,7 +7,6 @@
 	onMount(async () => {
 		try {
 			const test = await getMe()
-			console.log(test)
 			name = test.fornavn
 		} catch (error) {
 			console.log(error)

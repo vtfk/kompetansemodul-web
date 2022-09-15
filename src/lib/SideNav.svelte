@@ -4,54 +4,37 @@
     import { Router, Link, Route } from 'svelte-navigator'; 
     import IconStudents from '../assets/Icon/icon-students.svelte'
     import GiOrganigram from 'svelte-icons/gi/GiOrganigram.svelte'
-
-    //Pages
-    import Hjelp from './Pages/Hjelp.svelte';
-    import Orgstruktur from './Pages/Orgstruktur.svelte';
-    import Personalia from './Pages/Personalia.svelte';
-
-    export let show_content = 'personalia'
+    import { displayedPage } from './services/store';
 </script>
 
 <Router>
-    <body class="main">
-        <div class="sidenav">
-            <div class="logoContainer">
-                <Logo />
-            </div>
-            <div>
-                <ul class="sidenav-list">
-                    <button on:click={() => show_content = 'personalia'} class="sidenav-item">
-                        <div class="icon">
-                            <IconStudents/>
-                        </div>
-                        <p>Personalia</p>
-                    </button>
-                    <button  on:click={() => show_content = 'orgstruktur'} class="sidenav-item">
-                        <div class="icon">
-                            <GiOrganigram/>
-                        </div>
-                        <p>Organiasasjons Struktur</p>
-                    </button>
-                    <button on:click={() => show_content = 'hjelp'} class="sidenav-item">
-                        <div class="icon">
-                            <IoMdHelpCircle/>
-                        </div>
-                        <p>Hjelp</p>
-                    </button>
-                </ul>
-            </div>      
+    <div class="sidenav">
+        <div class="logoContainer">
+            <Logo />
         </div>
-        <div class="content">
-            { #if show_content === 'personalia'}
-                <Personalia />
-            { :else if show_content === 'orgstruktur' }
-                <Orgstruktur />
-            { :else if show_content === 'hjelp' }
-                <Hjelp />
-            {/if }
+        <div>
+            <ul class="sidenav-list">
+                <button on:click={() => displayedPage.set('personalia')} class="sidenav-item">
+                    <div class="icon">
+                        <IconStudents/>
+                    </div>
+                    <p>Personalia</p>
+                </button>
+                <button  on:click={() => displayedPage.set('orgstruktur')} class="sidenav-item">
+                    <div class="icon">
+                        <GiOrganigram/>
+                    </div>
+                    <p>Organiasasjons Struktur</p>
+                </button>
+                <button on:click={() => displayedPage.set('hjelp')} class="sidenav-item">
+                    <div class="icon">
+                        <IoMdHelpCircle/>
+                    </div>
+                    <p>Hjelp</p>
+                </button>
+            </ul>
         </div>      
-    </body>
+    </div>
 </Router>
 
 <style>
@@ -101,10 +84,6 @@ body {
     cursor: pointer;
 }
 
-.main {
-    margin-left: 11rem; 
-}
-
 .icon {
     color: #000000;
     width: 2rem;
@@ -121,18 +100,8 @@ body {
     margin-top: 2rem;
 }
 
-.content {
-    background-color: #F8F6F0;
-    width: 100vw;
-    height: 100vh;
-}
-
 button {
     all:unset
-}
-
-.icon-active {
-    background-color: red;
 }
 
 button:active {

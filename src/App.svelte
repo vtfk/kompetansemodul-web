@@ -3,30 +3,50 @@
   import { Router, Link, Route } from 'svelte-navigator'; 
   import Login from './lib/Auth/Login.js'
   import SideNav from './lib/SideNav.svelte'
-  import { onMount } from 'svelte';
+  import { get } from 'svelte/store'
+  import { displayedPage } from './lib/services/store';
 
-  // let show_content = 'personalia'
-  let user
-  $: user
-  const login = async () => {
-    user = await Login()
+  //Pages
+  import Hjelp from './lib/Pages/Hjelp.svelte';
+  import Orgstruktur from './lib/Pages/Orgstruktur.svelte';
+  import Personalia from './lib/Pages/Personalia.svelte';
+  import login from './lib/Auth/Login';
+
+  let page = get(displayedPage)
+  displayedPage.subscribe(value => {
+      page = value
+  })
+
+  const getInitials = name => {
+    const split = name.split(' ')
+    return `${split[0][0].toUpperCase()}${split[split.length - 1][0].toUpperCase()}`
   }
-  login()
   
 </script>
 
 <main>
   <Router>
-  {#if user === undefined}
-    <main>
-      <Header title='Kompetansemodul' avatar={'RE'} name={'Robin Ellingsen'}/>
-      <SideNav />
-    </main>
-  {:else if user !== undefined}
-    <main>
-      <p>loading...</p>
-    </main>
-  {/if}
+  {#await Login()}
+    Loading...
+  {:then response}
+    <div class="main">
+      <div class="content">
+        <Header title='Kompetansemodul' avatar={getInitials(response.account.name)} name={response.account.name} />
+        <SideNav />
+        { #if page === 'personalia'}
+            <Personalia />
+        { :else if page === 'orgstruktur' }
+            <Orgstruktur />
+        { :else if page === 'hjelp' }
+            <Hjelp />
+        { :else if page === '' }
+            <h1>Ingenting</h1>
+        {/if }
+      </div>
+    </div>
+  {:catch error}
+    <h1>Stapp oppi: {error}</h1>
+  {/await}
   </Router>
 </main>
 
@@ -37,4 +57,14 @@
     text-decoration: none;
     font-size: 16px;
   }
+
+  .main {
+    /* margin-left: 11em; */
+  }
+
+  .content {
+    background-color: #F8F6F0;
+    /* width: 100vw; */
+    height: 100vh;
+}
 </style>

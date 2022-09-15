@@ -8,8 +8,6 @@ const apiRequest = async (method, endpoint, body) => {
     const msalClient = get(msalClientStore)
     const { accessToken } = await msalClient.acquireTokenSilent({ scopes: api.scopes });
 
-    console.log('halla: ', accessToken)
-
     const headers = {
         "authorization": `Bearer ${accessToken}`
     }

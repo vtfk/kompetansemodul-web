@@ -5,18 +5,15 @@
   // import authProvider from './authProvider.js'
 
   const login = async () => {
-
-    const loginRequest = {
-      scopes: ["User.Read "],
-    };
-    
     const msalClient = new PublicClientApplication(authConfig);
     try {
       const loginResponse = await msalClient.loginPopup({ scopes: ["User.Read "] })
       msalClient.setActiveAccount(loginResponse.account)
       msalClientStore.set(msalClient)
+
+      return loginResponse
     } catch (error) {
-      console.log('oh oh', error)
+      throw error
     }
 }
 
