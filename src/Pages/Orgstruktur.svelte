@@ -1,6 +1,6 @@
 <script>
-	import { getOrg }  from '../services/useApi'
-	import { displayedPage, searchUpn } from '../services/store'
+	import { getOrg }  from '../lib/services/useApi'
+	import { displayedPage, searchUpn } from '../lib/services/store'
 
 	let name = 'Organisasjon'
 </script>
@@ -25,12 +25,4 @@
 </div>
 
 <style>
-	h1 {
-		color: var(--deepSeaGreen);
-	}
-
-	.content {
-		padding-top: 1rem
-	}
-
 </style>

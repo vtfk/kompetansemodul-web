@@ -2,8 +2,8 @@
 
 <script>
   import { setContext } from 'svelte'
-  import IconDropdownNav from "../assets/Icon/icon-dropdown-nav.svelte";
-  import {clickOutside} from '../lib/Helpers/clickOutside'
+  import IconDropdownNav from "../../assets/Icon/icon-dropdown-nav.svelte";
+  import {clickOutside} from '../../lib/Helpers/clickOutside'
 
   let isMenuVisible = false;
 	let value = ''

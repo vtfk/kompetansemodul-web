@@ -1,6 +1,6 @@
 <script>
-    import IconDropdown from "./IconDropdown.svelte";
-    import DropdownItem from "./dropdown-item.svelte";
+    import IconDropdown from "./IconDropdown/IconDropdown.svelte";
+    import DropdownItem from "./IconDropdown/dropdown-item.svelte";
     import Avatar from "./Avatar.svelte";
 
     export let title;

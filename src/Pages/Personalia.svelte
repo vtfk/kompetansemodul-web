@@ -1,5 +1,5 @@
 <script>
-	import { getMe }  from '../services/useApi'
+	import { getMe }  from '../lib/services/useApi'
 	import PersonCard from '../components/PersonCard.svelte'
 </script>
 
@@ -44,12 +44,4 @@
 </div>
 
 <style>
-	h1 {
-		color: var(--deepSeaGreen);
-	}
-
-	.content {
-		padding-top: 1rem
-	}
-
 </style>

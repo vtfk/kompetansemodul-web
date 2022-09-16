@@ -3,7 +3,7 @@
     import IoMdHelpCircle from 'svelte-icons/io/IoMdHelpCircle.svelte'
     import IconStudents from '../assets/Icon/icon-students.svelte'
     import GiOrganigram from 'svelte-icons/gi/GiOrganigram.svelte'
-    import { displayedPage } from './services/store'
+    import { displayedPage } from '../lib/services/store'
 
     const updateUrl = (appendix) => {
         window.history.replaceState(null, null, appendix)

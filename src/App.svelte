@@ -1,16 +1,15 @@
 <script>
-  import Header from './lib/Header.svelte';
-  import BaseStyle from './lib/components/BaseStyle.svelte';
+  import Header from './components/Header.svelte';
   import Login from './lib/Auth/Login.js'
-  import SideNav from './lib/SideNav.svelte'
+  import SideNav from './components/SideNav.svelte'
   import { get } from 'svelte/store'
   import { displayedPage } from './lib/services/store';
 
   //Pages
-  import Hjelp from './lib/Pages/Hjelp.svelte';
-  import Orgstruktur from './lib/Pages/Orgstruktur.svelte';
-  import Personalia from './lib/Pages/Personalia.svelte';
-  import Person from './lib/Pages/Person.svelte';
+  import Hjelp from './Pages/Hjelp.svelte';
+  import Orgstruktur from './Pages/Orgstruktur.svelte';
+  import Personalia from './Pages/Personalia.svelte';
+  import Person from './Pages/Person.svelte';
   import login from './lib/Auth/Login';
 
   let page = get(displayedPage)
@@ -25,7 +24,7 @@
   
 </script>
 
-<BaseStyle>
+<main>
   {#await Login()}
     Loading...
   {:then response}
@@ -49,7 +48,7 @@
   {:catch error}
     <h1>Stapp oppi: {error}</h1>
   {/await}
-</BaseStyle>
+</main>
 
 <style>
   h1{
