@@ -16,11 +16,11 @@
 <div class="person-card">
     <div id="header"><h3>{personData.name}</h3></div>
     <div id="content">
-        <p>E-post: {personData.email}</p>
-        <p>Location: {personData.officeLocation}</p>
-        <p>Position: {personData.mainPosition}</p>
+        <p><strong>E-post:</strong> {personData.email}</p>
+        <p><strong>Location:</strong> {personData.officeLocation}</p>
+        <p><strong>Position:</strong> {personData.mainPosition}</p>
         {#each Object.keys(extras) as prop}
-            <p>{prop}: {personData[prop]}</p>
+            <p><strong>{prop}:</strong> {personData[prop]}</p>
         {/each}
     </div>
 </div>
