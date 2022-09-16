@@ -1,17 +1,20 @@
 <script>
-    export const title = "Balle Frans Ferdinand"
-    export const personData = {
-        mainPosition: "Murer",
-        officeLocation: "Horten kirkegård",
-        
+    export let personData = {
+        name: '',
+        email: '',
+        mainPosition: '',
+        officeLocation: '',
     }
-
+    export let extras = {}
 </script>
 
-<div class="card">
-    <div id="header"><h3>{title}</h3></div>
+<div class="person-card">
+    <div id="header"><h3>{personData.name}</h3></div>
     <div id="content">
-        {#each Object.keys(personData) as prop}
+        <p>E-post: {personData.email}</p>
+        <p>Location: {personData.officeLocation}</p>
+        <p>Position: {personData.mainPosition}</p>
+        {#each Object.keys(extras) as prop}
             <p>{prop}: {personData[prop]}</p>
         {/each}
     </div>
@@ -21,11 +24,11 @@
     #header {
         border-bottom: 2px solid black;
     }
-    .card {
+    .person-card {
         border: 2px solid black;
         border-radius: 2px;
         background-color: var(--potPourri);
-        padding: 0px;
+        padding: 0px 5px;
         margin: 20px;
         text-align: left;
     }
