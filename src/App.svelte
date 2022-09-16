@@ -34,7 +34,6 @@
   </div>
   <div class="content">
       <SideNavComponent />
-      <!-- <SideNav /> -->
       { #if page === 'personalia'}
           <Personalia />
       { :else if page === 'person' }
