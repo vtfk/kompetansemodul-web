@@ -13,9 +13,6 @@
   import Person from './lib/Pages/Person.svelte';
   import login from './lib/Auth/Login';
 
-  //Styling
-  //import css from './lib/mixins/scalablePage.css'
-
   let page = get(displayedPage)
   displayedPage.subscribe(value => {
       page = value

@@ -3,9 +3,6 @@
     import DropdownItem from "./dropdown-item.svelte";
     import Avatar from "./Avatar.svelte";
 
-    // Styling
-    import css from "./mixins/scalableHeader.css"
-
     export let title;
     export let name;
     export let avatar;
