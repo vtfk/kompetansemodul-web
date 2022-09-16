@@ -1,7 +1,6 @@
 <svelte:options tag="my-dropdown" />
 
 <script>
-  import { setContext } from 'svelte'
   import IconDropdownNav from "../../assets/Icon/icon-dropdown-nav.svelte";
   import {clickOutside} from '../../lib/Helpers/clickOutside'
 
@@ -9,6 +8,7 @@
 	let value = ''
 
 	let updateMe = (event)=> {
+    console.log(event)
 		calc(event.detail);
 	}
 	

@@ -1,7 +1,7 @@
 <svelte:options tag="my-dropdown-item" />
 
 <script>
-  import { getContext , createEventDispatcher } from 'svelte';
+  import { createEventDispatcher } from 'svelte';
 	
 	const dispatch = createEventDispatcher();
 	

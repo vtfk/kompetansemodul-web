@@ -1,7 +1,7 @@
 <script>
   import Header from './components/Header.svelte';
   import Login from './lib/Auth/Login.js'
-  import SideNav from './components/SideNav.svelte'
+  // import SideNav from './components/SideNav.svelte'
   import { get } from 'svelte/store'
   import { displayedPage } from './lib/services/store';
 
@@ -11,6 +11,7 @@
   import Personalia from './Pages/Personalia.svelte';
   import Person from './Pages/Person.svelte';
   import login from './lib/Auth/Login';
+  import SideNavComponent from './components/SideNavComponent.svelte';
 
   let page = get(displayedPage)
   displayedPage.subscribe(value => {
@@ -32,7 +33,8 @@
   <Header title='Kompetansemodul' avatar={getInitials(response.name)} name={response.name} />
   </div>
   <div class="content">
-      <SideNav />
+      <SideNavComponent />
+      <!-- <SideNav /> -->
       { #if page === 'personalia'}
           <Personalia />
       { :else if page === 'person' }
