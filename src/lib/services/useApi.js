@@ -6,7 +6,7 @@ import login from '../Auth/Login'
 
 // Implement method to execute requets
 const apiRequest = async (method, endpoint, body) => {
-    //console.log("NÅÅÅÅ KJØRER JEG: ", method, endpoint) // om du er redd for at den spinner api-kall kan du teste dette ;)
+  // console.log("NÅÅÅÅ STARTÆR JEG: ", method, endpoint) // om du er redd for at den spinner api-kall kan du teste dette ;)
   let accessToken
   try {
     const msalClient = get(msalClientStore)
@@ -23,9 +23,11 @@ const apiRequest = async (method, endpoint, body) => {
   }
   if (['get', 'delete'].includes(method)) {
     const res = await axios[method](`${api.url}/${endpoint}`, { headers })
+    // console.log('NÅÅÅ ER JEG FÆRRI')
     return res.data
   } else {
     const res = await axios[method](`${api.url}/${endpoint}`, body, { headers })
+    // console.log('NÅÅÅ HAR JEG BÆSJA PÅ MEG')
     return res.data
   }
 }

@@ -10,12 +10,14 @@
 	{#await getOrg()}
 	<p>...Lastær</p>
 	{:then res}
-		{#each res as unit}
-			<p>{unit.navn}</p>
-			{#each unit.arbeidsforhold as employee}
-				<p on:click={() => { searchUpn.set(employee.userPrincipalName); displayedPage.set('person') } } style="color: green">{employee.navn}</p>
+			{#each res as unit}
+					<p>{unit.navn}</p>
+					{#each unit.arbeidsforhold as employee}
+						{#if employee.lonnsprosent > 0}
+							<p on:click={() => { searchUpn.set(employee.userPrincipalName); displayedPage.set('person') } } style="color: green">{employee.navn}</p>
+						{/if}
+					{/each}
 			{/each}
-		{/each}
 	{:catch error}
 		<p style="color: red">{error.message}</p>
 	{/await}
