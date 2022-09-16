@@ -41,3 +41,5 @@ export const getPerson = async (upn) => await apiRequest('get', `GetEmployee/${u
 // Get org
 export const getOrg = async () => await apiRequest('get', 'GetOrg')
 
+// Save my edited competence
+export const saveCompetence = async (competence) => await apiRequest('post', 'UpsertCompetence', competence)
