@@ -3,6 +3,9 @@
     import DropdownItem from "./dropdown-item.svelte";
     import Avatar from "./Avatar.svelte";
 
+    // Styling
+    import css from "./mixins/scalableHeader.css"
+
     export let title;
     export let name;
     export let avatar;
@@ -82,25 +85,5 @@
 
     p {
         font-family: Nunito, Lato, 'Trebuchet MS', sans-serif;
-    }
-    
-    @media(max-width: 1024px) {
-        .person-card {
-            margin-right: 17rem;
-        }
-
-        h3 {
-            font-family: Nunito, Lato, 'Trebuchet MS', sans-serif;
-            font-size: 20px;
-            line-height: 28px;
-            min-height: 28px;
-            font-weight: 400;
-        }
-    }
-    
-    @media(max-width: 1000px) {
-        .person-card {
-            display: none;
-        }
     }
 </style>

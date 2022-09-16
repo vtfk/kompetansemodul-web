@@ -1,6 +1,6 @@
 <script>
   import Header from './lib/Header.svelte';
-  import { Router, Link, Route } from 'svelte-navigator'; 
+  import BaseStyle from './lib/components/BaseStyle.svelte';
   import Login from './lib/Auth/Login.js'
   import SideNav from './lib/SideNav.svelte'
   import { get } from 'svelte/store'
@@ -12,6 +12,9 @@
   import Personalia from './lib/Pages/Personalia.svelte';
   import Person from './lib/Pages/Person.svelte';
   import login from './lib/Auth/Login';
+
+  //Styling
+  //import css from './lib/mixins/scalablePage.css'
 
   let page = get(displayedPage)
   displayedPage.subscribe(value => {
@@ -25,8 +28,7 @@
   
 </script>
 
-<main>
-  <Router>
+<BaseStyle>
   {#await Login()}
     Loading...
   {:then response}
@@ -50,12 +52,10 @@
   {:catch error}
     <h1>Stapp oppi: {error}</h1>
   {/await}
-  </Router>
-</main>
+</BaseStyle>
 
 <style>
   h1{
-    font-family: 'Nunito Sans', Lato, 'Trebuchet MS', sans-serif;
     padding: 0.25rem 0.25rem 0.25rem 0.5rem;
     text-decoration: none;
     font-size: 32px;
@@ -69,22 +69,5 @@
     background-color: #F8F6F0;
     margin-left: 11em;
     height: 100vh;
-  }
-
-  @media screen and (max-width: 1024px) {
-    .content {
-      margin-left: 8rem;
-      margin-right: 3em;
-    }
-
-    .header {
-      margin-left: 8rem;
-    }
-  }
-
-  @media screen and (max-height: 600px) { 
-    .content {
-      margin-right: 17rem;
-    }
-  }
-  </style>
+  } 
+</style>

@@ -1,0 +1,16 @@
+@media screen and (max-width: 1024px) {
+    .content {
+      margin-left: 8rem;
+      margin-right: 3em;
+    }
+
+    .header {
+      margin-left: 8rem;
+    }
+  }
+
+  @media screen and (max-height: 600px) { 
+    .content {
+      margin-right: 17rem;
+    }
+  }

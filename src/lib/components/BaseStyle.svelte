@@ -1,0 +1,90 @@
+
+<slot>Du har ikke putta noe her</slot>
+
+<style global>
+    @import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,700&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,700&display=swap');
+
+    body {
+        margin: 0;
+        font-family: 'Nunito Sans', Lato, 'Trebuchet MS', sans-serif;
+        color: #1D1C28;
+        padding: 0;
+    }
+
+    * {
+        box-sizing: border-box;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        image-rendering: -webkit-optimize-contrast;
+        -webkit-tap-highlight-color:  rgba(255, 255, 255, 0);
+    }
+    :root {
+        /* units */
+        --baseUnit: 8px;
+
+        /* colors */
+        --red: #E40017;
+        --gin: #EAF3EF;
+        --swansDown: #D4E6DC;
+        --pixieGreen: #BFDCB2;
+        --springWood: #F8F6F0;
+        --lightBlue: #AEDCEA;
+        --potPourri: #F7E5E2;
+        --peppermint: #DAE8D0;
+        --deepSeaGreen: #005260;
+        --catSkillWhite: #EBF6F9;
+        --ecruWhite: #F6F5E4;
+        --hummingBird: #D2EFF6;
+        --onahau: #BDE7F1;
+        --grannyApple: #C9E6C2;
+        --zanah: #DAEED5;
+        --hawkesBlue: #D5DDEE;
+        --iceCold: #B2DCDA;
+
+        /* secondary colors */
+        --luft-1: #B2DCDA;
+        --luft-2: #D3EAE9;
+        --luft-3: #7DBEBA;
+        --korn-1: #E6E3BB;
+        --korn-2: #F0EED8;
+        --korn-3: #CFC98B;
+        --dugg-1: #BEDACA;
+        --dugg-2: #D9E9E0;
+        --dugg-3: #8DB9A0;
+        --varme-1: #E8D1C1;
+        --varme-2: #F1E4DB;
+        --varme-3: #D1AB94;
+        --berg-1: #D4D5CE;
+        --berg-2: #E6E6E2;
+        --berg-3: #B0B2A5;
+        --nype-1: #F6B6B3;
+        --nype-2: #FAD5D3;
+        --nype-3: #EB8380;
+        --roslyng-1: #D2B9C8;
+        --roslyng-2: #ECE2E8;
+        --roslyng-3: #AD879E;
+        --sand-1: #EBE6D6;
+        --sand-2: #F3F0E7;
+        --sand-3: #D9CFB4;
+        --siv-1: #F0E1BD;
+        --siv-2: #F6EDD9;
+        --siv-3: #E0C58E;
+        --himmel-1: #AEDCEA;
+        --himmel-2: #D1EAF3;
+        --himmel-3: #7ABED3;
+        --lavendel-1: #BBC7E0;
+        --lavendel-2: #D8DEED;
+        --lavendel-3: #8A9CC4;
+        --gress-1: #C0DCB2;
+        --gress-2: #DBEAD3;
+        --gress-3: #90BC7F;
+        --stein-1: #B9CDD4;
+        --stein-2: #D7E2E6;
+        --stein-3: #87A5AF;
+        --noytral-1: #E3E3E3;
+        --noytral-2: #EEEEEE;
+        --noytral-3: #CACACA;
+        --mork: #A3A3A3;
+    }
+</style>
