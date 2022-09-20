@@ -24,25 +24,33 @@
         <div>
             <div class="sideNavItem">
                 <button on:click={() => { changePage('personalia')} }>
-                    <IconPerson />
+                    <div class="icon">
+                        <IconPerson />
+                    </div>
                     <p>Meg</p>
                 </button>
             </div>
             <div class="sideNavItem">
                 <button on:click={() => { changePage('person')} }>
-                    <IconPerson />
+                    <div class="icon">
+                        <IconPerson />
+                    </div>
                     <p>Personsøk</p>
                 </button>
             </div>
             <div class="sideNavItem">
                 <button on:click={() => { changePage('organisasjon')} }>
-                    <IconOrg />
+                    <div class="icon">
+                        <IconOrg />
+                    </div>
                     <p>Meg</p>
                 </button>
             </div>
             <div class="sideNavItem">
                 <button on:click={() => { changePage('hjelp')} }>
-                    <IconHelp />
+                    <div class="icon">
+                        <IconHelp />
+                    </div>
                     <p>Meg</p>
                 </button>
             </div>
@@ -79,6 +87,10 @@
         text-align: center;
     }
 
+    .sideNavItem :hover {
+        background: #dcac89;
+        cursor: pointer;
+    }
 
     .icon {
         color: #000000;
@@ -91,10 +103,22 @@
         display: block;
     }
 
+    button {
+        all:unset;
+        width: calc(var(--baseUnit) * 19);
+    }
+
     button:active {
-        outline: #EBF6F9 0.01rem auto;
-        width: 100%;
+        outline: #dcac89 auto;
+        width: calc(var(--baseUnit) * 19);
         height: 100%;
     }
 
+    p {
+        padding: 1.25rem 0.5rem;
+        text-decoration: none;
+        font-size: 16px;
+        color: #000000;
+        display: block;
+    }
 </style>

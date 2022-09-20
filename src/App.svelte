@@ -23,31 +23,31 @@
   
 </script>
 
-{#await Login()}
-  Loading...
-{:then response}
+  {#await Login()}
+    Loading...
+  {:then response}
 <div class="sidenavWrapper">
   <SideNav />
-</div>
+  </div>
 <div class="contentWrapper">
   <div class="content">
     <Header title='Kompetansemodul' initials={getInitials(response.name)} name={response.name} />
-    { #if page === 'personalia'}
-        <Personalia />
-    { :else if page === 'person' }
-        <Person />
-    { :else if page === 'orgstruktur' }
-        <Orgstruktur />
-    { :else if page === 'hjelp' }
-        <Hjelp />
-    { :else if page === '' }
-        <h1>Ingenting</h1>
-    {/if }
-  </div>
+      { #if page === 'personalia'}
+          <Personalia />
+      { :else if page === 'person' }
+          <Person />
+      { :else if page === 'orgstruktur' }
+          <Orgstruktur />
+      { :else if page === 'hjelp' }
+          <Hjelp />
+      { :else if page === '' }
+          <h1>Ingenting</h1>
+      {/if }
+    </div>
 </div>
-{:catch error}
-  <h1>Stapp oppi: {error}</h1>
-{/await}
+  {:catch error}
+    <h1>Stapp oppi: {error}</h1>
+  {/await}
 
 <style>
   .sidenavWrapper, .contentWrapper {
@@ -69,5 +69,5 @@
     position: relative;
     max-width: 1032px;
     margin: 0px auto;
-  }
+  } 
 </style>
