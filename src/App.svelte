@@ -26,25 +26,25 @@
   {#await Login()}
     Loading...
   {:then response}
-<div class="sidenavWrapper">
-  <SideNav />
-  </div>
-<div class="contentWrapper">
-  <div class="content">
-    <Header title='Kompetansemodul' initials={getInitials(response.name)} name={response.name} />
-      { #if page === 'personalia'}
-          <Personalia />
-      { :else if page === 'person' }
-          <Person />
-      { :else if page === 'orgstruktur' }
-          <Orgstruktur />
-      { :else if page === 'hjelp' }
-          <Hjelp />
-      { :else if page === '' }
-          <h1>Ingenting</h1>
-      {/if }
+    <div class="sidenavWrapper">
+      <SideNav />
+      </div>
+    <div class="contentWrapper">
+      <div class="content">
+        <Header title='Kompetansemodul' initials={getInitials(response.name)} name={response.name} />
+          { #if page === 'personalia'}
+              <Personalia />
+          { :else if page === 'person' }
+              <Person />
+          { :else if page === 'orgstruktur' }
+              <Orgstruktur />
+          { :else if page === 'hjelp' }
+              <Hjelp />
+          { :else if page === '' }
+              <h1>Velkommen skal du være, {response.name.split(' ')[0]}!</h1>
+          {/if }
+        </div>
     </div>
-</div>
   {:catch error}
     <h1>Stapp oppi: {error}</h1>
   {/await}
@@ -55,7 +55,7 @@
   }
   .sidenavWrapper {
     position: fixed;
-    width: calc(var(--sidenavWidth) - 8px);
+    width: calc(var(--sidenavWidth));
     background-color: var(--varme-1);
     top: 0;
     bottom: 0;
@@ -64,6 +64,7 @@
   .contentWrapper {
     margin-left: var(--sidenavWidth);
     width: calc(100vw - var(--sidenavWidth));
+    padding: 0px 32px;
   }
   .content {
     position: relative;

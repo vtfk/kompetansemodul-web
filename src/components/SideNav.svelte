@@ -3,6 +3,7 @@
     import IconHelp from './Icons/IconHelp.svelte';
     import IconPerson from './Icons/IconPerson.svelte';
     import IconOrg from './Icons/IconOrg.svelte'
+    import IconSearch from './Icons/IconSearch.svelte';
 
     import { displayedPage } from '../lib/services/store';
 
@@ -16,12 +17,12 @@
 <div class=container>
     <div class="logoContainer">
         <Logo />
-        <div style="text-align: center;">
-            <p>Halla</p>
-        </div>
+    </div>
+    <div style="text-align: center; width: 100%;">
+        <p style="padding: 0px;">Hallo</p>
     </div>
     <div class="sideNavItemsContainer">
-        <div>
+        <div class="sideNavFlexHelper">
             <div class="sideNavItem">
                 <button on:click={() => { changePage('personalia')} }>
                     <div class="icon">
@@ -33,7 +34,7 @@
             <div class="sideNavItem">
                 <button on:click={() => { changePage('person')} }>
                     <div class="icon">
-                        <IconPerson />
+                        <IconSearch />
                     </div>
                     <p>Personsøk</p>
                 </button>
@@ -43,7 +44,7 @@
                     <div class="icon">
                         <IconOrg />
                     </div>
-                    <p>Meg</p>
+                    <p>Organisasjon</p>
                 </button>
             </div>
             <div class="sideNavItem">
@@ -51,7 +52,7 @@
                     <div class="icon">
                         <IconHelp />
                     </div>
-                    <p>Meg</p>
+                    <p>Hjælp!</p>
                 </button>
             </div>
         </div>
@@ -69,7 +70,7 @@
     }
     .logoContainer {
         margin: 0px auto;
-        padding: 36px 0px;
+        padding-top: 36px;
         width: calc(var(--baseUnit) * 6);
     }
     .sideNavItemsContainer {
@@ -77,8 +78,14 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        flex-wrap: wrap;
         margin-top: 0px;
+        margin-bottom: 200px;
+        width: 100%;
+        text-align: center;
+    }
+
+    .sideNavFlexHelper {
+        width: 100%;
     }
 
     .sideNavItem {
@@ -105,12 +112,12 @@
 
     button {
         all:unset;
-        width: calc(var(--baseUnit) * 19);
+        width: 100%;
     }
 
     button:active {
         outline: #dcac89 auto;
-        width: calc(var(--baseUnit) * 19);
+        width: 100%;
         height: 100%;
     }
 

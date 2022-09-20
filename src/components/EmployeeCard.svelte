@@ -1,0 +1,34 @@
+<script>
+    export let title = 'Ansattinformasjon'
+    export let backgroundColor = '--springWood'
+    export let employeeData = {
+        name: 'Test',
+        email: 'test@test.no',
+        mainPosition: 'rotgiver',
+        officeLocation: 'Narnia',
+        employeeType: 'Løst ansatt',
+        manager: 'Sjefen'
+    }
+</script>
+
+<div class="panel" style="background-color: var({backgroundColor});">
+    <div id="header"><h3 class="title">{title}</h3></div>
+    <div id="content">
+        <p><strong>Navn:</strong> {employeeData.name}</p>
+        <p><strong>Stilling:</strong> {employeeData.mainPosition}</p>
+        <p><strong>E-post:</strong> {employeeData.email}</p>
+        <p><strong>Lokasjon:</strong> {employeeData.officeLocation}</p>
+        <p><strong>Stillingstype:</strong> {employeeData.employeeType}</p>
+        <p><strong>Nærmeste leder:</strong> {employeeData.manager}</p>
+    </div>
+</div>
+
+<style>
+    .panel {
+        margin-bottom: 32px;
+        padding: 40px 32px;
+    }
+    .title {
+        margin: 0 0 16px 0;
+    }
+</style>
