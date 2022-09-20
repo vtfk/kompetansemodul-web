@@ -1,7 +1,7 @@
 <svelte:options tag="my-dropdown" />
 
 <script>
-  import IconDropdownNav from "../../assets/Icon/icon-dropdown-nav.svelte";
+  import IconDropdownNav from "../Icons/IconKebabMenu.svelte";
   import {clickOutside} from '../../lib/Helpers/clickOutside'
 
   let isMenuVisible = false;
