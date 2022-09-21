@@ -14,7 +14,7 @@
     "vite": "^3.1.0"
   },
   "dependencies": {
-    "@azure/msal-browser": "^2.28.2",
+    "@azure/msal-browser": "2.28.3",
     "axios": "^0.27.2",
     "svelte-icon": "^1.2.4",
     "svelte-icons": "^2.1.0",
