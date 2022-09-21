@@ -1,6 +1,9 @@
 <script>
 	import { getMe, saveCompetence }  from '../lib/services/useApi'
-	import PersonCard from '../components/PersonCard.svelte'
+	import EmployeeCard from '../components/EmployeeCard.svelte'
+	import PosistionsCard from '../components/PositionsCard.svelte'
+	import EducationCard from '../components/EducationCard.svelte'
+	import WorkExperienceCard from '../components/WorkExperienceCard.svelte'
 
 	let competence = {
 		preOfficeLocation: '',
@@ -56,14 +59,24 @@
 	{#await getMee()}
 	<p>...Lastær me</p>
 	{:then res}
-		<PersonCard personData={{
+		<div class="pageIntro">
+			<h2>Hei, {res.fornavn}! Dette er informasjon om deg.</h2>
+			<p><em>Her kan du gjøre ditten og datten</em></p>
+		</div>
+		<EmployeeCard employeeData={{
 			name: `${res.fornavn} ${res.etternavn}`,
 			email: res.kontaktEpostadresse,
 			mainPosition: res.harAktivtArbeidsforhold ? res.aktiveArbeidsforhold.find(forhold => forhold.lonnsprosent > 0 && forhold.hovedstilling).stillingstittel : 'Dagdranker',
 			officeLocation: `${res.azureAd.officeLocation || 'Jørgen jobbe jobbe'}`,
-			navn: res.azureAd.manager.displayName
-		}} />
+			manager: res.azureAd.manager.displayName,
+			employeeType: res.personalressurskategori ? res.personalressurskategori.navn : 'Hva?',
+			employedSince: res.ansettelsesperiode?.start ? res.ansettelsesperiode?.start.split('T')[0] : 'Hakke peiling',
 
+		}} />
+		<PosistionsCard positions={res.tidligereArbeidsforhold} />
+		<EducationCard competence={res.competenceData} />
+		<WorkExperienceCard competence={res.competenceData} />
+		<!--
 		<pre>{JSON.stringify({ ...competence.education, preOfficeLocation: competence.preOfficeLocation, prefferedCounty: competence.prefferedCounty }, null, 2)}</pre>
 		<h3>Overordnet</h3>
 		<p>{res.azureAd.manager.displayName}</p>
@@ -110,11 +123,14 @@
 			Personalressurskategori: {res.personalressurskategori.navn}<br />
 			Ansettelsesperiode: {res.ansettelsesperiode ? `${res.ansettelsesperiode.start || 'What?'} -> ${res.ansettelsesperiode.slutt || 'Ikke angitt'}` : 'Du jobber ikke her 😬'}<br />
 			Ansattnummer: {res.ansattnummer}
-		</p>
+		</p>-->
 	{:catch error}
 		<p style="color: red">{error.message}</p>
 	{/await}
 </div>
 
 <style>
+	.pageIntro {
+		margin-bottom: 36px;
+	}
 </style>

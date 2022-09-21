@@ -1,7 +1,6 @@
 <script>
   import Header from './components/Header.svelte';
   import Login from './lib/Auth/Login.js'
-  // import SideNav from './components/SideNav.svelte'
   import { get } from 'svelte/store'
   import { displayedPage } from './lib/services/store';
 
@@ -10,8 +9,7 @@
   import Orgstruktur from './Pages/Orgstruktur.svelte';
   import Personalia from './Pages/Personalia.svelte';
   import Person from './Pages/Person.svelte';
-  import login from './lib/Auth/Login';
-  import SideNavComponent from './components/SideNavComponent.svelte';
+  import SideNav from './components/SideNav.svelte';
 
   let page = get(displayedPage)
   displayedPage.subscribe(value => {
@@ -25,46 +23,52 @@
   
 </script>
 
-<main>
   {#await Login()}
     Loading...
   {:then response}
-  <div class="header">
-  <Header title='Kompetansemodul' avatar={getInitials(response.name)} name={response.name} />
-  </div>
-  <div class="content">
-      <SideNavComponent />
-      { #if page === 'personalia'}
-          <Personalia />
-      { :else if page === 'person' }
-          <Person />
-      { :else if page === 'orgstruktur' }
-          <Orgstruktur />
-      { :else if page === 'hjelp' }
-          <Hjelp />
-      { :else if page === '' }
-          <h1>Ingenting</h1>
-      {/if }
+    <div class="sidenavWrapper">
+      <SideNav />
+      </div>
+    <div class="contentWrapper">
+      <div class="content">
+        <Header title='Kompetansemodul' initials={getInitials(response.name)} name={response.name} />
+          { #if page === 'personalia'}
+              <Personalia />
+          { :else if page === 'person' }
+              <Person />
+          { :else if page === 'orgstruktur' }
+              <Orgstruktur />
+          { :else if page === 'hjelp' }
+              <Hjelp />
+          { :else if page === '' }
+              <h1>Velkommen skal du være, {response.name.split(' ')[0]}!</h1>
+          {/if }
+        </div>
     </div>
   {:catch error}
     <h1>Stapp oppi: {error}</h1>
   {/await}
-</main>
 
 <style>
-  h1{
-    padding: 0.25rem 0.25rem 0.25rem 0.5rem;
-    text-decoration: none;
-    font-size: 32px;
+  .sidenavWrapper, .contentWrapper {
+    min-height: 100vh;
   }
-
-  .header {
-    margin-left: 11rem;
+  .sidenavWrapper {
+    position: fixed;
+    width: calc(var(--sidenavWidth));
+    background-color: var(--varme-1);
+    top: 0;
+    bottom: 0;
+    left: 0;
   }
-
+  .contentWrapper {
+    margin-left: var(--sidenavWidth);
+    width: calc(100vw - var(--sidenavWidth));
+    padding: 0px 32px;
+  }
   .content {
-    background-color: #F8F6F0;
-    margin-left: 11em;
-    height: 100vh;
+    position: relative;
+    max-width: 1032px;
+    margin: 0px auto;
   } 
 </style>

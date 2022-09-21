@@ -1,86 +1,51 @@
 <script>
-    import IconDropdown from "./IconDropdown/IconDropdown.svelte";
-    import DropdownItem from "./IconDropdown/dropdown-item.svelte";
-    import Avatar from "./Avatar.svelte";
+    import InitialsBadge from "./InitialsBadge.svelte";
+    import Menu from "./Menu.svelte";
 
     export let title;
     export let name;
-    export let avatar;
+    export let initials;
 </script>
 
-<main class="header">
+<div class="header">
     <div class="title">
         <h3>{title}</h3>
     </div>
-    <div class="person-card">
-        <div class="collection">
-            <div class="name">
-                <p>{name}</p>
-            </div>
-            <div >
-                <Avatar avatar={avatar}/>
-            </div>
-            <div class="icon">
-                <IconDropdown let:updateMe>
-                    <DropdownItem value="1" on:clicked={updateMe}>Item 1</DropdownItem>
-                    <DropdownItem value="2" on:clicked={updateMe}>Item 2</DropdownItem>
-                    <DropdownItem value="3" on:clicked={updateMe}>Item 3</DropdownItem>
-                </IconDropdown>
-            </div>
+    <div class="headerRight">
+        <div class="name">
+            <p>{name}</p>
+        </div>
+        <div class="initials">
+            <InitialsBadge initials={initials} />
+        </div>
+        <div class="menu">
+            <Menu />
         </div>
     </div>
-</main>
+</div>
 
 <style>
     .header {
-        margin-left: 16px;
-        width: 75vw;
-        height: 5rem;
+        padding: 16px 0px;
+        width: 100%;
         display: flex;
-        position: relative;
+        justify-content: space-between;
+        margin-bottom: 64px;
     }
 
-    .title {
-        align-self: center;
-        position:absolute;
-        width: 10%;
-        left: 0;
+    .headerRight {
+        display: flex;
     }
-
-    .person-card {
-       align-self: center;
-       position:absolute;
-       width: 30%;
-       right: 0;
-    }
-
-    .collection {
-        display:inline-flex;
-        align-items: center;
-    }
-
     .name {
-        display: flex;
-        align-items: center;
-        padding: 1rem;
+        margin: 0px 4px;
     }
 
-    .icon {
-        display: flex;
-        align-items: center;
-        padding: 1rem;
-        cursor: pointer;
+    .initials {
+        margin: 0px 4px;
     }
 
-    h3 {
-        font-family: Nunito, Lato, 'Trebuchet MS', sans-serif;
-        font-size: 36px;
-        line-height: 28px;
-        min-height: 28px;
-        font-weight: 400;
+    .menu {
+        margin: 0px 16px
     }
 
-    p {
-        font-family: Nunito, Lato, 'Trebuchet MS', sans-serif;
-    }
 </style>
