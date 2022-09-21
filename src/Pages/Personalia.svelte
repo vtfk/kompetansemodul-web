@@ -72,7 +72,7 @@
 			employeeType: res.personalressurskategori ? res.personalressurskategori.navn : 'Hva?'
 		}} />
 		<PosistionsCard positions={res.tidligereArbeidsforhold} />
-		<EducationCard education={res.competenceData.education} />
+		<EducationCard education={res.competenceData?.education} />
 		<!--
 		<pre>{JSON.stringify({ ...competence.education, preOfficeLocation: competence.preOfficeLocation, prefferedCounty: competence.prefferedCounty }, null, 2)}</pre>
 		<h3>Overordnet</h3>

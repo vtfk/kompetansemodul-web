@@ -28,7 +28,7 @@
     console.log(number + 1)
   }
 
-  function handleClickOutside(event) {
+  function handleClickOutside() {
     if(isMenuVisible) {
       isMenuVisible = !isMenuVisible;
     }

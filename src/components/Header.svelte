@@ -1,5 +1,6 @@
 <script>
     import InitialsBadge from "./InitialsBadge.svelte";
+    import Menu from "./Menu.svelte";
 
     export let title;
     export let name;
@@ -18,10 +19,7 @@
             <InitialsBadge initials={initials} />
         </div>
         <div class="menu">
-            ei litta meny
-            <!--
-            <HeaderMenu />
-            -->
+            <Menu />
         </div>
     </div>
 </div>
@@ -33,6 +31,7 @@
         display: flex;
         justify-content: space-between;
         margin-bottom: 64px;
+        margin-top: 10px;
     }
 
     .headerRight {
