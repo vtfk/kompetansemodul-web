@@ -63,16 +63,7 @@
 			<h2>Hei, {res.fornavn}! Dette er informasjon om deg.</h2>
 			<p><em>Her kan du gjøre ditten og datten</em></p>
 		</div>
-		<EmployeeCard employeeData={{
-			name: `${res.fornavn} ${res.etternavn}`,
-			email: res.kontaktEpostadresse,
-			mainPosition: res.harAktivtArbeidsforhold ? res.aktiveArbeidsforhold.find(forhold => forhold.lonnsprosent > 0 && forhold.hovedstilling).stillingstittel : 'Dagdranker',
-			officeLocation: `${res.azureAd.officeLocation || 'Jørgen jobbe jobbe'}`,
-			manager: res.azureAd.manager.displayName,
-			employeeType: res.personalressurskategori ? res.personalressurskategori.navn : 'Hva?',
-			employedSince: res.ansettelsesperiode?.start ? res.ansettelsesperiode?.start.split('T')[0] : 'Hakke peiling',
-
-		}} />
+		<EmployeeCard employeeData={res} />
 		<PosistionsCard positions={res.tidligereArbeidsforhold} />
 		<EducationCard competence={res.competenceData} />
 		<WorkExperienceCard competence={res.competenceData} />

@@ -18,7 +18,7 @@
 
   const getInitials = name => {
     const split = name.split(' ')
-    return `${split[0][0].toUpperCase()}${split[split.length - 1][0].toUpperCase()}`
+    return `${split[0][0].toUpperCase()} ${split[split.length - 1][0].toUpperCase()}`
   }
   
 </script>

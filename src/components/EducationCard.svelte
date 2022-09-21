@@ -137,8 +137,6 @@
     .title {
         margin: 0 0 16px 0;
     }
-    button {
-    }
     button:hover {
         cursor: pointer;
         background-color: var(--catSkillWhite);

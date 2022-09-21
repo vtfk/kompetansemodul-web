@@ -1,20 +1,39 @@
 <script>
-    export let initials;
+    export let initials = '? ?'
+    export let size = 'small'
+    export let color = 'peppermint'
 </script>
 
 <main>
-    <p class="initialsBadge">{initials}</p>
+    <div class="initialsBadge {size}" style="background: var(--{color})">{initials}</div>
 </main>
 
 <style>
     .initialsBadge {
-        width: calc(var(--baseUnit) * 3);
-        height: calc(var(--baseUnit) * 3);
-        line-height: calc(var(--baseUnit) * 3);
-        text-align: center;
         border-radius: 50%;
-        font-size: calc(var(--baseUnit) * 1.5);
         color: #1D1C28;
-        background: #D4E6DC;
+        font-size: 16px;
+        line-height: 1em;
+        font-weight: 700;
+        text-align: center;
+        text-transform: uppercase;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        letter-spacing: -1px;
+        cursor: default;
+        user-select: none;
+    }
+    .initialsBadge.small {
+        width: 40px;
+        height: 40px;
+        font-size: 16px;
+        letter-spacing: -1px;
+    }
+    .initialsBadge.large {
+        width: 104px;
+        height: 104px;
+        font-size: 42px;
+        letter-spacing: -3.5px;
     }
 </style>

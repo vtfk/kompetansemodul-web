@@ -35,6 +35,7 @@
 
     .headerRight {
         display: flex;
+        align-items: center;
     }
     .name {
         margin: 0px 4px;
