@@ -4,7 +4,9 @@
 
     export let title = 'Arbeidserfaring'
     export let backgroundColor = '--springWood'
-    export let workExperience = []
+    export let competence = {
+        workExperience: []
+    }
 
     let editInfo = get(editingPersonalia)
     editingPersonalia.subscribe(value => {
@@ -39,7 +41,7 @@
     </div>
     <div id="content">
         <ul>
-            {#each workExperience as exp}
+            {#each competence.workExperience as exp}
                 <li>
                     {exp.title ?? 'Ukjent tittel'} ({exp.percent ?? '100'}%) - {exp.company ?? 'Ukjent arbeidsgiver'} - {exp.yearSpan ?? 'Ukjent periode'}
                 </li>

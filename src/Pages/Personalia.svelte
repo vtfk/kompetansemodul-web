@@ -75,7 +75,7 @@
 		}} />
 		<PosistionsCard positions={res.tidligereArbeidsforhold} />
 		<EducationCard competence={res.competenceData} />
-		<WorkExperienceCard workExperience={res.competenceData?.workExperience} />
+		<WorkExperienceCard competence={res.competenceData} />
 		<!--
 		<pre>{JSON.stringify({ ...competence.education, preOfficeLocation: competence.preOfficeLocation, prefferedCounty: competence.prefferedCounty }, null, 2)}</pre>
 		<h3>Overordnet</h3>

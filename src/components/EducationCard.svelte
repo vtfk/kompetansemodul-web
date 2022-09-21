@@ -5,9 +5,16 @@
 
     export let title = 'Utdanning'
     export let backgroundColor = '--ecruWhite'
+
+    let isSaving = false
+    let saveError = false
+
     export let competence = {
 		education: []
 	}
+
+    // Create a copy to display correct information (and maybe alert if user has edited) if user aborts edit
+    let tempEducation = [...competence.education]
 
     let editInfo = get(editingPersonalia)
     editingPersonalia.subscribe(value => {
@@ -23,6 +30,7 @@
     }
 
     const cancelEdit = () => {
+        competence.education = [...tempEducation]
         editingPersonalia.set({ isEditing: false, editBlock: 'ingen' })
     }
 
@@ -32,68 +40,88 @@
 		competence.education = [ ...competence.education, newEducation ]
 		newEducation = {}
 	}
-    const removeEducation = brukernavn => {
-		// competence.education = competence.education.filter(education => education.brukernavn !== brukernavn)
+    const removeEducation = edu => {
+		competence.education = competence.education.filter(education => education !== edu)
 	}
 
     const saveCompetencee = async () => {
+        isSaving = true
 		try {
-			await saveCompetence(competence)
-			console.log('Detta gikk så fint så :)')
+            if (JSON.stringify(tempEducation) !== JSON.stringify(competence.education)) {
+                await saveCompetence(competence)
+                console.log('Detta gikk så fint så :)')
+                tempEducation = [...competence.education]
+            } else {
+                console.log('Ingen endring, gidder ikke lagre')
+            }
+            isSaving = false
+            editingPersonalia.set({ isEditing: false, editBlock: 'ingen' })
 		} catch (error) {
 			console.error('Aiaiaiai:', error)
+            isSaving = false
+            saveError = error.message
 		}
 	}
 
 </script>
 
 <div class="panel" style="background-color: var({backgroundColor});">
-    {JSON.stringify(newEducation, null, 2)}
+    <!--{JSON.stringify(newEducation, null, 2)}-->
     <div class="header">
         <h3 class="title">{title}</h3>
         {#if editInfo.isEditing && editInfo.editBlock === title}
-            <div>
-                <button on:click={() => cancelEdit()}>Avbryt redigering</button>
-                <button on:click={() => saveCompetencee()}>Lagre</button>
-            </div>
+            {#if isSaving}
+                ...Lagrer
+            {:else if saveError}
+                {saveError}
+            {:else}
+                <div>
+                    <button on:click={() => cancelEdit()}>Avbryt redigering</button>
+                    <button on:click={() => saveCompetencee()}>Lagre</button>
+                </div>
+            {/if}
         {:else}
             <button on:click={() => openEdit()}>Rediger</button>
         {/if}
     </div>
     <div id="content">
-        <ul>
+        <table class="cardTable">
+            <tr>
+                <th>Utdanningsgrad</th>
+                <th>Fagområde</th>
+                <th>Periode</th>
+                <th>Skole</th>
+            </tr>
             {#each competence.education as edu}
-                <li>
-                    {edu.degree ?? 'Ukjent grad'} - {edu.subject ?? 'Ukjent fag'} - {edu.yearSpan ?? 'Ukjent start-år'} - {edu.school ?? 'Ukjent skole'}
-                </li>
+                <tr>
+                    <td>{edu.degree ?? 'Ukjent grad'}</td>
+                    <td>{edu.subject ?? 'Ukjent fag'}</td>
+                    <td>{edu.yearSpan ?? 'Ukjent start-år'}</td>
+                    <td>{edu.school ?? 'Ukjent skole'}</td>
+                    {#if editInfo.isEditing && editInfo.editBlock === title}
+                        <td><button on:click={() => removeEducation(edu)}>Fjern</button></td>
+                    {/if}
+                </tr>
             {/each}
-        </ul>
-        {#if editInfo.isEditing && editInfo.editBlock === title}
-            <div class="editContainer">
-                <div class="editElement">
-                    <label for="degree">Utdanningsgrad:</label><br />
-                    <select name="degree" id="degree" bind:value={newEducation.degree}>
-                        <option value="Master">Master</option>
-                        <option value="Bachelor">Bachelor</option>
-                        <option value="Årsstudium">Årsstudium</option>
-                        <option value="Fagbrev">Fagbrev</option>
-                    </select>
-                </div>
-                <div class="editElement">
-                    <label for="subject">Fagområde:</label><br />
-                    <input type="text" id="subject" bind:value={newEducation.subject} />
-                </div>
-                <div class="editElement">
-                    <label for="yearSpan">Periode (år):</label><br />
-                    <input type="text" id="yearSpan" bind:value={newEducation.yearSpan} />
-                </div>
-                <div class="editElement">
-                    <label for="school">Skole:</label><br />
-                    <input type="text" id="school" bind:value={newEducation.school} />
-                </div>
-                <button class='addButton' on:click={() => addEducation()}>Legg til ny utdanning</button>
-            </div>
-        {/if}
+            {#if editInfo.isEditing && editInfo.editBlock === title}
+                <tr class="editRow">
+                    <td>
+                        <select name="degree" id="degree" bind:value={newEducation.degree}>
+                            <option value="Master">Master</option>
+                            <option value="Bachelor">Bachelor</option>
+                            <option value="Årsstudium">Årsstudium</option>
+                            <option value="Fagbrev">Fagbrev</option>
+                        </select>
+                    </td>
+                    <td><input type="text" id="subject" size="20" bind:value={newEducation.subject} /></td>
+                    <!--<td><input type="month" id="start" name="start" min="1900-01" value="2024-12"></td>-->
+                    <td><input type="text" id="yearSpan" size="9" bind:value={newEducation.yearSpan} /></td>
+                    <td><input type="text" id="school" size="20" bind:value={newEducation.school} /></td>
+                    <td><button class='addButton' on:click={() => addEducation()}>Legg til</button></td>
+                </tr>
+            {/if}
+
+        </table>
     </div>
 </div>
 
@@ -110,8 +138,6 @@
         margin: 0 0 16px 0;
     }
     button {
-        padding: 4px;
-        margin-bottom: 16px;
     }
     button:hover {
         cursor: pointer;
@@ -120,12 +146,18 @@
     .addButton {
         margin-top: 16px;
     }
-    .editContainer {
-        margin-top: 32px;
-        display: flex;
-        justify-content: space-between;
+    .cardTable {
+        border-collapse: collapse;
     }
-    .editElement {
-        
+    th {
+        text-align: left;
+        padding-right: 32px;
+    }
+    td {
+        border-bottom: 1px dotted black;
+        padding: 8px 32px 0px 0px;
+    }
+    .editRow td {
+        border-bottom: none;
     }
 </style>
