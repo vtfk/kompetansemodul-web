@@ -31,7 +31,6 @@
         display: flex;
         justify-content: space-between;
         margin-bottom: 64px;
-        margin-top: 10px;
     }
 
     .headerRight {

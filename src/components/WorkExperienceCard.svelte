@@ -2,9 +2,9 @@
     import { get } from 'svelte/store'
     import { editingPersonalia } from '../lib/services/store';
 
-    export let title = 'Utdanning'
-    export let backgroundColor = '--ecruWhite'
-    export let education = []
+    export let title = 'Arbeidserfaring'
+    export let backgroundColor = '--springWood'
+    export let workExperience = []
 
     let editInfo = get(editingPersonalia)
     editingPersonalia.subscribe(value => {
@@ -39,15 +39,15 @@
     </div>
     <div id="content">
         <ul>
-            {#each education as edu}
+            {#each workExperience as exp}
                 <li>
-                    {edu.degree ?? 'Ukjent grad'} - {edu.subject ?? 'Ukjent fag'} - {edu.yearSpan ?? 'Ukjent start-år'} - {edu.school ?? 'Ukjent skole'}
+                    {exp.title ?? 'Ukjent tittel'} ({exp.percent ?? '100'}%) - {exp.company ?? 'Ukjent arbeidsgiver'} - {exp.yearSpan ?? 'Ukjent periode'}
                 </li>
             {/each}
         </ul>
         {#if editInfo.isEditing && editInfo.editBlock === title}
             <div>
-                <button class='addButton' on:click={() => {}}>Legg til ny utdanning</button>
+                <button class='addButton' on:click={() => {}}>Legg til ny arbeidserfaring</button>
             </div>
         {/if}
     </div>

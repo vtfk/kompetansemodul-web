@@ -7,7 +7,8 @@
         mainPosition: 'rotgiver',
         officeLocation: 'Narnia',
         employeeType: 'Løst ansatt',
-        manager: 'Sjefen'
+        manager: 'Sjefen',
+        employedSince: '2021'
     }
 </script>
 
@@ -20,6 +21,7 @@
         <p><strong>Lokasjon:</strong> {employeeData.officeLocation}</p>
         <p><strong>Stillingstype:</strong> {employeeData.employeeType}</p>
         <p><strong>Nærmeste leder:</strong> {employeeData.manager}</p>
+        <p><strong>Ansatt siden:</strong> {employeeData.employedSince}</p>
     </div>
 </div>
 

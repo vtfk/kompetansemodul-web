@@ -1,9 +1,9 @@
 <script>
 	import { getMe, saveCompetence }  from '../lib/services/useApi'
-	import PersonCard from '../components/PersonCard.svelte'
 	import EmployeeCard from '../components/EmployeeCard.svelte'
 	import PosistionsCard from '../components/PositionsCard.svelte'
 	import EducationCard from '../components/EducationCard.svelte'
+	import WorkExperienceCard from '../components/WorkExperienceCard.svelte'
 
 	let competence = {
 		preOfficeLocation: '',
@@ -69,10 +69,13 @@
 			mainPosition: res.harAktivtArbeidsforhold ? res.aktiveArbeidsforhold.find(forhold => forhold.lonnsprosent > 0 && forhold.hovedstilling).stillingstittel : 'Dagdranker',
 			officeLocation: `${res.azureAd.officeLocation || 'Jørgen jobbe jobbe'}`,
 			manager: res.azureAd.manager.displayName,
-			employeeType: res.personalressurskategori ? res.personalressurskategori.navn : 'Hva?'
+			employeeType: res.personalressurskategori ? res.personalressurskategori.navn : 'Hva?',
+			employedSince: res.ansettelsesperiode?.start ? res.ansettelsesperiode?.start.split('T')[0] : 'Hakke peiling',
+
 		}} />
 		<PosistionsCard positions={res.tidligereArbeidsforhold} />
 		<EducationCard education={res.competenceData?.education} />
+		<WorkExperienceCard workExperience={res.competenceData?.workExperience} />
 		<!--
 		<pre>{JSON.stringify({ ...competence.education, preOfficeLocation: competence.preOfficeLocation, prefferedCounty: competence.prefferedCounty }, null, 2)}</pre>
 		<h3>Overordnet</h3>
