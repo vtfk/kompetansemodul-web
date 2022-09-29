@@ -232,6 +232,11 @@ h4 {
   height: auto;
 }
 
+input, select, textarea, button {
+  font-family:inherit;
+  font-size: inherit;
+}
+
 /* End typography */
 
 .skip-link {

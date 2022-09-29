@@ -3,9 +3,15 @@
     import { saveCompetence }  from '../lib/services/useApi'
     import { editingPersonalia } from '../lib/services/store'
     import Button from './Button.svelte';
+    import TableButton from './TableButton.svelte';
     import IconHelp from './Icons/IconHelp.svelte';
-    import IconEdit from './Icons/iconEdit.svelte';
+    import IconEdit from './Icons/IconEdit.svelte';
     import IconPerson from './Icons/IconPerson.svelte';
+    import IconDelete from './Icons/IconDelete.svelte';
+    import IconAdd from './Icons/IconAdd.svelte';
+    import IconCheck from './Icons/IconCheck.svelte';
+    import IconClose from './Icons/IconClose.svelte';
+    import IconSpinner from './Icons/iconSpinner.svelte';
 
     export let title = 'Utdanning'
     export let backgroundColor = '--ecruWhite'
@@ -75,12 +81,12 @@
         <h3 class="title">{title}</h3>
         {#if editInfo.isEditing && editInfo.editBlock === title}
             {#if isSaving}
-                ...Lagrer
+                <IconSpinner width="2rem" />
             {:else if saveError}
                 {saveError}
-                <Button buttonText="Avbryt redigering" onClick={() => cancelEdit()}><IconPerson slot="before" /></Button>
+                <Button buttonText="Avbryt redigering" onClick={() => cancelEdit()}><IconClose slot="before" /></Button>
             {:else}
-                <Button buttonText="Avbryt redigering" onClick={() => cancelEdit()}><IconPerson slot="before" /></Button>
+                <Button buttonText="Avbryt redigering" onClick={() => cancelEdit()}><IconClose slot="before" /></Button>
             {/if}
         {:else}
             <Button buttonText="Rediger" onClick={() => openEdit()}><IconEdit slot="before" /></Button>
@@ -101,7 +107,7 @@
                     <td>{edu.yearSpan ?? 'Ukjent start-år'}</td>
                     <td>{edu.school ?? 'Ukjent skole'}</td>
                     {#if editInfo.isEditing && editInfo.editBlock === title}
-                        <td><Button buttonText="Fjern" onClick={() => removeEducation(edu)}><IconHelp slot="before" /></Button></td>
+                        <td class="actionCol"><TableButton size="small" onClick={() => removeEducation(edu)} ><IconDelete /></TableButton></td>
                     {/if}
                 </tr>
             {/each}
@@ -119,21 +125,20 @@
                     <!--<td><input type="month" id="start" name="start" min="1900-01" value="2024-12"></td>-->
                     <td><input type="text" id="yearSpan" size="9" bind:value={newEducation.yearSpan} /></td>
                     <td><input type="text" id="school" size="20" bind:value={newEducation.school} /></td>
-                    <td><Button buttonText="Legg til" onClick={() => addEducation()}><IconHelp slot="before" /></Button></td>
+                    <td class="actionCol"><TableButton size="small" onClick={() => addEducation()}><IconAdd /></TableButton></td>
                 </tr>
                 {#if isSaving}
                     <br />
-                    <Button buttonText="Lagrer..." disabled={true}><IconHelp slot="before" /></Button>
+                    <Button buttonText="Lagrer..." disabled={true}><IconCheck slot="before" /></Button>
                 {:else if saveError}
                     {saveError}
                     <br />
-                    <Button buttonText="Lagre endringer" onClick={() => saveCompetencee()}><IconHelp slot="before" /></Button>
+                    <Button buttonText="Lagre endringer" onClick={() => saveCompetencee()}><IconCheck slot="before" /></Button>
                 {:else}
                     <br />
-                    <Button buttonText="Lagre endringer" onClick={() => saveCompetencee()}><IconHelp slot="before" /></Button>
+                    <Button buttonText="Lagre endringer" onClick={() => saveCompetencee()}><IconCheck slot="before" /></Button>
                 {/if}
             {/if}
-
         </table>
     </div>
 </div>
@@ -150,13 +155,6 @@
     .title {
         margin: 0 0 16px 0;
     }
-    button:hover {
-        cursor: pointer;
-        background-color: var(--catSkillWhite);
-    }
-    .addButton {
-        margin-top: 16px;
-    }
     .cardTable {
         border-collapse: collapse;
     }
@@ -165,10 +163,21 @@
         padding-right: 32px;
     }
     td {
-        border-bottom: 1px dotted black;
+        border-bottom: 1px solid black;
         padding: 8px 32px 0px 0px;
     }
     .editRow td {
         border-bottom: none;
     }
+    td.actionCol {
+        padding: 0px;
+    }
+    .editRow td.actionCol {
+        padding-top: 0.4rem; /* bare for syns skyld... */
+    }
+    /*
+    table tr:nth-child(even) {
+        background: #9DCECE;
+    }
+    */
 </style>

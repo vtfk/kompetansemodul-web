@@ -3,11 +3,12 @@
     export let onClick = () => {console.log('click click')}
     export let disabled = false
     export let size = 'medium'
+    export let title = 'a button'
 
 </script>
 
 
-<button on:click={onClick} class={`${size} ${disabled ? 'disabled' : ''}`}>
+<button on:click={onClick} title={title} class={`${size} ${disabled ? 'disabled' : ''}`}>
     <div class="beforeContainer"><slot name="before"></slot></div>
     <div class="buttonText">{buttonText}</div>
     <span class="afterContainer"><slot name="after"></slot></span>
@@ -25,13 +26,13 @@
     button {
         all:unset;
         display: flex;
-        border: 1px solid black;
+        border: 2px solid black;
         cursor: pointer;
-        border-radius: 8px;
+        border-radius: 0px;
         padding-left: 0.5rem;
         padding-right: 0.5rem;
         height: 2rem;
-        background-color: var(--catSkillWhite);
+        /* background-color: var(--catSkillWhite); */
     }
     button:hover {
         background-color: var(--lightBlue);
@@ -41,6 +42,12 @@
     }
     button.disabled:hover {
         background-color: var(--catSkillWhite);
+    }
+    button.small {
+        height: 1.5rem;
+    }
+    button.large {
+        height: 3rem;
     }
 
 </style>

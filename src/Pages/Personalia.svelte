@@ -4,6 +4,7 @@
 	import PosistionsCard from '../components/PositionsCard.svelte'
 	import EducationCard from '../components/EducationCard.svelte'
 	import WorkExperienceCard from '../components/WorkExperienceCard.svelte'
+    import IconSpinner from '../components/Icons/iconSpinner.svelte';
 
 	let competence = {
 		preOfficeLocation: '',
@@ -57,7 +58,7 @@
 
 <div class="content">
 	{#await getMee()}
-	<p>...Lastær me</p>
+		<IconSpinner width="200px" />
 	{:then res}
 		<div class="pageIntro">
 			<h2>Hei, {res.fornavn}! Dette er informasjon om deg.</h2>
@@ -67,54 +68,6 @@
 		<PosistionsCard positions={res.tidligereArbeidsforhold} />
 		<EducationCard competence={res.competenceData} />
 		<WorkExperienceCard competence={res.competenceData} />
-		<!--
-		<pre>{JSON.stringify({ ...competence.education, preOfficeLocation: competence.preOfficeLocation, prefferedCounty: competence.prefferedCounty }, null, 2)}</pre>
-		<h3>Overordnet</h3>
-		<p>{res.azureAd.manager.displayName}</p>
-		
-		<h3>Aktive arbeidsforhold</h3>
-		<ol>
-			{#each res.aktiveArbeidsforhold as arbeidsforhold}
-				<li>{arbeidsforhold.arbeidssted.navn} ({arbeidsforhold.stillingstittel})</li>
-			{/each}
-		</ol>
-
-		<h3>Tidligere arbeidsforhold</h3>
-		<ol>
-			{#each competence.workExperience as arbeidsforhold}
-				<li>{arbeidsforhold.arbeidssted.navn} ({arbeidsforhold.stillingstittel})</li>
-			{/each}
-		</ol>
-
-		<h1>Utdanning</h1>
-		<div>
-
-			{#each competence.education as education}
-				<input type="text" bind:value={education.brukernavn} /><br />
-				<input type="text" bind:value={education.fornavn} /><br />
-				<input type="text" bind:value={education.etternavn} /><br />
-				<button on:click={() => removeEducation(education.brukernavn)}>Fjern meg</button><br /><br />
-			{/each}
-
-			Ny Utdanning<br />
-			<input type="text" bind:value={newEducation.brukernavn} /><br />
-			<input type="text" bind:value={newEducation.fornavn} /><br />
-			<input type="text" bind:value={newEducation.etternavn} /><br />
-			<button on:click={() => addEducation()}>Legg meg til</button><br /><br />
-
-		<h1>Arbeidsplass</h1>
-			<input type="text" bind:value={competence.preOfficeLocation} /><br />
-			<input type="text" bind:value={competence.prefferedCounty} /><br /><br />
-
-			<button on:click={() => saveCompetencee()}>Lagre det nye meg</button>
-		</div>
-
-		<h3>Diverse</h3>
-		<p>
-			Personalressurskategori: {res.personalressurskategori.navn}<br />
-			Ansettelsesperiode: {res.ansettelsesperiode ? `${res.ansettelsesperiode.start || 'What?'} -> ${res.ansettelsesperiode.slutt || 'Ikke angitt'}` : 'Du jobber ikke her 😬'}<br />
-			Ansattnummer: {res.ansattnummer}
-		</p>-->
 	{:catch error}
 		<p style="color: red">{error.message}</p>
 	{/await}
