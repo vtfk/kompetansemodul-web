@@ -1,10 +1,4 @@
-<script>
-    export let width = "24px"
-    export let height = "24px"
-    export let viewBox = "0 0 512 512"
-</script>
-
-<svg version="1.1" id="Layer_1"  width={width} height={height} xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"viewBox={viewBox} style="enable-background:new {viewBox};" xml:space="preserve">
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"viewBox="0 0 512 512" style="enable-background:new 0 0 512 512;" xml:space="preserve">
 		<path d="M469.333,366.322V234.667h-192v-85.333H320v-128H192v128h42.667v85.333h-192v131.655C17.811,375.109,0,398.8,0,426.667
 			c0,35.349,28.651,64,64,64c35.349,0,64-28.651,64-64c0-27.867-17.811-51.558-42.667-60.345v-88.989h149.333v88.989
 			C209.811,375.109,192,398.8,192,426.667c0,35.349,28.651,64,64,64c35.349,0,64-28.651,64-64c0-27.867-17.811-51.558-42.667-60.345

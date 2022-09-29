@@ -1,8 +1,4 @@
-<script>
-  export let viewBox="0 0 569 648"
-</script>
-
-<svg version="1.1" viewBox={viewBox} xmlns="http://www.w3.org/2000/svg">
+<svg version="1.1" viewBox="0 0 569 648" xmlns="http://www.w3.org/2000/svg">
   <g>
     <path
       d="m0.78 0v359.47c0 9.48 0.47 24.17 1.38 33.42 14.16 142.93 135.13 254.6 282.25 254.6s268.08-111.67 282.24-254.6c0.92-9.25 1.39-23.94 1.39-33.42v-359.47h-567.26z"

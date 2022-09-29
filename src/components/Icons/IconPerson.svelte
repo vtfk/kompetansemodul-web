@@ -1,11 +1,4 @@
-<script>
-    export let width = "24px"
-    export let height = "24px"
-    export let viewBox = "0 0 24 24"
-</script>
-
-
-<svg width={width} height={height} viewBox={viewBox} version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<svg viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
     <g id="layout-" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
         <g id="Extra-large:-Desktops---12-col-Copy-32" transform="translate(-58.000000, -482.000000)" fill="currentColor">
             <g id="Group-7" transform="translate(49.000000, 482.000000)">

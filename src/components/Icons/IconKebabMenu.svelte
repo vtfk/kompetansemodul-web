@@ -1,10 +1,4 @@
-<script>
-    export let width = "4px"
-    export let height = "16px"
-    export let viewBox = "0 0 4 16"
-</script>
-
-<svg width={width} height={height} viewBox={viewBox} version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<svg viewBox="0 0 4 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
     <title>Åpne dropdown meny</title>
     <g id="layout" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
         <g id="Extra-large:-Desktops---12-col-Copy-8" transform="translate(-1271.000000, -51.000000)" fill="#000000">

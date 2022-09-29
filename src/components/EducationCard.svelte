@@ -1,7 +1,11 @@
 <script>
     import { get } from 'svelte/store'
     import { saveCompetence }  from '../lib/services/useApi'
-    import { editingPersonalia } from '../lib/services/store';
+    import { editingPersonalia } from '../lib/services/store'
+    import Button from './Button.svelte';
+    import IconHelp from './Icons/IconHelp.svelte';
+    import IconEdit from './Icons/iconEdit.svelte';
+    import IconPerson from './Icons/IconPerson.svelte';
 
     export let title = 'Utdanning'
     export let backgroundColor = '--ecruWhite'
@@ -74,14 +78,12 @@
                 ...Lagrer
             {:else if saveError}
                 {saveError}
+                <Button buttonText="Avbryt redigering" onClick={() => cancelEdit()}><IconPerson slot="before" /></Button>
             {:else}
-                <div>
-                    <button on:click={() => cancelEdit()}>Avbryt redigering</button>
-                    <button on:click={() => saveCompetencee()}>Lagre</button>
-                </div>
+                <Button buttonText="Avbryt redigering" onClick={() => cancelEdit()}><IconPerson slot="before" /></Button>
             {/if}
         {:else}
-            <button on:click={() => openEdit()}>Rediger</button>
+            <Button buttonText="Rediger" onClick={() => openEdit()}><IconEdit slot="before" /></Button>
         {/if}
     </div>
     <div id="content">
@@ -99,7 +101,7 @@
                     <td>{edu.yearSpan ?? 'Ukjent start-år'}</td>
                     <td>{edu.school ?? 'Ukjent skole'}</td>
                     {#if editInfo.isEditing && editInfo.editBlock === title}
-                        <td><button on:click={() => removeEducation(edu)}>Fjern</button></td>
+                        <td><Button buttonText="Fjern" onClick={() => removeEducation(edu)}><IconHelp slot="before" /></Button></td>
                     {/if}
                 </tr>
             {/each}
@@ -117,8 +119,19 @@
                     <!--<td><input type="month" id="start" name="start" min="1900-01" value="2024-12"></td>-->
                     <td><input type="text" id="yearSpan" size="9" bind:value={newEducation.yearSpan} /></td>
                     <td><input type="text" id="school" size="20" bind:value={newEducation.school} /></td>
-                    <td><button class='addButton' on:click={() => addEducation()}>Legg til</button></td>
+                    <td><Button buttonText="Legg til" onClick={() => addEducation()}><IconHelp slot="before" /></Button></td>
                 </tr>
+                {#if isSaving}
+                    <br />
+                    <Button buttonText="Lagrer..." disabled={true}><IconHelp slot="before" /></Button>
+                {:else if saveError}
+                    {saveError}
+                    <br />
+                    <Button buttonText="Lagre endringer" onClick={() => saveCompetencee()}><IconHelp slot="before" /></Button>
+                {:else}
+                    <br />
+                    <Button buttonText="Lagre endringer" onClick={() => saveCompetencee()}><IconHelp slot="before" /></Button>
+                {/if}
             {/if}
 
         </table>

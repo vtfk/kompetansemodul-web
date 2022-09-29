@@ -71,7 +71,7 @@
     .logoContainer {
         margin: 0px auto;
         padding-top: 36px;
-        width: calc(var(--baseUnit) * 6);
+        width: 3.5rem;
     }
     .sideNavItemsContainer {
         flex: 1;
