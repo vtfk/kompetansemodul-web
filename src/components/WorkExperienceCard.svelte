@@ -18,6 +18,8 @@
 		workExperience: []
 	}
 
+    if (!competence.workExperience) competence.workExperience = []
+
     // State
     let isSaving = false
     let saveError = false

@@ -4,7 +4,7 @@
     import { editingPersonalia } from '../lib/services/store'
     import Button from './Button.svelte';
     import TableButton from './TableButton.svelte';
-    import IconEdit from './Icons/IconEdit.svelte'
+    import IconEdit from './icons/iconEdit.svelte'
     import IconDelete from './Icons/IconDelete.svelte';
     import IconAdd from './Icons/IconAdd.svelte';
     import IconCheck from './Icons/IconCheck.svelte';
@@ -17,6 +17,8 @@
     export let competence = {
 		education: []
 	}
+
+    if (!competence.education) competence.education = []
 
     // State
     let isSaving = false
