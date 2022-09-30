@@ -4,7 +4,7 @@
     import { editingPersonalia } from '../lib/services/store'
     import Button from './Button.svelte';
     import TableButton from './TableButton.svelte';
-    import IconEdit from './icons/iconEdit.svelte'
+    import IconEdit from './Icons/IconEdit.svelte'
     import IconDelete from './Icons/IconDelete.svelte';
     import IconAdd from './Icons/IconAdd.svelte';
     import IconCheck from './Icons/IconCheck.svelte';
