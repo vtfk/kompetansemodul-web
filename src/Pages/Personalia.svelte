@@ -25,7 +25,7 @@
 			<p><em>Her kan du gjøre ditten og datten</em></p>
 		</div>
 		<EmployeeCard employeeData={res} />
-		<PosistionsCard positions={res.tidligereArbeidsforhold} />
+		<PosistionsCard employeeData={res} />
 		<EducationCard competence={res.competenceData} />
 		<WorkExperienceCard competence={res.competenceData} />
 	{:catch error}

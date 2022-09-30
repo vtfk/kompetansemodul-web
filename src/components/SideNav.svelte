@@ -10,6 +10,7 @@
     const changePage = (pageName) => {
         window.history.replaceState(null, null, pageName)
         displayedPage.set(pageName)
+        console.log(window.location.pathname)
         // window.history.pushState(new XMLSerializer().serializeToString(document), "Title", appendix);
     }
 </script>
@@ -31,20 +32,20 @@
                     <p>Meg</p>
                 </button>
             </div>
-            <div class="sideNavItem">
-                <button on:click={() => { changePage('person')} }>
+            <div class="sideNavItem disabled">
+                <button class="disabled" on:click={() => { } }>
                     <div class="icon">
                         <IconSearch />
                     </div>
-                    <p>Personsøk</p>
+                    <p>Personsøk (ikke laget enda)</p>
                 </button>
             </div>
-            <div class="sideNavItem">
-                <button on:click={() => { changePage('organisasjon')} }>
+            <div class="sideNavItem disabled">
+                <button class="disabled" on:click={() => { } }>
                     <div class="icon">
                         <IconOrg />
                     </div>
-                    <p>Organisasjon</p>
+                    <p>Organisasjon (ikke laget enda)</p>
                 </button>
             </div>
             <div class="sideNavItem">

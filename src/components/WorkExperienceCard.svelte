@@ -116,11 +116,11 @@
             {/each}
             {#if editInfo.isEditing && editInfo.editBlock === title}
                 <tr class="editRow">
-                    <td><input type="text" id="employer" size="20" bind:value={newWorkExperience.employer} /></td>
-                    <td><input type="text" id="position" size="20" bind:value={newWorkExperience.position} /></td>
+                    <td><input type="text" id="employer" size="15" bind:value={newWorkExperience.employer} /></td>
+                    <td><input type="text" id="position" size="15" bind:value={newWorkExperience.position} /></td>
                     <td><input type="text" id="field" size="9" bind:value={newWorkExperience.field} /></td>
-                    <td><input type="text" id="yearSpan" size="20" bind:value={newWorkExperience.yearSpan} /></td>
-                    <td><input type="text" id="mainTasks" size="20" bind:value={newWorkExperience.mainTasks} /></td>
+                    <td><input type="text" id="yearSpan" size="15" bind:value={newWorkExperience.yearSpan} /></td>
+                    <td><input type="text" id="mainTasks" size="15" bind:value={newWorkExperience.mainTasks} /></td>
                     <td class="actionCol"><TableButton size="small" onClick={() => addWorkExperience()}><IconAdd /></TableButton></td>
                 </tr>
                 {#if isSaving}
@@ -152,6 +152,7 @@
         margin: 0 0 16px 0;
     }
     .cardTable {
+        max-width: 800px;
         border-collapse: collapse;
     }
     th {
