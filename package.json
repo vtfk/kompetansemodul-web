@@ -11,13 +11,13 @@
   "devDependencies": {
     "@sveltejs/vite-plugin-svelte": "1.0.8",
     "svelte": "3.50.1",
-    "vite": "^3.1.4"
+    "vite": "3.1.4"
   },
   "dependencies": {
     "@azure/msal-browser": "2.28.3",
-    "axios": "^0.27.2",
-    "svelte-icon": "^1.2.4",
-    "svelte-icons": "^2.1.0",
-    "svelte-navigator": "^3.2.2"
+    "axios": "0.27.2",
+    "svelte-icon": "1.2.4",
+    "svelte-icons": "2.1.0",
+    "svelte-navigator": "3.2.2"
   }
 }
