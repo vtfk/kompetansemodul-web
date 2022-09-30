@@ -13,15 +13,16 @@
     import IconClose from './Icons/IconClose.svelte';
     import IconSpinner from './Icons/iconSpinner.svelte';
 
+    // Props
     export let title = 'Utdanning'
     export let backgroundColor = '--ecruWhite'
-
-    let isSaving = false
-    let saveError = false
-
     export let competence = {
 		education: []
 	}
+
+    // State
+    let isSaving = false
+    let saveError = false
 
     // Create a copy to display correct information (and maybe alert if user has edited) if user aborts edit
     let tempEducation = [...competence.education]
@@ -54,6 +55,7 @@
 		competence.education = competence.education.filter(education => education !== edu)
 	}
 
+    // TODO: remove error msg if user tries again
     const saveCompetencee = async () => {
         isSaving = true
 		try {
@@ -76,7 +78,6 @@
 </script>
 
 <div class="panel" style="background-color: var({backgroundColor});">
-    <!--{JSON.stringify(newEducation, null, 2)}-->
     <div class="header">
         <h3 class="title">{title}</h3>
         {#if editInfo.isEditing && editInfo.editBlock === title}
@@ -122,7 +123,6 @@
                         </select>
                     </td>
                     <td><input type="text" id="subject" size="20" bind:value={newEducation.subject} /></td>
-                    <!--<td><input type="month" id="start" name="start" min="1900-01" value="2024-12"></td>-->
                     <td><input type="text" id="yearSpan" size="9" bind:value={newEducation.yearSpan} /></td>
                     <td><input type="text" id="school" size="20" bind:value={newEducation.school} /></td>
                     <td class="actionCol"><TableButton size="small" onClick={() => addEducation()}><IconAdd /></TableButton></td>

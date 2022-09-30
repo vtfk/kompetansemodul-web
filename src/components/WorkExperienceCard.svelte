@@ -1,12 +1,31 @@
 <script>
     import { get } from 'svelte/store'
-    import { editingPersonalia } from '../lib/services/store';
+    import { saveCompetence }  from '../lib/services/useApi'
+    import { editingPersonalia } from '../lib/services/store'
+    import Button from './Button.svelte';
+    import TableButton from './TableButton.svelte';
+    import IconHelp from './Icons/IconHelp.svelte';
+    import IconEdit from './Icons/IconEdit.svelte';
+    import IconPerson from './Icons/IconPerson.svelte';
+    import IconDelete from './Icons/IconDelete.svelte';
+    import IconAdd from './Icons/IconAdd.svelte';
+    import IconCheck from './Icons/IconCheck.svelte';
+    import IconClose from './Icons/IconClose.svelte';
+    import IconSpinner from './Icons/iconSpinner.svelte';
 
+    // Props
     export let title = 'Arbeidserfaring'
     export let backgroundColor = '--springWood'
     export let competence = {
-        workExperience: []
-    }
+		workExperience: []
+	}
+
+    // State
+    let isSaving = false
+    let saveError = false
+
+    // Create a copy to display correct information (and maybe alert if user has edited) if user aborts edit
+    let tempWorkExperience = [...competence.workExperience]
 
     let editInfo = get(editingPersonalia)
     editingPersonalia.subscribe(value => {
@@ -22,8 +41,39 @@
     }
 
     const cancelEdit = () => {
+        competence.workExperience = [...tempWorkExperience]
         editingPersonalia.set({ isEditing: false, editBlock: 'ingen' })
     }
+
+    let newWorkExperience = {}
+    const addWorkExperience = () => {
+		// need to assign as a new object to make it "reactive"
+		competence.workExperience = [ ...competence.workExperience, newWorkExperience ]
+		newWorkExperience = {}
+	}
+    const removeWorkExperience = exp => {
+		competence.workExperience = competence.workExperience.filter(experience => experience !== exp)
+	}
+
+    // TODO: remove error msg if user tries again
+    const saveCompetencee = async () => {
+        isSaving = true
+		try {
+            if (JSON.stringify(tempWorkExperience) !== JSON.stringify(competence.workExperience)) {
+                await saveCompetence(competence)
+                console.log('Detta gikk så fint så :)')
+                tempWorkExperience = [...competence.workExperience]
+            } else {
+                console.log('Ingen endring, gidder ikke lagre')
+            }
+            isSaving = false
+            editingPersonalia.set({ isEditing: false, editBlock: 'ingen' })
+		} catch (error) {
+			console.error('Aiaiaiai:', error)
+            isSaving = false
+            saveError = error.message
+		}
+	}
 
 </script>
 
@@ -31,27 +81,61 @@
     <div class="header">
         <h3 class="title">{title}</h3>
         {#if editInfo.isEditing && editInfo.editBlock === title}
-            <div>
-                <button on:click={() => cancelEdit()}>Avbryt redigering</button>
-                <button>Lagre</button>
-            </div>
+            {#if isSaving}
+                <IconSpinner width="2rem" />
+            {:else if saveError}
+                {saveError}
+                <Button buttonText="Avbryt redigering" onClick={() => cancelEdit()}><IconClose slot="before" /></Button>
+            {:else}
+                <Button buttonText="Avbryt redigering" onClick={() => cancelEdit()}><IconClose slot="before" /></Button>
+            {/if}
         {:else}
-            <button on:click={() => openEdit()}>Rediger</button>
+            <Button buttonText="Rediger" onClick={() => openEdit()}><IconEdit slot="before" /></Button>
         {/if}
     </div>
     <div id="content">
-        <ul>
+        <table class="cardTable">
+            <tr>
+                <th>Arbeidsgiver</th>
+                <th>Stilling</th>
+                <th>Bransje?</th>
+                <th>Periode</th>
+                <th>Oppgaver?</th>
+            </tr>
             {#each competence.workExperience as exp}
-                <li>
-                    {exp.title ?? 'Ukjent tittel'} ({exp.percent ?? '100'}%) - {exp.company ?? 'Ukjent arbeidsgiver'} - {exp.yearSpan ?? 'Ukjent periode'}
-                </li>
+                <tr>
+                    <td>{exp.employer ?? 'Ukjent arbeidsgiver'}</td>
+                    <td>{exp.position ?? 'Ukjent stilling'}</td>
+                    <td>{exp.field ?? 'Ukjent bransje eller no'}</td>
+                    <td>{exp.yearSpan ?? 'Ukjent periode'}</td>
+                    <td>{exp.mainTasks ?? 'Ukjente oppgaver'}</td>
+                    {#if editInfo.isEditing && editInfo.editBlock === title}
+                        <td class="actionCol"><TableButton size="small" onClick={() => removeWorkExperience(exp)} ><IconDelete /></TableButton></td>
+                    {/if}
+                </tr>
             {/each}
-        </ul>
-        {#if editInfo.isEditing && editInfo.editBlock === title}
-            <div>
-                <button class='addButton' on:click={() => {}}>Legg til ny arbeidserfaring</button>
-            </div>
-        {/if}
+            {#if editInfo.isEditing && editInfo.editBlock === title}
+                <tr class="editRow">
+                    <td><input type="text" id="employer" size="20" bind:value={newWorkExperience.employer} /></td>
+                    <td><input type="text" id="position" size="20" bind:value={newWorkExperience.position} /></td>
+                    <td><input type="text" id="field" size="9" bind:value={newWorkExperience.field} /></td>
+                    <td><input type="text" id="yearSpan" size="20" bind:value={newWorkExperience.yearSpan} /></td>
+                    <td><input type="text" id="mainTasks" size="20" bind:value={newWorkExperience.mainTasks} /></td>
+                    <td class="actionCol"><TableButton size="small" onClick={() => addWorkExperience()}><IconAdd /></TableButton></td>
+                </tr>
+                {#if isSaving}
+                    <br />
+                    <Button buttonText="Lagrer..." disabled={true}><IconCheck slot="before" /></Button>
+                {:else if saveError}
+                    {saveError}
+                    <br />
+                    <Button buttonText="Lagre endringer" onClick={() => saveCompetencee()}><IconCheck slot="before" /></Button>
+                {:else}
+                    <br />
+                    <Button buttonText="Lagre endringer" onClick={() => saveCompetencee()}><IconCheck slot="before" /></Button>
+                {/if}
+            {/if}
+        </table>
     </div>
 </div>
 
@@ -67,15 +151,29 @@
     .title {
         margin: 0 0 16px 0;
     }
-    button {
-        padding: 4px;
-        margin-bottom: 16px;
+    .cardTable {
+        border-collapse: collapse;
     }
-    button:hover {
-        cursor: pointer;
-        background-color: var(--catSkillWhite);
+    th {
+        text-align: left;
+        padding-right: 32px;
     }
-    .addButton {
-        margin-top: 16px;
+    td {
+        border-bottom: 1px solid black;
+        padding: 8px 32px 0px 0px;
     }
+    .editRow td {
+        border-bottom: none;
+    }
+    td.actionCol {
+        padding: 0px;
+    }
+    .editRow td.actionCol {
+        padding-top: 0.4rem; /* bare for syns skyld... */
+    }
+    /*
+    table tr:nth-child(even) {
+        background: #9DCECE;
+    }
+    */
 </style>

@@ -36,7 +36,7 @@
               <Personalia />
           { :else if page === 'person' }
               <Person />
-          { :else if page === 'orgstruktur' }
+          { :else if page === 'organisasjon' }
               <Orgstruktur />
           { :else if page === 'hjelp' }
               <Hjelp />
@@ -60,6 +60,8 @@
     top: 0;
     bottom: 0;
     left: 0;
+    overflow-y:auto;
+    overflow-x:hidden;
   }
   .contentWrapper {
     margin-left: var(--sidenavWidth);
