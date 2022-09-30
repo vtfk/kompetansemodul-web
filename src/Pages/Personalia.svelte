@@ -4,7 +4,7 @@
 	import PosistionsCard from '../components/PositionsCard.svelte'
 	import EducationCard from '../components/EducationCard.svelte'
 	import WorkExperienceCard from '../components/WorkExperienceCard.svelte'
-    import IconSpinner from '../components/Icons/iconSpinner.svelte';
+    import IconSpinner from '../components/Icons/IconSpinner.svelte';
 
 
 	const getMee = async () => {

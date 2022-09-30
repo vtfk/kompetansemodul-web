@@ -9,7 +9,7 @@
     import IconAdd from './Icons/IconAdd.svelte';
     import IconCheck from './Icons/IconCheck.svelte';
     import IconClose from './Icons/IconClose.svelte';
-    import IconSpinner from './Icons/iconSpinner.svelte';
+    import IconSpinner from './Icons/IconSpinner.svelte';
 
     // Props
     export let title = 'Utdanning'
