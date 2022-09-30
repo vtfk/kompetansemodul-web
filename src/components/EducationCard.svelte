@@ -4,7 +4,7 @@
     import { editingPersonalia } from '../lib/services/store'
     import Button from './Button.svelte';
     import TableButton from './TableButton.svelte';
-    import Iconedit from './Icons/Iconedit.svelte'
+    import IconEdit from './icons/iconEdit.svelte'
     import IconDelete from './Icons/IconDelete.svelte';
     import IconAdd from './Icons/IconAdd.svelte';
     import IconCheck from './Icons/IconCheck.svelte';
@@ -88,7 +88,7 @@
                 <Button buttonText="Avbryt redigering" onClick={() => cancelEdit()}><IconClose slot="before" /></Button>
             {/if}
         {:else}
-            <Button buttonText="Rediger" onClick={() => openEdit()}><Iconedit slot="before" /></Button>
+            <Button buttonText="Rediger" onClick={() => openEdit()}><IconEdit slot="before" /></Button>
         {/if}
     </div>
     <div id="content">
