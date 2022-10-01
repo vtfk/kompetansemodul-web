@@ -7,11 +7,9 @@
         const dateList = date.slice(0,10).split('-')
         return `${dateList[2]}.${dateList[1]}.${dateList[0]}`
     }
-
+    const mainPosition = employeeData.harAktivtArbeidsforhold ? employeeData.aktiveArbeidsforhold.find(forhold => forhold.lonnsprosent > 0 && forhold.hovedstilling) : undefined
     const displayData = {
-        activePositions: (employeeData.aktiveArbeidsforhold && employeeData.aktiveArbeidsforhold.length > 0) ? employeeData.aktiveArbeidsforhold : [],
-        managerName: employeeData.azureAd?.manager.displayName ?? 'Har ingen leder...',
-        managerEmail: employeeData.azureAd?.manager.userPrincipalName ?? 'Og da har ikke leder noe e-post',
+        otherPositions: mainPosition ? employeeData.aktiveArbeidsforhold.filter(pos => pos.systemId !== mainPosition.systemId) : employeeData.aktiveArbeidsforhold,
         category: employeeData.personalressurskategori?.navn ?? 'Ukjent',
         employedSince: employeeData.ansettelsesperiode?.start ? convertDate(employeeData.ansettelsesperiode.start) : '🤷‍♂️',
         zipCode: employeeData.bostedsadresse?.postnummer ?? 'Ukjent postnummer'
@@ -30,15 +28,6 @@
             </div>
         </div>
         <div class="infoSection">
-            <strong>Nærmeste leder</strong>
-            <div>
-                {displayData.managerName}
-            </div>
-            <div>
-                ✉ {displayData.managerEmail}
-            </div>
-        </div>
-        <div class="infoSection">
             <strong>Postnummer</strong>
             <div>
                 {displayData.zipCode} (Må få henta kommune basert på postnummer)
@@ -51,10 +40,31 @@
             </div>
         </div>
         <div class="infoSection">
-            <strong>Aktive arbeidsforhold</strong>
-            {#each displayData.activePositions as position}
+            {#if mainPosition}
+                <h3>Hovedstilling</h3>
+                <strong>Tittel</strong>
                 <div>
-                    {position.stillingstittel ?? 'Ukjent tittel'} ({Math.ceil(position.lonnsprosent/100)}%) - {position.arbeidssted?.navn ?? 'Ukjent avdeling'} - {position.arbeidssted?.kortnavn ?? 'Ukjent avdeling'} - {position.hovedstilling ? 'Hovedstilling' : 'tilleggsstilling' }
+                    {mainPosition.stillingstittel ?? 'Ukjent tittel'} ({Math.ceil(mainPosition.lonnsprosent/100)}%) - {mainPosition.arbeidssted?.navn ?? 'Ukjent avdeling'}
+                </div>
+                <strong>Organisasjonsplassering</strong>
+                <div class="orgStructure">
+                    {#each mainPosition.arbeidssted.struktur.reverse() as unit, i}
+                        <div style="padding-left: {i}rem">{unit.navn}</div>
+                    {/each}
+                </div>
+            {/if}
+
+            {#each displayData.otherPositions as position, i}
+                <h3>Stilling {i+1}</h3>
+                <strong>Tittel</strong>
+                <div>
+                    {position.stillingstittel ?? 'Ukjent tittel'} ({Math.ceil(position.lonnsprosent/100)}%) - {position.arbeidssted?.navn ?? 'Ukjent avdeling'}
+                </div>
+                <strong>Organisasjonsplassering</strong>
+                <div class="orgStructure">
+                    {#each position.arbeidssted.struktur.reverse() as unit, i}
+                        <div style="padding-left: {i}rem">{unit.navn}</div>
+                    {/each}
                 </div>
             {/each}
         </div>
@@ -71,5 +81,8 @@
     }
     .infoSection {
         margin-bottom: 1rem;
+    }
+    .orgStructure {
+
     }
 </style>

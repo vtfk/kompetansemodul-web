@@ -14,7 +14,7 @@
         mainCompany: mainPosition?.arbeidssted?.kortnavn ?? 'En eller annen sektor',
         officeLocation: employeeData.azureAd?.officeLocation ?? 'Flytende kontorplass',
         email: employeeData.userPrincipalName ?? 'Har visst ikke e-post',
-        manager: employeeData.azureAd?.manager?.displayName ?? 'Sin egen sjef',
+        manager: mainPosition?.leder?.navn ?? 'Sin egen sjef',
         employeeType: employeeData.personalemployeeDatasurskategori?.navn ?? 'En eller annen slags type ansatt',
         employedSince: employeeData.ansettelsesperiode?.start ? employeeData.ansettelsesperiode.start.split('T')[0] : 'Hakke peiling',
     }
