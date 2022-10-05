@@ -48,3 +48,4 @@ export default writable(0)
 ```
 
 # Alt er obligatorisk
+test
