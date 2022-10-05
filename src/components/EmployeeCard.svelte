@@ -1,8 +1,10 @@
 <script>
     import InitialsBadge from "./InitialsBadge.svelte";
 
+    // Props
     export let backgroundColor = '--springWood'
     export let employeeData = {}
+
 
     let mainPosition = employeeData.harAktivtArbeidsforhold ? employeeData.aktiveArbeidsforhold.find(forhold => forhold.hovedstilling) : undefined
     let employeeInfo = {

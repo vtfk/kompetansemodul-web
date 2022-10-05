@@ -10,6 +10,8 @@
     import IconCheck from './Icons/IconCheck.svelte';
     import IconClose from './Icons/IconClose.svelte';
     import IconSpinner from './Icons/IconSpinner.svelte';
+    import IconHelp from './Icons/IconHelp.svelte';
+    import InfoBox from './InfoBox.svelte';
 
     // Props
     export let title = 'Arbeidserfaring'
@@ -23,6 +25,7 @@
     // State
     let isSaving = false
     let saveError = false
+    let showInfoBox = false
 
     // Create a copy to display correct information (and maybe alert if user has edited) if user aborts edit
     let tempWorkExperience = [...competence.workExperience]
@@ -79,7 +82,7 @@
 
 <div class="panel" style="background-color: var({backgroundColor});">
     <div class="header">
-        <h3 class="title">{title}</h3>
+        <div class="headerTitle"><h3 class="title">{title}</h3><div class="headerIcon" title={showInfoBox ? 'Lukk infoboks' : 'Åpne infoboks'} on:click={() => {showInfoBox = !showInfoBox}}><IconHelp /></div></div>
         {#if editInfo.isEditing && editInfo.editBlock === title}
             {#if isSaving}
                 <IconSpinner width="2rem" />
@@ -93,6 +96,7 @@
             <Button buttonText="Rediger" onClick={() => openEdit()}><IconEdit slot="before" /></Button>
         {/if}
     </div>
+    <InfoBox open={showInfoBox} onClose={() => {showInfoBox = !showInfoBox}} />
     <div id="content">
         <table class="cardTable">
             <tr>
@@ -143,13 +147,15 @@
     .header {
         display: flex;
         justify-content: space-between;
+        margin: 0 0 16px 0;
+    }
+    .headerTitle {
+        display: flex;
+        align-items: center;
     }
     .panel {
         margin-bottom: 32px;
         padding: 40px 32px;
-    }
-    .title {
-        margin: 0 0 16px 0;
     }
     .cardTable {
         max-width: 800px;
@@ -171,6 +177,16 @@
     }
     .editRow td.actionCol {
         padding-top: 0.4rem; /* bare for syns skyld... */
+    }
+    .headerIcon {
+        display: flex;
+        align-items: center;
+        width: 1rem;
+        margin-left: 4px;
+    }
+    .headerIcon:hover {
+        cursor: pointer;
+        transform: scale(1.2);
     }
     /*
     table tr:nth-child(even) {

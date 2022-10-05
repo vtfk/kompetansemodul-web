@@ -1,7 +1,13 @@
 <script>
+    import IconHelp from "./Icons/IconHelp.svelte";
+    import InfoBox from "./InfoBox.svelte";
+
     export let title = 'Ansattinformasjon'
     export let backgroundColor = '--catSkillWhite'
     export let employeeData = {}
+
+    // State
+    let showInfoBox = false
 
     const convertDate = (date) => {
         const dateList = date.slice(0,10).split('-')
@@ -19,7 +25,8 @@
 </script>
 
 <div class="panel" style="background-color: var({backgroundColor});">
-    <div id="header"><h3 class="title">{title}</h3></div>
+    <div class="header"><h3 class="title">{title}</h3><div class="headerIcon" title={showInfoBox ? 'Lukk infoboks' : 'Åpne infoboks'} on:click={() => {showInfoBox = !showInfoBox}}><IconHelp /></div></div>
+    <InfoBox open={showInfoBox} onClose={() => {showInfoBox = !showInfoBox}} />
     <div id="content">
         <div class="infoSection">
             <strong>Ansattkategori</strong>
@@ -76,13 +83,22 @@
         margin-bottom: 32px;
         padding: 40px 32px;
     }
-    .title {
-        margin: 0 0 16px 0;
-    }
     .infoSection {
         margin-bottom: 1rem;
     }
-    .orgStructure {
-
+    .header {
+        display: flex;
+        align-items: center;
+        margin-bottom: 1rem;
+    }
+    .headerIcon {
+        display: flex;
+        align-items: center;
+        width: 1rem;
+        margin-left: 4px;
+    }
+    .headerIcon:hover {
+        cursor: pointer;
+        transform: scale(1.2);
     }
 </style>
