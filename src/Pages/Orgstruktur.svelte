@@ -1,6 +1,6 @@
 <script>
 	import { getOrg }  from '../lib/services/useApi'
-	import { displayedPage, searchUpn } from '../lib/services/store'
+	import { displayedPage, searchParameter } from '../lib/services/store'
 
 	let name = 'Organisasjon'
 </script>
@@ -14,7 +14,7 @@
 					<p>{unit.navn}</p>
 					{#each unit.arbeidsforhold as employee}
 						{#if employee.lonnsprosent > 0}
-							<p on:click={() => { searchUpn.set(employee.userPrincipalName); displayedPage.set('person') } } style="color: green">{employee.navn}</p>
+							<p on:click={() => { searchParameter.set(employee.userPrincipalName); displayedPage.set('person') } } style="color: green">{employee.navn}</p>
 						{/if}
 					{/each}
 			{/each}

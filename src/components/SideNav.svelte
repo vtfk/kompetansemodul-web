@@ -20,7 +20,7 @@
         <Logo />
     </div>
     <div style="text-align: center; width: 100%;">
-        <p style="padding: 0px;">Hallo</p>
+        <p style="padding: 0px;">Kompetanse</p>
     </div>
     <div class="sideNavItemsContainer">
         <div class="sideNavFlexHelper">
@@ -33,11 +33,11 @@
                 </button>
             </div>
             <div class="sideNavItem disabled">
-                <button class="disabled" on:click={() => { } }>
+                <button class="disabled" on:click={() => { changePage('person') } }>
                     <div class="icon">
                         <IconSearch />
                     </div>
-                    <p>Personsøk (ikke laget enda)</p>
+                    <p>Finn ansatt</p>
                 </button>
             </div>
             <div class="sideNavItem disabled">

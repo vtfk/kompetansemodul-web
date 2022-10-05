@@ -31,7 +31,7 @@
       </div>
     <div class="contentWrapper">
       <div class="content">
-        <Header title='Kompetansemodul' initials={getInitials(response.name)} name={response.name} />
+        <Header initials={getInitials(response.name)} name={response.name} />
           { #if page === 'personalia'}
               <Personalia />
           { :else if page === 'person' }

@@ -36,7 +36,7 @@ const apiRequest = async (method, endpoint, body) => {
 export const getMe = async () => await apiRequest('get', 'me')
 
 // Get user
-export const getPerson = async (upn) => await apiRequest('get', `GetEmployee/${upn}`)
+export const getPerson = async (parameter) => await apiRequest('get', `GetEmployee/${parameter}`)
 
 // Get org
 export const getOrg = async () => await apiRequest('get', 'GetOrg')

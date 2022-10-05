@@ -1,11 +1,10 @@
 <script>
     import InitialsBadge from "./InitialsBadge.svelte";
 
-    export let title = 'Ansattinformasjon'
     export let backgroundColor = '--springWood'
     export let employeeData = {}
 
-    let mainPosition = employeeData.harAktivtArbeidsforhold ? employeeData.aktiveArbeidsforhold.find(forhold => forhold.lonnsprosent > 0 && forhold.hovedstilling) : undefined
+    let mainPosition = employeeData.harAktivtArbeidsforhold ? employeeData.aktiveArbeidsforhold.find(forhold => forhold.hovedstilling) : undefined
     let employeeInfo = {
         initials: `${employeeData.fornavn.slice(0,1)} ${employeeData.etternavn.slice(0,1)}`,
         name: `${employeeData.fornavn} ${employeeData.etternavn}`,
