@@ -46,7 +46,7 @@
         </div>
     </div>
   {:catch error}
-    <h1>Stapp oppi: {error}</h1>
+    <h1>App app app: {error}</h1>
   {/await}
 
 <style>
