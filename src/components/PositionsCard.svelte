@@ -1,6 +1,7 @@
 <script>
     import IconHelp from "./Icons/IconHelp.svelte";
     import InfoBox from "./InfoBox.svelte";
+    import { getZipCodeInfo } from '../lib/Helpers/zipCode'
 
     export let title = 'Ansattinformasjon'
     export let backgroundColor = '--catSkillWhite'
@@ -35,9 +36,9 @@
             </div>
         </div>
         <div class="infoSection">
-            <strong>Postnummer</strong>
+            <strong>Bostedskommune</strong>
             <div>
-                {displayData.zipCode} (Må få henta kommune basert på postnummer)
+                {getZipCodeInfo(displayData.zipCode)?.Kommunenavn ?? 'Har ikke gyldig postnummer i HR' }
             </div>
         </div>
         <div class="infoSection">
