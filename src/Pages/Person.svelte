@@ -2,8 +2,8 @@
 	import { getPerson }  from '../lib/services/useApi'
 	import { searchParameter }  from '../lib/services/store'
 	import EmployeeCard from '../components/EmployeeCard.svelte'
-    import Button from '../components/Button.svelte';
     import IconSpinner from '../components/Icons/IconSpinner.svelte';
+    import PositionsCard from '../components/PositionsCard.svelte';
 
 	let personParameter
 
@@ -11,15 +11,22 @@
 		personParameter = value
 	})
 
+	const getPersoon = async (personParameter) => {
+		const p = await getPerson(personParameter)
+		console.log(p)
+		return p[0]
+	}
+
 </script>
 
 <div class="content">
 	{#if personParameter}
 		<h2>Ansattinformasjon</h2>
-		{#await getPerson(personParameter)}
+		{#await getPersoon(personParameter)}
 		<p><IconSpinner width="2rem" /></p>
 		{:then res}
 			<EmployeeCard employeeData={res} />
+			<!--<PositionsCard employeeData={res} />-->
 		{:catch error}
 			<p style="color: red">{error.message}</p>
 		{/await}
