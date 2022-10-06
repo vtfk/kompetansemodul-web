@@ -2,6 +2,8 @@
     import IconHelp from "./Icons/IconHelp.svelte";
     import InfoBox from "./InfoBox.svelte";
 
+    import {getCountyValue} from "../lib/Helpers/countyFromZipCode"
+
     export let title = 'Ansattinformasjon'
     export let backgroundColor = '--catSkillWhite'
     export let employeeData = {}
@@ -36,9 +38,15 @@
         </div>
         <div class="infoSection">
             <strong>Postnummer</strong>
-            <div>
-                {displayData.zipCode} (Må få henta kommune basert på postnummer)
-            </div>
+                {#await getCountyValue(displayData.zipCode)}
+                    <p>Venter</p>
+                {:then county}
+                    <div>
+                        {displayData.zipCode} {county}
+                    </div>
+                {:catch error}
+                    <p>{error}</p>
+                {/await}
         </div>
         <div class="infoSection">
             <strong>Ansatt dato</strong>
