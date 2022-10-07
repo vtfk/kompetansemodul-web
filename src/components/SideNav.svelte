@@ -97,7 +97,7 @@
 
     .sideNavItem {
         width: 100%;
-        margin: 16px auto;
+        margin: 0 auto;
         text-align: center;
     }
 
