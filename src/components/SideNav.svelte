@@ -1,4 +1,5 @@
 <script>
+    import { get } from 'svelte/store'
     import Logo from './Icons/Logo.svelte'
     import IconHelp from './Icons/IconHelp.svelte';
     import IconPerson from './Icons/IconPerson.svelte';
@@ -13,6 +14,11 @@
         console.log(window.location.pathname)
         // window.history.pushState(new XMLSerializer().serializeToString(document), "Title", appendix);
     }
+
+    let currentPage = get(displayedPage)
+    displayedPage.subscribe(() => {
+        currentPage = get(displayedPage)
+    })
 </script>
 
 <div class=container>
@@ -25,7 +31,7 @@
     <div class="sideNavItemsContainer">
         <div class="sideNavFlexHelper">
             <div class="sideNavItem">
-                <button on:click={() => { changePage('personalia')} }>
+                <button on:click={() => { changePage('personalia')} } class={currentPage === 'personalia' ? 'siteNavItemActive' : ''}>
                     <div class="icon">
                         <IconPerson />
                     </div>
@@ -33,7 +39,7 @@
                 </button>
             </div>
             <div class="sideNavItem disabled">
-                <button class="disabled" on:click={() => { changePage('person') } }>
+                <button on:click={() => { changePage('person') } } class={`disabled${currentPage === 'person' ? ' siteNavItemActive' : ''}`}>
                     <div class="icon">
                         <IconSearch />
                     </div>
@@ -41,7 +47,7 @@
                 </button>
             </div>
             <div class="sideNavItem disabled">
-                <button class="disabled" on:click={() => { } }>
+                <button on:click={() => { } } class={`disabled${currentPage === 'organisasjon' ? ' siteNavItemActive' : ''}`}>
                     <div class="icon">
                         <IconOrg />
                     </div>
@@ -49,7 +55,7 @@
                 </button>
             </div>
             <div class="sideNavItem">
-                <button on:click={() => { changePage('hjelp')} }>
+                <button on:click={() => { changePage('hjelp')} } class={currentPage === 'hjelp' ? 'siteNavItemActive' : ''}>
                     <div class="icon">
                         <IconHelp />
                     </div>
@@ -95,8 +101,11 @@
         text-align: center;
     }
 
-    .sideNavItem :hover {
+    .siteNavItemActive, .sideNavItem:hover {
         background: #dcac89;
+    }
+
+    .sideNavItem:hover {
         cursor: pointer;
     }
 
