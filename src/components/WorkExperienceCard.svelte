@@ -1,7 +1,10 @@
 <script>
     import { get } from 'svelte/store'
+    import capitalize from 'capitalize'
+    import uniq from 'lodash.uniq'
     import { saveCompetence }  from '../lib/services/useApi'
     import { editingPersonalia } from '../lib/services/store'
+    import SearchBar from './SearchBar.svelte';
     import Button from './Button.svelte';
     import TableButton from './TableButton.svelte';
     import IconEdit from './Icons/IconEdit.svelte';
@@ -12,6 +15,8 @@
     import IconSpinner from './Icons/IconSpinner.svelte';
     import IconHelp from './Icons/IconHelp.svelte';
     import InfoBox from './InfoBox.svelte';
+
+    import occupations from '../assets/yrkerSSB.json'
 
     // Props
     export let title = 'Arbeidserfaring'
@@ -26,6 +31,7 @@
     let isSaving = false
     let saveError = false
     let showInfoBox = false
+    let positionValue = ''
 
     // Create a copy to display correct information (and maybe alert if user has edited) if user aborts edit
     let tempWorkExperience = [...competence.workExperience]
@@ -51,8 +57,10 @@
     let newWorkExperience = {}
     const addWorkExperience = () => {
 		// need to assign as a new object to make it "reactive"
+        newWorkExperience.position = positionValue
 		competence.workExperience = [ ...competence.workExperience, newWorkExperience ]
 		newWorkExperience = {}
+        positionValue = ''
 	}
     const removeWorkExperience = exp => {
 		competence.workExperience = competence.workExperience.filter(experience => experience !== exp)
@@ -77,6 +85,28 @@
             saveError = error.message
 		}
 	}
+
+    const stillingSearch = async query => {
+        const foundOccupations = occupations.filter(occupation => occupation.name.toLowerCase().startsWith(query.toLowerCase())).map(occupation => {
+            if (occupation.name.includes('(')) return occupation.name.slice(0, occupation.name.indexOf('(') - 1)
+            return occupation.name
+        })
+        
+        return uniq(foundOccupations.sort().slice(0, 10))
+    }
+
+    const stillingPreviewMapper = (input) => {
+        return input.map(item => {
+            return {
+                first: capitalize(item),
+                second: '',
+                third: '',
+                onClick: () => {
+                    positionValue = capitalize(item)
+                }
+            }
+        })
+    }
 
 </script>
 
@@ -121,7 +151,20 @@
             {#if editInfo.isEditing && editInfo.editBlock === title}
                 <tr class="editRow">
                     <td><input type="text" id="employer" size="15" bind:value={newWorkExperience.employer} /></td>
-                    <td><input type="text" id="position" size="15" bind:value={newWorkExperience.position} /></td>
+                    <td>
+                        <SearchBar
+                            debounceMs={0}
+                            placeholder=''
+                            showClear={false}
+                            showSearch={false}
+                            showPreview={true}
+                            search={stillingSearch}
+                            previewMapper={stillingPreviewMapper}
+                            showSelected={true}
+                            textInputStyle={true}
+                            bind:searchValue={positionValue}
+                        />
+                    </td>
                     <td><input type="text" id="field" size="9" bind:value={newWorkExperience.field} /></td>
                     <td><input type="text" id="yearSpan" size="15" bind:value={newWorkExperience.yearSpan} /></td>
                     <td><input type="text" id="mainTasks" size="15" bind:value={newWorkExperience.mainTasks} /></td>
@@ -158,8 +201,8 @@
         padding: 40px 32px;
     }
     .cardTable {
-        max-width: 800px;
         border-collapse: collapse;
+        width: 100%;
     }
     th {
         text-align: left;

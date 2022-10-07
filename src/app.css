@@ -252,6 +252,11 @@ input, select, textarea, button {
   background: var(--pixieGreen);
 }
 
+input[type=text] {
+  height: 2rem;
+  padding: 0 1rem;
+}
+
 
 @media (prefers-color-scheme: light) {
   :root {

@@ -70,7 +70,7 @@
   }
   .content {
     position: relative;
-    max-width: 1032px;
+    max-width: 1096px;
     margin: 0px auto;
   } 
 </style>
