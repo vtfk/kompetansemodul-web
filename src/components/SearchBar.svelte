@@ -5,10 +5,15 @@
     import IconSpinner from "./Icons/IconSpinner.svelte";
 
     // props
+    export let searchValue = ''
     export let placeholder = 'Søk her'
     export let rounded = false
+    export let textInputStyle = false
     export let debounceMs = 1000
+    export let showClear = true
     export let showPreview = false
+    export let showSearch = true
+    export let showSelected = false
     export let search = async (query) => {
         return [{fyrste: "hei på deg", andre: "oh oh"}, {fyrste: "tut tut"}, {fyrste: "tut tut"}, {fyrste: "tut tut"}, {fyrste: "tut tut"}, {fyrste: "tut tut"}, {fyrste: "tut tut"}]
     }
@@ -29,7 +34,6 @@
     }
     
     // state
-    let searchValue = ''
     let focusing
     let previewData = []
     let searchError
@@ -78,7 +82,11 @@
                 id: `previewItem-${i}`,
                 onClick: () => {
                     item.onClick()
-                    clearSearch()
+                    if (!showSelected) clearSearch()
+                    else {
+                        searchValue = item.first
+                        clear()
+                    }
                 }
             }
         })
@@ -156,16 +164,22 @@
 </script>
 
 <div class="searchContainer" use:clickOutside on:click_outside={onBlur}>
-    <div class="searchBar{rounded ? ' rounded' : ''}{focusing && showPreview && (previewData.length > 0 || isSearching || searchError) ? ' focused' : ''}">
+    <div class="searchBar{rounded ? ' rounded' : ''}{textInputStyle ? ' textInput' : ''}{focusing && showPreview && (previewData.length > 0 || isSearching || searchError) ? ' focused' : ''}">
         <input bind:value={searchValue} {placeholder} on:keydown={onKeydown} on:focus={onFocus} on:input={() => debounceSearch()} />
-        <div class="iconGroup">
-            <div class='icon' on:click={clearSearch}>
-                <IconClose />
+        {#if showClear || showSearch}
+            <div class="iconGroup">
+                {#if showClear}
+                    <div class='icon' on:click={clearSearch}>
+                        <IconClose />
+                    </div>
+                {/if}
+                {#if showSearch}
+                    <div class='icon' on:click={() => debounceSearch(0)}>
+                        <IconSearch />
+                    </div>
+                {/if}
             </div>
-            <div class='icon' on:click={() => debounceSearch(0)}>
-                <IconSearch />
-            </div>
-        </div>
+        {/if}
     </div>
     {#if focusing && showPreview && (previewData.length > 0 || isSearching || searchError)}
         <div class="previewContainer">
@@ -199,6 +213,11 @@
         height: 3rem;
         padding: 0 1.5rem;
         border: 1px solid rgb(151, 151, 151);
+    }
+
+    .searchBar.textInput {
+        height: 2rem;
+        padding: 0 1rem;
     }
     .searchBar.rounded {
         border-radius: 24px;
