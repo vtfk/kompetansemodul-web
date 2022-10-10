@@ -6,7 +6,7 @@
     export let employeeData = {}
 
 
-    let mainPosition = employeeData.harAktivtArbeidsforhold ? employeeData.aktiveArbeidsforhold.find(forhold => forhold.hovedstilling) : undefined
+    const mainPosition = employeeData.harAktivtArbeidsforhold ? employeeData.aktiveArbeidsforhold.find(forhold => forhold.hovedstilling) : undefined
     let employeeInfo = {
         initials: `${employeeData.fornavn.slice(0,1)} ${employeeData.etternavn.slice(0,1)}`,
         name: `${employeeData.fornavn} ${employeeData.etternavn}`,
