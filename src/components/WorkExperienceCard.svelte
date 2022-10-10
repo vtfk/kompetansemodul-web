@@ -1,10 +1,9 @@
 <script>
     import { get } from 'svelte/store'
     import capitalize from 'capitalize'
-    import uniq from 'lodash.uniq'
+    import uniqBy from 'lodash.uniqby'
     import { saveCompetence }  from '../lib/services/useApi'
     import { editingPersonalia } from '../lib/services/store'
-    import SearchBar from './SearchBar.svelte';
     import Button from './Button.svelte';
     import TableButton from './TableButton.svelte';
     import IconEdit from './Icons/IconEdit.svelte';
@@ -15,6 +14,7 @@
     import IconSpinner from './Icons/IconSpinner.svelte';
     import IconHelp from './Icons/IconHelp.svelte';
     import InfoBox from './InfoBox.svelte';
+    import DataList from './DataList.svelte';
 
     import occupations from '../assets/yrkerSSB.json'
 
@@ -86,26 +86,19 @@
 		}
 	}
 
-    const stillingSearch = async query => {
-        const foundOccupations = occupations.filter(occupation => occupation.name.toLowerCase().startsWith(query.toLowerCase())).map(occupation => {
-            if (occupation.name.includes('(')) return occupation.name.slice(0, occupation.name.indexOf('(') - 1)
-            return occupation.name
-        })
-        
-        return uniq(foundOccupations.sort().slice(0, 10))
-    }
-
-    const stillingPreviewMapper = (input) => {
-        return input.map(item => {
+    const dataList = () => {
+        const list = uniqBy(occupations.map(occupation => {
             return {
-                first: capitalize(item),
-                second: '',
-                third: '',
+                value: capitalize(occupation.name),
+                category: 'Apeloff',
                 onClick: () => {
-                    positionValue = capitalize(item)
+                    positionValue = capitalize(occupation.name)
                 }
             }
-        })
+        }), item => item.value)
+
+        console.log(`Æ har funne ${list.length} yrka`)
+        return list.sort((a, b) => a.value.localeCompare(b.value))
     }
 
 </script>
@@ -151,20 +144,7 @@
             {#if editInfo.isEditing && editInfo.editBlock === title}
                 <tr class="editRow">
                     <td><input type="text" id="employer" size="15" bind:value={newWorkExperience.employer} /></td>
-                    <td>
-                        <SearchBar
-                            debounceMs={0}
-                            placeholder=''
-                            showClear={false}
-                            showSearch={false}
-                            showPreview={true}
-                            search={stillingSearch}
-                            previewMapper={stillingPreviewMapper}
-                            showSelected={true}
-                            textInputStyle={true}
-                            bind:searchValue={positionValue}
-                        />
-                    </td>
+                    <td><DataList dataList={dataList()} filterFunction={(input, obj) => obj.value.toLowerCase().includes(input.toLowerCase()) || obj.category.toLowerCase().includes(input.toLowerCase())} bind:inputValue={positionValue} /></td>
                     <td><input type="text" id="field" size="9" bind:value={newWorkExperience.field} /></td>
                     <td><input type="text" id="yearSpan" size="15" bind:value={newWorkExperience.yearSpan} /></td>
                     <td><input type="text" id="mainTasks" size="15" bind:value={newWorkExperience.mainTasks} /></td>
