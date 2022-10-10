@@ -16,7 +16,7 @@
     import InfoBox from './InfoBox.svelte';
     import DataList from './DataList.svelte';
 
-    import occupations from '../assets/yrkerSSB.json'
+    import occupations from '../assets/yrker.json'
 
     // Props
     export let title = 'Arbeidserfaring'
@@ -32,6 +32,7 @@
     let saveError = false
     let showInfoBox = false
     let positionValue = ''
+    let excludedCategories = []
 
     // Create a copy to display correct information (and maybe alert if user has edited) if user aborts edit
     let tempWorkExperience = [...competence.workExperience]
@@ -86,19 +87,51 @@
 		}
 	}
 
-    const dataList = () => {
+    const occupationCategories = () => {
         const list = uniqBy(occupations.map(occupation => {
             return {
-                value: capitalize(occupation.name),
-                category: 'Apeloff',
+                category: occupation.category
+            }
+        }), item => item.category).map(cat => cat.category)
+        return list
+    }
+
+    const dataList = (excludedCategories) => {
+        let list = occupations.filter(item => !excludedCategories.includes(item.category)).map(occupation => {
+            return {
+                value: occupation.value,
+                category: occupation.category,
                 onClick: () => {
-                    positionValue = capitalize(occupation.name)
+                    positionValue = occupation.value
                 }
             }
-        }), item => item.value)
+        })
+        if (list.length < 1) {
+            list = occupations.map(occupation => {
+                return {
+                    value: occupation.value,
+                    category: occupation.category,
+                    onClick: () => {
+                        positionValue = occupation.value
+                    }
+                }
+            })
+        }
 
         console.log(`Æ har funne ${list.length} yrka`)
-        return list.sort((a, b) => a.value.localeCompare(b.value))
+        return list.sort((a, b) => a.category.localeCompare(b.category))
+    }
+
+    const categoryFilter = (cat) => {
+        if (excludedCategories.includes(cat)) {
+            console.log('Jeg fjernan')
+            excludedCategories = excludedCategories.filter(category => category !== cat)
+        }
+        else {
+            console.log('jeg la den til')
+            excludedCategories.push(cat)
+            excludedCategories = excludedCategories
+        }
     }
 
 </script>
@@ -144,11 +177,23 @@
             {#if editInfo.isEditing && editInfo.editBlock === title}
                 <tr class="editRow">
                     <td><input type="text" id="employer" size="15" bind:value={newWorkExperience.employer} /></td>
-                    <td><DataList dataList={dataList()} filterFunction={(input, obj) => obj.value.toLowerCase().includes(input.toLowerCase()) || obj.category.toLowerCase().includes(input.toLowerCase())} bind:inputValue={positionValue} /></td>
+                    <td>
+                        <DataList dataList={dataList(excludedCategories)} filterFunction={(input, obj) => obj.value.toLowerCase().includes(input.toLowerCase()) || obj.category.toLowerCase().startsWith(input.toLowerCase())} bind:inputValue={positionValue} />
+                    </td>
                     <td><input type="text" id="field" size="9" bind:value={newWorkExperience.field} /></td>
                     <td><input type="text" id="yearSpan" size="15" bind:value={newWorkExperience.yearSpan} /></td>
                     <td><input type="text" id="mainTasks" size="15" bind:value={newWorkExperience.mainTasks} /></td>
                     <td class="actionCol"><TableButton size="small" onClick={() => addWorkExperience()}><IconAdd /></TableButton></td>
+                </tr>
+                <tr>
+                    <!--
+                    <td>
+                        {#each occupationCategories() as cat, i}
+                            <input type="checkbox" id="cat{i}" name="cat{i}" value={cat} on:change={() => categoryFilter(cat)} checked>
+                            <label for="cat{i}">{cat}</label><br>
+                        {/each}
+                    </td>
+                    -->
                 </tr>
                 {#if isSaving}
                     <br />
@@ -182,7 +227,6 @@
     }
     .cardTable {
         border-collapse: collapse;
-        width: 100%;
     }
     th {
         text-align: left;

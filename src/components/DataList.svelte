@@ -3,7 +3,7 @@
 
     // props
     export let placeholder = 'Skriv inn noe a!'
-    export let displayNumberOfItems = 50
+    export let displayNumberOfItems = 80
     export let rounded = false
     export let inputValue = ''
     export let dataList = [
@@ -19,125 +19,6 @@
             category: "Food",
             onClick: () => {
                 console.log('Æ klikka på Karbis!')
-            }
-        },
-        {
-            value: "Øl",
-            category: "Drikke",
-            onClick: () => {
-                console.log('Æ klikka på Øl!')
-            }
-        },
-        {
-            value: "Øl",
-            category: "Drikke",
-            onClick: () => {
-                console.log('Æ klikka på Øl!')
-            }
-        },
-        {
-            value: "Øl",
-            category: "Drikke",
-            onClick: () => {
-                console.log('Æ klikka på Øl!')
-            }
-        },
-        {
-            value: "Øl",
-            category: "Drikke",
-            onClick: () => {
-                console.log('Æ klikka på Øl!')
-            }
-        },
-        {
-            value: "Øl",
-            category: "Drikke",
-            onClick: () => {
-                console.log('Æ klikka på Øl!')
-            }
-        },
-        {
-            value: "Øl",
-            category: "Drikke",
-            onClick: () => {
-                console.log('Æ klikka på Øl!')
-            }
-        },
-        {
-            value: "Øl",
-            category: "Drikke",
-            onClick: () => {
-                console.log('Æ klikka på Øl!')
-            }
-        },
-        {
-            value: "Øl",
-            category: "Drikke",
-            onClick: () => {
-                console.log('Æ klikka på Øl!')
-            }
-        },
-        {
-            value: "Øl",
-            category: "Drikke",
-            onClick: () => {
-                console.log('Æ klikka på Øl!')
-            }
-        },
-        {
-            value: "Øl",
-            category: "Drikke",
-            onClick: () => {
-                console.log('Æ klikka på Øl!')
-            }
-        },
-        {
-            value: "Øl",
-            category: "Drikke",
-            onClick: () => {
-                console.log('Æ klikka på Øl!')
-            }
-        },
-        {
-            value: "Øl",
-            category: "Drikke",
-            onClick: () => {
-                console.log('Æ klikka på Øl!')
-            }
-        },
-        {
-            value: "Øl",
-            category: "Drikke",
-            onClick: () => {
-                console.log('Æ klikka på Øl!')
-            }
-        },
-        {
-            value: "Øl",
-            category: "Drikke",
-            onClick: () => {
-                console.log('Æ klikka på Øl!')
-            }
-        },
-        {
-            value: "Øl",
-            category: "Drikke",
-            onClick: () => {
-                console.log('Æ klikka på Øl!')
-            }
-        },
-        {
-            value: "Øl",
-            category: "Drikke",
-            onClick: () => {
-                console.log('Æ klikka på Øl!')
-            }
-        },
-        {
-            value: "Øl",
-            category: "Drikke",
-            onClick: () => {
-                console.log('Æ klikka på Øl!')
             }
         },
         {
@@ -220,7 +101,19 @@
 
     // Actual filter function
     const filterPreviewData = () => {
-        previewData = mapDataList(dataList.filter(ele => filterFunction(inputValue, ele))).slice(0, displayNumberOfItems)
+        const dataToPreview = [...dataList]
+        if (inputValue && inputValue.length > 0 && !dataList.find(item => item.value.toLowerCase() === inputValue.toLowerCase())) {
+            dataToPreview.unshift(
+                {
+                    value: inputValue,
+                    category: "Annet",
+                    onClick: () => {
+                        console.log('vil ikke velge, vil bare skrive')
+                    }
+                }
+            )
+        }
+        previewData = mapDataList(dataToPreview.filter(ele => filterFunction(inputValue, ele))).slice(0, displayNumberOfItems)
         console.log(`Æ har ${previewData.length} elementa`)
     }
 
@@ -254,8 +147,15 @@
                 clear()
                 e.preventDefault()
             } else if (e.key !== 'Enter') {
+                console.log("Hallla")
                 showPreview = true
             }
+        }
+    }
+
+    const focusOnClick = () => {
+        if (focusing) {
+            showPreview = true
         }
     }
 
@@ -263,7 +163,7 @@
 
 <div class="searchContainer" use:clickOutside on:click_outside={onBlur}>
     <div class="searchBar{rounded ? ' rounded' : ''}{focusing && showPreview && (previewData.length > 0) ? ' focused' : ''}">
-        <input bind:value={inputValue} {placeholder} on:keydown={onKeydown} on:focus={onFocus} on:input={filterPreviewData} />
+        <input bind:value={inputValue} {placeholder} on:keydown={onKeydown} on:focus={onFocus} on:click={focusOnClick} on:input={filterPreviewData} />
     </div>
     {#if focusing && showPreview && (previewData.length > 0)}
         <div class="previewContainer">
