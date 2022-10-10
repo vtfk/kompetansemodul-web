@@ -5,7 +5,9 @@
 	import EducationCard from '../components/EducationCard.svelte'
 	import WorkExperienceCard from '../components/WorkExperienceCard.svelte'
     import IconSpinner from '../components/Icons/IconSpinner.svelte';
+	import Card from '../components/Card.svelte'
 
+	// State
 
 	const getMee = async () => {
 		const me = await getMe()
@@ -28,6 +30,7 @@
 		<PosistionsCard employeeData={res} />
 		<EducationCard competence={res.competenceData} />
 		<WorkExperienceCard competence={res.competenceData} />
+		<Card editable={true} infoBox={{content: "halla"}} />
 	{:catch error}
 		<p style="color: red">{error.message}</p>
 	{/await}
