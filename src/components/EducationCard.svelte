@@ -15,6 +15,7 @@
     import InfoBox from './InfoBox.svelte';
     import fagbrev from '../assets/fagbrevUDIR.json';
     import DataList from './DataList.svelte'
+    import fagomraader from '../assets/fagomraader.json'
 
     // Props
     export let title = 'Utdanning'
@@ -170,7 +171,7 @@
                         </datalist>
                     </td> -->
                 {:else}
-                    <td><input list="fagområder" name="fagområde" id="fagområde" bind:value={newEducation.subject}/></td>
+                <DataList dataList={fagomraader} filterFunction={(input, obj) => obj.value.toLowerCase().includes(input.toLowerCase()) || obj.category.toLowerCase().startsWith(input.toLowerCase()) } bind:inputValue={newEducation.subject}/>
                 {/if}
                 <td>
                     <input type="month" id="fromMonth" max={getToday().yearMonth} bind:value={newEducation.fromMonth}/>
