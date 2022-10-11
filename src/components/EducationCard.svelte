@@ -175,8 +175,8 @@
                         <td><input list="fagområder" name="fagområde" id="fagområde" bind:value={newEducation.subject}/></td>
                     {/if}
                     <td>
-                        <input type="month" id="fromMonth" max={getToday().year} bind:value={newEducation.fromYear}/>
-                        <input type="month" id="toMonth" min={newEducation.fromMonth} max={getToday().year} bind:value={newEducation.toYear} />
+                        <input type="month" id="fromMonth" max={getToday().yearMonth} bind:value={newEducation.fromMonth}/>
+                        <input type="month" id="toMonth" min={newEducation.fromMonth} max={getToday().yearMonth} bind:value={newEducation.toMonth} />
                     </td>
                     <td><input type="text" id="school" size="20" bind:value={newEducation.school} /></td>
                     <td class="actionCol"><TableButton size="small" onClick={() => addEducation()}><IconAdd /></TableButton></td>
