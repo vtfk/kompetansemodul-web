@@ -15,6 +15,7 @@
     import InfoBox from './InfoBox.svelte';
     import fagbrev from '../assets/fagbrevUDIR.json';
     import DataList from './DataList.svelte'
+    import fagomraader from '../assets/fagomraader.json'
 
     // Props
     export let title = 'Utdanning'
@@ -127,9 +128,6 @@
                 <IconSpinner width="2rem" />
             {:else if saveError}
                 {saveError}
-                <Button buttonText="Avbryt redigering" onClick={() => cancelEdit()}><IconClose slot="before" /></Button>
-            {:else}
-                <Button buttonText="Avbryt redigering" onClick={() => cancelEdit()}><IconClose slot="before" /></Button>
             {/if}
         {:else}
             <Button buttonText="Rediger" onClick={() => openEdit()}><IconEdit slot="before" /></Button>
@@ -160,38 +158,19 @@
                     {/if}
                 </tr>
             {/each}
-            {#if editInfo.isEditing && editInfo.editBlock === title}
-                <tr class="editRow">
-                    <td>
-                        <select name="degree" id="degree" bind:value={newEducation.degree}>
-                            <option value="Master">Master</option>
-                            <option value="Bachelor">Bachelor</option>
-                            <option value="Årsstudium">Årsstudium</option>
-                            <option value="Fagbrev">Fagbrev</option>
-                            <option value="Doktorgrad">Doktorgrad</option>
-                        </select>
-                    </td>
-                    {#if newEducation.degree === "Fagbrev"}
-                        <td>
-                            <DataList dataList={utdanningsprogramvariantNavn()} filterFunction={(input, obj) => obj.value.toLowerCase().includes(input.toLowerCase()) || obj.category.toLowerCase().startsWith(input.toLowerCase()) } bind:inputValue={newEducation.subject}/>
-                            <!-- <input list="fagområder" name="fagområde" id="fagområde" bind:value={newEducation.fagområde}/>
-                            <datalist id="fagområder">
-                                {#each utdanningsprogramvariantNavn().map(variantName => variantName) as variationName}
-                                    <option>{variationName}</option>
-                                {/each}
-                            </datalist> -->
-                        </td>
-                        <!-- <td>
-                            <input list="fagbrevlist" name="fagbrev" id="fagbrev"/>
-                            <datalist id="fagbrevlist">
-                                {#each getFagbrev(newEducation.fagområde).map(fagbrev => fagbrev) as fagbrevName}
-                                    <option>{fagbrevName}</option>
-                                {/each}
-                            </datalist>
-                        </td> -->
-                    {:else}
-                        <td><input list="fagområder" name="fagområde" id="fagområde" bind:value={newEducation.subject}/></td>
-                    {/if}
+        </table>
+        {#if editInfo.isEditing && editInfo.editBlock === title}
+            <tr class="editRow">
+                <td>
+                    <select name="degree" id="degree" bind:value={newEducation.degree}>
+                        <option value="Master">Master</option>
+                        <option value="Bachelor">Bachelor</option>
+                        <option value="Årsstudium">Årsstudium</option>
+                        <option value="Fagbrev">Fagbrev</option>
+                        <option value="Doktorgrad">Doktorgrad</option>
+                    </select>
+                </td>
+                {#if newEducation.degree === "Fagbrev"}
                     <td>
                         <select bind:value={newEducation.fromMonth}>
                             {#each months as month }
@@ -224,22 +203,50 @@
                         <!-- <input type="month" id="fromMonth" max={getToday().yearMonth} bind:value={newEducation.fromMonth}/>
                         <input type="month" id="toMonth" min={newEducation.fromMonth} max={getToday().yearMonth} bind:value={newEducation.toMonth} /> -->
                     </td>
-                    <td><input type="text" id="school" size="20" bind:value={newEducation.school} /></td>
-                    <td class="actionCol"><TableButton size="small" onClick={() => addEducation()}><IconAdd /></TableButton></td>
-                </tr>
-                {#if isSaving}
-                    <br />
-                    <Button buttonText="Lagrer..." disabled={true}><IconCheck slot="before" /></Button>
-                {:else if saveError}
-                    {saveError}
-                    <br />
-                    <Button buttonText="Lagre endringer" onClick={() => saveCompetencee()}><IconCheck slot="before" /></Button>
+                    <!-- <td>
+                        <input list="fagbrevlist" name="fagbrev" id="fagbrev"/>
+                        <datalist id="fagbrevlist">
+                            {#each getFagbrev(newEducation.fagområde).map(fagbrev => fagbrev) as fagbrevName}
+                                <option>{fagbrevName}</option>
+                            {/each}
+                        </datalist>
+                    </td> -->
                 {:else}
-                    <br />
-                    <Button buttonText="Lagre endringer" onClick={() => saveCompetencee()}><IconCheck slot="before" /></Button>
+                <DataList dataList={fagomraader} filterFunction={(input, obj) => obj.value.toLowerCase().includes(input.toLowerCase()) || obj.category.toLowerCase().startsWith(input.toLowerCase()) } bind:inputValue={newEducation.subject}/>
                 {/if}
-            {/if}
-        </table>
+                <td>
+                    <input type="month" id="fromMonth" max={getToday().yearMonth} bind:value={newEducation.fromMonth}/>
+                    <input type="month" id="toMonth" min={newEducation.fromMonth} max={getToday().yearMonth} bind:value={newEducation.toMonth} />
+                </td>
+                <td><input type="text" id="school" size="20" bind:value={newEducation.school} /></td>
+            </tr>
+            <div class="bottomLine">
+                {#if isSaving}
+                    <Button buttonText="Lagrer..." disabled={true}><IconAdd slot="before" /></Button>
+                    <div class="saveCancel">
+                        <Button buttonText="Lagrer..." disabled={true}><IconCheck slot="before" /></Button>
+                        &nbsp&nbsp
+                        <Button buttonText="Lagrer..." disabled={true}><IconClose slot="before" /></Button>
+                    </div>
+                {:else if saveError}
+                    <Button buttonText="Legg til" onClick={() => addEducation()}><IconAdd slot="before" /></Button>
+                    {saveError}
+                    <div class="saveCancel">
+                        <Button buttonText="Lagre" onClick={() => saveCompetencee()}><IconCheck slot="before" /></Button>
+                        &nbsp
+                        &nbsp
+                        <Button buttonText="Avbryt" onClick={() => cancelEdit()}><IconClose slot="before" /></Button>
+                    </div>
+                {:else}
+                    <Button buttonText="Legg til" onClick={() => addEducation()}><IconAdd slot="before" /></Button>
+                    <div class="saveCancel">
+                        <Button buttonText="Lagre" onClick={() => saveCompetencee()}><IconCheck slot="before" /></Button>
+                        &nbsp&nbsp
+                        <Button buttonText="Avbryt" onClick={() => cancelEdit()}><IconClose slot="before" /></Button>
+                    </div>
+                {/if}
+            </div>
+        {/if}
     </div>
 </div>
 
@@ -259,6 +266,7 @@
     }
     .cardTable {
         border-collapse: collapse;
+        width: 100%;
     }
     th {
         text-align: left;
@@ -286,6 +294,15 @@
     .headerIcon:hover {
         cursor: pointer;
         transform: scale(1.2);
+    }
+    .bottomLine {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        padding-top: 2rem;
+    }
+    .saveCancel {
+        display: flex;
     }
     /*
     table tr:nth-child(even) {
