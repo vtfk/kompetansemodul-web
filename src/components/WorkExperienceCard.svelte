@@ -1,10 +1,9 @@
 <script>
     import { get } from 'svelte/store'
     import capitalize from 'capitalize'
-    import uniq from 'lodash.uniq'
+    import uniqBy from 'lodash.uniqby'
     import { saveCompetence }  from '../lib/services/useApi'
     import { editingPersonalia } from '../lib/services/store'
-    import SearchBar from './SearchBar.svelte';
     import Button from './Button.svelte';
     import TableButton from './TableButton.svelte';
     import IconEdit from './Icons/IconEdit.svelte';
@@ -15,8 +14,9 @@
     import IconSpinner from './Icons/IconSpinner.svelte';
     import IconHelp from './Icons/IconHelp.svelte';
     import InfoBox from './InfoBox.svelte';
+    import DataList from './DataList.svelte';
 
-    import occupations from '../assets/yrkerSSB.json'
+    import occupations from '../assets/yrker.json'
 
     // Props
     export let title = 'Arbeidserfaring'
@@ -32,6 +32,7 @@
     let saveError = false
     let showInfoBox = false
     let positionValue = ''
+    let excludedCategories = []
 
     // Create a copy to display correct information (and maybe alert if user has edited) if user aborts edit
     let tempWorkExperience = [...competence.workExperience]
@@ -86,26 +87,51 @@
 		}
 	}
 
-    const stillingSearch = async query => {
-        const foundOccupations = occupations.filter(occupation => occupation.name.toLowerCase().startsWith(query.toLowerCase())).map(occupation => {
-            if (occupation.name.includes('(')) return occupation.name.slice(0, occupation.name.indexOf('(') - 1)
-            return occupation.name
-        })
-        
-        return uniq(foundOccupations.sort().slice(0, 10))
+    const occupationCategories = () => {
+        const list = uniqBy(occupations.map(occupation => {
+            return {
+                category: occupation.category
+            }
+        }), item => item.category).map(cat => cat.category)
+        return list
     }
 
-    const stillingPreviewMapper = (input) => {
-        return input.map(item => {
+    const dataList = (excludedCategories) => {
+        let list = occupations.filter(item => !excludedCategories.includes(item.category)).map(occupation => {
             return {
-                first: capitalize(item),
-                second: '',
-                third: '',
+                value: occupation.value,
+                category: occupation.category,
                 onClick: () => {
-                    positionValue = capitalize(item)
+                    positionValue = occupation.value
                 }
             }
         })
+        if (list.length < 1) {
+            list = occupations.map(occupation => {
+                return {
+                    value: occupation.value,
+                    category: occupation.category,
+                    onClick: () => {
+                        positionValue = occupation.value
+                    }
+                }
+            })
+        }
+
+        console.log(`Æ har funne ${list.length} yrka`)
+        return list.sort((a, b) => a.category.localeCompare(b.category))
+    }
+
+    const categoryFilter = (cat) => {
+        if (excludedCategories.includes(cat)) {
+            console.log('Jeg fjernan')
+            excludedCategories = excludedCategories.filter(category => category !== cat)
+        }
+        else {
+            console.log('jeg la den til')
+            excludedCategories.push(cat)
+            excludedCategories = excludedCategories
+        }
     }
 
 </script>
@@ -152,23 +178,22 @@
                 <tr class="editRow">
                     <td><input type="text" id="employer" size="15" bind:value={newWorkExperience.employer} /></td>
                     <td>
-                        <SearchBar
-                            debounceMs={0}
-                            placeholder=''
-                            showClear={false}
-                            showSearch={false}
-                            showPreview={true}
-                            search={stillingSearch}
-                            previewMapper={stillingPreviewMapper}
-                            showSelected={true}
-                            textInputStyle={true}
-                            bind:searchValue={positionValue}
-                        />
+                        <DataList dataList={dataList(excludedCategories)} filterFunction={(input, obj) => obj.value.toLowerCase().includes(input.toLowerCase()) || obj.category.toLowerCase().startsWith(input.toLowerCase())} bind:inputValue={positionValue} />
                     </td>
                     <td><input type="text" id="field" size="9" bind:value={newWorkExperience.field} /></td>
                     <td><input type="text" id="yearSpan" size="15" bind:value={newWorkExperience.yearSpan} /></td>
                     <td><input type="text" id="mainTasks" size="15" bind:value={newWorkExperience.mainTasks} /></td>
                     <td class="actionCol"><TableButton size="small" onClick={() => addWorkExperience()}><IconAdd /></TableButton></td>
+                </tr>
+                <tr>
+                    <!--
+                    <td>
+                        {#each occupationCategories() as cat, i}
+                            <input type="checkbox" id="cat{i}" name="cat{i}" value={cat} on:change={() => categoryFilter(cat)} checked>
+                            <label for="cat{i}">{cat}</label><br>
+                        {/each}
+                    </td>
+                    -->
                 </tr>
                 {#if isSaving}
                     <br />
@@ -202,7 +227,6 @@
     }
     .cardTable {
         border-collapse: collapse;
-        width: 100%;
     }
     th {
         text-align: left;
