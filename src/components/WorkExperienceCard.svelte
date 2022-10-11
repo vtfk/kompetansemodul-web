@@ -1,6 +1,5 @@
 <script>
     import { get } from 'svelte/store'
-    import capitalize from 'capitalize'
     import uniqBy from 'lodash.uniqby'
     import { saveCompetence }  from '../lib/services/useApi'
     import { editingPersonalia } from '../lib/services/store'
@@ -55,17 +54,35 @@
         editingPersonalia.set({ isEditing: false, editBlock: 'ingen' })
     }
 
-    let newWorkExperience = {}
+    let newWorkExperience = {
+        fromMonth: "2021-01",
+        toMonth: "2022-01"
+    }
     const addWorkExperience = () => {
 		// need to assign as a new object to make it "reactive"
         newWorkExperience.position = positionValue
 		competence.workExperience = [ ...competence.workExperience, newWorkExperience ]
-		newWorkExperience = {}
+		newWorkExperience = {
+            fromMonth: "2021-01",
+            toMonth: "2022-01"
+        }
         positionValue = ''
 	}
     const removeWorkExperience = exp => {
 		competence.workExperience = competence.workExperience.filter(experience => experience !== exp)
 	}
+
+    const getToday = () => {
+        const date = new Date() 
+        const year = date.getFullYear().toString()
+        const month = date.getMonth() < 9 ? `0${(date.getMonth() + 1).toString()}` : (date.getMonth() + 1).toString() 
+        
+        return {
+            yearMonth: `${year}-${month}`,
+            year,
+            month
+        }
+    }
 
     // TODO: remove error msg if user tries again
     const saveCompetencee = async () => {
@@ -158,7 +175,7 @@
             <tr>
                 <th>Arbeidsgiver</th>
                 <th>Stilling</th>
-                <th>Bransje?</th>
+                <th>Sektor</th>
                 <th>Periode</th>
                 <th>Oppgaver?</th>
             </tr>
@@ -166,8 +183,8 @@
                 <tr>
                     <td>{exp.employer ?? 'Ukjent arbeidsgiver'}</td>
                     <td>{exp.position ?? 'Ukjent stilling'}</td>
-                    <td>{exp.field ?? 'Ukjent bransje eller no'}</td>
-                    <td>{exp.yearSpan ?? 'Ukjent periode'}</td>
+                    <td>{exp.field ?? 'Ukjent sektor'}</td>
+                    <td>{(exp.fromMonth && exp.toMonth) ? `${exp.fromMonth} - ${exp.toMonth}` : 'Ukjent periode'}</td>
                     <td>{exp.mainTasks ?? 'Ukjente oppgaver'}</td>
                     {#if editInfo.isEditing && editInfo.editBlock === title}
                         <td class="actionCol"><TableButton size="small" onClick={() => removeWorkExperience(exp)} ><IconDelete /></TableButton></td>
@@ -180,8 +197,16 @@
                     <td>
                         <DataList dataList={dataList(excludedCategories)} filterFunction={(input, obj) => obj.value.toLowerCase().includes(input.toLowerCase()) || obj.category.toLowerCase().startsWith(input.toLowerCase())} bind:inputValue={positionValue} />
                     </td>
-                    <td><input type="text" id="field" size="9" bind:value={newWorkExperience.field} /></td>
-                    <td><input type="text" id="yearSpan" size="15" bind:value={newWorkExperience.yearSpan} /></td>
+                    <td>
+                        <select name="field" id="field" bind:value={newWorkExperience.field}>
+                            <option value="Offentlig">Offentlig</option>
+                            <option value="Privat">Privat</option>
+                        </select>
+                    </td>
+                    <td>
+                        <input type="month" id="fromMonth" max={getToday().yearMonth} bind:value={newWorkExperience.fromMonth}/>
+                        <input type="month" id="toMonth" min={newWorkExperience.fromMonth} max={getToday().yearMonth} bind:value={newWorkExperience.toMonth} />
+                    </td>
                     <td><input type="text" id="mainTasks" size="15" bind:value={newWorkExperience.mainTasks} /></td>
                     <td class="actionCol"><TableButton size="small" onClick={() => addWorkExperience()}><IconAdd /></TableButton></td>
                 </tr>

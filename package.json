@@ -17,6 +17,7 @@
     "@azure/msal-browser": "2.28.3",
     "axios": "0.27.2",
     "capitalize": "2.0.4",
+    "lodash.uniq": "^4.5.0",
     "lodash.uniqby": "4.7.0",
     "svelte-icon": "1.2.4",
     "svelte-icons": "2.1.0",

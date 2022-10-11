@@ -2,6 +2,7 @@
     import { get } from 'svelte/store'
     import { saveCompetence }  from '../lib/services/useApi'
     import { editingPersonalia } from '../lib/services/store'
+    import { getFagbrev } from '../lib/Helpers/fagbrev';
     import Button from './Button.svelte';
     import TableButton from './TableButton.svelte';
     import IconEdit from './Icons/IconEdit.svelte'
@@ -12,6 +13,9 @@
     import IconSpinner from './Icons/IconSpinner.svelte';
     import IconHelp from './Icons/IconHelp.svelte';
     import InfoBox from './InfoBox.svelte';
+    import fagbrev from '../assets/fagbrevUDIR.json';
+    import uniq from 'lodash.uniq';
+    import DataList from './DataList.svelte'
 
     // Props
     export let title = 'Utdanning'
@@ -78,6 +82,15 @@
 		}
 	}
 
+    const utdanningsprogramvariantNavn = () => {
+        return fagbrev.map(variantName => {
+            return {
+                value: variantName.ProgramomraadeNavn.split(' - ')[1],
+                category: variantName.UtdanningsprogramvariantNavn
+            }
+        }) 
+    }                   
+
 </script>
 
 <div class="panel" style="background-color: var({backgroundColor});">
@@ -101,7 +114,11 @@
         <table class="cardTable">
             <tr>
                 <th>Utdanningsgrad</th>
-                <th>Fagområde</th>
+                {#if newEducation.degree === "Fagbrev"}
+                    <th>Fagbrev</th>
+                {:else}
+                    <th>Fagområde</th>
+                {/if}
                 <th>Periode</th>
                 <th>Skole</th>
             </tr>
@@ -109,6 +126,7 @@
                 <tr>
                     <td>{edu.degree ?? 'Ukjent grad'}</td>
                     <td>{edu.subject ?? 'Ukjent fag'}</td>
+                    <!-- <td>{edu.fagbrev ?? 'Ukjent fagbrev'}</td> -->
                     <td>{edu.yearSpan ?? 'Ukjent start-år'}</td>
                     <td>{edu.school ?? 'Ukjent skole'}</td>
                     {#if editInfo.isEditing && editInfo.editBlock === title}
@@ -124,9 +142,30 @@
                             <option value="Bachelor">Bachelor</option>
                             <option value="Årsstudium">Årsstudium</option>
                             <option value="Fagbrev">Fagbrev</option>
+                            <option value="Doktorgrad">Doktorgrad</option>
                         </select>
                     </td>
-                    <td><input type="text" id="subject" size="20" bind:value={newEducation.subject} /></td>
+                    {#if newEducation.degree === "Fagbrev"}
+                        <td>
+                            <DataList dataList={utdanningsprogramvariantNavn()} filterFunction={(input, obj) => obj.value.toLowerCase().includes(input.toLowerCase()) || obj.category.toLowerCase().startsWith(input.toLowerCase()) } bind:inputValue={newEducation.subject}/>
+                            <!-- <input list="fagområder" name="fagområde" id="fagområde" bind:value={newEducation.fagområde}/>
+                            <datalist id="fagområder">
+                                {#each utdanningsprogramvariantNavn().map(variantName => variantName) as variationName}
+                                    <option>{variationName}</option>
+                                {/each}
+                            </datalist> -->
+                        </td>
+                        <!-- <td>
+                            <input list="fagbrevlist" name="fagbrev" id="fagbrev"/>
+                            <datalist id="fagbrevlist">
+                                {#each getFagbrev(newEducation.fagområde).map(fagbrev => fagbrev) as fagbrevName}
+                                    <option>{fagbrevName}</option>
+                                {/each}
+                            </datalist>
+                        </td> -->
+                    {:else}
+                        <td><input list="fagområder" name="fagområde" id="fagområde" bind:value={newEducation.subject}/></td>
+                    {/if}
                     <td><input type="text" id="yearSpan" size="9" bind:value={newEducation.yearSpan} /></td>
                     <td><input type="text" id="school" size="20" bind:value={newEducation.school} /></td>
                     <td class="actionCol"><TableButton size="small" onClick={() => addEducation()}><IconAdd /></TableButton></td>

@@ -31,9 +31,6 @@
         {
             value: "Øl",
             category: "Drikke",
-            onClick: () => {
-                console.log('Æ klikka på Øl!')
-            }
         }
     ]
     export let filterFunction = (filterInput, objectToCheck) => {
@@ -93,7 +90,7 @@
                 onClick: () => {
                     inputValue = item.value
                     showPreview = false
-                    item.onClick()
+                    if(item.onClick) item.onClick()
                 }
             }
         })
