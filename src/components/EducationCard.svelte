@@ -52,15 +52,19 @@
     }
 
     let newEducation = {
-        fromMonth: "2021-01",
-        toMonth: "2022-01"
+        fromYear: "2021",
+        toYear: "2022",
+        fromMonth: "01",
+        toMonth: "02"
     }
     const addEducation = () => {
 		// need to assign as a new object to make it "reactive"
 		competence.education = [ ...competence.education, newEducation ]
 		newEducation = {
-            fromMonth: "2021-01",
-            toMonth: "2022-01"
+            fromYear: "2021",
+            toYear: "2022",
+            fromMonth: "01",
+            toMonth: "02"
         }
 	}
     const removeEducation = edu => {
@@ -97,7 +101,21 @@
                 category: variantName.UtdanningsprogramvariantNavn
             }
         }) 
-    }                   
+    } 
+    
+    const months = ['Januar', 'Februar', 'Mars', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Desember']
+
+    const years = () => {
+        const currentYear = new Date().getFullYear()
+        let yearArr = []
+        for (let i = 1950; i <= currentYear; i++){
+            yearArr.push(i)
+        } 
+        return {
+            years: yearArr.reverse(),
+            currentYear
+        }
+    }
 
 </script>
 
@@ -135,7 +153,7 @@
                     <td>{edu.degree ?? 'Ukjent grad'}</td>
                     <td>{edu.subject ?? 'Ukjent fag'}</td>
                     <!-- <td>{edu.fagbrev ?? 'Ukjent fagbrev'}</td> -->
-                    <td>{(edu.fromMonth && edu.toMonth) ? `${edu.fromMonth} - ${edu.toMonth}` : 'Ukjent periode'}</td>
+                    <td>{(edu.fromMonth && edu.toMonth) ? `${edu.fromMonth} ${edu.fromYear} - ${edu.toMonth} ${edu.toYear}` : 'Ukjent periode'}</td>
                     <td>{edu.school ?? 'Ukjent skole'}</td>
                     {#if editInfo.isEditing && editInfo.editBlock === title}
                         <td class="actionCol"><TableButton size="small" onClick={() => removeEducation(edu)} ><IconDelete /></TableButton></td>
@@ -175,8 +193,36 @@
                         <td><input list="fagområder" name="fagområde" id="fagområde" bind:value={newEducation.subject}/></td>
                     {/if}
                     <td>
-                        <input type="month" id="fromMonth" max={getToday().yearMonth} bind:value={newEducation.fromMonth}/>
-                        <input type="month" id="toMonth" min={newEducation.fromMonth} max={getToday().yearMonth} bind:value={newEducation.toMonth} />
+                        <select bind:value={newEducation.fromMonth}>
+                            {#each months as month }
+                            <option>
+                                {month}
+                            </option>
+                            {/each}
+                        </select>
+                        <select bind:value={newEducation.fromYear}>
+                            {#each years().years as year }
+                            <option>
+                                {year}
+                            </option>
+                            {/each}
+                        </select>
+                        <select bind:value={newEducation.toMonth}>
+                            {#each months as month }
+                            <option>
+                                {month}
+                            </option>
+                            {/each}
+                        </select>
+                        <select bind:value={newEducation.toYear}>
+                            {#each years().years as year }
+                            <option>
+                                {year}
+                            </option>
+                            {/each}
+                        </select>
+                        <!-- <input type="month" id="fromMonth" max={getToday().yearMonth} bind:value={newEducation.fromMonth}/>
+                        <input type="month" id="toMonth" min={newEducation.fromMonth} max={getToday().yearMonth} bind:value={newEducation.toMonth} /> -->
                     </td>
                     <td><input type="text" id="school" size="20" bind:value={newEducation.school} /></td>
                     <td class="actionCol"><TableButton size="small" onClick={() => addEducation()}><IconAdd /></TableButton></td>
