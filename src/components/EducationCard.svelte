@@ -53,15 +53,19 @@
     }
 
     let newEducation = {
-        fromMonth: "2021-01",
-        toMonth: "2022-01"
+        fromYear: "2021",
+        toYear: "2022",
+        fromMonth: "01",
+        toMonth: "02"
     }
     const addEducation = () => {
 		// need to assign as a new object to make it "reactive"
 		competence.education = [ ...competence.education, newEducation ]
 		newEducation = {
-            fromMonth: "2021-01",
-            toMonth: "2022-01"
+            fromYear: "2021",
+            toYear: "2022",
+            fromMonth: "01",
+            toMonth: "02"
         }
 	}
     const removeEducation = edu => {
@@ -98,7 +102,21 @@
                 category: variantName.UtdanningsprogramvariantNavn
             }
         }) 
-    }                   
+    } 
+    
+    const months = ['Januar', 'Februar', 'Mars', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Desember']
+
+    const years = () => {
+        const currentYear = new Date().getFullYear()
+        let yearArr = []
+        for (let i = 1950; i <= currentYear; i++){
+            yearArr.push(i)
+        } 
+        return {
+            years: yearArr.reverse(),
+            currentYear
+        }
+    }
 
 </script>
 
@@ -133,7 +151,7 @@
                     <td>{edu.degree ?? 'Ukjent grad'}</td>
                     <td>{edu.subject ?? 'Ukjent fag'}</td>
                     <!-- <td>{edu.fagbrev ?? 'Ukjent fagbrev'}</td> -->
-                    <td>{(edu.fromMonth && edu.toMonth) ? `${edu.fromMonth} - ${edu.toMonth}` : 'Ukjent periode'}</td>
+                    <td>{(edu.fromMonth && edu.toMonth) ? `${edu.fromMonth} ${edu.fromYear} - ${edu.toMonth} ${edu.toYear}` : 'Ukjent periode'}</td>
                     <td>{edu.school ?? 'Ukjent skole'}</td>
                     {#if editInfo.isEditing && editInfo.editBlock === title}
                         <td class="actionCol"><TableButton size="small" onClick={() => removeEducation(edu)} ><IconDelete /></TableButton></td>
@@ -154,13 +172,36 @@
                 </td>
                 {#if newEducation.degree === "Fagbrev"}
                     <td>
-                        <DataList dataList={utdanningsprogramvariantNavn()} filterFunction={(input, obj) => obj.value.toLowerCase().includes(input.toLowerCase()) || obj.category.toLowerCase().startsWith(input.toLowerCase()) } bind:inputValue={newEducation.subject}/>
-                        <!-- <input list="fagområder" name="fagområde" id="fagområde" bind:value={newEducation.fagområde}/>
-                        <datalist id="fagområder">
-                            {#each utdanningsprogramvariantNavn().map(variantName => variantName) as variationName}
-                                <option>{variationName}</option>
+                        <select bind:value={newEducation.fromMonth}>
+                            {#each months as month }
+                            <option>
+                                {month}
+                            </option>
                             {/each}
-                        </datalist> -->
+                        </select>
+                        <select bind:value={newEducation.fromYear}>
+                            {#each years().years as year }
+                            <option>
+                                {year}
+                            </option>
+                            {/each}
+                        </select>
+                        <select bind:value={newEducation.toMonth}>
+                            {#each months as month }
+                            <option>
+                                {month}
+                            </option>
+                            {/each}
+                        </select>
+                        <select bind:value={newEducation.toYear}>
+                            {#each years().years as year }
+                            <option>
+                                {year}
+                            </option>
+                            {/each}
+                        </select>
+                        <!-- <input type="month" id="fromMonth" max={getToday().yearMonth} bind:value={newEducation.fromMonth}/>
+                        <input type="month" id="toMonth" min={newEducation.fromMonth} max={getToday().yearMonth} bind:value={newEducation.toMonth} /> -->
                     </td>
                     <!-- <td>
                         <input list="fagbrevlist" name="fagbrev" id="fagbrev"/>
