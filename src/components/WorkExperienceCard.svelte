@@ -1,6 +1,5 @@
 <script>
     import { get } from 'svelte/store'
-    import uniqBy from 'lodash.uniqby'
     import { saveCompetence }  from '../lib/services/useApi'
     import { editingPersonalia } from '../lib/services/store'
     import Button from './Button.svelte';
@@ -14,6 +13,7 @@
     import IconHelp from './Icons/IconHelp.svelte';
     import InfoBox from './InfoBox.svelte';
     import DataList from './DataList.svelte';
+    import { getToday } from '../lib/Helpers/getToday';
 
     import occupations from '../assets/yrker.json'
 
@@ -72,20 +72,12 @@
 		competence.workExperience = competence.workExperience.filter(experience => experience !== exp)
 	}
 
-    const getToday = () => {
-        const date = new Date() 
-        const year = date.getFullYear().toString()
-        const month = date.getMonth() < 9 ? `0${(date.getMonth() + 1).toString()}` : (date.getMonth() + 1).toString() 
-        
-        return {
-            yearMonth: `${year}-${month}`,
-            year,
-            month
-        }
-    }
-
     // TODO: remove error msg if user tries again
     const saveCompetencee = async () => {
+        // newWorkExperience.employer !== undefined ||  newWorkExperience.position !== undefined || newWorkExperience.field !== undefined || newWorkExperience.mainTasks !== undefined 
+        if(newWorkExperience.employer !== undefined &&  newWorkExperience.position !== undefined && newWorkExperience.mainTasks !== undefined ) {
+            addWorkExperience()
+        }
         isSaving = true
 		try {
             if (JSON.stringify(tempWorkExperience) !== JSON.stringify(competence.workExperience)) {
@@ -104,14 +96,14 @@
 		}
 	}
 
-    const occupationCategories = () => {
-        const list = uniqBy(occupations.map(occupation => {
-            return {
-                category: occupation.category
-            }
-        }), item => item.category).map(cat => cat.category)
-        return list
-    }
+    // const occupationCategories = () => {
+    //     const list = uniqBy(occupations.map(occupation => {
+    //         return {
+    //             category: occupation.category
+    //         }
+    //     }), item => item.category).map(cat => cat.category)
+    //     return list
+    // }
 
     const dataList = (excludedCategories) => {
         let list = occupations.filter(item => !excludedCategories.includes(item.category)).map(occupation => {
@@ -139,17 +131,17 @@
         return list.sort((a, b) => a.category.localeCompare(b.category))
     }
 
-    const categoryFilter = (cat) => {
-        if (excludedCategories.includes(cat)) {
-            console.log('Jeg fjernan')
-            excludedCategories = excludedCategories.filter(category => category !== cat)
-        }
-        else {
-            console.log('jeg la den til')
-            excludedCategories.push(cat)
-            excludedCategories = excludedCategories
-        }
-    }
+    // const categoryFilter = (cat) => {
+    //     if (excludedCategories.includes(cat)) {
+    //         console.log('Jeg fjernan')
+    //         excludedCategories = excludedCategories.filter(category => category !== cat)
+    //     }
+    //     else {
+    //         console.log('jeg la den til')
+    //         excludedCategories.push(cat)
+    //         excludedCategories = excludedCategories
+    //     }
+    // }
 
 </script>
 

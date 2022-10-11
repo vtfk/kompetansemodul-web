@@ -2,7 +2,7 @@
     import { get } from 'svelte/store'
     import { saveCompetence }  from '../lib/services/useApi'
     import { editingPersonalia } from '../lib/services/store'
-    import { getFagbrev } from '../lib/Helpers/fagbrev';
+    import { getToday } from '../lib/Helpers/getToday';
     import Button from './Button.svelte';
     import TableButton from './TableButton.svelte';
     import IconEdit from './Icons/IconEdit.svelte'
@@ -14,7 +14,6 @@
     import IconHelp from './Icons/IconHelp.svelte';
     import InfoBox from './InfoBox.svelte';
     import fagbrev from '../assets/fagbrevUDIR.json';
-    import uniq from 'lodash.uniq';
     import DataList from './DataList.svelte'
 
     // Props
@@ -52,11 +51,17 @@
         editingPersonalia.set({ isEditing: false, editBlock: 'ingen' })
     }
 
-    let newEducation = {}
+    let newEducation = {
+        fromMonth: "2021-01",
+        toMonth: "2022-01"
+    }
     const addEducation = () => {
 		// need to assign as a new object to make it "reactive"
 		competence.education = [ ...competence.education, newEducation ]
-		newEducation = {}
+		newEducation = {
+            fromMonth: "2021-01",
+            toMonth: "2022-01"
+        }
 	}
     const removeEducation = edu => {
 		competence.education = competence.education.filter(education => education !== edu)
@@ -64,6 +69,9 @@
 
     // TODO: remove error msg if user tries again
     const saveCompetencee = async () => {
+        if(newEducation.subject !== undefined && newEducation.school !== undefined) {
+            addEducation()
+        }
         isSaving = true
 		try {
             if (JSON.stringify(tempEducation) !== JSON.stringify(competence.education)) {
@@ -127,7 +135,7 @@
                     <td>{edu.degree ?? 'Ukjent grad'}</td>
                     <td>{edu.subject ?? 'Ukjent fag'}</td>
                     <!-- <td>{edu.fagbrev ?? 'Ukjent fagbrev'}</td> -->
-                    <td>{edu.yearSpan ?? 'Ukjent start-år'}</td>
+                    <td>{(edu.fromMonth && edu.toMonth) ? `${edu.fromMonth} - ${edu.toMonth}` : 'Ukjent periode'}</td>
                     <td>{edu.school ?? 'Ukjent skole'}</td>
                     {#if editInfo.isEditing && editInfo.editBlock === title}
                         <td class="actionCol"><TableButton size="small" onClick={() => removeEducation(edu)} ><IconDelete /></TableButton></td>
@@ -166,7 +174,10 @@
                     {:else}
                         <td><input list="fagområder" name="fagområde" id="fagområde" bind:value={newEducation.subject}/></td>
                     {/if}
-                    <td><input type="text" id="yearSpan" size="9" bind:value={newEducation.yearSpan} /></td>
+                    <td>
+                        <input type="month" id="fromMonth" max={getToday().year} bind:value={newEducation.fromYear}/>
+                        <input type="month" id="toMonth" min={newEducation.fromMonth} max={getToday().year} bind:value={newEducation.toYear} />
+                    </td>
                     <td><input type="text" id="school" size="20" bind:value={newEducation.school} /></td>
                     <td class="actionCol"><TableButton size="small" onClick={() => addEducation()}><IconAdd /></TableButton></td>
                 </tr>
