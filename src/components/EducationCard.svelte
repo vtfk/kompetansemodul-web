@@ -171,38 +171,15 @@
                     </select>
                 </td>
                 {#if newEducation.degree === "Fagbrev"}
-                    <td>
-                        <select bind:value={newEducation.fromMonth}>
-                            {#each months as month }
-                            <option>
-                                {month}
-                            </option>
+                <td>
+                    <DataList dataList={utdanningsprogramvariantNavn()} filterFunction={(input, obj) => obj.value.toLowerCase().includes(input.toLowerCase()) || obj.category.toLowerCase().startsWith(input.toLowerCase()) } bind:inputValue={newEducation.subject}/>
+                        <!-- <input list="fagområder" name="fagområde" id="fagområde" bind:value={newEducation.fagområde}/>
+                        <datalist id="fagområder">
+                            {#each utdanningsprogramvariantNavn().map(variantName => variantName) as variationName}
+                                <option>{variationName}</option>
                             {/each}
-                        </select>
-                        <select bind:value={newEducation.fromYear}>
-                            {#each years().years as year }
-                            <option>
-                                {year}
-                            </option>
-                            {/each}
-                        </select>
-                        <select bind:value={newEducation.toMonth}>
-                            {#each months as month }
-                            <option>
-                                {month}
-                            </option>
-                            {/each}
-                        </select>
-                        <select bind:value={newEducation.toYear}>
-                            {#each years().years as year }
-                            <option>
-                                {year}
-                            </option>
-                            {/each}
-                        </select>
-                        <!-- <input type="month" id="fromMonth" max={getToday().yearMonth} bind:value={newEducation.fromMonth}/>
-                        <input type="month" id="toMonth" min={newEducation.fromMonth} max={getToday().yearMonth} bind:value={newEducation.toMonth} /> -->
-                    </td>
+                        </datalist> -->
+                </td>
                     <!-- <td>
                         <input list="fagbrevlist" name="fagbrev" id="fagbrev"/>
                         <datalist id="fagbrevlist">
@@ -211,12 +188,40 @@
                             {/each}
                         </datalist>
                     </td> -->
-                {:else}
-                <DataList dataList={fagomraader} filterFunction={(input, obj) => obj.value.toLowerCase().includes(input.toLowerCase()) || obj.category.toLowerCase().startsWith(input.toLowerCase()) } bind:inputValue={newEducation.subject}/>
-                {/if}
+            {:else}
+            <DataList dataList={fagomraader} filterFunction={(input, obj) => obj.value.toLowerCase().includes(input.toLowerCase()) || obj.category.toLowerCase().startsWith(input.toLowerCase()) } bind:inputValue={newEducation.subject}/>
+            {/if}
                 <td>
-                    <input type="month" id="fromMonth" max={getToday().yearMonth} bind:value={newEducation.fromMonth}/>
-                    <input type="month" id="toMonth" min={newEducation.fromMonth} max={getToday().yearMonth} bind:value={newEducation.toMonth} />
+                    <select bind:value={newEducation.fromMonth}>
+                        {#each months as month }
+                        <option>
+                            {month}
+                        </option>
+                        {/each}
+                    </select>
+                    <select bind:value={newEducation.fromYear}>
+                        {#each years().years as year }
+                        <option>
+                            {year}
+                        </option>
+                        {/each}
+                    </select>
+                    <select bind:value={newEducation.toMonth}>
+                        {#each months as month }
+                        <option>
+                            {month}
+                        </option>
+                        {/each}
+                    </select>
+                    <select bind:value={newEducation.toYear}>
+                        {#each years().years as year }
+                        <option>
+                            {year}
+                        </option>
+                        {/each}
+                    </select>
+                    <!-- <input type="month" id="fromMonth" max={getToday().yearMonth} bind:value={newEducation.fromMonth}/>
+                    <input type="month" id="toMonth" min={newEducation.fromMonth} max={getToday().yearMonth} bind:value={newEducation.toMonth} /> -->
                 </td>
                 <td><input type="text" id="school" size="20" bind:value={newEducation.school} /></td>
             </tr>
