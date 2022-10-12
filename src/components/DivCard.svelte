@@ -19,6 +19,8 @@
     <div>Nei, alle kan det</div>
     <div><strong>Foretrukken fk</strong></div>
     <div>Nordland</div>
+    <div><strong>Tidligere Plassering</strong></div>
+    <div>Telemark, Vestfold, kun VTFK</div>
 </Card>
 
 <style>
