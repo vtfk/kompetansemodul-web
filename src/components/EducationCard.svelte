@@ -2,7 +2,8 @@
     import { get } from 'svelte/store'
     import { saveCompetence }  from '../lib/services/useApi'
     import { editingPersonalia } from '../lib/services/store'
-    import { getToday } from '../lib/Helpers/getToday';
+    import SelectYears from './SelectYears.svelte'
+    import SelectMonth from './SelectMonth.svelte'
     import Button from './Button.svelte';
     import TableButton from './TableButton.svelte';
     import IconEdit from './Icons/IconEdit.svelte'
@@ -53,19 +54,19 @@
     }
 
     let newEducation = {
-        fromYear: "2021",
-        toYear: "2022",
-        fromMonth: "01",
-        toMonth: "02"
+        fromYear: 2019,
+        toYear: 2022,
+        fromMonth: 'Januar',
+        toMonth: 'Februar'
     }
     const addEducation = () => {
 		// need to assign as a new object to make it "reactive"
 		competence.education = [ ...competence.education, newEducation ]
 		newEducation = {
-            fromYear: "2021",
-            toYear: "2022",
-            fromMonth: "01",
-            toMonth: "02"
+            fromYear: 2019,
+            toYear: 2022,
+            fromMonth: 'Januar',
+            toMonth: 'Februar'
         }
 	}
     const removeEducation = edu => {
@@ -106,10 +107,10 @@
     
     const months = ['Januar', 'Februar', 'Mars', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Desember']
 
-    const years = () => {
+    const years = (startYear) => {
         const currentYear = new Date().getFullYear()
         let yearArr = []
-        for (let i = 1950; i <= currentYear; i++){
+        for (let i = startYear; i <= currentYear; i++){
             yearArr.push(i)
         } 
         return {
@@ -180,49 +181,20 @@
                             {/each}
                         </datalist> -->
                 </td>
-                    <!-- <td>
-                        <input list="fagbrevlist" name="fagbrev" id="fagbrev"/>
-                        <datalist id="fagbrevlist">
-                            {#each getFagbrev(newEducation.fagområde).map(fagbrev => fagbrev) as fagbrevName}
-                                <option>{fagbrevName}</option>
-                            {/each}
-                        </datalist>
-                    </td> -->
             {:else}
             <DataList dataList={fagomraader} filterFunction={(input, obj) => obj.value.toLowerCase().includes(input.toLowerCase()) || obj.category.toLowerCase().startsWith(input.toLowerCase()) } bind:inputValue={newEducation.subject}/>
             {/if}
-                <td>
-                    <select bind:value={newEducation.fromMonth}>
-                        {#each months as month }
-                        <option>
-                            {month}
-                        </option>
-                        {/each}
-                    </select>
-                    <select bind:value={newEducation.fromYear}>
-                        {#each years().years as year }
-                        <option>
-                            {year}
-                        </option>
-                        {/each}
-                    </select>
-                    <select bind:value={newEducation.toMonth}>
-                        {#each months as month }
-                        <option>
-                            {month}
-                        </option>
-                        {/each}
-                    </select>
-                    <select bind:value={newEducation.toYear}>
-                        {#each years().years as year }
-                        <option>
-                            {year}
-                        </option>
-                        {/each}
-                    </select>
-                    <!-- <input type="month" id="fromMonth" max={getToday().yearMonth} bind:value={newEducation.fromMonth}/>
-                    <input type="month" id="toMonth" min={newEducation.fromMonth} max={getToday().yearMonth} bind:value={newEducation.toMonth} /> -->
-                </td>
+                <td> 
+                    <td>
+                        <SelectMonth bind:monthValue={newEducation.fromMonth}/>
+                        <SelectYears startYear={1950} bind:yearValue={newEducation.fromYear} on:change={() => newEducation.toYear = newEducation.fromYear}/>
+                    </td>
+                    <td>
+                        <SelectMonth bind:monthValue={newEducation.toMonth}/>
+                        {#if newEducation.fromYear}
+                            <SelectYears startYear={newEducation.fromYear} bind:yearValue={newEducation.toYear}/>
+                        {/if}
+                    </td>
                 <td><input type="text" id="school" size="20" bind:value={newEducation.school} /></td>
             </tr>
             <div class="bottomLine">
