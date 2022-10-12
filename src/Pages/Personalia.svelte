@@ -6,6 +6,9 @@
 	import WorkExperienceCard from '../components/WorkExperienceCard.svelte'
     import IconSpinner from '../components/Icons/IconSpinner.svelte';
     import EducationCard2 from '../components/EducationCard2.svelte';
+    import TasksCard from '../components/TasksCard.svelte';
+    import DivCard from '../components/DivCard.svelte';
+    import ExperienceCard from '../components/ExperienceCard.svelte';
 
 
 	const getMee = async () => {
@@ -27,9 +30,12 @@
 		</div>
 		<EmployeeCard employeeData={res} />
 		<PosistionsCard employeeData={res} />
+		<TasksCard />
 		<EducationCard2 competence={res.competenceData} />
 		<EducationCard competence={res.competenceData} />
 		<WorkExperienceCard competence={res.competenceData} />
+		<ExperienceCard />
+		<DivCard />
 	{:catch error}
 		<p style="color: red">{error.message}</p>
 	{/await}
