@@ -90,7 +90,7 @@
                 onClick: () => {
                     inputValue = item.value
                     showPreview = false
-                    if(item.onClick) item.onClick()
+                    if (item.onClick) item.onClick()
                 }
             }
         })
@@ -103,10 +103,7 @@
             dataToPreview.unshift(
                 {
                     value: inputValue,
-                    category: "Annet",
-                    onClick: () => {
-                        console.log('vil ikke velge, vil bare skrive')
-                    }
+                    category: "Annet"
                 }
             )
         }
@@ -185,8 +182,8 @@
         width: 100%;
         background-color: #fff;
         min-width: 100px;
-        height: 3rem;
-        padding: 0 1.5rem;
+        height: 2rem;
+        padding: 0 1rem;
         border: 1px solid rgb(151, 151, 151);
     }
     .searchBar.rounded {

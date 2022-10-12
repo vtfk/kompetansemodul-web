@@ -15,7 +15,6 @@
     export let backgroundColor = '--ecruWhite'
     export let infoBox = undefined // { content: "Det som kommer til å stå på hjelpeboksen, om du vil ha hjelpeboks" }
     export let editable = false
-    export let successTimeout = null
     export let saveFunc = async () => { // Only need if editable
         console.log('Æ lagrer')
     }
@@ -28,6 +27,7 @@
     let saveError = false
     let showInfoBox = false
     let showSavedMsg = false
+    let successTimeout = null
 
     let editInfo = get(editingPersonalia)
     editingPersonalia.subscribe(value => {

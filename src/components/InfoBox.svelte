@@ -1,7 +1,7 @@
 <script>
     import IconClose from "./Icons/IconClose.svelte";
     // Props
-    export let content = 'litt innhold og greier og geierojeirjdlkfjlksd dflkjdsklgfdsds  greier og geierojeirjdlkfjlksd dflkjdsklgfdsdsv  greier og geierojeirjdlkfjlksd dflkjdsklgfdsds  greier og geierojeirjdlkfjlksd dflkjdsklgfdsds  greier og geierojeirjdlkfjlksd dflkjdsklgfdsds  greier og geierojeirjdlkfjlksd dflkjdsklgfdsds  greier og geierojeirjdlkfjlksd dflkjdsklgfdsds  greier og geierojeirjdlkfjlksd dflkjdsklgfdsds  greier og geierojeirjdlkfjlksd dflkjdsklgfdsds'
+    export let content = 'litt innhold og greier og geierojeirjdlkfjlksd '
     export let open = false
     export let onClose = () => {console.log('LUKK!')}
 
@@ -23,7 +23,7 @@
 <style>
     .infoBox {
         background-color: var(--siv-2);
-        width: calc(100% - 1rem);
+        width: 100%;
         padding: 1rem;
         margin-bottom: 1rem;
         display: none;
