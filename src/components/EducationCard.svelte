@@ -103,20 +103,6 @@
                 category: variantName.UtdanningsprogramvariantNavn
             }
         }) 
-    } 
-    
-    const months = ['Januar', 'Februar', 'Mars', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Desember']
-
-    const years = (startYear) => {
-        const currentYear = new Date().getFullYear()
-        let yearArr = []
-        for (let i = startYear; i <= currentYear; i++){
-            yearArr.push(i)
-        } 
-        return {
-            years: yearArr.reverse(),
-            currentYear
-        }
     }
 
 </script>

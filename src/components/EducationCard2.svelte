@@ -3,6 +3,8 @@
     import { get } from 'svelte/store'
     import { saveCompetence }  from '../lib/services/useApi'
     import { editingPersonalia } from '../lib/services/store'
+    import SelectMonth from "./SelectMonth.svelte";
+    import SelectYears from "./SelectYears.svelte";
     import fagbrev from '../assets/fagbrevUDIR.json';
     import DataList from './DataList.svelte'
     import fagomraader from '../assets/fagomraader.json'
@@ -28,10 +30,10 @@
     let tempEducation = JSON.parse(JSON.stringify(competence.education)) // Create a copy to display correct information (and maybe alert if user has edited) if user aborts edit
     
     let newEducation = {
-        fromYear: "2021",
-        toYear: "2022",
-        fromMonth: "01",
-        toMonth: "02"
+        fromYear: 2019,
+        toYear: 2022,
+        fromMonth: 'Januar',
+        toMonth: 'Februar'
     }
 
     // Functions
@@ -39,10 +41,10 @@
 		// need to assign as a new object to make it "reactive"
 		tempEducation = [ ...tempEducation, newEducation ]
 		newEducation = {
-            fromYear: "2021",
-            toYear: "2022",
-            fromMonth: "01",
-            toMonth: "02"
+            fromYear: 2019,
+            toYear: 2022,
+            fromMonth: 'Januar',
+            toMonth: 'Februar'
         }
 	}
 
@@ -79,17 +81,6 @@
             }
         }) 
     }
-
-    const months = ['Januar', 'Februar', 'Mars', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Desember']
-
-    const years = () => {
-        const currentYear = new Date().getFullYear()
-        let yearArr = []
-        for (let i = 1950; i <= currentYear; i++){
-            yearArr.push(i)
-        } 
-        return yearArr
-    }
 </script>
 
 <Card title={title} editable={true} backgroundColor={backgroundColor} infoBox={ {content: "Her kommer det du trenger hjelp til"}} saveFunc={saveFunc} cancelFunc={cancelFunc}>
@@ -111,6 +102,7 @@
                                         <option value="Videregående skole">Videregående skole</option>
                                         <option value="Doktorgrad">Doktorgrad</option>
                                         <option value="Enkeltemne">Enkeltemne</option>
+                                        <option value="Sertifisering">Sertifisering</option>
                                     </select>
                                 </div>
                             </div>
@@ -125,7 +117,14 @@
                             </div>
                             <div class="editEdu">
                                 <label for="period">Periode</label><br>
-                                <input type="text" bind:value={tempEdu.toMonth}>
+                                <label for="from">Fra</label><br>
+                                <SelectMonth bind:monthValue={tempEdu.fromMonth}/>
+                                <SelectYears startYear={1950} bind:yearValue={tempEdu.fromYear} on:change={() => tempEdu.toYear = tempEdu.fromYear}/>
+                                <label for="to">Til</label><br>
+                                <SelectMonth bind:monthValue={tempEdu.toMonth}/>
+                                    {#if newEducation.fromYear}
+                                        <SelectYears startYear={tempEdu.fromYear} bind:yearValue={tempEdu.toYear}/>
+                                    {/if}
                             </div>
                             <div class="editEdu">
                                 <label for="period">Skole</label><br>
@@ -181,6 +180,15 @@
     .deleteButton {
         position: absolute;
         right: 1rem;
+    }
+
+    input[type=text], select {
+        width: 100%;
+        padding: 5px 5px;
+        display: inline-block;
+        border: 1px solid var(--mork);
+        border-radius: 0.5rem;
+        box-sizing: border-box;
     }
 
 </style>

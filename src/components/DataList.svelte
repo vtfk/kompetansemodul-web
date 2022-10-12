@@ -184,7 +184,9 @@
         min-width: 100px;
         height: 2rem;
         padding: 0 1rem;
-        border: 1px solid rgb(151, 151, 151);
+        border: 1px solid var(--mork);
+        border-radius: 0.5rem;
+        box-sizing: border-box;
     }
     .searchBar.rounded {
         border-radius: 24px;
