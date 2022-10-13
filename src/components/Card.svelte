@@ -50,6 +50,7 @@
         resetSuccessMsg()
         cancelFunc()
         editingPersonalia.set({ isEditing: false, editBlock: 'ingen' })
+        scrollIfNeeded()
     }
 
     const showSuccess = async () => {
@@ -63,12 +64,24 @@
         clearTimeout(successTimeout)
     }
 
+    const scrollIfNeeded = () => {
+        const elm = document.getElementById(title)
+        const rect = elm.getBoundingClientRect()
+        const viewHeight = Math.max(document.documentElement.clientHeight, window.innerHeight)
+        const needToScroll = (rect.top < 0)
+        console.log(rect.top)
+        console.log(viewHeight)
+        console.log(needToScroll)
+        if (needToScroll) elm.scrollIntoView()
+    }
+
     const saveChanges = async () => {
         saveError = null
         resetSuccessMsg()
         isSaving = true
         try {
             await saveFunc()
+            scrollIfNeeded()
             isSaving = false
             editingPersonalia.set({ isEditing: false, editBlock: 'ingen' })
             await showSuccess()
@@ -76,12 +89,13 @@
             console.error('Aiaiaiai:', error)
             isSaving = false
             saveError = error.message
+            scrollIfNeeded()
         }
     }
 
 </script>
 
-<div class="panel" style="background-color: var({backgroundColor});">
+<div id={title ?? 'har ikke tittel'} class="panel" style="background-color: var({backgroundColor});">
     {#if title}
         <div class="header">
             <div class="headerTitle">
