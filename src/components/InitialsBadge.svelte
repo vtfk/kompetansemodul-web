@@ -36,4 +36,10 @@
         font-size: 42px;
         letter-spacing: -3.5px;
     }
+    .initialsBadge.medium {
+        width: 80px;
+        height: 80px;
+        font-size: 35px;
+        letter-spacing: -2px;
+    }
 </style>

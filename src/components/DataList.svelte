@@ -108,7 +108,6 @@
             )
         }
         previewData = mapDataList(dataToPreview.filter(ele => filterFunction(inputValue, ele))).slice(0, displayNumberOfItems)
-        console.log(`Æ har ${previewData.length} elementa`)
     }
 
     const onFocus = () => {
@@ -141,8 +140,8 @@
                 clear()
                 e.preventDefault()
             } else if (e.key !== 'Enter') {
-                console.log("Hallla")
                 showPreview = true
+                console.log('joa')
             }
         }
     }

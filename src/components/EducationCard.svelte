@@ -1,22 +1,17 @@
 <script>
+    import Card from "./Card.svelte"
     import { get } from 'svelte/store'
     import { saveCompetence }  from '../lib/services/useApi'
     import { editingPersonalia } from '../lib/services/store'
-    import SelectYears from './SelectYears.svelte'
-    import SelectMonth from './SelectMonth.svelte'
-    import Button from './Button.svelte';
-    import TableButton from './TableButton.svelte';
-    import IconEdit from './Icons/IconEdit.svelte'
-    import IconDelete from './Icons/IconDelete.svelte';
-    import IconAdd from './Icons/IconAdd.svelte';
-    import IconCheck from './Icons/IconCheck.svelte';
-    import IconClose from './Icons/IconClose.svelte';
-    import IconSpinner from './Icons/IconSpinner.svelte';
-    import IconHelp from './Icons/IconHelp.svelte';
-    import InfoBox from './InfoBox.svelte';
-    import fagbrev from '../assets/fagbrevUDIR.json';
+    import SelectMonth from "./SelectMonth.svelte"
+    import SelectYears from "./SelectYears.svelte"
+    import fagbrev from '../assets/fagbrevUDIR.json'
     import DataList from './DataList.svelte'
     import fagomraader from '../assets/fagomraader.json'
+    import InitialsBadge from "./InitialsBadge.svelte"
+    import Button from "./Button.svelte"
+    import IconDelete from "./Icons/IconDelete.svelte"
+    import IconAdd from "./Icons/IconAdd.svelte"
 
     // Props
     export let title = 'Utdanning'
@@ -24,44 +19,27 @@
     export let competence = {
 		education: []
 	}
-
     if (!competence.education) competence.education = []
 
     // State
-    let isSaving = false
-    let saveError = false
-    let showInfoBox = false
-
-    // Create a copy to display correct information (and maybe alert if user has edited) if user aborts edit
-    let tempEducation = [...competence.education]
-
     let editInfo = get(editingPersonalia)
     editingPersonalia.subscribe(value => {
         editInfo = value
     })
 
-    const openEdit = () => {
-        if (!editInfo.isEditing) {
-            editingPersonalia.set({ isEditing: true, editBlock: title })
-        } else if (editInfo.isEditing && editInfo.editBlock !== title) {
-            alert(`Du redigerer allerede ${editInfo.editBlock}, vennligst fullfør eller avbryt denne redigeringen først`)
-        }
-    }
-
-    const cancelEdit = () => {
-        competence.education = [...tempEducation]
-        editingPersonalia.set({ isEditing: false, editBlock: 'ingen' })
-    }
-
+    let tempEducation = JSON.parse(JSON.stringify(competence.education)) // Create a copy to display correct information (and maybe alert if user has edited) if user aborts edit
+    
     let newEducation = {
         fromYear: 2019,
         toYear: 2022,
         fromMonth: 'Januar',
         toMonth: 'Februar'
     }
+
+    // Functions
     const addEducation = () => {
 		// need to assign as a new object to make it "reactive"
-		competence.education = [ ...competence.education, newEducation ]
+		tempEducation = [ ...tempEducation, newEducation ]
 		newEducation = {
             fromYear: 2019,
             toYear: 2022,
@@ -69,32 +47,31 @@
             toMonth: 'Februar'
         }
 	}
+
     const removeEducation = edu => {
-		competence.education = competence.education.filter(education => education !== edu)
+		tempEducation = tempEducation.filter(education => education !== edu)
 	}
 
-    // TODO: remove error msg if user tries again
-    const saveCompetencee = async () => {
+    const saveFunc = async () => {
         if(newEducation.subject !== undefined && newEducation.school !== undefined) {
-            addEducation()
+            console.log('Jeg fyra')
         }
-        isSaving = true
-		try {
-            if (JSON.stringify(tempEducation) !== JSON.stringify(competence.education)) {
-                await saveCompetence(competence)
-                console.log('Detta gikk så fint så :)')
-                tempEducation = [...competence.education]
-            } else {
-                console.log('Ingen endring, gidder ikke lagre')
-            }
-            isSaving = false
-            editingPersonalia.set({ isEditing: false, editBlock: 'ingen' })
-		} catch (error) {
-			console.error('Aiaiaiai:', error)
-            isSaving = false
-            saveError = error.message
-		}
+        if (checkIfChanges()) {
+            await saveCompetence({...competence, education: tempEducation})
+            competence.education = tempEducation
+        } else {
+            console.log('Ingen endring, gidder ikke lagre')
+        }
 	}
+
+    const checkIfChanges = () => {
+        if (JSON.stringify(competence.education) !== JSON.stringify(tempEducation)) return true
+        return false
+    }
+
+    const cancelFunc = async () => {
+        tempEducation = JSON.parse(JSON.stringify(competence.education))
+    }
 
     const utdanningsprogramvariantNavn = () => {
         return fagbrev.map(variantName => {
@@ -104,172 +81,114 @@
             }
         }) 
     }
-
 </script>
 
-<div class="panel" style="background-color: var({backgroundColor});">
-    <div class="header">
-        <div class="headerTitle"><h3 class="title">{title}</h3><div class="headerIcon" title={showInfoBox ? 'Lukk infoboks' : 'Åpne infoboks'} on:click={() => {showInfoBox = !showInfoBox}}><IconHelp /></div></div>
+<Card title={title} editable={true} backgroundColor={backgroundColor} infoBox={ {content: "Her kommer det du trenger hjelp til"}} saveFunc={saveFunc} cancelFunc={cancelFunc}>
+    <div>
         {#if editInfo.isEditing && editInfo.editBlock === title}
-            {#if isSaving}
-                <IconSpinner width="2rem" />
-            {:else if saveError}
-                {saveError}
-            {/if}
-        {:else}
-            <Button buttonText="Rediger" onClick={() => openEdit()}><IconEdit slot="before" /></Button>
-        {/if}
-    </div>
-    <InfoBox open={showInfoBox} onClose={() => {showInfoBox = !showInfoBox}} />
-    <div id="content">
-        <table class="cardTable">
-            <tr>
-                <th>Utdanningsgrad</th>
-                {#if newEducation.degree === "Fagbrev"}
-                    <th>Fagbrev</th>
-                {:else}
-                    <th>Fagområde</th>
-                {/if}
-                <th>Periode</th>
-                <th>Skole</th>
-            </tr>
-            {#each competence.education as edu}
-                <tr>
-                    <td>{edu.degree ?? 'Ukjent grad'}</td>
-                    <td>{edu.subject ?? 'Ukjent fag'}</td>
-                    <!-- <td>{edu.fagbrev ?? 'Ukjent fagbrev'}</td> -->
-                    <td>{(edu.fromMonth && edu.toMonth) ? `${edu.fromMonth} ${edu.fromYear} - ${edu.toMonth} ${edu.toYear}` : 'Ukjent periode'}</td>
-                    <td>{edu.school ?? 'Ukjent skole'}</td>
-                    {#if editInfo.isEditing && editInfo.editBlock === title}
-                        <td class="actionCol"><TableButton size="small" onClick={() => removeEducation(edu)} ><IconDelete /></TableButton></td>
-                    {/if}
-                </tr>
+            {#each tempEducation as tempEdu}
+                <div class="eduContainer">
+                    <InitialsBadge size='large' initials='🎓' />
+                    <div class='eduStuff'>
+                        <div class="mainStuff">
+                            <div class="editEdu">
+                                <div>
+                                    <label for="degree">Utdanningsgrad</label><br>
+                                    <select name="degree" id="degree" bind:value={tempEdu.degree}>
+                                        <option value="Master">Master</option>
+                                        <option value="Bachelor">Bachelor</option>
+                                        <option value="Årsstudium">Årsstudium</option>
+                                        <option value="Fagbrev">Fagbrev</option>
+                                        <option value="Videregående skole">Videregående skole</option>
+                                        <option value="Doktorgrad">Doktorgrad</option>
+                                        <option value="Enkeltemne">Enkeltemne</option>
+                                        <option value="Sertifisering">Sertifisering</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="editEdu">
+                                {#if tempEdu.degree === "Fagbrev"}
+                                    <label for="degree">Fagbrev</label><br>
+                                    <DataList dataList={utdanningsprogramvariantNavn()} filterFunction={(input, obj) => obj.value.toLowerCase().includes(input.toLowerCase()) || obj.category.toLowerCase().startsWith(input.toLowerCase()) } bind:inputValue={tempEdu.subject}/>
+                                {:else}
+                                    <label for="subject">Fagområde</label><br>
+                                    <DataList dataList={fagomraader} filterFunction={(input, obj) => obj.value.toLowerCase().includes(input.toLowerCase()) || obj.category.toLowerCase().startsWith(input.toLowerCase()) } bind:inputValue={tempEdu.subject}/>
+                                {/if}                           
+                            </div>
+                            <div class="editEdu">
+                                <label for="period">Periode</label><br>
+                                <label for="from">Fra</label><br>
+                                <SelectMonth bind:monthValue={tempEdu.fromMonth}/>
+                                <SelectYears startYear={1950} bind:yearValue={tempEdu.fromYear} on:change={() => tempEdu.toYear = tempEdu.fromYear}/>
+                                <label for="to">Til</label><br>
+                                <SelectMonth bind:monthValue={tempEdu.toMonth}/>
+                                    {#if newEducation.fromYear}
+                                        <SelectYears startYear={tempEdu.fromYear} bind:yearValue={tempEdu.toYear}/>
+                                    {/if}
+                            </div>
+                            <div class="editEdu">
+                                <label for="period">Skole</label><br>
+                                <input type="text" bind:value={tempEdu.school}>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="deleteButton">
+                        <Button buttonText="Fjern" onClick={() => removeEducation(tempEdu)}><IconDelete slot="before" /></Button>
+                    </div>
+                </div>
             {/each}
-        </table>
-        {#if editInfo.isEditing && editInfo.editBlock === title}
-            <tr class="editRow">
-                <td>
-                    <select name="degree" id="degree" bind:value={newEducation.degree}>
-                        <option value="Master">Master</option>
-                        <option value="Bachelor">Bachelor</option>
-                        <option value="Årsstudium">Årsstudium</option>
-                        <option value="Fagbrev">Fagbrev</option>
-                        <option value="Doktorgrad">Doktorgrad</option>
-                    </select>
-                </td>
-                {#if newEducation.degree === "Fagbrev"}
-                <td>
-                    <DataList dataList={utdanningsprogramvariantNavn()} filterFunction={(input, obj) => obj.value.toLowerCase().includes(input.toLowerCase()) || obj.category.toLowerCase().startsWith(input.toLowerCase()) } bind:inputValue={newEducation.subject}/>
-                        <!-- <input list="fagområder" name="fagområde" id="fagområde" bind:value={newEducation.fagområde}/>
-                        <datalist id="fagområder">
-                            {#each utdanningsprogramvariantNavn().map(variantName => variantName) as variationName}
-                                <option>{variationName}</option>
-                            {/each}
-                        </datalist> -->
-                </td>
-            {:else}
-            <DataList dataList={fagomraader} filterFunction={(input, obj) => obj.value.toLowerCase().includes(input.toLowerCase()) || obj.category.toLowerCase().startsWith(input.toLowerCase()) } bind:inputValue={newEducation.subject}/>
-            {/if}
-                <td> 
-                    <td>
-                        <SelectMonth bind:monthValue={newEducation.fromMonth}/>
-                        <SelectYears startYear={1950} bind:yearValue={newEducation.fromYear} on:change={() => newEducation.toYear = newEducation.fromYear}/>
-                    </td>
-                    <td>
-                        <SelectMonth bind:monthValue={newEducation.toMonth}/>
-                        {#if newEducation.fromYear}
-                            <SelectYears startYear={newEducation.fromYear} bind:yearValue={newEducation.toYear}/>
-                        {/if}
-                    </td>
-                <td><input type="text" id="school" size="20" bind:value={newEducation.school} /></td>
-            </tr>
-            <div class="bottomLine">
-                {#if isSaving}
-                    <Button buttonText="Lagrer..." disabled={true}><IconAdd slot="before" /></Button>
-                    <div class="saveCancel">
-                        <Button buttonText="Lagrer..." disabled={true}><IconCheck slot="before" /></Button>
-                        &nbsp&nbsp
-                        <Button buttonText="Lagrer..." disabled={true}><IconClose slot="before" /></Button>
+            <Button buttonText="Legg til" onClick={() => addEducation()}><IconAdd slot="before" /></Button>
+        {:else}
+            {#each competence.education as edu}
+                <div class="eduContainer">
+                    <InitialsBadge size='large' initials='🎓' />
+                    <div class='eduStuff'>
+                        <div class="mainStuff">
+                            <h3>{edu.degree ?? 'Ukjent grad'}</h3>
+                            <h4>{edu.subject ?? 'Ukjent fag'}</h4>
+                            <p>📅 {(edu.fromMonth && edu.toMonth) ? `${edu.fromMonth} ${edu.fromYear} - ${edu.toMonth} ${edu.toYear}` : 'Ukjent periode'}</p>
+                            <p>🏫 {edu.school ?? 'Ukjent skole'}</p>
+                        </div>
                     </div>
-                {:else if saveError}
-                    <Button buttonText="Legg til" onClick={() => addEducation()}><IconAdd slot="before" /></Button>
-                    {saveError}
-                    <div class="saveCancel">
-                        <Button buttonText="Lagre" onClick={() => saveCompetencee()}><IconCheck slot="before" /></Button>
-                        &nbsp
-                        &nbsp
-                        <Button buttonText="Avbryt" onClick={() => cancelEdit()}><IconClose slot="before" /></Button>
-                    </div>
-                {:else}
-                    <Button buttonText="Legg til" onClick={() => addEducation()}><IconAdd slot="before" /></Button>
-                    <div class="saveCancel">
-                        <Button buttonText="Lagre" onClick={() => saveCompetencee()}><IconCheck slot="before" /></Button>
-                        &nbsp&nbsp
-                        <Button buttonText="Avbryt" onClick={() => cancelEdit()}><IconClose slot="before" /></Button>
-                    </div>
-                {/if}
-            </div>
+                </div>
+            {/each}
         {/if}
     </div>
-</div>
+</Card>
 
 <style>
-    .header {
+    .eduContainer {
+        position: relative;
         display: flex;
-        justify-content: space-between;
-        margin: 0 0 16px 0;
+        padding: 1rem 1rem;
+        /*background-color: var(--siv-1);*/
+        /*border: 1px solid var(--siv-2);*/
+        border: 1px solid var(--mork);
+        border-radius: 1rem;
+        margin: 1rem 0;
+        /*box-shadow: 0 0 0 4px #aedcea;
+        box-shadow: 0px 5px 5px 0px rgba(0, 0, 0, 0.3);*/
     }
-    .headerTitle {
-        display: flex;
-        align-items: center;
+    .eduStuff {
+        margin-left: 32px;
     }
-    .panel {
-        margin-bottom: 32px;
-        padding: 40px 32px;
+    label {
+        font-size: 0.9em;
+        font-weight: bold;
+        font-style: italic;
     }
-    .cardTable {
-        border-collapse: collapse;
+    .deleteButton {
+        position: absolute;
+        right: 1rem;
+    }
+
+    input[type=text], select {
         width: 100%;
+        padding: 5px 5px;
+        display: inline-block;
+        border: 1px solid var(--mork);
+        border-radius: 0.5rem;
+        box-sizing: border-box;
     }
-    th {
-        text-align: left;
-        padding-right: 32px;
-    }
-    td {
-        border-bottom: 1px solid black;
-        padding: 8px 32px 0px 0px;
-    }
-    .editRow td {
-        border-bottom: none;
-    }
-    td.actionCol {
-        padding: 0px;
-    }
-    .editRow td.actionCol {
-        padding-top: 0.4rem; /* bare for syns skyld... */
-    }
-    .headerIcon {
-        display: flex;
-        align-items: center;
-        width: 1rem;
-        margin-left: 4px;
-    }
-    .headerIcon:hover {
-        cursor: pointer;
-        transform: scale(1.2);
-    }
-    .bottomLine {
-        width: 100%;
-        display: flex;
-        justify-content: space-between;
-        padding-top: 2rem;
-    }
-    .saveCancel {
-        display: flex;
-    }
-    /*
-    table tr:nth-child(even) {
-        background: #9DCECE;
-    }
-    */
+
 </style>

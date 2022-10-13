@@ -1,14 +1,15 @@
 <script>
 	import { getMe }  from '../lib/services/useApi'
 	import EmployeeCard from '../components/EmployeeCard.svelte'
-	import PosistionsCard from '../components/PositionsCard.svelte'
-	import EducationCard from '../components/EducationCard.svelte'
+	import PosistionsCard2 from '../components/PositionsCardOld.svelte'
+	import EducationCard2 from '../components/EducationCardOld.svelte'
 	import WorkExperienceCard from '../components/WorkExperienceCard.svelte'
     import IconSpinner from '../components/Icons/IconSpinner.svelte';
-    import EducationCard2 from '../components/EducationCard2.svelte';
+    import EducationCard from '../components/EducationCard.svelte';
     import TasksCard from '../components/TasksCard.svelte';
     import DivCard from '../components/DivCard.svelte';
     import ExperienceCard from '../components/ExperienceCard.svelte';
+    import PositionsCard from '../components/PositionsCard.svelte';
 
 
 	const getMee = async () => {
@@ -29,10 +30,11 @@
 			<p><em>Her kan du gjøre ditten og datten</em></p>
 		</div>
 		<EmployeeCard employeeData={res} />
-		<PosistionsCard employeeData={res} />
+		<PositionsCard employeeData={res} />
+		<PosistionsCard2 employeeData={res} />
 		<TasksCard />
-		<EducationCard2 competence={res.competenceData} />
 		<EducationCard competence={res.competenceData} />
+		<EducationCard2 competence={res.competenceData} />
 		<WorkExperienceCard competence={res.competenceData} />
 		<ExperienceCard />
 		<DivCard />

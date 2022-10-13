@@ -82,32 +82,34 @@
 </script>
 
 <div class="panel" style="background-color: var({backgroundColor});">
-    <div class="header">
-        <div class="headerTitle">
-            <h3 class="title">{title}</h3>
-            {#if infoBox}
-                <div class="headerIcon" title={showInfoBox ? 'Lukk infoboks' : 'Åpne infoboks'} on:click={() => {showInfoBox = !showInfoBox}}><IconHelp /></div>
+    {#if title}
+        <div class="header">
+            <div class="headerTitle">
+                <h3 class="title">{title}</h3>
+                {#if infoBox}
+                    <div class="headerIcon" title={showInfoBox ? 'Lukk infoboks' : 'Åpne infoboks'} on:click={() => {showInfoBox = !showInfoBox}}><IconHelp /></div>
+                {/if}
+            </div>
+            {#if editable}
+                {#if editInfo.isEditing && editInfo.editBlock === title}
+                    {#if isSaving}
+                        <IconSpinner width="2rem" />
+                    {:else if saveError}
+                        <span class="error slide fadeIn">😮 {saveError}</span>
+                    {/if}
+                {:else}
+                    <div style="display: flex; position: relative;">
+                        {#if showSavedMsg}
+                            <div class="success slide fadeInOut">Lagret 👍</div>&nbsp&nbsp
+                        {/if}
+                        <Button buttonText="Rediger" onClick={() => openEdit()}><IconEdit slot="before" /></Button>
+                    </div>
+                {/if}
             {/if}
         </div>
-        {#if editable}
-            {#if editInfo.isEditing && editInfo.editBlock === title}
-                {#if isSaving}
-                    <IconSpinner width="2rem" />
-                {:else if saveError}
-                    <span class="error slide fadeIn">😮 {saveError}</span>
-                {/if}
-            {:else}
-                <div style="display: flex; position: relative;">
-                    {#if showSavedMsg}
-                        <div class="success slide fadeInOut">Lagret 👍</div>&nbsp&nbsp
-                    {/if}
-                    <Button buttonText="Rediger" onClick={() => openEdit()}><IconEdit slot="before" /></Button>
-                </div>
-            {/if}
+        {#if infoBox}
+            <InfoBox content={infoBox.content} open={showInfoBox} onClose={() => {showInfoBox = !showInfoBox}} />
         {/if}
-    </div>
-    {#if infoBox}
-        <InfoBox content={infoBox.content} open={showInfoBox} onClose={() => {showInfoBox = !showInfoBox}} />
     {/if}
     <div id="content">
         <slot>Her er kortets innhold, hvis du huska å legge det inn. Om du skal kunne redigere kortet MÅ du huske å subscribe på tilhørende edit-store i cardContent</slot>
@@ -148,7 +150,7 @@
     .header {
         display: flex;
         justify-content: space-between;
-        padding-bottom: 2rem;
+        padding-bottom: 1.5rem;
     }
     .headerTitle {
         display: flex;
@@ -161,7 +163,7 @@
     .headerIcon {
         display: flex;
         align-items: center;
-        width: 1rem;
+        width: 1.2rem;
         margin-left: 4px;
     }
     .headerIcon:hover {
