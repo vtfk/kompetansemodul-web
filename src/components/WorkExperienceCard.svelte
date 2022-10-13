@@ -1,21 +1,16 @@
 <script>
+    import Card from "./Card.svelte"
     import { get } from 'svelte/store'
     import { saveCompetence }  from '../lib/services/useApi'
     import { editingPersonalia } from '../lib/services/store'
-    import Button from './Button.svelte';
-    import TableButton from './TableButton.svelte';
-    import IconEdit from './Icons/IconEdit.svelte';
-    import IconDelete from './Icons/IconDelete.svelte';
-    import IconAdd from './Icons/IconAdd.svelte';
-    import IconCheck from './Icons/IconCheck.svelte';
-    import IconClose from './Icons/IconClose.svelte';
-    import IconSpinner from './Icons/IconSpinner.svelte';
-    import IconHelp from './Icons/IconHelp.svelte';
-    import InfoBox from './InfoBox.svelte';
-    import DataList from './DataList.svelte';
-    import { getToday } from '../lib/Helpers/getToday';
-
     import occupations from '../assets/yrker.json'
+    import InitialsBadge from "./InitialsBadge.svelte";
+    import DataList from "./DataList.svelte";
+    import SelectMonth from "./SelectMonth.svelte";
+    import SelectYears from "./SelectYears.svelte";
+    import Button from "./Button.svelte";
+    import IconDelete from "./Icons/IconDelete.svelte";
+    import IconAdd from "./Icons/IconAdd.svelte";
 
     // Props
     export let title = 'Arbeidserfaring'
@@ -26,255 +21,222 @@
 
     if (!competence.workExperience) competence.workExperience = []
 
-    // State
-    let isSaving = false
-    let saveError = false
-    let showInfoBox = false
-    let positionValue = ''
-    let excludedCategories = []
-
-    // Create a copy to display correct information (and maybe alert if user has edited) if user aborts edit
-    let tempWorkExperience = [...competence.workExperience]
-
+    // Store
     let editInfo = get(editingPersonalia)
     editingPersonalia.subscribe(value => {
         editInfo = value
     })
 
-    const openEdit = () => {
-        if (!editInfo.isEditing) {
-            editingPersonalia.set({ isEditing: true, editBlock: title })
-        } else if (editInfo.isEditing && editInfo.editBlock !== title) {
-            alert(`Du redigerer allerede ${editInfo.editBlock}, vennligst fullfør eller avbryt denne redigeringen først`)
+    // State
+    let tempWorkExperience = JSON.parse(JSON.stringify(competence.workExperience)) // Create a copy to display correct information (and maybe alert if user has edited) if user aborts edit
+    // Nedenfor endrer vi antall tasks med maxTasks
+    const maxTasks = 5
+    tempWorkExperience = tempWorkExperience.map(exp => {
+        if (exp.tasks && exp.tasks.length !== maxTasks) {
+            for (let i=exp.tasks.length; i < maxTasks; i++) {
+                exp.tasks.push('')
+            }
         }
-    }
+        return {
+            ...exp,
+            tasks: exp.tasks ?? Array(maxTasks).fill('')
+        }
+    })
 
-    const cancelEdit = () => {
-        competence.workExperience = [...tempWorkExperience]
-        editingPersonalia.set({ isEditing: false, editBlock: 'ingen' })
-    }
 
     let newWorkExperience = {
-        fromMonth: "2021-01",
-        toMonth: "2022-01"
+        fromYear: 2019,
+        toYear: 2022,
+        fromMonth: 'Januar',
+        toMonth: 'Februar',
+        tasks: Array(maxTasks).fill('')
     }
+
+    console.log(tempWorkExperience)
+
+    // Functions
     const addWorkExperience = () => {
 		// need to assign as a new object to make it "reactive"
-        newWorkExperience.position = positionValue
-		competence.workExperience = [ ...competence.workExperience, newWorkExperience ]
+		tempWorkExperience = [ ...tempWorkExperience, newWorkExperience ]
 		newWorkExperience = {
-            fromMonth: "2021-01",
-            toMonth: "2022-01"
+            fromYear: 2019,
+            toYear: 2022,
+            fromMonth: 'Januar',
+            toMonth: 'Februar',
+            tasks: Array(maxTasks).fill('')
         }
-        positionValue = ''
 	}
+
     const removeWorkExperience = exp => {
-		competence.workExperience = competence.workExperience.filter(experience => experience !== exp)
+		tempWorkExperience = tempWorkExperience.filter(workExperience => workExperience !== exp)
 	}
 
-    // TODO: remove error msg if user tries again
-    const saveCompetencee = async () => {
-        // newWorkExperience.employer !== undefined ||  newWorkExperience.position !== undefined || newWorkExperience.field !== undefined || newWorkExperience.mainTasks !== undefined 
-        if(newWorkExperience.employer !== undefined &&  newWorkExperience.position !== undefined && newWorkExperience.mainTasks !== undefined ) {
-            addWorkExperience()
+    const saveFunc = async () => {
+        if (checkIfChanges()) {
+            await saveCompetence({...competence, workExperience: tempWorkExperience})
+            competence.workExperience = JSON.parse(JSON.stringify(tempWorkExperience))
+        } else {
+            console.log('Ingen endring, gidder ikke lagre')
         }
-        isSaving = true
-		try {
-            if (JSON.stringify(tempWorkExperience) !== JSON.stringify(competence.workExperience)) {
-                await saveCompetence(competence)
-                console.log('Detta gikk så fint så :)')
-                tempWorkExperience = [...competence.workExperience]
-            } else {
-                console.log('Ingen endring, gidder ikke lagre')
-            }
-            isSaving = false
-            editingPersonalia.set({ isEditing: false, editBlock: 'ingen' })
-		} catch (error) {
-			console.error('Aiaiaiai:', error)
-            isSaving = false
-            saveError = error.message
-		}
 	}
 
-    // const occupationCategories = () => {
-    //     const list = uniqBy(occupations.map(occupation => {
-    //         return {
-    //             category: occupation.category
-    //         }
-    //     }), item => item.category).map(cat => cat.category)
-    //     return list
-    // }
-
-    const dataList = (excludedCategories) => {
-        let list = occupations.filter(item => !excludedCategories.includes(item.category)).map(occupation => {
-            return {
-                value: occupation.value,
-                category: occupation.category,
-                onClick: () => {
-                    positionValue = occupation.value
-                }
-            }
-        })
-        if (list.length < 1) {
-            list = occupations.map(occupation => {
-                return {
-                    value: occupation.value,
-                    category: occupation.category,
-                    onClick: () => {
-                        positionValue = occupation.value
-                    }
-                }
-            })
-        }
-
-        console.log(`Æ har funne ${list.length} yrka`)
-        return list.sort((a, b) => a.category.localeCompare(b.category))
+    const checkIfChanges = () => {
+        if (JSON.stringify(competence.workExperience) !== JSON.stringify(tempWorkExperience)) return true
+        return false
     }
 
-    // const categoryFilter = (cat) => {
-    //     if (excludedCategories.includes(cat)) {
-    //         console.log('Jeg fjernan')
-    //         excludedCategories = excludedCategories.filter(category => category !== cat)
-    //     }
-    //     else {
-    //         console.log('jeg la den til')
-    //         excludedCategories.push(cat)
-    //         excludedCategories = excludedCategories
-    //     }
-    // }
+    const cancelFunc = async () => {
+        tempWorkExperience = JSON.parse(JSON.stringify(competence.workExperience))
+    }
 
 </script>
 
-<div class="panel" style="background-color: var({backgroundColor});">
-    <div class="header">
-        <div class="headerTitle"><h3 class="title">{title}</h3><div class="headerIcon" title={showInfoBox ? 'Lukk infoboks' : 'Åpne infoboks'} on:click={() => {showInfoBox = !showInfoBox}}><IconHelp /></div></div>
+<Card title={title} backgroundColor={backgroundColor} editable={true} infoBox={ {content: "Her kommer det du trenger hjelp til"}} saveFunc={saveFunc} cancelFunc={cancelFunc}>
+    <div>
         {#if editInfo.isEditing && editInfo.editBlock === title}
-            {#if isSaving}
-                <IconSpinner width="2rem" />
-            {:else if saveError}
-                {saveError}
-                <Button buttonText="Avbryt redigering" onClick={() => cancelEdit()}><IconClose slot="before" /></Button>
-            {:else}
-                <Button buttonText="Avbryt redigering" onClick={() => cancelEdit()}><IconClose slot="before" /></Button>
-            {/if}
+            {#each tempWorkExperience as tempWork}
+                <div class="workContainer">
+                    <InitialsBadge size='large' initials='💼' />
+                    <div class='workStuff'>
+                        <div class="workFlex">
+                            <div class="mainStuff">
+                                <div class="editWork">
+                                    <label for="position">Stilling</label><br>
+                                    <DataList dataList={occupations} filterFunction={(input, obj) => obj.value.toLowerCase().includes(input.toLowerCase()) || obj.category.toLowerCase().startsWith(input.toLowerCase())} bind:inputValue={tempWork.position} />
+                                </div>
+                                <div class="editWork">
+                                    <div>
+                                        <label for="employer">Arbeidsgiver</label><br>
+                                        <input id="employer" type="text" bind:value={tempWork.employer}>
+                                    </div>
+                                </div>
+                                <div class="editWork">
+                                    <label for="sector">Sektor</label><br>
+                                    <select id="sector" bind:value={tempWork.sector}>
+                                        <option value="Privat">Privat</option>
+                                        <option value="Offentlig">Offentlig</option>
+                                    </select>
+                                </div>
+                                <div class="editWork">
+                                    <label for="from">Fra</label><br>
+                                    <div class="peroidContainer">
+                                        <SelectMonth bind:monthValue={tempWork.fromMonth}/>
+                                        <SelectYears startYear={1950} bind:yearValue={tempWork.fromYear} on:change={() => tempWork.toYear = tempWork.fromYear}/>
+                                    </div>
+                                    <label for="to">Til</label><br>
+                                    <div class="peroidContainer">
+                                        <SelectMonth bind:monthValue={tempWork.toMonth}/>
+                                            {#if newWorkExperience.fromYear}
+                                                <SelectYears startYear={tempWork.fromYear} bind:yearValue={tempWork.toYear}/>
+                                            {/if}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tasks">
+                                <div class="editWork">
+                                    <label for="tasks">Hovedoppgaver</label><br>
+                                    {#each tempWork.tasks as task}
+                                        <input type="text" bind:value={task}>
+                                    {/each}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="deleteButton">
+                        <Button buttonText="Fjern" onClick={() => removeWorkExperience(tempWork)}><IconDelete slot="before" /></Button>
+                    </div>
+                </div>
+            {/each}
+            <Button buttonText="Legg til" onClick={() => addWorkExperience()}><IconAdd slot="before" /></Button>
         {:else}
-            <Button buttonText="Rediger" onClick={() => openEdit()}><IconEdit slot="before" /></Button>
+            {#each competence.workExperience as work}
+                <div class="workContainer">
+                    <InitialsBadge size='large' initials='💼' />
+                    <div class='workStuff'>
+                        <div class='workFlex'>
+                            <div class="mainStuff">
+                                <h3>{work.position ?? 'Ukjent stilling'}</h3>
+                                <h4>{work.employer ?? 'Ukjent arbeidsgiver'}</h4>
+                                <p>{work.sector ?? 'Ukjent'} sektor</p>
+                                <p>📅 {(work.fromMonth && work.toMonth) ? `${work.fromMonth} ${work.fromYear} - ${work.toMonth} ${work.toYear}` : 'Ukjent periode'}</p>
+                            </div>
+                            {#if work.tasks && work.tasks.length > 0}
+                                <div class='tasks'>
+                                    <label for='noe'>Hovedoppgaver</label><br />
+                                    {#each work.tasks as task}
+                                        <div class="task">{task}</div>
+                                    {/each}
+                                </div>
+                            {/if}
+                        </div>
+                    </div>
+                </div>
+            {/each}
         {/if}
     </div>
-    <InfoBox open={showInfoBox} onClose={() => {showInfoBox = !showInfoBox}} />
-    <div id="content">
-        <table class="cardTable">
-            <tr>
-                <th>Arbeidsgiver</th>
-                <th>Stilling</th>
-                <th>Sektor</th>
-                <th>Periode</th>
-                <th>Oppgaver?</th>
-            </tr>
-            {#each competence.workExperience as exp}
-                <tr>
-                    <td>{exp.employer ?? 'Ukjent arbeidsgiver'}</td>
-                    <td>{exp.position ?? 'Ukjent stilling'}</td>
-                    <td>{exp.field ?? 'Ukjent sektor'}</td>
-                    <td>{(exp.fromMonth && exp.toMonth) ? `${exp.fromMonth} - ${exp.toMonth}` : 'Ukjent periode'}</td>
-                    <td>{exp.mainTasks ?? 'Ukjente oppgaver'}</td>
-                    {#if editInfo.isEditing && editInfo.editBlock === title}
-                        <td class="actionCol"><TableButton size="small" onClick={() => removeWorkExperience(exp)} ><IconDelete /></TableButton></td>
-                    {/if}
-                </tr>
-            {/each}
-            {#if editInfo.isEditing && editInfo.editBlock === title}
-                <tr class="editRow">
-                    <td><input type="text" id="employer" size="15" bind:value={newWorkExperience.employer} /></td>
-                    <td>
-                        <DataList dataList={dataList(excludedCategories)} filterFunction={(input, obj) => obj.value.toLowerCase().includes(input.toLowerCase()) || obj.category.toLowerCase().startsWith(input.toLowerCase())} bind:inputValue={positionValue} />
-                    </td>
-                    <td>
-                        <select name="field" id="field" bind:value={newWorkExperience.field}>
-                            <option value="Offentlig">Offentlig</option>
-                            <option value="Privat">Privat</option>
-                        </select>
-                    </td>
-                    <td>
-                        <input type="month" id="fromMonth" max={getToday().yearMonth} bind:value={newWorkExperience.fromMonth}/>
-                        <input type="month" id="toMonth" min={newWorkExperience.fromMonth} max={getToday().yearMonth} bind:value={newWorkExperience.toMonth} />
-                    </td>
-                    <td><input type="text" id="mainTasks" size="15" bind:value={newWorkExperience.mainTasks} /></td>
-                    <td class="actionCol"><TableButton size="small" onClick={() => addWorkExperience()}><IconAdd /></TableButton></td>
-                </tr>
-                <tr>
-                    <!--
-                    <td>
-                        {#each occupationCategories() as cat, i}
-                            <input type="checkbox" id="cat{i}" name="cat{i}" value={cat} on:change={() => categoryFilter(cat)} checked>
-                            <label for="cat{i}">{cat}</label><br>
-                        {/each}
-                    </td>
-                    -->
-                </tr>
-                {#if isSaving}
-                    <br />
-                    <Button buttonText="Lagrer..." disabled={true}><IconCheck slot="before" /></Button>
-                {:else if saveError}
-                    {saveError}
-                    <br />
-                    <Button buttonText="Lagre endringer" onClick={() => saveCompetencee()}><IconCheck slot="before" /></Button>
-                {:else}
-                    <br />
-                    <Button buttonText="Lagre endringer" onClick={() => saveCompetencee()}><IconCheck slot="before" /></Button>
-                {/if}
-            {/if}
-        </table>
-    </div>
-</div>
+</Card>
 
 <style>
-    .header {
+    .workContainer {
+        position: relative;
         display: flex;
-        justify-content: space-between;
-        margin: 0 0 16px 0;
+        padding: 1rem 1rem;
+        /*background-color: var(--siv-1);*/
+        /*border: 1px solid var(--siv-2);*/
+        border: 0px solid var(--mork);
+        border-radius: 1rem;
+        background-color: rgba(163, 163, 163, 0.1);
+        margin: 1rem 0;
+        /*box-shadow: 0 0 0 4px #aedcea;
+        box-shadow: 0px 5px 5px 0px rgba(0, 0, 0, 0.3);*/
     }
-    .headerTitle {
+    .workFlex {
         display: flex;
-        align-items: center;
+        flex-wrap: wrap;
     }
-    .panel {
-        margin-bottom: 32px;
-        padding: 40px 32px;
+    .mainStuff {
+        margin-left: 32px;
+        width: 20rem;
     }
-    .cardTable {
-        border-collapse: collapse;
+    .tasks {
+        margin-left: 32px;
+        max-width: 20rem;
     }
-    th {
-        text-align: left;
-        padding-right: 32px;
+    label {
+        font-size: 0.9em;
+        font-weight: bold;
+        font-style: italic;
     }
-    td {
-        border-bottom: 1px solid black;
-        padding: 8px 32px 0px 0px;
-    }
-    .editRow td {
-        border-bottom: none;
-    }
-    td.actionCol {
-        padding: 0px;
-    }
-    .editRow td.actionCol {
-        padding-top: 0.4rem; /* bare for syns skyld... */
-    }
-    .headerIcon {
-        display: flex;
-        align-items: center;
-        width: 1rem;
-        margin-left: 4px;
-    }
-    .headerIcon:hover {
-        cursor: pointer;
-        transform: scale(1.2);
+    .task {
+        border-left: 0px solid var(--mork);
+        border-radius: 1rem;
+        margin-right: 1rem;
     }
     /*
-    table tr:nth-child(even) {
-        background: #9DCECE;
+    .task:nth-child(4n+0) {
+        background-color: var(--grannyApple);
     }
-    */
+    .task:nth-child(4n-1) {
+        background-color: var(--potPourri);
+    }
+    .task:nth-child(4n-2) {
+        background-color: var(--lightBlue);
+    }*/
+    .deleteButton {
+        position: absolute;
+        right: 1rem;
+    }
+
+    input[type=text], select {
+        width: 100%;
+        padding: 5px 5px;
+        display: inline-block;
+        border: 1px solid var(--mork);
+        border-radius: 0.5rem;
+        box-sizing: border-box;
+    }
+    .peroidContainer {
+        display: flex;
+    }
+
 </style>

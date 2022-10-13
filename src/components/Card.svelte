@@ -69,9 +69,6 @@
         const rect = elm.getBoundingClientRect()
         const viewHeight = Math.max(document.documentElement.clientHeight, window.innerHeight)
         const needToScroll = (rect.top < 0)
-        console.log(rect.top)
-        console.log(viewHeight)
-        console.log(needToScroll)
         if (needToScroll) elm.scrollIntoView()
     }
 

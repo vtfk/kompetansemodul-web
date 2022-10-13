@@ -53,12 +53,9 @@
 	}
 
     const saveFunc = async () => {
-        if(newEducation.subject !== undefined && newEducation.school !== undefined) {
-            console.log('Jeg fyra')
-        }
         if (checkIfChanges()) {
             await saveCompetence({...competence, education: tempEducation})
-            competence.education = tempEducation
+            competence.education = JSON.parse(JSON.stringify(tempEducation))
         } else {
             console.log('Ingen endring, gidder ikke lagre')
         }
@@ -187,7 +184,8 @@
         padding: 1rem 1rem;
         /*background-color: var(--siv-1);*/
         /*border: 1px solid var(--siv-2);*/
-        border: 1px solid var(--mork);
+        border-left: 0px solid var(--mork);
+        background-color: rgba(0, 0, 0, 0.03);
         border-radius: 1rem;
         margin: 1rem 0;
         /*box-shadow: 0 0 0 4px #aedcea;

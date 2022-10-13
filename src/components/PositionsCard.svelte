@@ -4,6 +4,7 @@
     import InitialsBadge from "./InitialsBadge.svelte";
 
     // Props
+    export let backgroundColor = '--catSkillWhite'
     export let employeeData = {}
 
     const convertDate = (date) => {
@@ -24,7 +25,7 @@
 
 </script>
 
-<Card title="Ansattinformasjon" infoBox={ {content: "Her kommer det du trenger hjelp til"}}>
+<Card title="Ansattinformasjon" backgroundColor={backgroundColor} infoBox={ {content: "Her kommer det du trenger hjelp til"}}>
     <div class="cardContent">
         <div class="generalInfo">
             <div class="infoPair">
@@ -111,7 +112,8 @@
     .position {
         display: flex;
         padding: 1rem 1rem;
-        border: 1px solid var(--mork);
+        border: 0px solid var(--mork);
+        background-color: rgba(0, 0, 0, 0.03);
         border-radius: 1rem;
     }
     .stuff {

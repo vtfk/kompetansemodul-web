@@ -1,15 +1,14 @@
 <script>
 	import { getMe }  from '../lib/services/useApi'
 	import EmployeeCard from '../components/EmployeeCard.svelte'
-	import PosistionsCard2 from '../components/PositionsCardOld.svelte'
-	import EducationCard2 from '../components/EducationCardOld.svelte'
-	import WorkExperienceCard from '../components/WorkExperienceCard.svelte'
+	import WorkExperienceCardOld from '../components/WorkExperienceCardOld.svelte'
     import IconSpinner from '../components/Icons/IconSpinner.svelte';
     import EducationCard from '../components/EducationCard.svelte';
     import TasksCard from '../components/TasksCard.svelte';
     import DivCard from '../components/DivCard.svelte';
     import ExperienceCard from '../components/ExperienceCard.svelte';
     import PositionsCard from '../components/PositionsCard.svelte';
+    import WorkExperienceCard from '../components/WorkExperienceCard.svelte';
 
 
 	const getMee = async () => {
@@ -34,6 +33,7 @@
 		<TasksCard />
 		<EducationCard competence={res.competenceData} />
 		<WorkExperienceCard competence={res.competenceData} />
+		<WorkExperienceCardOld competence={res.competenceData} />
 		<ExperienceCard />
 		<DivCard />
 	{:catch error}
