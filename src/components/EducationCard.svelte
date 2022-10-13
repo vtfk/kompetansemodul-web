@@ -88,7 +88,17 @@
         {#if editInfo.isEditing && editInfo.editBlock === title}
             {#each tempEducation as tempEdu}
                 <div class="eduContainer">
-                    <InitialsBadge size='large' initials='🎓' />
+                    {#if tempEdu.degree === 'Fagbrev'}
+                        <InitialsBadge size='large' initials='🧾' />
+                        {:else if tempEdu.degree === 'Sertifisering'}
+                            <InitialsBadge size='large' initials='📜' />
+                        {:else if tempEdu.degree === 'Enkeltemne'}
+                            <InitialsBadge size='large' initials='📄' />
+                        {:else if tempEdu.degree === 'Videregående skole'}
+                            <InitialsBadge size='large' initials='📝' />
+                        {:else} 
+                            <InitialsBadge size='large' initials='🎓' />
+                    {/if}
                     <div class='eduStuff'>
                         <div class="mainStuff">
                             <div class="editEdu">
@@ -118,13 +128,17 @@
                             <div class="editEdu">
                                 <label for="period">Periode</label><br>
                                 <label for="from">Fra</label><br>
-                                <SelectMonth bind:monthValue={tempEdu.fromMonth}/>
-                                <SelectYears startYear={1950} bind:yearValue={tempEdu.fromYear} on:change={() => tempEdu.toYear = tempEdu.fromYear}/>
+                                <div class="peroidContainer">
+                                    <SelectMonth bind:monthValue={tempEdu.fromMonth}/>
+                                    <SelectYears startYear={1950} bind:yearValue={tempEdu.fromYear} on:change={() => tempEdu.toYear = tempEdu.fromYear}/>
+                                </div>
                                 <label for="to">Til</label><br>
-                                <SelectMonth bind:monthValue={tempEdu.toMonth}/>
-                                    {#if newEducation.fromYear}
-                                        <SelectYears startYear={tempEdu.fromYear} bind:yearValue={tempEdu.toYear}/>
-                                    {/if}
+                                <div class="peroidContainer">
+                                    <SelectMonth bind:monthValue={tempEdu.toMonth}/>
+                                        {#if newEducation.fromYear}
+                                            <SelectYears startYear={tempEdu.fromYear} bind:yearValue={tempEdu.toYear}/>
+                                        {/if}
+                                </div>
                             </div>
                             <div class="editEdu">
                                 <label for="period">Skole</label><br>
@@ -141,7 +155,17 @@
         {:else}
             {#each competence.education as edu}
                 <div class="eduContainer">
-                    <InitialsBadge size='large' initials='🎓' />
+                    {#if edu.degree === 'Fagbrev'}
+                        <InitialsBadge size='large' initials='🧾' />
+                        {:else if edu.degree === 'Sertifisering'}
+                            <InitialsBadge size='large' initials='📜' />
+                        {:else if edu.degree === 'Enkeltemne'}
+                            <InitialsBadge size='large' initials='📄' />
+                        {:else if edu.degree === 'Videregående skole'}
+                            <InitialsBadge size='large' initials='📝' />
+                        {:else} 
+                            <InitialsBadge size='large' initials='🎓' />
+                    {/if}
                     <div class='eduStuff'>
                         <div class="mainStuff">
                             <h3>{edu.degree ?? 'Ukjent grad'}</h3>
@@ -189,6 +213,9 @@
         border: 1px solid var(--mork);
         border-radius: 0.5rem;
         box-sizing: border-box;
+    }
+    .peroidContainer {
+        display: flex;
     }
 
 </style>
