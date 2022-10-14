@@ -152,6 +152,7 @@
         width: 42px;
         display: flex;
         align-items: center;
+        position: relative;
     }
     .menuButton {
         display: flex;
