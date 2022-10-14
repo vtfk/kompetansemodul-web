@@ -12,7 +12,7 @@
         return `${dateList[2]}.${dateList[1]}.${dateList[0]}`
     }
 
-    const mainPosition = employeeData.harAktivtArbeidsforhold ? employeeData.aktiveArbeidsforhold.find(forhold => forhold.lonnsprosent > 0 && forhold.hovedstilling) : undefined
+    const mainPosition = employeeData.harAktivtArbeidsforhold ? employeeData.aktiveArbeidsforhold.find(forhold => forhold.hovedstilling) : undefined
     const displayData = {
         name: `${employeeData.fornavn} ${employeeData.etternavn}`,
         officeLocation: employeeData.azureAd?.officeLocation ?? 'Ukjent kontorplass',
