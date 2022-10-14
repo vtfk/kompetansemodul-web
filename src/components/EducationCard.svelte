@@ -119,7 +119,6 @@
                             {/if}                           
                         </div>
                         <div>
-                            <label for="period">Periode</label><br>
                             <label for="from">Fra</label><br>
                             <div class="peroidContainer">
                                 <SelectMonth bind:monthValue={tempEdu.fromMonth}/>
