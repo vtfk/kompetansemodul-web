@@ -21,4 +21,7 @@
 </svg>
 
 <style>
+  svg {
+    position: relative;
+  }
 </style>
