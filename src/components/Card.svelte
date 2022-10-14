@@ -161,11 +161,12 @@
     .header {
         display: flex;
         justify-content: space-between;
-        padding-bottom: 1.5rem;
+        padding-bottom: 0.5rem;
     }
     .headerTitle {
         display: flex;
         align-items: center;
+        flex-wrap: wrap;
     }
     .panel {
         margin-bottom: 2rem;
@@ -241,6 +242,13 @@
 
     @keyframes fadeinout {
         50% { opacity: 1; }
+    }
+
+    @media(max-width: 885px) {
+        .panel {
+            margin-bottom: 2rem;
+            padding: 32px 16px;
+        }
     }
 
 </style>

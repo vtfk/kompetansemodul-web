@@ -21,7 +21,6 @@
         align-items: center;
         justify-content: center;
         letter-spacing: -1px;
-        cursor: default;
         user-select: none;
     }
     .initialsBadge.small {

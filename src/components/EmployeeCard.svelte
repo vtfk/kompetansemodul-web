@@ -19,17 +19,20 @@
 </script>
 
 <Card title={null}>
-    <div>
-        <div class="employeeHeader">
+    <div class="employeeHeader">
+        <div class ="employeeBadge">
             <InitialsBadge size='large' initials={employeeInfo.initials} />
-            <div class='employeeStuff'>
-                <div class="mainStuff">
-                    <h3>{employeeInfo.name}</h3>
-                    <h4>{employeeInfo.mainTitle} - {employeeInfo.mainDepartment}</h4>
-                    <p>{employeeInfo.officeLocation}</p>
-                    <p>✉ {employeeInfo.email}</p>
+        </div>
+        <div class="mainStuff">
+            <div class="employeeTitle">
+                <div class="smallBadge">
+                    <InitialsBadge size='small' initials={employeeInfo.initials} />
                 </div>
+                <h3>{employeeInfo.name}</h3>
             </div>
+            <h4>{employeeInfo.mainTitle} - {employeeInfo.mainDepartment}</h4>
+            <p>{employeeInfo.officeLocation}</p>
+            <p>✉ {employeeInfo.email}</p>
         </div>
     </div>
 
@@ -39,8 +42,28 @@
     .employeeHeader {
         display: flex;
     }
-    .employeeStuff {
-        margin-left: 32px;
+    .employeeBadge {
+        margin-right: 32px;
+    }
+    .smallBadge {
+        display: none;
+        margin-right: 8px;
+    }
+    .employeeTitle {
+        display: flex;
+        align-items: center;
+        margin-bottom: inherit;
+    }
+    @media(max-width: 885px) {
+        .employeeBadge {
+            display: none;
+        }
+        .smallBadge {
+            display: block;
+        }
+        .employeeTitle {
+            margin-bottom: 8px;
+        }
     }
 
 </style>

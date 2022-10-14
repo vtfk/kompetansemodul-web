@@ -1,18 +1,17 @@
 <script>
     import { get } from 'svelte/store'
+    import { displayedPage } from '../lib/services/store';
     import Logo from './Icons/Logo.svelte'
     import IconHelp from './Icons/IconHelp.svelte';
     import IconPerson from './Icons/IconPerson.svelte';
     import IconOrg from './Icons/IconOrg.svelte'
     import IconSearch from './Icons/IconSearch.svelte';
-
-    import { displayedPage } from '../lib/services/store';
+    
 
     const changePage = (pageName) => {
-        window.history.replaceState(null, null, pageName)
+        // window.history.replaceState(null, null, pageName)
         displayedPage.set(pageName)
         console.log(window.location.pathname)
-        // window.history.pushState(new XMLSerializer().serializeToString(document), "Title", appendix);
     }
 
     let currentPage = get(displayedPage)
@@ -26,7 +25,7 @@
         <Logo />
     </div>
     <div style="text-align: center; width: 100%;">
-        <p style="padding: 0px;">Kompetanse</p>
+        <p style="padding: 0px;"><strong>Kompetanse</strong></p>
     </div>
     <div class="sideNavItemsContainer">
         <div class="sideNavFlexHelper">

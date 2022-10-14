@@ -72,5 +72,15 @@
     position: relative;
     max-width: 1096px;
     margin: 0px auto;
-  } 
+  }
+  @media(max-width: 885px) {
+    .sidenavWrapper {
+      display: none;
+    }
+    .contentWrapper {
+      margin-left: 0;
+      width: auto;
+      padding: 0px 16px;
+    }
+  }
 </style>

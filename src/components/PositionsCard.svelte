@@ -2,6 +2,7 @@
     import Card from "./Card.svelte";
     import { getZipCodeInfo } from '../lib/Helpers/zipCode'
     import InitialsBadge from "./InitialsBadge.svelte";
+    import InnerCard from "./InnerCard.svelte";
 
     // Props
     export let backgroundColor = '--catSkillWhite'
@@ -56,32 +57,26 @@
         {#if mainPosition}
             <div class="mainPosition">
                 <h4>Hovedstilling</h4>
-                <div class="position">
-                    <InitialsBadge size='medium' initials='💼' />
-                    <div class='stuff'>
-                        <div class="mainStuff">
-                            <h3>{mainPosition.stillingstittel ?? 'Ukjent tittel'} ({Math.ceil(mainPosition.lonnsprosent/100)}%)</h3>
-                            <h4>{mainPosition.arbeidssted.struktur[mainPosition.arbeidssted.struktur.length-1].navn}</h4>
-                            <p>{mainPosition.arbeidssted.struktur[2].navn}</p>
-                        </div>
+                <InnerCard size='medium' emoji='💼'>
+                    <div slot="first">
+                        <h3>{mainPosition.stillingstittel ?? 'Ukjent tittel'} ({Math.ceil(mainPosition.lonnsprosent/100)}%)</h3>
+                        <h4>{mainPosition.arbeidssted.struktur[mainPosition.arbeidssted.struktur.length-1].navn}</h4>
+                        <p>{mainPosition.arbeidssted.struktur[2].navn}</p>
                     </div>
-                </div>
+                </InnerCard>
             </div>
         {/if}
         {#if displayData.otherPositions.length > 0}
             <div class="secondaryPosition">
                 <h4>Aktive sekundærstillinger</h4>
                 {#each displayData.otherPositions as position}
-                    <div class="position">
-                        <InitialsBadge size='medium' initials='💼' />
-                        <div class='stuff'>
-                            <div class="mainStuff">
-                                <h3>{position.stillingstittel ?? 'Ukjent tittel'} ({Math.ceil(position.lonnsprosent/100)}%)</h3>
-                                <h4>{position.arbeidssted.struktur[position.arbeidssted.struktur.length-1].navn}</h4>
-                                <p>{position.arbeidssted.struktur[2].navn}</p>
-                            </div>
+                    <InnerCard size='medium' emoji='💼'>
+                        <div slot="first">
+                            <h3>{position.stillingstittel ?? 'Ukjent tittel'} ({Math.ceil(position.lonnsprosent/100)}%)</h3>
+                            <h4>{position.arbeidssted.struktur[position.arbeidssted.struktur.length-1].navn}</h4>
+                            <p>{position.arbeidssted.struktur[2].navn}</p>
                         </div>
-                    </div>
+                    </InnerCard>     
                 {/each}
             </div>
         {/if}
