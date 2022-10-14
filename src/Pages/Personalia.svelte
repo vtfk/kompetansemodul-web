@@ -1,7 +1,6 @@
 <script>
 	import { getMe }  from '../lib/services/useApi'
 	import EmployeeCard from '../components/EmployeeCard.svelte'
-	import WorkExperienceCardOld from '../components/WorkExperienceCardOld.svelte'
     import IconSpinner from '../components/Icons/IconSpinner.svelte';
     import EducationCard from '../components/EducationCard.svelte';
     import TasksCard from '../components/TasksCard.svelte';
@@ -33,7 +32,6 @@
 		<TasksCard />
 		<EducationCard competence={res.competenceData} />
 		<WorkExperienceCard competence={res.competenceData} />
-		<WorkExperienceCardOld competence={res.competenceData} />
 		<ExperienceCard />
 		<DivCard />
 	{:catch error}
