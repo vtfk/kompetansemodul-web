@@ -131,6 +131,7 @@
         display: flex;
         padding: 1rem 1.5rem;
         background-color: var(--varme-1);
+        position: relative;
     }
     .mobileSearchBar {
         margin: 1rem 1rem;
@@ -138,6 +139,7 @@
     .mobileLeft {
         display: flex;
         align-items: center;
+        position: relative;
     }
     .mobileRight {
         display: flex;
