@@ -11,8 +11,8 @@
         const dateList = date.slice(0,10).split('-')
         return `${dateList[2]}.${dateList[1]}.${dateList[0]}`
     }
-
-    const mainPosition = employeeData.harAktivtArbeidsforhold ? employeeData.aktiveArbeidsforhold.find(forhold => forhold.hovedstilling) : undefined
+ 
+    const mainPosition = employeeData.harAktivtArbeidsforhold ? employeeData.aktiveArbeidsforhold.find(forhold => forhold.hovedstilling) : undefined // TODO: hva med de som faktisk ikke har aktiv hovedstilling????
     const displayData = {
         name: `${employeeData.fornavn} ${employeeData.etternavn}`,
         officeLocation: employeeData.azureAd?.officeLocation ?? 'Ukjent kontorplass',
@@ -76,8 +76,8 @@
                         <InitialsBadge size='medium' initials='💼' />
                         <div class='stuff'>
                             <div class="mainStuff">
-                                <h3>{position.stillingstittel ?? 'Ukjent tittel'} ({Math.ceil(mainPosition.lonnsprosent/100)}%)</h3>
-                                <h4>{position.arbeidssted.struktur[mainPosition.arbeidssted.struktur.length-1].navn}</h4>
+                                <h3>{position.stillingstittel ?? 'Ukjent tittel'} ({Math.ceil(position.lonnsprosent/100)}%)</h3>
+                                <h4>{position.arbeidssted.struktur[position.arbeidssted.struktur.length-1].navn}</h4>
                                 <p>{position.arbeidssted.struktur[2].navn}</p>
                             </div>
                         </div>

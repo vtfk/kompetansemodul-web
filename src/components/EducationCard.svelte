@@ -8,10 +8,10 @@
     import fagbrev from '../assets/fagbrevUDIR.json'
     import DataList from './DataList.svelte'
     import fagomraader from '../assets/fagomraader.json'
-    import InitialsBadge from "./InitialsBadge.svelte"
     import Button from "./Button.svelte"
     import IconDelete from "./Icons/IconDelete.svelte"
     import IconAdd from "./Icons/IconAdd.svelte"
+    import InnerCard from "./InnerCard.svelte";
 
     // Props
     export let title = 'Utdanning'
@@ -78,132 +78,93 @@
             }
         }) 
     }
+
+    const getEmoji = (degree) => {
+        if (degree === 'Fagbrev') return '🧾'
+        else if (degree === 'Sertifisering') return '📜'
+        else if (degree === 'Enkeltemne') return '📄'
+        else if (degree === 'Videregående skole') return '📝'
+        else return '🎓'
+    } 
 </script>
 
 <Card title={title} editable={true} backgroundColor={backgroundColor} infoBox={ {content: "Her kommer det du trenger hjelp til"}} saveFunc={saveFunc} cancelFunc={cancelFunc}>
     <div>
         {#if editInfo.isEditing && editInfo.editBlock === title}
             {#each tempEducation as tempEdu}
-                <div class="eduContainer">
-                    {#if tempEdu.degree === 'Fagbrev'}
-                        <InitialsBadge size='large' initials='🧾' />
-                        {:else if tempEdu.degree === 'Sertifisering'}
-                            <InitialsBadge size='large' initials='📜' />
-                        {:else if tempEdu.degree === 'Enkeltemne'}
-                            <InitialsBadge size='large' initials='📄' />
-                        {:else if tempEdu.degree === 'Videregående skole'}
-                            <InitialsBadge size='large' initials='📝' />
-                        {:else} 
-                            <InitialsBadge size='large' initials='🎓' />
-                    {/if}
-                    <div class='eduStuff'>
-                        <div class="mainStuff">
-                            <div class="editEdu">
-                                <div>
-                                    <label for="degree">Utdanningsgrad</label><br>
-                                    <select name="degree" id="degree" bind:value={tempEdu.degree}>
-                                        <option value="Master">Master</option>
-                                        <option value="Bachelor">Bachelor</option>
-                                        <option value="Årsstudium">Årsstudium</option>
-                                        <option value="Fagbrev">Fagbrev</option>
-                                        <option value="Videregående skole">Videregående skole</option>
-                                        <option value="Doktorgrad">Doktorgrad</option>
-                                        <option value="Enkeltemne">Enkeltemne</option>
-                                        <option value="Sertifisering">Sertifisering</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="editEdu">
-                                {#if tempEdu.degree === "Fagbrev"}
-                                    <label for="degree">Fagbrev</label><br>
-                                    <DataList dataList={utdanningsprogramvariantNavn()} filterFunction={(input, obj) => obj.value.toLowerCase().includes(input.toLowerCase()) || obj.category.toLowerCase().startsWith(input.toLowerCase()) } bind:inputValue={tempEdu.subject}/>
-                                {:else}
-                                    <label for="subject">Fagområde</label><br>
-                                    <DataList dataList={fagomraader} filterFunction={(input, obj) => obj.value.toLowerCase().includes(input.toLowerCase()) || obj.category.toLowerCase().startsWith(input.toLowerCase()) } bind:inputValue={tempEdu.subject}/>
-                                {/if}                           
-                            </div>
-                            <div class="editEdu">
-                                <label for="period">Periode</label><br>
-                                <label for="from">Fra</label><br>
-                                <div class="peroidContainer">
-                                    <SelectMonth bind:monthValue={tempEdu.fromMonth}/>
-                                    <SelectYears startYear={1950} bind:yearValue={tempEdu.fromYear} on:change={() => tempEdu.toYear = tempEdu.fromYear}/>
-                                </div>
-                                <label for="to">Til</label><br>
-                                <div class="peroidContainer">
-                                    <SelectMonth bind:monthValue={tempEdu.toMonth}/>
-                                        {#if newEducation.fromYear}
-                                            <SelectYears startYear={tempEdu.fromYear} bind:yearValue={tempEdu.toYear}/>
-                                        {/if}
-                                </div>
-                            </div>
-                            <div class="editEdu">
-                                <label for="period">Skole</label><br>
-                                <input type="text" bind:value={tempEdu.school}>
+                <InnerCard emoji={getEmoji(tempEdu.degree)}>
+                    <div slot="first">
+                        <div>
+                            <div>
+                                <label for="degree">Utdanningsgrad</label><br>
+                                <select name="degree" id="degree" bind:value={tempEdu.degree}>
+                                    <option value="Master">Master</option>
+                                    <option value="Bachelor">Bachelor</option>
+                                    <option value="Årsstudium">Årsstudium</option>
+                                    <option value="Fagbrev">Fagbrev</option>
+                                    <option value="Videregående skole">Videregående skole</option>
+                                    <option value="Doktorgrad">Doktorgrad</option>
+                                    <option value="Enkeltemne">Enkeltemne</option>
+                                    <option value="Sertifisering">Sertifisering</option>
+                                </select>
                             </div>
                         </div>
+                        <div>
+                            {#if tempEdu.degree === "Fagbrev"}
+                                <label for="degree">Fagbrev</label><br>
+                                <DataList dataList={utdanningsprogramvariantNavn()} filterFunction={(input, obj) => obj.value.toLowerCase().includes(input.toLowerCase()) || obj.category.toLowerCase().startsWith(input.toLowerCase()) } bind:inputValue={tempEdu.subject}/>
+                            {:else}
+                                <label for="subject">Fagområde</label><br>
+                                <DataList dataList={fagomraader} filterFunction={(input, obj) => obj.value.toLowerCase().includes(input.toLowerCase()) || obj.category.toLowerCase().startsWith(input.toLowerCase()) } bind:inputValue={tempEdu.subject}/>
+                            {/if}                           
+                        </div>
+                        <div>
+                            <label for="period">Periode</label><br>
+                            <label for="from">Fra</label><br>
+                            <div class="peroidContainer">
+                                <SelectMonth bind:monthValue={tempEdu.fromMonth}/>
+                                <SelectYears startYear={1950} bind:yearValue={tempEdu.fromYear} on:change={() => tempEdu.toYear = tempEdu.fromYear}/>
+                            </div>
+                            <label for="to">Til</label><br>
+                            <div class="peroidContainer">
+                                <SelectMonth bind:monthValue={tempEdu.toMonth}/>
+                                    {#if newEducation.fromYear}
+                                        <SelectYears startYear={tempEdu.fromYear} bind:yearValue={tempEdu.toYear}/>
+                                    {/if}
+                            </div>
+                        </div>
+                        <div>
+                            <label for="period">Skole</label><br>
+                            <input type="text" bind:value={tempEdu.school}>
+                        </div>
                     </div>
-                    <div class="deleteButton">
+                    <div slot="right">
                         <Button buttonText="Fjern" onClick={() => removeEducation(tempEdu)}><IconDelete slot="before" /></Button>
                     </div>
-                </div>
+                </InnerCard>
             {/each}
             <Button buttonText="Legg til" onClick={() => addEducation()}><IconAdd slot="before" /></Button>
         {:else}
             {#each competence.education as edu}
-                <div class="eduContainer">
-                    {#if edu.degree === 'Fagbrev'}
-                        <InitialsBadge size='large' initials='🧾' />
-                        {:else if edu.degree === 'Sertifisering'}
-                            <InitialsBadge size='large' initials='📜' />
-                        {:else if edu.degree === 'Enkeltemne'}
-                            <InitialsBadge size='large' initials='📄' />
-                        {:else if edu.degree === 'Videregående skole'}
-                            <InitialsBadge size='large' initials='📝' />
-                        {:else} 
-                            <InitialsBadge size='large' initials='🎓' />
-                    {/if}
-                    <div class='eduStuff'>
-                        <div class="mainStuff">
-                            <h3>{edu.degree ?? 'Ukjent grad'}</h3>
-                            <h4>{edu.subject ?? 'Ukjent fag'}</h4>
-                            <p>📅 {(edu.fromMonth && edu.toMonth) ? `${edu.fromMonth} ${edu.fromYear} - ${edu.toMonth} ${edu.toYear}` : 'Ukjent periode'}</p>
-                            <p>🏫 {edu.school ?? 'Ukjent skole'}</p>
-                        </div>
+                <InnerCard emoji={getEmoji(edu.degree)}>
+                    <div slot="first">
+                        <h3>{edu.degree ?? 'Ukjent grad'}</h3>
+                        <h4>{edu.subject ?? 'Ukjent fag'}</h4>
+                        <p>📅 {(edu.fromMonth && edu.toMonth) ? `${edu.fromMonth} ${edu.fromYear} - ${edu.toMonth} ${edu.toYear}` : 'Ukjent periode'}</p>
+                        <p>🏫 {edu.school ?? 'Ukjent skole'}</p>
                     </div>
-                </div>
+                </InnerCard>
             {/each}
         {/if}
     </div>
 </Card>
 
 <style>
-    .eduContainer {
-        position: relative;
-        display: flex;
-        padding: 1rem 1rem;
-        /*background-color: var(--siv-1);*/
-        /*border: 1px solid var(--siv-2);*/
-        border-left: 0px solid var(--mork);
-        background-color: rgba(0, 0, 0, 0.03);
-        border-radius: 1rem;
-        margin: 1rem 0;
-        /*box-shadow: 0 0 0 4px #aedcea;
-        box-shadow: 0px 5px 5px 0px rgba(0, 0, 0, 0.3);*/
-    }
-    .eduStuff {
-        margin-left: 32px;
-    }
     label {
         font-size: 0.9em;
         font-weight: bold;
         font-style: italic;
     }
-    .deleteButton {
-        position: absolute;
-        right: 1rem;
-    }
-
     input[type=text], select {
         width: 100%;
         padding: 5px 5px;

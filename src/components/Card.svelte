@@ -168,7 +168,7 @@
         align-items: center;
     }
     .panel {
-        margin-bottom: 32px;
+        margin-bottom: 2rem;
         padding: 40px 32px;
     }
     .headerIcon {

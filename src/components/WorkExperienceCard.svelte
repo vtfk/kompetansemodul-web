@@ -4,13 +4,13 @@
     import { saveCompetence }  from '../lib/services/useApi'
     import { editingPersonalia } from '../lib/services/store'
     import occupations from '../assets/yrker.json'
-    import InitialsBadge from "./InitialsBadge.svelte";
     import DataList from "./DataList.svelte";
     import SelectMonth from "./SelectMonth.svelte";
     import SelectYears from "./SelectYears.svelte";
     import Button from "./Button.svelte";
     import IconDelete from "./Icons/IconDelete.svelte";
     import IconAdd from "./Icons/IconAdd.svelte";
+    import InnerCard from "./InnerCard.svelte";
 
     // Props
     export let title = 'Arbeidserfaring'
@@ -95,138 +95,84 @@
     <div>
         {#if editInfo.isEditing && editInfo.editBlock === title}
             {#each tempWorkExperience as tempWork}
-                <div class="workContainer">
-                    <InitialsBadge size='large' initials='💼' />
-                    <div class='workStuff'>
-                        <div class="workFlex">
-                            <div class="mainStuff">
-                                <div class="editWork">
-                                    <label for="position">Stilling</label><br>
-                                    <DataList dataList={occupations} filterFunction={(input, obj) => obj.value.toLowerCase().includes(input.toLowerCase()) || obj.category.toLowerCase().startsWith(input.toLowerCase())} bind:inputValue={tempWork.position} />
-                                </div>
-                                <div class="editWork">
-                                    <div>
-                                        <label for="employer">Arbeidsgiver</label><br>
-                                        <input id="employer" type="text" bind:value={tempWork.employer}>
-                                    </div>
-                                </div>
-                                <div class="editWork">
-                                    <label for="sector">Sektor</label><br>
-                                    <select id="sector" bind:value={tempWork.sector}>
-                                        <option value="Privat">Privat</option>
-                                        <option value="Offentlig">Offentlig</option>
-                                    </select>
-                                </div>
-                                <div class="editWork">
-                                    <label for="from">Fra</label><br>
-                                    <div class="peroidContainer">
-                                        <SelectMonth bind:monthValue={tempWork.fromMonth}/>
-                                        <SelectYears startYear={1950} bind:yearValue={tempWork.fromYear} on:change={() => tempWork.toYear = tempWork.fromYear}/>
-                                    </div>
-                                    <label for="to">Til</label><br>
-                                    <div class="peroidContainer">
-                                        <SelectMonth bind:monthValue={tempWork.toMonth}/>
-                                            {#if newWorkExperience.fromYear}
-                                                <SelectYears startYear={tempWork.fromYear} bind:yearValue={tempWork.toYear}/>
-                                            {/if}
-                                    </div>
-                                </div>
+                <InnerCard emoji='💼'>
+                    <div slot="first">
+                        <div>
+                            <label for="position">Stilling</label><br>
+                            <DataList dataList={occupations} filterFunction={(input, obj) => obj.value.toLowerCase().includes(input.toLowerCase()) || obj.category.toLowerCase().startsWith(input.toLowerCase())} bind:inputValue={tempWork.position} />
+                        </div>
+                        <div>
+                            <div>
+                                <label for="employer">Arbeidsgiver</label><br>
+                                <input id="employer" type="text" bind:value={tempWork.employer}>
                             </div>
-                            <div class="tasks">
-                                <div class="editWork">
-                                    <label for="tasks">Hovedoppgaver</label><br>
-                                    {#each tempWork.tasks as task}
-                                        <input type="text" bind:value={task}>
-                                    {/each}
-                                </div>
+                        </div>
+                        <div>
+                            <label for="sector">Sektor</label><br>
+                            <select id="sector" bind:value={tempWork.sector}>
+                                <option value="Privat">Privat</option>
+                                <option value="Offentlig">Offentlig</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="from">Fra</label><br>
+                            <div class="peroidContainer">
+                                <SelectMonth bind:monthValue={tempWork.fromMonth}/>
+                                <SelectYears startYear={1950} bind:yearValue={tempWork.fromYear} on:change={() => tempWork.toYear = tempWork.fromYear}/>
+                            </div>
+                            <label for="to">Til</label><br>
+                            <div class="peroidContainer">
+                                <SelectMonth bind:monthValue={tempWork.toMonth}/>
+                                    {#if newWorkExperience.fromYear}
+                                        <SelectYears startYear={tempWork.fromYear} bind:yearValue={tempWork.toYear}/>
+                                    {/if}
                             </div>
                         </div>
                     </div>
-                    <div class="deleteButton">
+                    <div slot="second">
+                        <div>
+                            <label for="tasks">Hovedoppgaver</label><br>
+                            {#each tempWork.tasks as task}
+                                <input type="text" bind:value={task}>
+                            {/each}
+                        </div>
+                    </div>
+                    <div slot="right">
                         <Button buttonText="Fjern" onClick={() => removeWorkExperience(tempWork)}><IconDelete slot="before" /></Button>
                     </div>
-                </div>
+                </InnerCard>
             {/each}
             <Button buttonText="Legg til" onClick={() => addWorkExperience()}><IconAdd slot="before" /></Button>
         {:else}
             {#each competence.workExperience as work}
-                <div class="workContainer">
-                    <InitialsBadge size='large' initials='💼' />
-                    <div class='workStuff'>
-                        <div class='workFlex'>
-                            <div class="mainStuff">
-                                <h3>{work.position ?? 'Ukjent stilling'}</h3>
-                                <h4>{work.employer ?? 'Ukjent arbeidsgiver'}</h4>
-                                <p>{work.sector ?? 'Ukjent'} sektor</p>
-                                <p>📅 {(work.fromMonth && work.toMonth) ? `${work.fromMonth} ${work.fromYear} - ${work.toMonth} ${work.toYear}` : 'Ukjent periode'}</p>
-                            </div>
-                            {#if work.tasks && work.tasks.length > 0}
-                                <div class='tasks'>
-                                    <label for='noe'>Hovedoppgaver</label><br />
-                                    {#each work.tasks as task}
-                                        <div class="task">{task}</div>
-                                    {/each}
-                                </div>
-                            {/if}
-                        </div>
+                <InnerCard emoji='💼'>
+                    <div slot="first">
+                        <h3>{work.position ?? 'Ukjent stilling'}</h3>
+                        <h4>{work.employer ?? 'Ukjent arbeidsgiver'}</h4>
+                        <p>{work.sector ?? 'Ukjent'} sektor</p>
+                        <p>📅 {(work.fromMonth && work.toMonth) ? `${work.fromMonth} ${work.fromYear} - ${work.toMonth} ${work.toYear}` : 'Ukjent periode'}</p>
                     </div>
-                </div>
+                    <div slot="second">
+                        {#if work.tasks && work.tasks.length > 0}
+                            <label for='noe'>Hovedoppgaver</label><br />
+                            {#each work.tasks as task}
+                                <div>{task}</div>
+                            {/each}
+                        {/if}
+                    </div>
+                </InnerCard>
             {/each}
         {/if}
     </div>
 </Card>
 
 <style>
-    .workContainer {
-        position: relative;
-        display: flex;
-        padding: 1rem 1rem;
-        /*background-color: var(--siv-1);*/
-        /*border: 1px solid var(--siv-2);*/
-        border: 0px solid var(--mork);
-        border-radius: 1rem;
-        background-color: rgba(163, 163, 163, 0.1);
-        margin: 1rem 0;
-        /*box-shadow: 0 0 0 4px #aedcea;
-        box-shadow: 0px 5px 5px 0px rgba(0, 0, 0, 0.3);*/
-    }
-    .workFlex {
-        display: flex;
-        flex-wrap: wrap;
-    }
-    .mainStuff {
-        margin-left: 32px;
-        width: 20rem;
-    }
-    .tasks {
-        margin-left: 32px;
-        max-width: 20rem;
-    }
     label {
         font-size: 0.9em;
         font-weight: bold;
         font-style: italic;
     }
-    .task {
-        border-left: 0px solid var(--mork);
-        border-radius: 1rem;
-        margin-right: 1rem;
-    }
-    /*
-    .task:nth-child(4n+0) {
-        background-color: var(--grannyApple);
-    }
-    .task:nth-child(4n-1) {
-        background-color: var(--potPourri);
-    }
-    .task:nth-child(4n-2) {
-        background-color: var(--lightBlue);
-    }*/
-    .deleteButton {
-        position: absolute;
-        right: 1rem;
-    }
-
+    
     input[type=text], select {
         width: 100%;
         padding: 5px 5px;
