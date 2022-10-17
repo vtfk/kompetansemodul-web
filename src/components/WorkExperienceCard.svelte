@@ -52,8 +52,6 @@
         tasks: Array(maxTasks).fill('')
     }
 
-    console.log(tempWorkExperience)
-
     // Functions
     const addWorkExperience = () => {
 		// need to assign as a new object to make it "reactive"
@@ -88,7 +86,6 @@
     const cancelFunc = async () => {
         tempWorkExperience = JSON.parse(JSON.stringify(competence.workExperience))
     }
-
 </script>
 
 <Card title={title} backgroundColor={backgroundColor} editable={true} infoBox={ {content: "Her kommer det du trenger hjelp til"}} saveFunc={saveFunc} cancelFunc={cancelFunc}>

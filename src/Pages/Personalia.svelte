@@ -25,15 +25,14 @@
 	{:then res}
 		<div class="pageIntro">
 			<h2>Hei, {res.fornavn}! Dette er informasjon om deg.</h2>
-			<p><em>Her kan du gjøre ditten og datten</em></p>
 		</div>
 		<EmployeeCard employeeData={res} />
 		<PositionsCard employeeData={res} />
 		<TasksCard />
 		<EducationCard competence={res.competenceData} />
 		<WorkExperienceCard competence={res.competenceData} />
-		<ExperienceCard />
-		<DivCard />
+		<ExperienceCard competence={res.competenceData}/>
+		<DivCard competence={res.competenceData}/>
 	{:catch error}
 		<p style="color: red">{error.message}</p>
 	{/await}

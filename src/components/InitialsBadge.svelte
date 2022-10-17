@@ -2,10 +2,15 @@
     export let initials = '? ?'
     export let size = 'small'
     export let color = 'peppermint'
+    export let hideBadge = false
 </script>
 
 <main>
-    <div class="initialsBadge {size}" style="background: var(--{color})">{initials}</div>
+    {#if hideBadge === true}
+        <div></div>
+        {:else}
+        <div class="initialsBadge {size}" style="background: var(--{color})">{initials}</div>
+    {/if}
 </main>
 
 <style>

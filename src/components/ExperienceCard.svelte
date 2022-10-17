@@ -1,24 +1,143 @@
 <script>
-    import Card from "./Card.svelte";
+    import Card from "./Card.svelte"
+    import { get } from 'svelte/store'
+    import { saveCompetence }  from '../lib/services/useApi'
+    import { editingPersonalia } from '../lib/services/store'
+    import SelectMonth from "./SelectMonth.svelte"
+    import SelectYears from "./SelectYears.svelte"
+    import Button from "./Button.svelte"
+    import IconAdd from "./Icons/IconAdd.svelte"
+    import IconDelete from "./Icons/IconDelete.svelte"
+    import InnerCard from "./InnerCard.svelte"
 
-    const sleep = ms => new Promise(r => setTimeout(r, ms));
+    // Props
+    export let title = 'Annen relevant erfaring'
+    export let backgroundColor = '--potPourri'
+    export let competence = {
+		experience: []
+	}
+
+    if (!competence.experience) competence.experience = []
+
+    // State
+    let tempExperience = JSON.parse(JSON.stringify(competence.experience)) // Create a copy to display correct information (and maybe alert if user has edited) if user aborts edit
     
-    const saveFunc = async () => {
-        await sleep(1000)
-        const res = Math.floor(Math.random() * 2)+1
-        if (res === 1) console.log('OK, lagret')
-        else throw new Error('ÅNEI!')
+    let newExperience = {
+        fromYear: 2019,
+        toYear: 2022,
+        fromMonth: 'Januar',
+        toMonth: 'Februar'
     }
+
+    // Functions
+    const addExperience = () => {
+		// need to assign as a new object to make it "reactive"
+		tempExperience = [ ...tempExperience, newExperience ]
+		newExperience = {
+            fromYear: 2019,
+            toYear: 2022,
+            fromMonth: 'Januar',
+            toMonth: 'Februar',
+        }
+	}
+
+    const removeExperience = exp => {
+		tempExperience = tempExperience.filter(workExperience => workExperience !== exp)
+	}
+
+    // Store
+    let editInfo = get(editingPersonalia)
+    editingPersonalia.subscribe(value => {
+        editInfo = value
+    })
+
+    const saveFunc = async () => {
+        if (checkIfChanges()) {
+            await saveCompetence({...competence, experience: tempExperience})
+            competence.experience = JSON.parse(JSON.stringify(tempExperience))
+        } else {
+            console.log('Ingen endring, gidder ikke lagre')
+        }
+	}
+
+    const checkIfChanges = () => {
+        if ((competence.experience) !== (tempExperience)) return true
+        return false
+    }
+
     const cancelFunc = async () => {
-        console.log('ok, slutta å redigere')
+        tempExperience = JSON.parse(JSON.stringify(competence.experience))
     }
 </script>
 
-<Card title="Annen relevant erfaring" editable={true} infoBox={ {content: "Her skriver du inn verv og sånn, det må være relevant"}} saveFunc={saveFunc} cancelFunc={cancelFunc}>
-    <div><strong>Erfaring</strong></div>
-    <div>en liste med erfaring, verv. organisasjon, vervet, perioden</div>
+<Card title={title} editable={true} backgroundColor={backgroundColor} infoBox={ {content: "Her skriver du inn verv og sånn, det må være relevant"}} saveFunc={saveFunc} cancelFunc={cancelFunc}>
+    <div>
+        {#if editInfo.isEditing && editInfo.editBlock === title}
+            {#each tempExperience as tempExp}
+                <InnerCard emoji={'💼'}>
+                    <div slot="first">
+                        <div>
+                            <label for="position">Verv</label>
+                            <input id="position" type="text" bind:value={tempExp.position}>
+                        </div>
+                        <div>
+                            <label for="organization ">Organisasjon</label>
+                            <input id="organization" type="text" bind:value={tempExp.organization}>
+                        </div>
+                        <div>
+                            <label for="from">Fra</label><br>
+                            <div class="peroidContainer">
+                                <SelectMonth bind:monthValue={tempExp.fromMonth}/>
+                                <SelectYears startYear={1950} bind:yearValue={tempExp.fromYear} on:change={() => tempExp.toYear = tempExp.fromYear}/>
+                            </div>
+                            <label for="to">Til</label><br>
+                            <div class="peroidContainer">
+                                <SelectMonth bind:monthValue={tempExp.toMonth}/>
+                                    {#if newExperience.fromYear}
+                                        <SelectYears startYear={tempExp.fromYear} bind:yearValue={tempExp.toYear}/>
+                                    {/if}
+                            </div>
+                        </div>
+                    </div>
+                    <div slot="right">
+                        <Button buttonText="Fjern" onClick={() => removeExperience(tempExp)}><IconDelete slot="before" /></Button>
+                    </div>
+                </InnerCard>
+            {/each}
+            <Button buttonText="Legg til" onClick={() => addExperience()}><IconAdd slot="before" /></Button>
+        {:else if competence.experience.length === 0}
+            <div><p>Ingen annen relevant erfaring</p></div> 
+        {:else} 
+            {#each competence.experience as exp}
+                <InnerCard emoji={'💼'}>
+                    <div slot="first">
+                        <h3>{exp.position ?? 'Ukjent posisjon'}</h3>
+                        <h4>🏢{exp.organization  ?? 'Ukjent organisasjon'}</h4>
+                        <p>📅 {(exp.fromMonth && exp.toMonth) ? `${exp.fromMonth} ${exp.fromYear} - ${exp.toMonth} ${exp.toYear}` : 'Ukjent periode'}</p>
+                    </div>
+                </InnerCard>
+            {/each}
+        {/if}
+    </div>
 </Card>
 
 <style>
+label {
+    font-size: 0.9em;
+    font-weight: bold;
+    font-style: italic;
+}
+
+input[type=text] {
+    width: 100%;
+    padding: 5px 5px;
+    display: inline-block;
+    border: 1px solid var(--mork);
+    border-radius: 0.5rem;
+    box-sizing: border-box;
+}
+.peroidContainer {
+    display: flex;
+}
 
 </style>

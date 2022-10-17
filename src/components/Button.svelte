@@ -28,7 +28,7 @@
         display: flex;
         border: 2px solid black;
         cursor: pointer;
-        border-radius: 0px;
+        border-radius: 0.5rem; /* Skal vi ha border radius???? */
         padding-left: 0.5rem;
         padding-right: 0.5rem;
         height: 2rem;
