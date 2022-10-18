@@ -169,7 +169,7 @@
         flex-wrap: wrap;
     }
     .panel {
-        margin-bottom: 2rem;
+        margin-bottom: 3rem;
         padding: 40px 32px;
     }
     .headerIcon {
