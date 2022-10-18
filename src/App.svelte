@@ -21,30 +21,38 @@
     return `${split[0][0].toUpperCase()} ${split[split.length - 1][0].toUpperCase()}`
   }
   
+  const validateUsername = (upn) => {
+    return upn.endsWith('@vtfk.no')
+  }
+  
 </script>
 
   {#await Login()}
     Loading...
   {:then response}
-    <div class="sidenavWrapper">
-      <SideNav />
-      </div>
-    <div class="contentWrapper">
-      <div class="content">
-        <Header initials={getInitials(response.name)} name={response.name} />
-          { #if page === 'personalia'}
-              <Personalia />
-          { :else if page === 'person' }
-              <Person />
-          { :else if page === 'organisasjon' }
-              <Orgstruktur />
-          { :else if page === 'hjelp' }
-              <Hjelp />
-          { :else if page === '' }
-              <h1>Velkommen skal du være, {response.name.split(' ')[0]}!</h1>
-          {/if }
+    {#if !validateUsername(response.username)}
+      Kun VTFK-ansatte har tilgang på denne portalen. Ta kontakt med IT-service desk dersom du mener du skal ha tilgang.
+      {:else}
+        <div class="sidenavWrapper">
+          <SideNav />
+          </div>
+        <div class="contentWrapper">
+          <div class="content">
+            <Header initials={getInitials(response.name)} name={response.name} />
+              { #if page === 'personalia'}
+                  <Personalia />
+              { :else if page === 'person' }
+                  <Person />
+              { :else if page === 'organisasjon' }
+                  <Orgstruktur />
+              { :else if page === 'hjelp' }
+                  <Hjelp />
+              { :else if page === '' }
+                  <h1>Velkommen skal du være, {response.name.split(' ')[0]}!</h1>
+              {/if }
+            </div>
         </div>
-    </div>
+    {/if}
   {:catch error}
     <h1>App app app: {error}</h1>
   {/await}
