@@ -4,14 +4,18 @@
     export let content = 'litt innhold og greier og geierojeirjdlkfjlksd '
     export let open = false
     export let onClose = () => {console.log('LUKK!')}
-
+    export let html = false
 
 </script>
 
 <div class="infoBox{ open ? ' open' : '' }">
     <div class="infoContainer">
         <div class="content">
-            {content}
+            {#if html}
+                {@html content}
+            {:else}
+                {content}
+            {/if}
         </div>
         <div class="iconContainer">
             <div class="closeIcon" title="Lukk infoboks" on:click={onClose}><IconClose /></div>
