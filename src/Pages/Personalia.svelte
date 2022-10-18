@@ -8,7 +8,12 @@
     import ExperienceCard from '../components/ExperienceCard.svelte';
     import PositionsCard from '../components/PositionsCard.svelte';
     import WorkExperienceCard from '../components/WorkExperienceCard.svelte';
+    import IconHelp from '../components/Icons/IconHelp.svelte';
+    import InfoBox from '../components/InfoBox.svelte';
 
+	// State
+	let showInfoBox = false
+	let infoContent = "<h4>VTFK Kompetanse</h4><p>Her kan du gjøre litt av hvert!</p>"
 
 	const getMee = async () => {
 		const me = await getMe()
@@ -24,7 +29,9 @@
 		</div>
 	{:then res}
 		<div class="pageIntro">
-			<h2>Hei, {res.fornavn}! Dette er informasjon om deg.</h2>
+			<h2>Hei, {res.fornavn}! Her kan du se og redigere din kompetanse</h2>
+			<div class="headerIcon" title={showInfoBox ? 'Lukk infoboks' : 'Åpne infoboks'} on:click={() => {showInfoBox = !showInfoBox}}><IconHelp /></div>
+			<InfoBox content={infoContent} html={true} open={showInfoBox} onClose={() => {showInfoBox = !showInfoBox}} />
 		</div>
 		<EmployeeCard employeeData={res} />
 		<PositionsCard employeeData={res} />
@@ -45,5 +52,18 @@
 	}
 	.pageIntro {
 		margin-bottom: 36px;
+		display: flex;
+		flex-wrap: wrap;
 	}
+	.headerIcon {
+		flex-shrink: 0;
+        display: flex;
+        align-items: center;
+        width: 1.6rem;
+        margin-left: 4px;
+    }
+	.headerIcon:hover {
+        cursor: pointer;
+        transform: scale(1.2);
+    }
 </style>

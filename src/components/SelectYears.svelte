@@ -1,13 +1,15 @@
 <script>
     export let yearValue
     export let startYear = undefined
+    export let addTodaysDate = false
     
     const years = (startYear) => {
         const currentYear = new Date().getFullYear()
         let yearArr = []
         for (let i = startYear; i <= currentYear; i++){
             yearArr.push(i)
-        } 
+        }
+        if (addTodaysDate) yearArr.push('Dagens dato')
         return {
             years: yearArr.reverse(),
             currentYear

@@ -11,7 +11,7 @@
     import InnerCard from "./InnerCard.svelte"
 
     // Props
-    export let title = 'Annen relevant erfaring'
+    export let title = 'Verv'
     export let backgroundColor = '--potPourri'
     export let competence = {
 		experience: []
@@ -68,13 +68,28 @@
     const cancelFunc = async () => {
         tempExperience = JSON.parse(JSON.stringify(competence.experience))
     }
+
+    const getPeriod = (exp) => {
+        const dates = {
+            fromMonth: exp.fromMonth ?? 'Ukjent mnd',
+            fromYear: exp.fromYear ?? 'Ukjent år',
+            toMonth: exp.toMonth ?? 'Ukjent mnd',
+            toYear: exp.toYear ?? 'Ukjent år'
+        }
+        if (dates.toMonth === 'Dagens dato' || dates.toYear === 'Dagens dato') {
+            dates.toYear = ''
+            dates.toMonth = 'Dagens dato'
+        }
+        return `${dates.fromMonth} ${dates.fromYear} - ${dates.toMonth} ${dates.toYear}`
+    }
+
 </script>
 
 <Card title={title} editable={true} backgroundColor={backgroundColor} infoBox={ {content: "Her skriver du inn verv og sånn, det må være relevant"}} saveFunc={saveFunc} cancelFunc={cancelFunc}>
     <div>
         {#if editInfo.isEditing && editInfo.editBlock === title}
             {#each tempExperience as tempExp}
-                <InnerCard emoji={'💼'}>
+                <InnerCard emoji={'🦸‍♀️'}>
                     <div slot="first">
                         <div>
                             <label for="position">Verv</label>
@@ -92,9 +107,9 @@
                             </div>
                             <label for="to">Til</label><br>
                             <div class="peroidContainer">
-                                <SelectMonth bind:monthValue={tempExp.toMonth}/>
+                                <SelectMonth addTodaysDate={true} bind:monthValue={tempExp.toMonth}/>
                                     {#if newExperience.fromYear}
-                                        <SelectYears startYear={tempExp.fromYear} bind:yearValue={tempExp.toYear}/>
+                                        <SelectYears startYear={tempExp.fromYear} addTodaysDate={true} bind:yearValue={tempExp.toYear}/>
                                     {/if}
                             </div>
                         </div>
@@ -106,14 +121,14 @@
             {/each}
             <Button buttonText="Legg til" onClick={() => addExperience()}><IconAdd slot="before" /></Button>
         {:else if competence.experience.length === 0}
-            <div><p>Ingen annen relevant erfaring</p></div> 
+            <div><p>Ingen verv lagt inn</p></div> 
         {:else} 
             {#each competence.experience as exp}
-                <InnerCard emoji={'💼'}>
+                <InnerCard emoji={'🦸‍♀️'}>
                     <div slot="first">
-                        <h3>{exp.position ?? 'Ukjent posisjon'}</h3>
+                        <h3>{exp.position ?? 'Ukjent verv'}</h3>
                         <h4>🏢{exp.organization  ?? 'Ukjent organisasjon'}</h4>
-                        <p>📅 {(exp.fromMonth && exp.toMonth) ? `${exp.fromMonth} ${exp.fromYear} - ${exp.toMonth} ${exp.toYear}` : 'Ukjent periode'}</p>
+                        <p>📅 {getPeriod(exp)}</p>
                     </div>
                 </InnerCard>
             {/each}
