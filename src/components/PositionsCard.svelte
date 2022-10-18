@@ -1,7 +1,6 @@
 <script>
     import Card from "./Card.svelte";
     import { getZipCodeInfo } from '../lib/Helpers/zipCode'
-    import InitialsBadge from "./InitialsBadge.svelte";
     import InnerCard from "./InnerCard.svelte";
 
     // Props
@@ -11,6 +10,32 @@
     const convertDate = (date) => {
         const dateList = date.slice(0,10).split('-')
         return `${dateList[2]}.${dateList[1]}.${dateList[0]}`
+    }
+
+    const getDepartment = (structure) => {
+        const info = {
+            department: structure[0].navn
+        }
+        if (structure.length === 1) {
+            // Must be whaaat, top level?
+            info.company = structure[0].navn
+        }
+        else if (structure.length === 2) {
+            // Must be fylkesdirektor level, we use the main company
+            info.company = structure[1].navn
+        } else if (structure.length === 3) {
+            // Must be sector level, we use the main company
+            info.company = structure[2].navn
+        } else if (structure.length === 4) {
+            // Must be section level, we use the sector
+            info.company = structure[1].navn
+        } else if (structure.length > 4) {
+            // Must be something lower like me, we use sector
+            info.company = structure[structure.length-3].navn
+        } else {
+            info.company = 'Ukjent sektor'
+        }
+        return info
     }
  
     const mainPosition = employeeData.harAktivtArbeidsforhold ? employeeData.aktiveArbeidsforhold.find(forhold => forhold.hovedstilling) : undefined // TODO: hva med de som faktisk ikke har aktiv hovedstilling????
@@ -56,25 +81,33 @@
         </div>
         {#if mainPosition}
             <div class="mainPosition">
-                <h4>Hovedstilling</h4>
-                <InnerCard size='medium' emoji='💼'>
+                <InnerCard emoji='💼'>
                     <div slot="first">
+                        <h4>Hovedstilling</h4>
                         <h3>{mainPosition.stillingstittel ?? 'Ukjent tittel'} ({Math.ceil(mainPosition.lonnsprosent/100)}%)</h3>
-                        <h4>{mainPosition.arbeidssted.struktur[mainPosition.arbeidssted.struktur.length-1].navn}</h4>
-                        <p>{mainPosition.arbeidssted.struktur[2].navn}</p>
+                        <h4>{getDepartment(mainPosition.arbeidssted.struktur).department}</h4>
+                        <p>{getDepartment(mainPosition.arbeidssted.struktur).company}</p>
+                    </div>
+                    <div slot="second">
+                        <label for="tull">Leder</label>
+                        <p>{mainPosition.arbeidssted?.leder?.navn ?? 'Ukjent leder'}</p>
                     </div>
                 </InnerCard>
             </div>
         {/if}
         {#if displayData.otherPositions.length > 0}
             <div class="secondaryPosition">
-                <h4>Aktive sekundærstillinger</h4>
                 {#each displayData.otherPositions as position}
-                    <InnerCard size='medium' emoji='💼'>
+                    <InnerCard emoji='💼'>
                         <div slot="first">
+                            <h4>Tileggsstilling</h4>
                             <h3>{position.stillingstittel ?? 'Ukjent tittel'} ({Math.ceil(position.lonnsprosent/100)}%)</h3>
-                            <h4>{position.arbeidssted.struktur[position.arbeidssted.struktur.length-1].navn}</h4>
-                            <p>{position.arbeidssted.struktur[2].navn}</p>
+                            <h4>{getDepartment(position.arbeidssted.struktur).department}</h4>
+                            <p>{getDepartment(position.arbeidssted.struktur).company}</p>
+                        </div>
+                        <div slot="second">
+                            <label for="tull">Leder</label>
+                            <p>{position.arbeidssted?.leder?.navn ?? 'Ukjent leder'}</p>
                         </div>
                     </InnerCard>     
                 {/each}
@@ -103,19 +136,13 @@
     .generalInfo {
         padding-bottom: 1rem;
     }
-
-    .position {
-        display: flex;
-        padding: 1rem 1rem;
-        border: 0px solid var(--mork);
-        background-color: rgba(0, 0, 0, 0.03);
-        border-radius: 1rem;
-    }
-    .stuff {
-        margin-left: 32px;
-    }
     .secondaryPosition {
         margin-top: 1rem;
+    }
+    label {
+        font-size: 0.9em;
+        font-weight: bold;
+        font-style: italic;
     }
 
 </style>
