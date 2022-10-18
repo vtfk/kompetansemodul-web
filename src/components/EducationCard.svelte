@@ -143,6 +143,8 @@
                 </InnerCard>
             {/each}
             <Button buttonText="Legg til" onClick={() => addEducation()}><IconAdd slot="before" /></Button>
+        {:else if competence.education.length === 0}
+            <div><p>Ingen utdanning lagt inn</p></div> 
         {:else}
             {#each competence.education as edu}
                 <InnerCard emoji={getEmoji(edu.degree)}>

@@ -140,6 +140,8 @@
                 </InnerCard>
             {/each}
             <Button buttonText="Legg til" onClick={() => addWorkExperience()}><IconAdd slot="before" /></Button>
+        {:else if competence.workExperience.length === 0}
+            <div><p>Ingen arbeidserfaring lagt inn</p></div> 
         {:else}
             {#each competence.workExperience as work}
                 <InnerCard emoji='💼'>
