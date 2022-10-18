@@ -28,7 +28,7 @@
 		</div>
 		<EmployeeCard employeeData={res} />
 		<PositionsCard employeeData={res} />
-		<TasksCard />
+		<TasksCard competence={res.competenceData}/>
 		<EducationCard competence={res.competenceData} />
 		<WorkExperienceCard competence={res.competenceData} />
 		<ExperienceCard competence={res.competenceData}/>

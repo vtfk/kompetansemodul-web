@@ -46,8 +46,7 @@
 <Card title={title} saveFunc={saveFunc} cancelFunc={cancelFunc} backgroundColor={backgroundColor} editable={true} infoBox={ {content: "Her skriver du inn noe"}}>
     <div>
         {#if editInfo.isEditing && editInfo.editBlock === title}
-        <InnerCard hideBadge={true}>
-        <div slot="first">
+        <div class="contentConteiner">
             <div class="soloContainer">
                 <form name="soloroleForm">
                     <label for="solorole">Solorolle</label><br>
@@ -72,32 +71,31 @@
                 </form>
             </div>
         </div>
-        </InnerCard>
         {:else}
-        <InnerCard hideBadge={true}>
-            <div slot="first">
-                <div>
-                    <label for="solorole">Solorolle</label><br>
-                    <div>{tempOther.soloRole || 'Har ikke oppdatert denne informasjonen'}</div>
-                    {#if competence.other.soloRole === 'Ja'}
-                        <div class="textareaContainer">
-                            <label for="description">Beskriv din solorolle</label>
-                            <textarea id="description" disabled rows="4" cols="50" maxlength="200" bind:value={competence.other.description}/>
-                        </div>
-                    {/if}
-                </div>
-                <div>
-                    <label for="solorole">Foretrukken fylkeskommune</label><br>
-                    <div>{tempOther.county || 'Har ikke oppdatert denne inromasjonen'}</div>
-                </div>
+            <div class="contentConteiner">
+                <label for="solorole">Solorolle</label><br>
+                <div>{tempOther.soloRole || 'Har ikke oppdatert denne informasjonen'}</div>
+                {#if competence.other.soloRole === 'Ja'}
+                    <div class="textareaContainer">
+                        <label for="description">Beskriv din solorolle</label>
+                        <textarea id="description" disabled rows="4" cols="50" maxlength="200" bind:value={competence.other.description}/>
+                    </div>
+                {/if}
             </div>
-        </InnerCard>
+            <div>
+                <label for="solorole">Foretrukken fylkeskommune</label><br>
+                <div>{tempOther.county || 'Har ikke oppdatert denne inromasjonen'}</div>
+            </div>
         {/if}
 </Card>
 
 <style>
 .soloRadio {
     padding: 0.2rem;
+}
+
+.contentConteiner {
+    width: 23rem;
 }
 
 .soloContainer {
