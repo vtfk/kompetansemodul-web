@@ -3,7 +3,6 @@
     import { get } from 'svelte/store'
     import { saveCompetence }  from '../lib/services/useApi'
     import { editingPersonalia } from '../lib/services/store'
-    import InnerCard from "./InnerCard.svelte"
 
     // Props
     export let title = 'Annen relevant informasjon'
@@ -24,9 +23,8 @@
     let tempOther = JSON.parse(JSON.stringify(competence.other)) // Create a copy to display correct information (and maybe alert if user has edited) if user aborts edit
     
     const saveFunc = async () => {
-        console.log(tempOther)
         if (checkIfChanges()) {
-            console.log(await saveCompetence({...competence, other: tempOther}))
+            await saveCompetence({...competence, other: tempOther})
             competence.other = JSON.parse(JSON.stringify(tempOther))
         } else {
             console.log('Ingen endring, gidder ikke lagre')
@@ -34,7 +32,7 @@
 	}
 
     const checkIfChanges = () => {
-        if ((competence.other) !== (tempOther)) return true
+        if (JSON.stringify(competence.other) !== JSON.stringify(tempOther)) return true
         return false
     }
 
@@ -43,65 +41,64 @@
     }
 </script>
 
-<Card title={title} saveFunc={saveFunc} cancelFunc={cancelFunc} backgroundColor={backgroundColor} editable={true} infoBox={ {content: "Her skriver du inn noe"}}>
+<Card title={title} saveFunc={saveFunc} cancelFunc={cancelFunc} backgroundColor={backgroundColor} editable={true} infoBox={ {content: "Her skriver du inn noe"} }>
     <div>
         {#if editInfo.isEditing && editInfo.editBlock === title}
-        <div class="contentConteiner">
-            <div class="soloContainer">
-                <form name="soloroleForm">
-                    <label for="solorole">Solorolle</label><br>
-                    <div class="soloRadio">
-                        <label for="ja">Ja</label>
-                        <input type="radio" id="solorole" name="solo" value="Ja" bind:group={tempOther.soloRole}>
-                        <label for="nei">Nei</label>
-                        <input type="radio" id="solorole" name="solo" value="Nei" bind:group={tempOther.soloRole}>
-                    </div>
-                    {#if tempOther.soloRole === 'Ja'}
-                        <div class="textareaContainer">
-                            <label for="description">Beskriv din solorolle</label>
-                            <textarea id="description" rows="4" cols="50" maxlength="200" bind:value={tempOther.description}/>
-                        </div>
-                    {/if}
-                    <label for="solorole">Foretrukken fylkeskommune</label><br>
-                    <select name="degree" id="degree" bind:value={tempOther.county}>
-                        <option value="Telemark">Telemark</option>
-                        <option value="Vestfold">Vestfold</option>
-                        <option value="Vet ikke">Vet ikke</option>
-                    </select>
-                </form>
-            </div>
-        </div>
-        {:else}
-            <div class="contentConteiner">
-                <label for="solorole">Solorolle</label><br>
-                <div>{tempOther.soloRole || 'Har ikke oppdatert denne informasjonen'}</div>
-                {#if competence.other.soloRole === 'Ja'}
+        <div class="contentContainer">
+            <div class="innerContainer firstContainer">
+                <h4>Solorolle</h4>
+                <div class="soloRadio">
+                    <label for="ja">Ja</label>
+                    <input type="radio" id="ja" name="solo" value="Ja" bind:group={tempOther.soloRole}>
+                    <label for="nei">Nei</label>
+                    <input type="radio" id="nei" name="solo" value="Nei" bind:group={tempOther.soloRole}>
+                </div>
+                {#if tempOther.soloRole === 'Ja'}
                     <div class="textareaContainer">
-                        <label for="description">Beskriv din solorolle</label>
-                        <textarea id="description" disabled rows="4" cols="50" maxlength="200" bind:value={competence.other.description}/>
+                        <label for="description">Beskriv din solorolle (maks 200 tegn)</label><br />
+                        <textarea id="description" rows="6" maxlength="200" bind:value={tempOther.soloRoleDescription}/>
+                        <span>{tempOther.soloRoleDescription.length}/200</span>
                     </div>
                 {/if}
             </div>
-            <div>
-                <label for="solorole">Foretrukken fylkeskommune</label><br>
-                <div>{tempOther.county || 'Har ikke oppdatert denne inromasjonen'}</div>
+            <div class="innerContainer">
+                <h4>Ønsket fylkeskommune/arbeidssted etter oppdeling</h4>
+                <select name="preferredCounty" id="preferredCounty" bind:value={tempOther.preferredCounty}>
+                    <option value="Vet ikke">Vet ikke</option>
+                    <option value="Telemark">Telemark fylkeskommune</option>
+                    <option value="Vestfold">Vestfold fylkeskommune</option>
+                </select>
+            </div>
+        </div>
+        {:else}
+            <div class="contentContainer">
+                <div class="innerContainer firstContainer">
+                    <h4>Solorolle</h4>
+                    <div>{competence.other?.soloRole || 'Ikke fylt ut av ansatt'}
+                        {#if competence.other.soloRole === 'Ja'}
+                            - {competence.other.soloRoleDescription}
+                        {/if}
+                    </div>
+                </div>
+                <div class="innerContainer">
+                    <h4>Ønsket fylkeskommune/arbeidssted etter oppdeling</h4>
+                    <div>{tempOther.county || 'Ikke fylt ut av ansatt'}</div>
+                </div>
             </div>
         {/if}
 </Card>
 
 <style>
+
+.contentContainer {
+    display: flex;
+    flex-wrap: wrap;
+    max-width: 50rem;
+    justify-content: space-between;
+}
 .soloRadio {
     padding: 0.2rem;
 }
-
-.contentConteiner {
-    width: 23rem;
-}
-
-.soloContainer {
-    display: flex;
-}
-
 label {
     font-size: 0.9em;
     font-weight: bold;
@@ -111,7 +108,6 @@ label {
 select {
     width: 100%;
     padding: 5px 5px;
-    display: inline-block;
     border: 1px solid var(--mork);
     border-radius: 0.5rem;
     box-sizing: border-box;
@@ -127,13 +123,19 @@ input[type=radio] {
 
 textarea {
     padding: 5px 5px;
-    display: inline-block;
     border: 1px solid var(--mork);
     border-radius: 0.5rem;
-    box-sizing: border-box;
+    resize: none;
+    width: 100%;
 }
 
 .textareaContainer {
-    display:grid;
+    width: 19rem;
+}
+
+.firstContainer {
+    max-width: 25rem;
+    padding-right: 2rem;
+    padding-bottom: 2rem;
 }
 </style>
