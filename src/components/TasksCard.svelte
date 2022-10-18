@@ -8,7 +8,7 @@
     import IconAdd from "./Icons/IconAdd.svelte";
 
     // Props
-    export let title = 'Oppgaver'
+    export let title = 'Nøkkeloppgaver i dagens stilling'
     export let backgroundColor = '--springWood'
     export let competence = {
 		tasks: []
