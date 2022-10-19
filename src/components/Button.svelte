@@ -40,6 +40,7 @@
     }
     button.disabled {
         cursor: not-allowed;
+        color: var(--mork);
     }
 
     /* No border === true */
@@ -47,7 +48,7 @@
         border: 0px solid black;
     }
     button.disabled:hover {
-        background-color: var(--catSkillWhite);
+        background-color: inherit;
     }
     button.small {
         height: 1.5rem;
