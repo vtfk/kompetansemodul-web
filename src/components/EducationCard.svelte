@@ -36,6 +36,35 @@
         toMonth: 'Februar'
     }
 
+    // Validation
+    let canSave = false
+    let validation = []
+
+    // Reactive validation
+    $: {
+        canSave = true
+        const tempValidation = []
+        for (const edu of tempEducation) {
+            // What fields are we validating
+            const valid = {
+                subject: true,
+                school: true,
+            }
+            // Validation of each field
+            if (!edu.subject || edu.subject.length < 1) {
+                valid.subject = false
+                canSave = false
+            }
+            if (!edu.school || edu.school.length < 1) {
+                valid.school = false
+                canSave = false
+            }
+
+            tempValidation.push(valid)
+        }
+        validation = JSON.parse(JSON.stringify(tempValidation))
+    }
+
     // Functions
     const addEducation = () => {
 		// need to assign as a new object to make it "reactive"
@@ -90,10 +119,10 @@
     const infoText = "<p>Informasjon om hvilken utdanning du har. Vi er interessert i enkeltemner, videreutdanninger, fagbrev eller andre grader av utdanning. Her skal du også legge inn sertifiseringer.<p><br><p>Din utdanning er beskrivende for din formelle kompetanse og er dermed nødvendig i forbindelse med kartleggingen av din kompetanse.</p>"
 </script>
 
-<Card title={title} editable={true} backgroundColor={backgroundColor} infoBox={ {content: infoText}} saveFunc={saveFunc} cancelFunc={cancelFunc}>
+<Card title={title} editable={true} backgroundColor={backgroundColor} infoBox={ {content: infoText}} canSave={canSave} saveFunc={saveFunc} cancelFunc={cancelFunc}>
     <div>
         {#if editInfo.isEditing && editInfo.editBlock === title}
-            {#each tempEducation as tempEdu}
+            {#each tempEducation as tempEdu, i}
                 <InnerCard emoji={getEmoji(tempEdu.degree)}>
                     <div slot="first">
                         <div>
@@ -113,10 +142,10 @@
                         </div>
                         <div>
                             {#if tempEdu.degree === "Fagbrev"}
-                                <label for="degree">Fagbrev</label><br>
+                                <label for="subject">Fagbrev</label><label for="subject" class="validation">{!validation[i].subject ? '*' : '' }</label><br>
                                 <DataList dataList={utdanningsprogramvariantNavn()} filterFunction={(input, obj) => obj.value.toLowerCase().includes(input.toLowerCase()) || obj.category.toLowerCase().startsWith(input.toLowerCase()) } bind:inputValue={tempEdu.subject}/>
                             {:else}
-                                <label for="subject">Fagområde</label><br>
+                                <label for="subject">Fagområde</label><label for="subject" class="validation">{!validation[i].subject ? '*' : '' }</label><br>
                                 <DataList dataList={fagomraader} filterFunction={(input, obj) => obj.value.toLowerCase().includes(input.toLowerCase()) || obj.category.toLowerCase().startsWith(input.toLowerCase()) } bind:inputValue={tempEdu.subject}/>
                             {/if}                           
                         </div>
@@ -135,7 +164,7 @@
                             </div>
                         </div>
                         <div>
-                            <label for="period">Skole</label><br>
+                            <label for="school">Skole</label><label for="school" class="validation">{!validation[i].school ? '*' : '' }</label><br>
                             <input type="text" bind:value={tempEdu.school}>
                         </div>
                     </div>
@@ -178,6 +207,10 @@
     }
     .peroidContainer {
         display: flex;
+    }
+    
+    .validation {
+        color: var(--red)
     }
 
 </style>

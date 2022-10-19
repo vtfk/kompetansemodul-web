@@ -26,7 +26,37 @@
         fromYear: 2019,
         toYear: 2022,
         fromMonth: 'Januar',
-        toMonth: 'Februar'
+        toMonth: 'Februar',
+        type: 'Verv'
+    }
+
+    // Validation
+    let canSave = false
+    let validation = []
+
+    // Reactive validation
+    $: {
+        canSave = true
+        const tempValidation = []
+        for (const exp of tempExperience) {
+            // What fields are we validating
+            const valid = {
+                position: true,
+                organization: true,
+            }
+            // Validation of each field
+            if (!exp.position || exp.position.length < 1) {
+                valid.position = false
+                canSave = false
+            }
+            if (!exp.organization || exp.organization.length < 1) {
+                valid.organization = false
+                canSave = false
+            }
+
+            tempValidation.push(valid)
+        }
+        validation = JSON.parse(JSON.stringify(tempValidation))
     }
 
     // Functions
@@ -38,6 +68,7 @@
             toYear: 2022,
             fromMonth: 'Januar',
             toMonth: 'Februar',
+            type: 'Verv'
         }
 	}
 
@@ -83,22 +114,22 @@
         return `${dates.fromMonth} ${dates.fromYear} - ${dates.toMonth} ${dates.toYear}`
     }
 
-    const infoText = "<p>Dette handler om relevant verv du har hatt de siste årene. Du trenger ikke fylle ut frivillige verv eller verv i fritidsaktiviteter.<p>"
+    const infoText = "<p>Dette handler om relevante verv du har hatt de siste årene. Du trenger ikke fylle ut frivillige verv eller verv i fritidsaktiviteter.<p>"
 
 </script>
 
-<Card title={title} editable={true} backgroundColor={backgroundColor} infoBox={ {content: infoText}} saveFunc={saveFunc} cancelFunc={cancelFunc}>
+<Card title={title} editable={true} backgroundColor={backgroundColor} infoBox={ {content: infoText}} canSave={canSave} saveFunc={saveFunc} cancelFunc={cancelFunc}>
     <div>
         {#if editInfo.isEditing && editInfo.editBlock === title}
-            {#each tempExperience as tempExp}
+            {#each tempExperience as tempExp, i}
                 <InnerCard emoji={'🦸‍♀️'}>
                     <div slot="first">
                         <div>
-                            <label for="position">Verv</label>
+                            <label for="position">Verv</label><label for="position" class="validation">{!validation[i].position ? '*' : '' }</label>
                             <input id="position" type="text" bind:value={tempExp.position}>
                         </div>
                         <div>
-                            <label for="organization ">Organisasjon</label>
+                            <label for="organization ">Organisasjon</label><label for="organization" class="validation">{!validation[i].organization ? '*' : '' }</label>
                             <input id="organization" type="text" bind:value={tempExp.organization}>
                         </div>
                         <div>
@@ -139,22 +170,25 @@
 </Card>
 
 <style>
-label {
-    font-size: 0.9em;
-    font-weight: bold;
-    font-style: italic;
-}
+    label {
+        font-size: 0.9em;
+        font-weight: bold;
+        font-style: italic;
+    }
 
-input[type=text] {
-    width: 100%;
-    padding: 5px 5px;
-    display: inline-block;
-    border: 1px solid var(--mork);
-    border-radius: 0.5rem;
-    box-sizing: border-box;
-}
-.peroidContainer {
-    display: flex;
-}
+    input[type=text] {
+        width: 100%;
+        padding: 5px 5px;
+        display: inline-block;
+        border: 1px solid var(--mork);
+        border-radius: 0.5rem;
+        box-sizing: border-box;
+    }
+    .peroidContainer {
+        display: flex;
+    }
+    .validation {
+        color: var(--red)
+    }
 
 </style>

@@ -52,6 +52,35 @@
         tasks: Array(maxTasks).fill('')
     }
 
+    // Validation
+    let canSave = false
+    let validation = []
+
+    // Reactive validation
+    $: {
+        canSave = true
+        const tempValidation = []
+        for (const exp of tempWorkExperience) {
+            // What fields are we validating
+            const valid = {
+                position: true,
+                employer: true,
+            }
+            // Validation of each field
+            if (!exp.position || exp.position.length < 1) {
+                valid.position = false
+                canSave = false
+            }
+            if (!exp.employer || exp.employer.length < 1) {
+                valid.employer = false
+                canSave = false
+            }
+
+            tempValidation.push(valid)
+        }
+        validation = JSON.parse(JSON.stringify(tempValidation))
+    }
+
     // Functions
     const addWorkExperience = () => {
 		// need to assign as a new object to make it "reactive"
@@ -90,19 +119,19 @@
     const infoText ="<p>Dette feltet omfatter tidligere stillinger du har hatt, dvs. ikke den stillingen du har i VTFK per i dag. Ta utgangspunkt i de siste 10-15 årene når du legger inn.</p><br><p>Hvorfor spør vi om dette? Din arbeidserfaring er èn del av din realkompetanse og er dermed nødvendig i forbindelse med kartlegging av din kompetanse.</p>"
 </script>
 
-<Card title={title} backgroundColor={backgroundColor} editable={true} infoBox={ {content: infoText}} saveFunc={saveFunc} cancelFunc={cancelFunc}>
+<Card title={title} backgroundColor={backgroundColor} editable={true} infoBox={ {content: infoText}} canSave={canSave} saveFunc={saveFunc} cancelFunc={cancelFunc}>
     <div>
         {#if editInfo.isEditing && editInfo.editBlock === title}
-            {#each tempWorkExperience as tempWork}
+            {#each tempWorkExperience as tempWork, i}
                 <InnerCard emoji='💼'>
                     <div slot="first">
                         <div>
-                            <label for="position">Stilling</label><br>
+                            <label for="position">Stilling</label><label for="position" class="validation">{!validation[i].position ? '*' : '' }</label><br>
                             <DataList dataList={occupations} filterFunction={(input, obj) => obj.value.toLowerCase().includes(input.toLowerCase()) || obj.category.toLowerCase().startsWith(input.toLowerCase())} bind:inputValue={tempWork.position} />
                         </div>
                         <div>
                             <div>
-                                <label for="employer">Arbeidsgiver</label><br>
+                                <label for="employer">Arbeidsgiver</label><label for="employer" class="validation">{!validation[i].employer ? '*' : '' }</label><br>
                                 <input id="employer" type="text" bind:value={tempWork.employer}>
                             </div>
                         </div>
@@ -184,6 +213,9 @@
     }
     .peroidContainer {
         display: flex;
+    }
+    .validation {
+        color: var(--red)
     }
 
 </style>
