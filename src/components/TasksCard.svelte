@@ -16,10 +16,8 @@
         otherTasks: []
 	}
 
-    if (!competence.tasks) competence.tasks = {
-		mainTasks: [],
-        otherTasks: []
-	}
+    if (!competence.mainTasks) competence.mainTasks = []
+	if (!competence.otherTasks) competence.otherTasks = []	
 
     // Store
     let editInfo = get(editingPersonalia)
