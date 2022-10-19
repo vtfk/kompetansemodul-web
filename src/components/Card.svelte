@@ -15,6 +15,7 @@
     export let backgroundColor = '--ecruWhite'
     export let infoBox = undefined // { content: "Det som kommer til å stå på hjelpeboksen, om du vil ha hjelpeboks" }
     export let editable = false
+    export let canSave = true
     export let saveFunc = async () => { // Only need if editable
         console.log('Æ lagrer')
     }
@@ -73,20 +74,22 @@
     }
 
     const saveChanges = async () => {
-        saveError = null
-        resetSuccessMsg()
-        isSaving = true
-        try {
-            await saveFunc()
-            scrollIfNeeded()
-            isSaving = false
-            editingPersonalia.set({ isEditing: false, editBlock: 'ingen' })
-            await showSuccess()
-        } catch (error) {
-            console.error('Aiaiaiai:', error)
-            isSaving = false
-            saveError = error.message
-            scrollIfNeeded()
+        if (canSave) {
+            saveError = null
+            resetSuccessMsg()
+            isSaving = true
+            try {
+                await saveFunc()
+                scrollIfNeeded()
+                isSaving = false
+                editingPersonalia.set({ isEditing: false, editBlock: 'ingen' })
+                await showSuccess()
+            } catch (error) {
+                console.error('Aiaiaiai:', error)
+                isSaving = false
+                saveError = error.message
+                scrollIfNeeded()
+            }
         }
     }
 
@@ -140,14 +143,14 @@
         {:else if saveError}
             <div></div>
             <div class="saveCancel">
-                <Button buttonText="Prøv igjen" onClick={saveChanges}><IconRetry slot="before" /></Button>
+                <Button buttonText="Prøv igjen" disabled={!canSave} onClick={saveChanges}><IconRetry slot="before" /></Button>
                 &nbsp&nbsp
                 <Button buttonText="Avbryt" onClick={cancelEdit}><IconClose slot="before" /></Button>
             </div>
         {:else}
             <div></div>
             <div class="saveCancel">
-                <Button buttonText="Lagre" onClick={saveChanges}><IconCheck slot="before" /></Button>
+                <Button buttonText="Lagre" disabled={!canSave} onClick={saveChanges}><IconCheck slot="before" /></Button>
                 &nbsp&nbsp
                 <Button buttonText="Avbryt" onClick={cancelEdit}><IconClose slot="before" /></Button>
             </div>
