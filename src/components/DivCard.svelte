@@ -57,7 +57,8 @@
                     <div class="textareaContainer">
                         <label for="description">Beskriv din solorolle (maks 200 tegn)</label><br />
                         <textarea id="description" rows="6" maxlength="200" bind:value={tempOther.soloRoleDescription}/>
-                        <span>{tempOther.soloRoleDescription.length}/200</span>
+                        <!-- gjorde en liten endring her frem til vi validerer data, dette for å unngå at noen lagrere noe tomt og ikke får mulighet til å redigere igjen. -->
+                        <span>{tempOther.soloRoleDescription?.length ?? 0}/200</span> 
                     </div>
                 {/if}
             </div>
