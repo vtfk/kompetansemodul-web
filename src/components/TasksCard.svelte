@@ -6,20 +6,20 @@
     import { editingPersonalia } from '../lib/services/store'
     import Button from "./Button.svelte";
     import IconAdd from "./Icons/IconAdd.svelte";
+    import IconDelete from "./Icons/IconDelete.svelte";
 
     // Props
     export let title = 'Nøkkeloppgaver i dagens stilling'
     export let backgroundColor = '--springWood'
     export let competence = {
-		tasks: []
+		mainTasks: [],
+        otherTasks: []
 	}
-    
-   let test = {
-        main: ['1', '2', '3', '7', '8'],
-        other: ['4', '5', '6']
-    }
 
-    if (!competence.tasks) competence.tasks = []
+    if (!competence.tasks) competence.tasks = {
+		mainTasks: [],
+        otherTasks: []
+	}
 
     // Store
     let editInfo = get(editingPersonalia)
@@ -28,91 +28,124 @@
     })
 
     // State
-    let tempTasks = JSON.parse(JSON.stringify(competence.tasks)) // Create a copy to display correct information (and maybe alert if user has edited) if user aborts edit
+    let tempMainTasks = JSON.parse(JSON.stringify(competence.mainTasks)) // Create a copy to display correct information (and maybe alert if user has edited) if user aborts edit
+    let tempOtherTasks = JSON.parse(JSON.stringify(competence.otherTasks)) // Create a copy to display correct information (and maybe alert if user has edited) if user aborts edit
+
 
     // const removeWorkExperience = exp => {
 	// 	tempWorkExperience = tempWorkExperience.filter(workExperience => workExperience !== exp)
 	// }
 
     let newMainTask = {
-        main:'',
+        main: ''
+    }
+    let newOtherTask = {
+        other: ''
     }
 
 
     const saveFunc = async () => {
-        if (checkIfChanges()) {
-            await saveCompetence({...competence, tasks: tempTasks})
-            competence.tasks = JSON.parse(JSON.stringify(tempTasks))
+        if (checkIfChangesInMain()) {
+            await saveCompetence({...competence, mainTasks: tempMainTasks})
+            competence.mainTasks = JSON.parse(JSON.stringify(tempMainTasks))
         } else {
-            console.log('Ingen endring, gidder ikke lagre')
+            console.log('Ingen endring i nøkkeloppgaver, gidder ikke lagre')
+        }
+        if (checkIfChangesInOther()) {
+            await saveCompetence({...competence, otherTasks: tempOtherTasks})
+            competence.otherTasks = JSON.parse(JSON.stringify(tempOtherTasks))
+        }
+        else {
+            console.log('Ingen endring i andre oppgaver, gidder ikke lagre')
         }
 	}
 
-    const checkIfChanges = () => {
-        if (JSON.stringify(competence.tasks) !== JSON.stringify(tempTasks)) return true
+    const checkIfChangesInMain = () => {
+        if (JSON.stringify(competence.mainTasks) !== JSON.stringify(tempMainTasks)) return true
+        return false
+    }
+
+    const checkIfChangesInOther = () => {
+        if (JSON.stringify(competence.otherTasks) !== JSON.stringify(tempOtherTasks)) return true
         return false
     }
 
     const cancelFunc = async () => {
-        tempTasks = JSON.parse(JSON.stringify(competence.tasks))
+        tempMainTasks = JSON.parse(JSON.stringify(competence.mainTasks))  
+        tempOtherTasks = JSON.parse(JSON.stringify(competence.otherTasks))
     }
 
     const addMainTask = () => {
-		tempTasks = [ ...tempTasks, newMainTask ]
-		newMainTask = {
-            main: ''
-        }
+		tempMainTasks = [ ...tempMainTasks, newMainTask ]
+		newMainTask = {main: ''}
 	}
 
-    
     const addOtherTask = () => {
-        console.log('other task added')
+		tempOtherTasks = [ ...tempOtherTasks, newOtherTask ]
+		newOtherTask = {other: ''}
+	}
+
+    const removeMainTask = task => {
+        console.log(task)
+        console.log(tempMainTasks)
+        tempMainTasks = tempMainTasks.filter(maintask => maintask !== task)
+        console.log(tempMainTasks)
+    }
+
+    const removeOtherTask = task => {
+        tempOtherTasks = tempOtherTasks.filter(othertask => othertask !== task)
     }
 </script>
 
-<Card title={title} editable={false} backgroundColor={backgroundColor} infoBox={ {content: "Her skriver du inn oppgavene du driver med I STIKKORDSFORM"}} saveFunc={saveFunc} cancelFunc={cancelFunc}>
+<Card title={title} editable={true} backgroundColor={backgroundColor} infoBox={ {content: "Her skriver du inn oppgavene du driver med I STIKKORDSFORM"}} saveFunc={saveFunc} cancelFunc={cancelFunc}>
     <div>
         {#if editInfo.isEditing && editInfo.editBlock === title}
             <InnerCard emoji='💼'>
                 <div slot="first">
-                    <label for='mainPos'>Hovedoppgaver</label><br />
-                    <!-- {#each tempTasks.main as main}
-                        <input type="text" bind:value={main}>
-                    {/each} -->
-                    <div>{console.log(tempTasks)}</div>
-                    <Button buttonText="Legg til" onClick={() => addMainTask()}><IconAdd slot="before" /></Button>
+                    <label for='mainPos'>Nøkkeloppgaver</label><br />
+                    {#each tempMainTasks as main, i }
+                        <div class="tasks">
+                            <input id={i.toString()} type="text" bind:value={tempMainTasks[i].main} placeholder="Hovedoppgave"/>
+                            <div class="button">
+                                <Button size="medium" noBorder={true} onClick={() => removeMainTask(tempMainTasks[i])}><IconDelete slot="before"/></Button>
+                            </div>
+                        </div>
+                    {/each}
+                    <Button size="small" buttonText="Legg til" onClick={() => addMainTask()}><IconAdd slot="before" /></Button>
                 </div>
                 <div slot="second">
                     <label for='otherPos'>Andre oppgaver</label><br />
-                    <Button buttonText="Legg til" onClick={() => addOtherTask()}><IconAdd slot="before" /></Button>
+                    {#each tempOtherTasks as other, i }
+                        <div class="tasks">
+                            <input id={i.toString()} type="text" bind:value={tempOtherTasks[i].other} placeholder="Andre oppgaver"/>
+                            <Button size="medium" noBorder={true} onClick={() => removeOtherTask(tempOtherTasks[i])}><IconDelete slot="before"/></Button>
+                        </div>
+                    {/each}
+                    <Button size="small" buttonText="Legg til" onClick={() => addOtherTask()}><IconAdd slot="before" /></Button>
                 </div>
             </InnerCard>
-                {:else if competence.tasks.length === 0}
+                {:else if competence.mainTasks.length === 0 && competence.otherTasks.length === 0}
                     <div>
-                        <label for="mainPos">Knyttet til min hovedstilling</label>
-                        <div>Jeg driver med ditt og datt, men bidrar ikke stort</div>
+                        <label for="mainPos">Nøkkeloppgaver</label>
+                        <div>Ingen nøkkeloppgaver er lagt til</div>
                         <label for="otherTasks">Andre oppgaver</label>
-                        <div>Jeg driver med ditt og datt, men bidrar ikke stort</div>
+                        <div>Ingen andre oppgaver er lagt til</div>
                     </div>
                 {:else}
                 <InnerCard emoji='💼'>
                     <div slot="first">
-                        {#each competence.tasks as task }
+                        <label for='mainPos'>Nøkkeloppgaver</label><br />
+                        {#each competence.mainTasks as task}
                             {#if task.main && task.main.length > 0}
-                            <label for='mainPos'>Hovedoppgaver</label><br />
-                            {#each task.main as main}
-                                <div>{main ?? 'Ingen hovedoppgaver'}</div>
-                            {/each}
+                                <div>{task.main ?? 'Ingen nøkkeloppgaver'}</div>
                             {/if}
                         {/each}
                     </div>
                     <div slot="second">
-                        {#each competence.tasks as task }
+                        <label for='otherTasks'>Andre oppgaver</label><br />
+                        {#each competence.otherTasks as task }
                             {#if task.other && task.other.length > 0}
-                                <label for='otherTasks'>Andre oppgaver</label><br />
-                                {#each task.other as other}
-                                    <div>{other ?? 'Ingen andre oppgaver'}</div>
-                                {/each}
+                                <div>{task.other ?? 'Ingen andre oppgaver'}</div>
                             {/if}
                         {/each}
                     </div>          
@@ -135,5 +168,10 @@ input[type=text] {
     border: 1px solid var(--mork);
     border-radius: 0.5rem;
     box-sizing: border-box;
+}
+
+.tasks {
+    display: flex;
+    margin: 0.25rem
 }
 </style>

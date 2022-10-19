@@ -4,14 +4,15 @@
     export let disabled = false
     export let size = 'medium'
     export let title = 'a button'
+    export let noBorder = false
 
 </script>
 
 
-<button on:click={onClick} title={title} class={`${size} ${disabled ? 'disabled' : ''}`}>
+<button on:click={onClick} title={title} class={`${size} ${disabled ? 'disabled' : ''} ${noBorder ? 'true' : ''}`}>
     <div class="beforeContainer"><slot name="before"></slot></div>
     <div class="buttonText">{buttonText}</div>
-    <span class="afterContainer"><slot name="after"></slot></span>
+    <div class="afterContainer"><slot name="after"></slot></div>
 </button>
 
 <style>
@@ -40,11 +41,17 @@
     button.disabled {
         cursor: not-allowed;
     }
+
+    /* No border === true */
+    button.true { 
+        border: 0px solid black;
+    }
     button.disabled:hover {
         background-color: var(--catSkillWhite);
     }
     button.small {
         height: 1.5rem;
+        border: 1.5px solid black;
     }
     button.large {
         height: 3rem;
