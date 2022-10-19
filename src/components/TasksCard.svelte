@@ -86,10 +86,7 @@
 	}
 
     const removeMainTask = task => {
-        console.log(task)
-        console.log(tempMainTasks)
         tempMainTasks = tempMainTasks.filter(maintask => maintask !== task)
-        console.log(tempMainTasks)
     }
 
     const removeOtherTask = task => {
