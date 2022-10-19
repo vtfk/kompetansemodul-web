@@ -141,7 +141,6 @@
                 e.preventDefault()
             } else if (e.key !== 'Enter') {
                 showPreview = true
-                console.log('joa')
             }
         }
     }
