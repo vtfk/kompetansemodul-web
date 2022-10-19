@@ -83,9 +83,11 @@
         return `${dates.fromMonth} ${dates.fromYear} - ${dates.toMonth} ${dates.toYear}`
     }
 
+    const infoText = "<p>Dette handler om relevant verv du har hatt de siste årene. Du trenger ikke fylle ut frivillige verv eller verv i fritidsaktiviteter.<p>"
+
 </script>
 
-<Card title={title} editable={true} backgroundColor={backgroundColor} infoBox={ {content: "Her skriver du inn verv og sånn, det må være relevant"}} saveFunc={saveFunc} cancelFunc={cancelFunc}>
+<Card title={title} editable={true} backgroundColor={backgroundColor} infoBox={ {content: infoText}} saveFunc={saveFunc} cancelFunc={cancelFunc}>
     <div>
         {#if editInfo.isEditing && editInfo.editBlock === title}
             {#each tempExperience as tempExp}

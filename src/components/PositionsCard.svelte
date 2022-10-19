@@ -37,6 +37,8 @@
         }
         return info
     }
+
+    const infoText = "<p>Her finner du ferdig utfylt informasjon om deg. Dette er informasjon som arbeidsgiver allerede har lagret om deg. Hvis dette ikke stemmer, kan du kontakte nærmeste leder.</p>"
  
     const mainPosition = employeeData.harAktivtArbeidsforhold ? employeeData.aktiveArbeidsforhold.find(forhold => forhold.hovedstilling) : undefined // TODO: hva med de som faktisk ikke har aktiv hovedstilling????
     const displayData = {
@@ -51,7 +53,7 @@
 
 </script>
 
-<Card title="Ansattinformasjon" backgroundColor={backgroundColor} infoBox={ {content: "Her kommer det du trenger hjelp til"}}>
+<Card title="Ansattinformasjon" backgroundColor={backgroundColor} infoBox={ {content: infoText}}>
     <div class="cardContent">
         <div class="generalInfo">
             <div class="infoPair">

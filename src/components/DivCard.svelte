@@ -39,9 +39,11 @@
     const cancelFunc = async () => {
         tempOther = JSON.parse(JSON.stringify(competence.other))
     }
+
+    const infoText = "<h4>Til slutt trenger vi litt annen informasjon fra deg.</h4><br><p>Du har en solorolle dersom dine arbeidsoppgaver og/eller fagfelt er unikt innenfor din sektor og at du alene har en nøkkelfunksjon som andre er avhengige. Et eksempel: Kari er den eneste i BDK som har funksjonen som programmerer av verktøyet PowerBI som er viktig i mange utviklingsområder.</p><br><p>Vi ber også om at du tar stilling til foretrukken fylkeskommune. Her ønsker vi at du svarer på hvilken fylkeskommune du foretrekker (Telemark eller Vestfold). Du kan også trykke “vet ikke” om du ikke har bestemt deg eller om ønsket ditt er avhengig av andre rammebetingelser.</p><br><p>MERK: Ditt svar er ikke bindende og er kun ment for at arbeidsgiver skal få en oversikt over hva de ansatte ønsker. Det betyr at ditt svar ikke automatisk vil få følger for innplasseringen. </p>"
 </script>
 
-<Card title={title} saveFunc={saveFunc} cancelFunc={cancelFunc} backgroundColor={backgroundColor} editable={true} infoBox={ {content: "Her skriver du inn noe"} }>
+<Card title={title} saveFunc={saveFunc} cancelFunc={cancelFunc} backgroundColor={backgroundColor} editable={true} infoBox={ {content: infoText} }>
     <div>
         {#if editInfo.isEditing && editInfo.editBlock === title}
         <div class="contentContainer">

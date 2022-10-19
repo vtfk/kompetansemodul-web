@@ -13,7 +13,7 @@
 
 	// State
 	let showInfoBox = false
-	let infoContent = "<h4>VTFK Kompetanse</h4><p>Her kan du gjøre litt av hvert!</p>"
+	let infoContent = "<h4>Hvorfor samle vi inn din kompetanse på denne måten?</h4><p>Vi ønsker en digital oversikt over kompetansen til ansatte i fylkesadministrasjonen. Intensjonen er å jobbe systematisk med rekruttering og kompetanseutvikling i både VTFK og de nye organisasjonene. Kompetansekartlegging er et verktøy for å anta om to nye fylkeskommuner personalmessig vil være i stand til å løse sitt samfunnsoppdrag</p> <br><p>Husk at du også finner informasjon om kartleggingsverktøyet, GDPR og hva informasjon skal brukes til på Innsida, i personvernerklæringen og i andre informasjonskanaler. Dersom du har spørsmål eller noe er uklart er du alltid velkommen til å kontakte  (sett inn kontaktopplysninger).</p"
 
 	const getMee = async () => {
 		const me = await getMe()

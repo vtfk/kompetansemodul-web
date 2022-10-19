@@ -119,7 +119,7 @@
             {/if}
         </div>
         {#if infoBox}
-            <InfoBox content={infoBox.content} open={showInfoBox} onClose={() => {showInfoBox = !showInfoBox}} />
+            <InfoBox content={infoBox.content} html={true} open={showInfoBox} onClose={() => {showInfoBox = !showInfoBox}} />
         {/if}
     {/if}
     <div id="content">

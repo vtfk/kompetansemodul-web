@@ -41,6 +41,8 @@
         other: ''
     }
 
+    const infoText = "<p>En kort beskrivelse av dine nøkkeloppgaver i dagens stilling i Vestfold og Telemark fylkeskommune.</p><br><p>Hovedstilling er den primære stillingen du har per i dag. Andre oppgaver kan være midlertidige oppgaver du utfører i en periode for eksempel i et prosjekt eller ved byggingen av nye fylkeskommuner.</p><br><p>Hvorfor spør vi om dette? Dette trenger vi for å få en mest god oversikt over oppgaver som ligger til din stilling i dag. Det er ment å fange opp informasjon om ansatte som kan ha endret nøkkeloppgaver, jobbe i matrise eller midlertidig i prosjekter.</p>" 
+    
 
     const saveFunc = async () => {
         if (checkIfChangesInMain()) {
@@ -92,7 +94,7 @@
     }
 </script>
 
-<Card title={title} editable={true} backgroundColor={backgroundColor} infoBox={ {content: "Her skriver du inn oppgavene du driver med I STIKKORDSFORM"}} saveFunc={saveFunc} cancelFunc={cancelFunc}>
+<Card title={title} editable={true} backgroundColor={backgroundColor} infoBox={ {content: infoText}} saveFunc={saveFunc} cancelFunc={cancelFunc}>
     <div>
         {#if editInfo.isEditing && editInfo.editBlock === title}
             <InnerCard emoji='💼'>

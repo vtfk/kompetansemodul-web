@@ -86,9 +86,11 @@
     const cancelFunc = async () => {
         tempWorkExperience = JSON.parse(JSON.stringify(competence.workExperience))
     }
+
+    const infoText ="<p>Dette feltet omfatter tidligere stillinger du har hatt, dvs. ikke den stillingen du har i VTFK per i dag. Ta utgangspunkt i de siste 10-15 årene når du legger inn.</p><br><p>Hvorfor spør vi om dette? Din arbeidserfaring er èn del av din realkompetanse og er dermed nødvendig i forbindelse med kartlegging av din kompetanse.</p>"
 </script>
 
-<Card title={title} backgroundColor={backgroundColor} editable={true} infoBox={ {content: "Her kommer det du trenger hjelp til"}} saveFunc={saveFunc} cancelFunc={cancelFunc}>
+<Card title={title} backgroundColor={backgroundColor} editable={true} infoBox={ {content: infoText}} saveFunc={saveFunc} cancelFunc={cancelFunc}>
     <div>
         {#if editInfo.isEditing && editInfo.editBlock === title}
             {#each tempWorkExperience as tempWork}

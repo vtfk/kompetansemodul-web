@@ -85,10 +85,12 @@
         else if (degree === 'Enkeltemne') return '📄'
         else if (degree === 'Videregående skole') return '📝'
         else return '🎓'
-    } 
+    }
+    
+    const infoText = "<p>Informasjon om hvilken utdanning du har. Vi er interessert i enkeltemner, videreutdanninger, fagbrev eller andre grader av utdanning. Her skal du også legge inn sertifiseringer.<p><br><p>Din utdanning er beskrivende for din formelle kompetanse og er dermed nødvendig i forbindelse med kartleggingen av din kompetanse.</p>"
 </script>
 
-<Card title={title} editable={true} backgroundColor={backgroundColor} infoBox={ {content: "Her kommer det du trenger hjelp til"}} saveFunc={saveFunc} cancelFunc={cancelFunc}>
+<Card title={title} editable={true} backgroundColor={backgroundColor} infoBox={ {content: infoText}} saveFunc={saveFunc} cancelFunc={cancelFunc}>
     <div>
         {#if editInfo.isEditing && editInfo.editBlock === title}
             {#each tempEducation as tempEdu}
