@@ -45,6 +45,7 @@
                     <p>Finn ansatt</p>
                 </button>
             </div>
+            <!--
             <div class="sideNavItem disabled">
                 <button on:click={() => { } } class={`disabled${currentPage === 'organisasjon' ? ' siteNavItemActive' : ''}`}>
                     <div class="icon">
@@ -53,6 +54,7 @@
                     <p>Organisasjon (ikke laget enda)</p>
                 </button>
             </div>
+            -->
             <div class="sideNavItem">
                 <button on:click={() => { changePage('hjelp')} } class={currentPage === 'hjelp' ? 'siteNavItemActive' : ''}>
                     <div class="icon">
@@ -85,7 +87,7 @@
         align-items: center;
         justify-content: center;
         margin-top: 0px;
-        margin-bottom: 200px;
+        margin-bottom: 300px;
         width: 100%;
         text-align: center;
     }
