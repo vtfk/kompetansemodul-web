@@ -60,7 +60,7 @@
                     <div class="icon">
                         <IconHelp />
                     </div>
-                    <p>Hjælp!</p>
+                    <p>Hjelp</p>
                 </button>
             </div>
         </div>
