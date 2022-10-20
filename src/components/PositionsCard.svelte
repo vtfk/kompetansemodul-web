@@ -2,10 +2,55 @@
     import Card from "./Card.svelte";
     import { getZipCodeInfo } from '../lib/Helpers/zipCode'
     import InnerCard from "./InnerCard.svelte";
+    import { get } from 'svelte/store'
+    import { saveCompetence }  from '../lib/services/useApi'
+    import { editingPersonalia } from '../lib/services/store'
 
     // Props
-    export let backgroundColor = '--catSkillWhite'
+    export let title = 'Dagens stillinger'
+    export let backgroundColor = '--springWood'
     export let employeeData = {}
+    export let competence = {
+		positionTasks: []
+	}
+
+
+    if (!competence.positionTasks) competence.positionTasks = []
+    
+
+    // Nedenfor endrer vi antall tasks med maxTasks
+    const maxTasks = 5
+    // Add tasks if needed
+    for (const forhold of employeeData.aktiveArbeidsforhold) {
+        if (!competence.positionTasks.find(task => task.positionId === forhold.systemId)) {
+            competence.positionTasks.push({
+                positionId: forhold.systemId,
+                tasks: Array(maxTasks).fill('')
+            })
+        }
+    }
+
+    // Store
+    let editInfo = get(editingPersonalia)
+    editingPersonalia.subscribe(value => {
+        editInfo = value
+    })
+
+    // State
+    let tempPositionTasks = JSON.parse(JSON.stringify(competence.positionTasks)) // Create a copy to display correct information (and maybe alert if user has edited) if user aborts edit
+
+    // usikker på om vi trenger denne???
+    tempPositionTasks = tempPositionTasks.map(pos => {
+        if (pos.tasks && pos.tasks.length !== maxTasks) {
+            for (let i=pos.tasks.length; i < maxTasks; i++) {
+                pos.tasks.push('')
+            }
+        }
+        return {
+            ...pos,
+            tasks: pos.tasks ?? Array(maxTasks).fill('')
+        }
+    })
 
     const convertDate = (date) => {
         const dateList = date.slice(0,10).split('-')
@@ -38,109 +83,88 @@
         return info
     }
 
-    const infoText = "<p>Her finner du ferdig utfylt informasjon om deg. Dette er informasjon som arbeidsgiver allerede har lagret om deg. Hvis dette ikke stemmer, kan du kontakte nærmeste leder.</p>"
+    const infoText = "<p>Dine aktive stillinger i organisajonen. Her legger du inn beskrivelse av dine nøkkeloppgaver i dagens stillinger i Vestfold og Telemark fylkeskommune. Om noe er galt i stillingsinformasjonen din, ta kontakt med nærmeste leder</p><br><p>Hvorfor spør vi om dette? Dette trenger vi for å få en mest god oversikt over oppgaver som ligger til din stilling i dag. Det er ment å fange opp informasjon om ansatte som kan ha endret nøkkeloppgaver, jobbe i matrise eller midlertidig i prosjekter.</p>"
  
-    const mainPosition = employeeData.harAktivtArbeidsforhold ? employeeData.aktiveArbeidsforhold.find(forhold => forhold.hovedstilling) : undefined // TODO: hva med de som faktisk ikke har aktiv hovedstilling????
     const displayData = {
         name: `${employeeData.fornavn} ${employeeData.etternavn}`,
         officeLocation: employeeData.azureAd?.officeLocation ?? 'Ukjent kontorplass',
         preLocation: employeeData.azureAd?.city ?? 'Ansatt etter sammenslåing',
-        otherPositions: mainPosition ? employeeData.aktiveArbeidsforhold.filter(pos => pos.systemId !== mainPosition.systemId) : employeeData.aktiveArbeidsforhold,
+        positions: employeeData.aktiveArbeidsforhold,
         category: employeeData.personalressurskategori?.navn ?? 'Ukjent',
         employedSince: employeeData.ansettelsesperiode?.start ? convertDate(employeeData.ansettelsesperiode.start) : '🤷‍♂️',
         zipCode: employeeData.bostedsadresse?.postnummer ?? 'Ukjent postnummer'
     }
 
+    const saveFunc = async () => {
+        if (checkIfChanges()) {
+            await saveCompetence({...competence, positionTasks: tempPositionTasks})
+            competence.positionTasks = JSON.parse(JSON.stringify(tempPositionTasks))
+        } else {
+            console.log('Ingen endring, gidder ikke lagre')
+        }
+	}
+
+    const checkIfChanges = () => {
+        if (JSON.stringify(competence.positionTasks) !== JSON.stringify(tempPositionTasks)) return true
+        return false
+    }
+
+    const cancelFunc = async () => {
+        tempPositionTasks = JSON.parse(JSON.stringify(competence.positionTasks))
+    }
+
 </script>
 
-<Card title="Ansattinformasjon" backgroundColor={backgroundColor} infoBox={ {content: infoText}}>
-    <div class="cardContent">
-        <div class="generalInfo">
-            <div class="infoPair">
-                <div class="desc">Navn</div>
-                <div class="value">{displayData.name}</div>
-            </div>
-            <div class="infoPair">
-                <div class="desc">Kategori</div>
-                <div class="value">{displayData.category}</div>
-            </div>
-            <div class="infoPair">
-                <div class="desc">Ansatt siden</div>
-                <div class="value">{displayData.employedSince}</div>
-            </div>
-            <div class="infoPair">
-                <div class="desc">Bostedskommune</div>
-                <div class="value">{getZipCodeInfo(displayData.zipCode)?.Kommunenavn ?? 'Har ikke gyldig postnummer i HR' }</div>
-            </div>
-            <div class="infoPair">
-                <div class="desc">Nåværende kontorplass</div>
-                <div class="value">{displayData.officeLocation}</div>
-            </div>
-            <div class="infoPair">
-                <div class="desc">Fylkestilhørighet før sammenslåing</div>
-                <div class="value">{displayData.preLocation}</div>
-            </div>
-        </div>
-        {#if mainPosition}
-            <div class="mainPosition">
+<Card title={title} backgroundColor={backgroundColor} infoBox={ {content: infoText}} editable={true} canSave={true} saveFunc={saveFunc} cancelFunc={cancelFunc}>
+    <div class="halla">
+        {#if editInfo.isEditing && editInfo.editBlock === title}
+            {#each displayData.positions as position, i}
                 <InnerCard emoji='💼'>
                     <div slot="first">
-                        <h4>Hovedstilling</h4>
-                        <h3>{mainPosition.stillingstittel ?? 'Ukjent tittel'} ({Math.ceil(mainPosition.lonnsprosent/100)}%)</h3>
-                        <h4>{getDepartment(mainPosition.arbeidssted.struktur).department}</h4>
-                        <p>{getDepartment(mainPosition.arbeidssted.struktur).company}</p>
+                        <h4>{position.hovedstilling ? 'Hovedstilling' : 'Tillegsstilling'}</h4>
+                        <h3>{position.stillingstittel ?? 'Ukjent tittel'} ({Math.ceil(position.lonnsprosent/100)}%)</h3>
+                        <h4>{getDepartment(position.arbeidssted.struktur).department}</h4>
+                        <p>{getDepartment(position.arbeidssted.struktur).company}</p>
+                        <p><strong>Leder: </strong>{position.arbeidssted?.leder?.navn ?? 'Ukjent leder'}</p>
                     </div>
                     <div slot="second">
-                        <label for="tull">Leder</label>
-                        <p>{mainPosition.arbeidssted?.leder?.navn ?? 'Ukjent leder'}</p>
+                        <div>
+                            <label for="tasks">Nøkkeloppgaver</label><br>
+                            {#each tempPositionTasks.find(pt => pt.positionId === position.systemId).tasks as task}
+                                <input type="text" bind:value={task}>
+                            {/each}
+                        </div>
                     </div>
-                </InnerCard>
-            </div>
-        {/if}
-        {#if displayData.otherPositions.length > 0}
-            <div class="secondaryPosition">
-                {#each displayData.otherPositions as position}
-                    <InnerCard emoji='💼'>
-                        <div slot="first">
-                            <h4>Tileggsstilling</h4>
-                            <h3>{position.stillingstittel ?? 'Ukjent tittel'} ({Math.ceil(position.lonnsprosent/100)}%)</h3>
-                            <h4>{getDepartment(position.arbeidssted.struktur).department}</h4>
-                            <p>{getDepartment(position.arbeidssted.struktur).company}</p>
-                        </div>
-                        <div slot="second">
-                            <label for="tull">Leder</label>
-                            <p>{position.arbeidssted?.leder?.navn ?? 'Ukjent leder'}</p>
-                        </div>
-                    </InnerCard>     
-                {/each}
-            </div>
-        {/if}
-        <div class="otherPositions">
+                </InnerCard>  
+            {/each}
 
-        </div>
+        {:else}
+            {#each displayData.positions as position}
+                <InnerCard emoji='💼'>
+                    <div slot="first">
+                        <h4>{position.hovedstilling ? 'Hovedstilling' : 'Tillegsstilling'}</h4>
+                        <h3>{position.stillingstittel ?? 'Ukjent tittel'} ({Math.ceil(position.lonnsprosent/100)}%)</h3>
+                        <h4>{getDepartment(position.arbeidssted.struktur).department}</h4>
+                        <p>{getDepartment(position.arbeidssted.struktur).company}</p>
+                        <p><strong>Leder: </strong>{position.arbeidssted?.leder?.navn ?? 'Ukjent leder'}</p>
+                    </div>
+                    <div slot="second">
+                        <label for="tull">Nøkkeloppgaver</label>
+                        {#if !(competence.positionTasks.find(pt => pt.positionId === position.systemId)).tasks.find(t => t.length > 0)}
+                            <div><p>Ingen nøkkeloppgaver lagt inn</p></div>
+                        {:else}
+                            {#each competence.positionTasks.find(pt => pt.positionId === position.systemId).tasks as task}
+                                <div>{task}</div>
+                            {/each}
+                        {/if}
+                    </div>
+                </InnerCard>     
+            {/each}
+        {/if}
     </div>
 </Card>
 
 <style>
-
-    .infoPair {
-        display: inline-block;
-        padding: 0.5rem;
-        border-left: 1px solid var(--mork);
-        margin-bottom: 1rem;
-        margin-right: 1rem;
-    }
-    .desc {
-        font-size: 0.9rem;
-        font-weight: bold;
-        font-style: italic;
-    }
-    .generalInfo {
-        padding-bottom: 1rem;
-    }
-    .secondaryPosition {
-        margin-top: 1rem;
-    }
     label {
         font-size: 0.9em;
         font-weight: bold;
