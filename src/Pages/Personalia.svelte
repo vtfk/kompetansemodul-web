@@ -22,20 +22,9 @@
 		return me
 	}
 
-	const vitne = async () => {
-		const hei = await vitnemaal()
-		console.log(hei)
-		return hei
-	}
-
 </script>
 
 <div class="content">
-	{#await vitne()}
-		Laster
-	{:then res} 
-		{res}
-	{/await}
 	{#await getMee()}
 		<div class="loadingContainer">
 			<span style="display: inline-block;"><IconSpinner width="200px" /></span>
