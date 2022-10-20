@@ -8,6 +8,7 @@
     import fagbrev from '../assets/fagbrevUDIR.json'
     import DataList from './DataList.svelte'
     import fagomraader from '../assets/fagomraader.json'
+    import utdanningsprogramVGS from '../assets/utdanningsprogramVGS.json'
     import Button from "./Button.svelte"
     import IconDelete from "./Icons/IconDelete.svelte"
     import IconAdd from "./Icons/IconAdd.svelte"
@@ -115,6 +116,13 @@
         else if (degree === 'Videregående skole') return '📝'
         else return '🎓'
     }
+
+    const chooseSubjectDatalist = (degree) => {
+        if (degree === 'Fagbrev') return utdanningsprogramvariantNavn()
+        else if (['Master', 'Bachelor', 'Doktorgrad', 'Årsstudium', 'Enkeltemne'].includes(degree)) return fagomraader
+        else if (degree === 'Videregående skole') return utdanningsprogramVGS
+        else return []
+    }
     
     const infoText = "<p>Informasjon om hvilken utdanning du har. Vi er interessert i enkeltemner, videreutdanninger, fagbrev eller andre grader av utdanning. Her skal du også legge inn sertifiseringer.<p><br><p>Din utdanning er beskrivende for din formelle kompetanse og er dermed nødvendig i forbindelse med kartleggingen av din kompetanse.</p>"
 </script>
@@ -141,13 +149,8 @@
                             </div>
                         </div>
                         <div>
-                            {#if tempEdu.degree === "Fagbrev"}
-                                <label for="subject">Fagbrev</label><label for="subject" class="validation">{!validation[i].subject ? '*' : '' }</label><br>
-                                <DataList dataList={utdanningsprogramvariantNavn()} filterFunction={(input, obj) => obj.value.toLowerCase().includes(input.toLowerCase()) || obj.category.toLowerCase().startsWith(input.toLowerCase()) } bind:inputValue={tempEdu.subject}/>
-                            {:else}
-                                <label for="subject">Fagområde</label><label for="subject" class="validation">{!validation[i].subject ? '*' : '' }</label><br>
-                                <DataList dataList={fagomraader} filterFunction={(input, obj) => obj.value.toLowerCase().includes(input.toLowerCase()) || obj.category.toLowerCase().startsWith(input.toLowerCase()) } bind:inputValue={tempEdu.subject}/>
-                            {/if}                           
+                            <label for="subject">{['Fagbrev', 'Sertifisering'].includes(tempEdu.degree) ? tempEdu.degree : 'Fagområde'}</label><label for="subject" class="validation">{!validation[i].subject ? '*' : '' }</label><br>
+                            <DataList dataList={chooseSubjectDatalist(tempEdu.degree)} filterFunction={(input, obj) => obj.value.toLowerCase().includes(input.toLowerCase()) || obj.category.toLowerCase().startsWith(input.toLowerCase()) } bind:inputValue={tempEdu.subject}/>                          
                         </div>
                         <div>
                             <label for="from">Fra</label><br>
@@ -164,7 +167,7 @@
                             </div>
                         </div>
                         <div>
-                            <label for="school">Skole</label><label for="school" class="validation">{!validation[i].school ? '*' : '' }</label><br>
+                            <label for="school">Skole{tempEdu.degree === 'Sertifisering' ? '/annet' : ''}</label><label for="school" class="validation">{!validation[i].school ? '*' : '' }</label><br>
                             <input type="text" bind:value={tempEdu.school}>
                         </div>
                     </div>
