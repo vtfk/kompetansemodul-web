@@ -9,7 +9,7 @@
     import IconDelete from "./Icons/IconDelete.svelte";
 
     // Props
-    export let title = 'Nøkkeloppgaver i dagens stilling'
+    export let title = 'Andre oppgaver'
     export let backgroundColor = '--springWood'
     export let competence = {
 		mainTasks: [],
@@ -41,7 +41,7 @@
         other: ''
     }
 
-    const infoText = "<p>En kort beskrivelse av dine nøkkeloppgaver i dagens stilling i Vestfold og Telemark fylkeskommune.</p><br><p>Hovedstilling er den primære stillingen du har per i dag. Andre oppgaver kan være midlertidige oppgaver du utfører i en periode for eksempel i et prosjekt eller ved byggingen av nye fylkeskommuner.</p><br><p>Hvorfor spør vi om dette? Dette trenger vi for å få en mest god oversikt over oppgaver som ligger til din stilling i dag. Det er ment å fange opp informasjon om ansatte som kan ha endret nøkkeloppgaver, jobbe i matrise eller midlertidig i prosjekter.</p>" 
+    const infoText = "<p>Hovedstilling er den primære stillingen du har per i dag. Andre oppgaver kan være midlertidige oppgaver du utfører i en periode for eksempel i et prosjekt eller ved byggingen av nye fylkeskommuner.</p><br><p>Hvorfor spør vi om dette? Dette trenger vi for å få en mest god oversikt over oppgaver som ligger til din stilling i dag. Det er ment å fange opp informasjon om ansatte som kan ha endret nøkkeloppgaver, jobbe i matrise eller midlertidig i prosjekter.</p>" 
     
 
     const saveFunc = async () => {
@@ -110,7 +110,7 @@
     <div>
         {#if editInfo.isEditing && editInfo.editBlock === title}
             <InnerCard emoji='💼'>
-                <div slot="first">
+                <!-- <div slot="first">
                     <label for='mainPos'>Nøkkeloppgaver</label><br />
                     {#each tempMainTasks as main, i }
                         <div class="tasks">
@@ -121,8 +121,8 @@
                         </div>
                     {/each}
                     <Button size="small" buttonText="Legg til" onClick={() => addMainTask()}><IconAdd slot="before" /></Button>
-                </div>
-                <div slot="second">
+                </div> -->
+                <div slot="first">
                     <label for='otherPos'>Andre oppgaver</label><br />
                     {#each tempOtherTasks as other, i }
                         <div class="tasks">
@@ -135,7 +135,7 @@
             </InnerCard>
         {:else}
             <InnerCard emoji='💼'>
-                <div slot="first">
+                <!-- <div slot="first">
                     <label for='mainPos'>Nøkkeloppgaver</label><br />
                     {#if competence.mainTasks.length === 0}
                         <div>{'Ingen nøkkeloppgaver er lagt til'}</div>
@@ -146,15 +146,15 @@
                             {/if}
                         {/each}
                     {/if}
-                </div>
-                <div slot="second">
+                </div> -->
+                <div slot="first">
                     <label for='otherTasks'>Andre oppgaver</label><br />
                     {#if competence.otherTasks.length === 0}
-                        <div>{'Ingen andre oppgaver er lagt'}</div>
+                        <div>{'Ingen andre oppgaver er lagt til'}</div>
                     {:else}
                         {#each competence.otherTasks as task }
                             {#if task.other && task.other.length >= 0}
-                                <div>{task.other || 'Ingen andre oppgaver er lagt'}</div>
+                                <div>{task.other || 'Ingen andre oppgaver er lagt til'}</div>
                             {/if}
                         {/each}
                     {/if}
