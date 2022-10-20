@@ -133,6 +133,8 @@
                     <Button size="small" buttonText="Legg til" onClick={() => addOtherTask()}><IconAdd slot="before" /></Button>
                 </div>
             </InnerCard>
+        {:else if competence.otherTasks.length === 0}
+            <div>Ingen andre oppgaver er lagt til</div>
         {:else}
             <InnerCard emoji='💼'>
                 <!-- <div slot="first">
@@ -149,15 +151,11 @@
                 </div> -->
                 <div slot="first">
                     <label for='otherTasks'>Andre oppgaver</label><br />
-                    {#if competence.otherTasks.length === 0}
-                        <div>{'Ingen andre oppgaver er lagt til'}</div>
-                    {:else}
-                        {#each competence.otherTasks as task }
-                            {#if task.other && task.other.length >= 0}
-                                <div>{task.other || 'Ingen andre oppgaver er lagt til'}</div>
-                            {/if}
-                        {/each}
-                    {/if}
+                    {#each competence.otherTasks as task }
+                        {#if task.other && task.other.length >= 0}
+                            <div>{task.other || 'Ingen andre oppgaver er lagt til'}</div>
+                        {/if}
+                    {/each}
                 </div>          
             </InnerCard>
         {/if}
