@@ -88,13 +88,13 @@
                     <h4>Solorolle</h4>
                     <div>{competence.other?.soloRole || 'Ikke fylt ut av ansatt'}
                         {#if competence.other.soloRole === 'Ja'}
-                            - {competence.other.soloRoleDescription}
+                            - {competence.other.soloRoleDescription ?? 'Beskrivelse av solorole er ikke fylt ut av ansatt'}
                         {/if}
                     </div>
                 </div>
                 <div class="innerContainer">
                     <h4>Ønsket fylkeskommune/arbeidssted etter oppdeling</h4>
-                    <div>{competence.other.preferredCounty || 'Ikke fylt ut av ansatt'}</div>
+                    <div>{competence.other.preferredCounty ?? 'Ikke fylt ut av ansatt'}</div>
                 </div>
             </div>
         {/if}

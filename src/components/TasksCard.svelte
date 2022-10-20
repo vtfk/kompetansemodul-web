@@ -46,14 +46,26 @@
 
     const saveFunc = async () => {
         if (checkIfChangesInMain()) {
-            await saveCompetence({...competence, mainTasks: tempMainTasks})
-            competence.mainTasks = JSON.parse(JSON.stringify(tempMainTasks))
+            let mainTasksToSave = []
+            tempMainTasks.forEach(task => {
+                if(task.main !== '') {
+                    mainTasksToSave.push(task)
+                }
+            });
+            await saveCompetence({...competence, mainTasks: mainTasksToSave})
+            competence.mainTasks = JSON.parse(JSON.stringify(mainTasksToSave))
         } else {
             console.log('Ingen endring i nøkkeloppgaver, gidder ikke lagre')
         }
         if (checkIfChangesInOther()) {
-            await saveCompetence({...competence, otherTasks: tempOtherTasks})
-            competence.otherTasks = JSON.parse(JSON.stringify(tempOtherTasks))
+            let otherTaskToSave = []
+            tempOtherTasks.forEach(task => {
+                if(task.other !== '') {
+                    otherTaskToSave.push(task)
+                }
+            });
+            await saveCompetence({...competence, otherTasks: otherTaskToSave})
+            competence.otherTasks = JSON.parse(JSON.stringify(otherTaskToSave))
         }
         else {
             console.log('Ingen endring i andre oppgaver, gidder ikke lagre')
@@ -68,11 +80,6 @@
     const checkIfChangesInOther = () => {
         if (JSON.stringify(competence.otherTasks) !== JSON.stringify(tempOtherTasks)) return true
         return false
-    }
-
-    const cancelFunc = async () => {
-        tempMainTasks = JSON.parse(JSON.stringify(competence.mainTasks))  
-        tempOtherTasks = JSON.parse(JSON.stringify(competence.otherTasks))
     }
 
     const addMainTask = () => {
@@ -91,6 +98,11 @@
 
     const removeOtherTask = task => {
         tempOtherTasks = tempOtherTasks.filter(othertask => othertask !== task)
+    }
+
+    const cancelFunc = async () => {
+        tempMainTasks = JSON.parse(JSON.stringify(competence.mainTasks))  
+        tempOtherTasks = JSON.parse(JSON.stringify(competence.otherTasks))
     }
 </script>
 
@@ -121,32 +133,33 @@
                     <Button size="small" buttonText="Legg til" onClick={() => addOtherTask()}><IconAdd slot="before" /></Button>
                 </div>
             </InnerCard>
-                {:else if competence.mainTasks.length === 0 && competence.otherTasks.length === 0}
-                    <div>
-                        <label for="mainPos">Nøkkeloppgaver</label>
-                        <div>Ingen nøkkeloppgaver er lagt til</div>
-                        <label for="otherTasks">Andre oppgaver</label>
-                        <div>Ingen andre oppgaver er lagt til</div>
-                    </div>
-                {:else}
-                <InnerCard emoji='💼'>
-                    <div slot="first">
-                        <label for='mainPos'>Nøkkeloppgaver</label><br />
+        {:else}
+            <InnerCard emoji='💼'>
+                <div slot="first">
+                    <label for='mainPos'>Nøkkeloppgaver</label><br />
+                    {#if competence.mainTasks.length === 0}
+                        <div>{'Ingen nøkkeloppgaver er lagt til'}</div>
+                    {:else}
                         {#each competence.mainTasks as task}
-                            {#if task.main && task.main.length > 0}
-                                <div>{task.main ?? 'Ingen nøkkeloppgaver'}</div>
+                            {#if task.main && task.main.length >= 0}
+                                <div>{task.main ?? 'Ingen nøkkeloppgaver er lagt til'}</div>
                             {/if}
                         {/each}
-                    </div>
-                    <div slot="second">
-                        <label for='otherTasks'>Andre oppgaver</label><br />
+                    {/if}
+                </div>
+                <div slot="second">
+                    <label for='otherTasks'>Andre oppgaver</label><br />
+                    {#if competence.otherTasks.length === 0}
+                        <div>{'Ingen andre oppgaver er lagt'}</div>
+                    {:else}
                         {#each competence.otherTasks as task }
-                            {#if task.other && task.other.length > 0}
-                                <div>{task.other ?? 'Ingen andre oppgaver'}</div>
+                            {#if task.other && task.other.length >= 0}
+                                <div>{task.other || 'Ingen andre oppgaver er lagt'}</div>
                             {/if}
                         {/each}
-                    </div>          
-                </InnerCard>
+                    {/if}
+                </div>          
+            </InnerCard>
         {/if}
     </div>
 </Card>

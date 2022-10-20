@@ -13,7 +13,7 @@
     import InnerCard from "./InnerCard.svelte";
 
     // Props
-    export let title = 'Arbeidserfaring'
+    export let title = 'Tidligere Arbeidserfaring'
     export let backgroundColor = '--springWood'
     export let competence = {
 		workExperience: []
