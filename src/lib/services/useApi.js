@@ -32,6 +32,15 @@ const apiRequest = async (method, endpoint, body) => {
   }
 }
 
+export const vitnemaal = async () => {
+  const payload = {
+    sessionId: "hubbabubba",
+    returnUrl: "https://kompetansemodul-test.vercel.app"
+  }
+  const res = await axios.post('https://app.vitnemalsportalen.no/vp/init', payload)
+  return res
+}
+
 // Get me
 export const getMe = async () => await apiRequest('get', 'me')
 

@@ -1,5 +1,5 @@
 <script>
-	import { getMe }  from '../lib/services/useApi'
+	import { getMe, vitnemaal }  from '../lib/services/useApi'
 	import EmployeeCard from '../components/EmployeeCard.svelte'
     import IconSpinner from '../components/Icons/IconSpinner.svelte';
     import EducationCard from '../components/EducationCard.svelte';
@@ -22,6 +22,7 @@
 		console.log(me)
 		return me
 	}
+
 </script>
 
 <div class="content">
