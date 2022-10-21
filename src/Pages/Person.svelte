@@ -3,7 +3,7 @@
 	import { searchParameter }  from '../lib/services/store'
 	import EmployeeCard from '../components/EmployeeCard.svelte'
     import IconSpinner from '../components/Icons/IconSpinner.svelte';
-    import PositionsCard from '../components/PositionsCardOld.svelte';
+    import PositionsCard from '../components/PositionsCard.svelte';
 
 	let personParameter
 
@@ -26,7 +26,9 @@
 		<p><IconSpinner width="2rem" /></p>
 		{:then res}
 			<EmployeeCard employeeData={res} />
-			<!--<PositionsCard employeeData={res} />-->
+			{#if res.isPrivileged}
+				<PositionsCard employeeData={res} />
+			{/if}
 		{:catch error}
 			<p style="color: red">{error.message}</p>
 		{/await}
