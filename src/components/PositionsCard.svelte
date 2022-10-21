@@ -10,6 +10,7 @@
     export let title = 'Dagens stillinger'
     export let backgroundColor = '--springWood'
     export let employeeData = {}
+    export let canEdit = true
     export let competence = {
 		positionTasks: []
 	}
@@ -115,7 +116,7 @@
 
 </script>
 
-<Card title={title} backgroundColor={backgroundColor} infoBox={ {content: infoText}} editable={true} canSave={true} saveFunc={saveFunc} cancelFunc={cancelFunc}>
+<Card title={title} backgroundColor={backgroundColor} infoBox={ {content: infoText}} editable={canEdit} canSave={true} saveFunc={saveFunc} cancelFunc={cancelFunc}>
     <div class="halla">
         {#if editInfo.isEditing && editInfo.editBlock === title}
             {#each displayData.positions as position, i}

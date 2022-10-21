@@ -4,6 +4,7 @@
 	import EmployeeCard from '../components/EmployeeCard.svelte'
     import IconSpinner from '../components/Icons/IconSpinner.svelte';
     import PositionsCard from '../components/PositionsCard.svelte';
+    import EmployeeInfoCard from '../components/EmployeeInfoCard.svelte';
 
 	let personParameter
 
@@ -27,7 +28,8 @@
 		{:then res}
 			<EmployeeCard employeeData={res} />
 			{#if res.isPrivileged}
-				<PositionsCard employeeData={res} />
+				<EmployeeInfoCard employeeData={res} />
+				<PositionsCard employeeData={res} canEdit={false} />
 			{/if}
 		{:catch error}
 			<p style="color: red">{error.message}</p>
