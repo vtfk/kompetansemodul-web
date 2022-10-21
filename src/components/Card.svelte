@@ -31,6 +31,8 @@
     let successTimeout = null
     let isInfoBoxOpen = false
 
+    let topOfCard = 0
+
     let editInfo = get(editingPersonalia)
     editingPersonalia.subscribe(value => {
         editInfo = value
@@ -49,6 +51,8 @@
 
     const openEdit = () => {
         if (!editInfo.isEditing) {
+            // topOfCard = document.getElementById(title).getBoundingClientRect().top + window.scrollY - 10
+            topOfCard = window.scrollY
             resetSuccessMsg()
             editingPersonalia.set({ isEditing: true, editBlock: title })
         } else if (editInfo.isEditing && editInfo.editBlock !== title) {
@@ -76,11 +80,25 @@
     }
 
     const scrollIfNeeded = () => {
+        /*
         const elm = document.getElementById(title)
         const rect = elm.getBoundingClientRect()
         const viewHeight = Math.max(document.documentElement.clientHeight, window.innerHeight)
         const needToScroll = (rect.top < 0)
-        if (needToScroll) elm.scrollIntoView()
+        console.log(title, elm)
+        if (needToScroll || true) {
+            console.log('må scrolle')
+           elm.scrollIntoView({ behavior: 'smooth' })
+        }*/
+        setTimeout(() => {
+            window.scrollTo(
+                {
+                    top: topOfCard,
+                    left: 0,
+                    behavior: 'auto'
+                }
+            )
+        }, 0.1)
     }
 
     const saveChanges = async () => {
@@ -113,70 +131,70 @@
     }
 </script>
 
-<div id={title ?? 'har ikke tittel'} class="panel" style="background-color: var({backgroundColor});">
-    {#if title}
-        <div class="header">
-            <div class="headerTitle">
-                <h3 class="title">{title}</h3>
-                {#if infoBox}
-                    <div class="headerIcon" title={showInfoBox ? 'Lukk infoboks' : 'Åpne infoboks'} on:click={() => {handleInfoClick()}}><IconHelp /></div>
+    <div id={title ?? 'har ikke tittel'} class="panel{(editInfo.isEditing && editInfo.editBlock !== title) ? ' hide' : ''}" style="background-color: var({backgroundColor});">
+        {#if title}
+            <div class="header">
+                <div class="headerTitle">
+                    <h3 class="title">{title}</h3>
+                    {#if infoBox}
+                        <div class="headerIcon" title={showInfoBox ? 'Lukk infoboks' : 'Åpne infoboks'} on:click={() => {handleInfoClick()}}><IconHelp /></div>
+                    {/if}
+                </div>
+                {#if editable}
+                    {#if editInfo.isEditing && editInfo.editBlock === title}
+                        {#if isSaving}
+                            <IconSpinner width="2rem" />
+                        {:else if saveError}
+                            <span class="error slide fadeIn">😮 {saveError}</span>
+                        {/if}
+                    {:else}
+                        <div style="display: flex; position: relative;">
+                            {#if showSavedMsg}
+                                <div class="success slide fadeInOut">Lagret 👍</div>&nbsp&nbsp
+                            {/if}
+                            <Button buttonText="Rediger" onClick={() => openEdit()}><IconEdit slot="before" /></Button>
+                        </div>
+                    {/if}
                 {/if}
             </div>
-            {#if editable}
-                {#if editInfo.isEditing && editInfo.editBlock === title}
-                    {#if isSaving}
-                        <IconSpinner width="2rem" />
-                    {:else if saveError}
-                        <span class="error slide fadeIn">😮 {saveError}</span>
-                    {/if}
-                {:else}
-                    <div style="display: flex; position: relative;">
-                        {#if showSavedMsg}
-                            <div class="success slide fadeInOut">Lagret 👍</div>&nbsp&nbsp
-                        {/if}
-                        <Button buttonText="Rediger" onClick={() => openEdit()}><IconEdit slot="before" /></Button>
-                    </div>
-                {/if}
+            {#if infoBox}
+                <InfoBox content={infoBox.content} html={true} open={showInfoBox} onClose={() => {handleInfoClick()}} />
+            {/if}
+        {/if}
+        <div id="content">
+            <slot>Her er kortets innhold, hvis du huska å legge det inn. Om du skal kunne redigere kortet MÅ du huske å subscribe på tilhørende edit-store i cardContent</slot>
+        </div>
+        {#if editInfo.isEditing && editInfo.editBlock === title}
+        <div class="bottomLine">
+            {#if isSaving}
+                <div></div>
+                <div class="saveCancel">
+                    Lagrer...
+                    <!--
+                    <Button buttonText="Lagrer..." disabled={true}></Button>
+                    &nbsp&nbsp
+                    <Button buttonText="Lagrer..." disabled={true}></Button>
+                    -->
+                </div>
+            {:else if saveError}
+                <div></div>
+                <div class="saveCancel">
+                    <Button buttonText="Prøv igjen" disabled={!canSave} onClick={saveChanges}><IconRetry slot="before" /></Button>
+                    &nbsp&nbsp
+                    <Button buttonText="Avbryt" onClick={cancelEdit}><IconClose slot="before" /></Button>
+                </div>
+            {:else}
+                <div></div>
+                <div class="saveCancel">
+                    <Button buttonText="Lagre" disabled={!canSave} onClick={saveChanges}><IconCheck slot="before" /></Button>
+                    &nbsp&nbsp
+                    <Button buttonText="Avbryt" onClick={cancelEdit}><IconClose slot="before" /></Button>
+                </div>
             {/if}
         </div>
-        {#if infoBox}
-            <InfoBox content={infoBox.content} html={true} open={showInfoBox} onClose={() => {handleInfoClick()}} />
         {/if}
-    {/if}
-    <div id="content">
-        <slot>Her er kortets innhold, hvis du huska å legge det inn. Om du skal kunne redigere kortet MÅ du huske å subscribe på tilhørende edit-store i cardContent</slot>
-    </div>
-    {#if editInfo.isEditing && editInfo.editBlock === title}
-    <div class="bottomLine">
-        {#if isSaving}
-            <div></div>
-            <div class="saveCancel">
-                Lagrer...
-                <!--
-                <Button buttonText="Lagrer..." disabled={true}></Button>
-                &nbsp&nbsp
-                <Button buttonText="Lagrer..." disabled={true}></Button>
-                -->
-            </div>
-        {:else if saveError}
-            <div></div>
-            <div class="saveCancel">
-                <Button buttonText="Prøv igjen" disabled={!canSave} onClick={saveChanges}><IconRetry slot="before" /></Button>
-                &nbsp&nbsp
-                <Button buttonText="Avbryt" onClick={cancelEdit}><IconClose slot="before" /></Button>
-            </div>
-        {:else}
-            <div></div>
-            <div class="saveCancel">
-                <Button buttonText="Lagre" disabled={!canSave} onClick={saveChanges}><IconCheck slot="before" /></Button>
-                &nbsp&nbsp
-                <Button buttonText="Avbryt" onClick={cancelEdit}><IconClose slot="before" /></Button>
-            </div>
-        {/if}
-    </div>
-    {/if}
 
-</div>
+    </div>
 
 <style>
     .header {
@@ -198,6 +216,9 @@
         align-items: center;
         width: 1.2rem;
         margin-left: 4px;
+    }
+    .hide {
+        display: none;
     }
     .headerIcon:hover {
         cursor: pointer;
