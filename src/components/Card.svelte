@@ -90,15 +90,17 @@
             console.log('må scrolle')
            elm.scrollIntoView({ behavior: 'smooth' })
         }*/
+        /*
         setTimeout(() => {
             window.scrollTo(
                 {
                     top: topOfCard,
                     left: 0,
-                    behavior: 'auto'
+                    behavior: 'smooth'
                 }
             )
-        }, 0.1)
+        }, 0.1)*/
+        window.scrollTo({ top: topOfCard, left: 0, behavior: 'smooth' })
     }
 
     const saveChanges = async () => {
@@ -148,7 +150,7 @@
                             <span class="error slide fadeIn">😮 {saveError}</span>
                         {/if}
                     {:else}
-                        <div style="display: flex; position: relative;">
+                        <div class="editButton">
                             {#if showSavedMsg}
                                 <div class="success slide fadeInOut">Lagret 👍</div>&nbsp&nbsp
                             {/if}
@@ -218,7 +220,17 @@
         margin-left: 4px;
     }
     .hide {
+        color: var(--mork);
+    }
+    .hide .headerIcon {
         display: none;
+    }
+    .hide .editButton {
+        display: none;
+    }
+    .editButton {
+        display: flex;
+        position: relative;
     }
     .headerIcon:hover {
         cursor: pointer;
