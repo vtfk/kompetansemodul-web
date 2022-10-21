@@ -1,5 +1,7 @@
 <script>
 	import { getMe, vitnemaal }  from '../lib/services/useApi'
+	import { get } from 'svelte/store'
+    import { editingPersonalia, infoOpen } from '../lib/services/store'
 	import EmployeeCard from '../components/EmployeeCard.svelte'
     import IconSpinner from '../components/Icons/IconSpinner.svelte';
     import EducationCard from '../components/EducationCard.svelte';
@@ -23,6 +25,11 @@
 		return me
 	}
 
+	let editInfo = get(editingPersonalia)
+    editingPersonalia.subscribe(value => {
+        editInfo = value
+    })
+
 </script>
 
 <div class="content">
@@ -32,9 +39,13 @@
 		</div>
 	{:then res}
 		<div class="pageIntro">
-			<h2>Hei, {res.fornavn}! Her kan du se og redigere din kompetanse</h2>
-			<div class="headerIcon" title={showInfoBox ? 'Lukk infoboks' : 'Åpne infoboks'} on:click={() => {showInfoBox = !showInfoBox}}><IconHelp /></div>
-			<InfoBox content={infoContent} html={true} open={showInfoBox} onClose={() => {showInfoBox = !showInfoBox}} />
+			{#if !editInfo.isEditing}
+				<h2>Hei, {res.fornavn}! Her kan du se og redigere din kompetanse</h2>
+				<div class="headerIcon" title={showInfoBox ? 'Lukk infoboks' : 'Åpne infoboks'} on:click={() => {showInfoBox = !showInfoBox}}><IconHelp /></div>
+				<InfoBox content={infoContent} html={true} open={showInfoBox} onClose={() => {showInfoBox = !showInfoBox}} />
+			{:else}
+				<h2>Redigerer {editInfo.editBlock}</h2>
+			{/if}
 		</div>
 		<!-- <p style="color: var(--deepSeaGreen);"><strong>Til dagens workshop:</strong> Klikk her: <a href ="mailto:jorgen.thorsnes@vtfk.no;robin.ellingsen@vtfk.no?subject=Tilbakemelding på kompetanse-verktøy&body=Eksempler på hva vi ønsker tilbakemelding på:%0D%0A-Hva er vanskelig å forstå?%0D%0A-Er det noe du føler mangler?%0D%0A-Er det noe som ikke fungerer som forventet?%0D%0A-Er det noe du liker godt?%0D%0A-Er det noe du ikke liker?%0D%0A-Generelle tanker?%0D%0A%0D%0ASkriv inn her:"> Lag tilbakemeldings-epost.</a> Skriv inn tilbakemeldinger i e-posten som åpnes, og send når du er ferdig å teste</p><br/>  -->
 		<EmployeeCard employeeData={res} />
