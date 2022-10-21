@@ -1,6 +1,6 @@
 <script>
     import { get } from 'svelte/store'
-    import { editingPersonalia } from '../lib/services/store'
+    import { editingPersonalia, infoOpen } from '../lib/services/store'
     import Button from './Button.svelte';
     import IconEdit from './Icons/IconEdit.svelte'
     import IconClose from './Icons/IconClose.svelte';
@@ -29,10 +29,20 @@
     let showInfoBox = false
     let showSavedMsg = false
     let successTimeout = null
+    let isInfoBoxOpen = false
 
     let editInfo = get(editingPersonalia)
     editingPersonalia.subscribe(value => {
         editInfo = value
+    })
+
+    infoOpen.subscribe(value => {
+        if(value !== title) {
+            showInfoBox = false
+            isInfoBoxOpen = false
+        } else if (value === title) {
+            showInfoBox = true
+        }
     })
 
     const sleep = ms => new Promise(r => {successTimeout = setTimeout(r, ms)})
@@ -93,6 +103,14 @@
         }
     }
 
+    const handleInfoClick = () => {
+        isInfoBoxOpen = !isInfoBoxOpen
+        if(isInfoBoxOpen === false) {
+            infoOpen.set('')
+        } else {
+            infoOpen.set(title)
+        }  
+    }
 </script>
 
 <div id={title ?? 'har ikke tittel'} class="panel" style="background-color: var({backgroundColor});">
@@ -101,7 +119,7 @@
             <div class="headerTitle">
                 <h3 class="title">{title}</h3>
                 {#if infoBox}
-                    <div class="headerIcon" title={showInfoBox ? 'Lukk infoboks' : 'Åpne infoboks'} on:click={() => {showInfoBox = !showInfoBox}}><IconHelp /></div>
+                    <div class="headerIcon" title={showInfoBox ? 'Lukk infoboks' : 'Åpne infoboks'} on:click={() => {handleInfoClick()}}><IconHelp /></div>
                 {/if}
             </div>
             {#if editable}
@@ -122,7 +140,7 @@
             {/if}
         </div>
         {#if infoBox}
-            <InfoBox content={infoBox.content} html={true} open={showInfoBox} onClose={() => {showInfoBox = !showInfoBox}} />
+            <InfoBox content={infoBox.content} html={true} open={showInfoBox} onClose={() => {handleInfoClick()}} />
         {/if}
     {/if}
     <div id="content">

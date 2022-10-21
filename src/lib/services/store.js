@@ -7,3 +7,4 @@ export const editingPersonalia = writable({
     isEditing: false,
     editBlock: 'ingen akkurat nå'
 })
+export const infoOpen = writable('')

@@ -11,6 +11,7 @@
     import IconHelp from '../components/Icons/IconHelp.svelte';
     import InfoBox from '../components/InfoBox.svelte';
     import EmployeeInfoCard from '../components/EmployeeInfoCard.svelte';
+	import CountySelection from '../components/CountySelection.svelte'
 
 	// State
 	let showInfoBox = false
@@ -34,15 +35,16 @@
 			<div class="headerIcon" title={showInfoBox ? 'Lukk infoboks' : 'Åpne infoboks'} on:click={() => {showInfoBox = !showInfoBox}}><IconHelp /></div>
 			<InfoBox content={infoContent} html={true} open={showInfoBox} onClose={() => {showInfoBox = !showInfoBox}} />
 		</div>
-		<p style="color: var(--deepSeaGreen);"><strong>Til dagens workshop:</strong> Klikk her: <a href ="mailto:jorgen.thorsnes@vtfk.no;robin.ellingsen@vtfk.no?subject=Tilbakemelding på kompetanse-verktøy&body=Eksempler på hva vi ønsker tilbakemelding på:%0D%0A-Hva er vanskelig å forstå?%0D%0A-Er det noe du føler mangler?%0D%0A-Er det noe som ikke fungerer som forventet?%0D%0A-Er det noe du liker godt?%0D%0A-Er det noe du ikke liker?%0D%0A-Generelle tanker?%0D%0A%0D%0ASkriv inn her:"> Lag tilbakemeldings-epost.</a> Skriv inn tilbakemeldinger i e-posten som åpnes, og send når du er ferdig å teste</p><br/> 
+		<!-- <p style="color: var(--deepSeaGreen);"><strong>Til dagens workshop:</strong> Klikk her: <a href ="mailto:jorgen.thorsnes@vtfk.no;robin.ellingsen@vtfk.no?subject=Tilbakemelding på kompetanse-verktøy&body=Eksempler på hva vi ønsker tilbakemelding på:%0D%0A-Hva er vanskelig å forstå?%0D%0A-Er det noe du føler mangler?%0D%0A-Er det noe som ikke fungerer som forventet?%0D%0A-Er det noe du liker godt?%0D%0A-Er det noe du ikke liker?%0D%0A-Generelle tanker?%0D%0A%0D%0ASkriv inn her:"> Lag tilbakemeldings-epost.</a> Skriv inn tilbakemeldinger i e-posten som åpnes, og send når du er ferdig å teste</p><br/>  -->
 		<EmployeeCard employeeData={res} />
 		<EmployeeInfoCard employeeData={res} />
 		<PositionsCard employeeData={res} competence={res.competenceData} />
 		<TasksCard competence={res.competenceData}/>
-		<EducationCard competence={res.competenceData} />
-		<WorkExperienceCard competence={res.competenceData} />
-		<ExperienceCard competence={res.competenceData}/>
+		<CountySelection competence={res.competenceData}/>
 		<DivCard competence={res.competenceData}/>
+		<WorkExperienceCard competence={res.competenceData} />
+		<EducationCard competence={res.competenceData} />
+		<ExperienceCard competence={res.competenceData}/>
 	{:catch error}
 		<p style="color: red">{error.message}</p>
 	{/await}

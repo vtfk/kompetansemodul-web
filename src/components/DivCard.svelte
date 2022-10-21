@@ -5,7 +5,7 @@
     import { editingPersonalia } from '../lib/services/store'
 
     // Props
-    export let title = 'Annen relevant informasjon'
+    export let title = 'Solorolle'
     export let backgroundColor = '--ecruWhite'
     export let competence = {
 		other: {}
@@ -57,7 +57,6 @@
         {#if editInfo.isEditing && editInfo.editBlock === title}
         <div class="contentContainer">
             <div class="innerContainer firstContainer">
-                <h4>Solorolle</h4>
                 <div class="soloRadio">
                     <label for="ja">Ja</label>
                     <input type="radio" id="ja" name="solo" value="Ja" bind:group={tempOther.soloRole}>
@@ -73,29 +72,29 @@
                     </div>
                 {/if}
             </div>
-            <div class="innerContainer">
+            <!-- <div class="innerContainer">
                 <h4>Ønsket fylkeskommune/arbeidssted etter oppdeling</h4>
                 <select name="preferredCounty" id="preferredCounty" bind:value={tempOther.preferredCounty}>
                     <option value="Vet ikke">Vet ikke</option>
                     <option value="Telemark fylkeskommune">Telemark fylkeskommune</option>
                     <option value="Vestfold fylkeskommune">Vestfold fylkeskommune</option>
+                    <option value="samma">Samma for meg hvor jeg havner(hr - gi oss innspill)</option>
                 </select>
-            </div>
+            </div> -->
         </div>
         {:else}
             <div class="contentContainer">
                 <div class="innerContainer firstContainer">
-                    <h4>Solorolle</h4>
                     <div>{competence.other?.soloRole || 'Ikke fylt ut av ansatt'}
                         {#if competence.other.soloRole === 'Ja'}
                             - {competence.other.soloRoleDescription ?? 'Beskrivelse av solorole er ikke fylt ut av ansatt'}
                         {/if}
                     </div>
                 </div>
-                <div class="innerContainer">
+                <!-- <div class="innerContainer">
                     <h4>Ønsket fylkeskommune/arbeidssted etter oppdeling</h4>
                     <div>{competence.other.preferredCounty ?? 'Ikke fylt ut av ansatt'}</div>
-                </div>
+                </div> -->
             </div>
         {/if}
 </Card>
