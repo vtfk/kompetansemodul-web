@@ -37,6 +37,45 @@
         toMonth: 'Februar'
     }
 
+    let degreeInfo = [
+        {
+            name: 'Master',
+            score: 300,
+            value: 'Master'
+        },
+        {
+            name: 'Bachelor',
+            score: 180,
+            value: 'Bachelor'
+        },
+        {
+            name: 'Årsstudium',
+            score: 60,
+            value: 'Årsstudium'
+        },
+        {
+            name: 'Fagbrev',
+            value: 'Fagbrev'
+        },
+        {
+            name: 'Videregående skole',
+            value: 'Videregående skole'
+        },
+        {
+            name: 'Doktorgrad',
+            score: 450,
+            value: 'Doktorgrad'
+        },
+        {
+            name: 'Enkeltemne',
+            value: 'Enkeltemne'
+        },
+        {
+            name: 'Sertifisering',
+            value: 'Sertifisering'
+        }
+    ]
+
     // Validation
     let canSave = false
     let validation = []
@@ -64,6 +103,26 @@
             tempValidation.push(valid)
         }
         validation = JSON.parse(JSON.stringify(tempValidation))
+    }
+
+    // Reactive on education degree
+    $: {
+        if (Array.isArray(tempEducation) && tempEducation.length > 0) {
+            tempEducation.forEach(edu => {
+                if (edu.degree) {
+                    const score = degreeInfo.find(degree => degree.name === edu.degree).score
+                    if (score) {
+                        if (!edu.credit || edu.degree !== edu.creditDegree) {
+                            edu.credit = score
+                            edu.creditDegree = edu.degree
+                        }
+                    } else {
+                        delete edu.credit
+                        delete edu.creditDegree
+                    }
+                }
+            })
+        }
     }
 
     // Functions
@@ -137,16 +196,15 @@
                             <div>
                                 <label for="degree">Utdanningsgrad</label><br>
                                 <select name="degree" id="degree" bind:value={tempEdu.degree}>
-                                    <option value="Master">Master</option>
-                                    <option value="Bachelor">Bachelor</option>
-                                    <option value="Årsstudium">Årsstudium</option>
-                                    <option value="Fagbrev">Fagbrev</option>
-                                    <option value="Videregående skole">Videregående skole</option>
-                                    <option value="Doktorgrad">Doktorgrad</option>
-                                    <option value="Enkeltemne">Enkeltemne</option>
-                                    <option value="Sertifisering">Sertifisering</option>
+                                    {#each degreeInfo as degree}
+                                        <option value={degree.value}>{degree.name}</option>
+                                    {/each}
                                 </select>
                             </div>
+                        </div>
+                        <div>
+                            <label for="credit">Studiepoeng</label><br>
+                            <input type="text" bind:value={tempEdu.credit} readonly={tempEdu.degree && !!!degreeInfo.find(degree => degree.name === tempEdu.degree).score} placeholder="Utdanningsgraden gir ikke studiepoeng" />
                         </div>
                         <div>
                             <label for="subject">{['Fagbrev', 'Sertifisering'].includes(tempEdu.degree) ? tempEdu.degree : 'Fagområde'}</label><label for="subject" class="validation">{!validation[i].subject ? '*' : '' }</label><br>
@@ -185,6 +243,9 @@
                     <div slot="first">
                         <h3>{edu.degree ?? 'Ukjent grad'}</h3>
                         <h4>{edu.subject ?? 'Ukjent fag'}</h4>
+                        {#if edu.credit}
+                            <p>Studiepoeng: {edu.credit}</p>
+                        {/if}
                         <p>📅 {(edu.fromMonth && edu.toMonth) ? `${edu.fromMonth} ${edu.fromYear} - ${edu.toMonth} ${edu.toYear}` : 'Ukjent periode'}</p>
                         <p>🏫 {edu.school ?? 'Ukjent skole'}</p>
                     </div>
@@ -214,6 +275,11 @@
     
     .validation {
         color: var(--red)
+    }
+
+    input[type=text]:read-only {
+        color: grey;
+        cursor: not-allowed;
     }
 
 </style>
