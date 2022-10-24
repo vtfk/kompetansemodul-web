@@ -208,7 +208,7 @@
                         </div>
                         <div>
                             <label for="subject">{['Fagbrev', 'Sertifisering'].includes(tempEdu.degree) ? tempEdu.degree : 'Fagområde'}</label><label for="subject" class="validation">{!validation[i].subject ? '*' : '' }</label><br>
-                            <DataList dataList={chooseSubjectDatalist(tempEdu.degree)} filterFunction={(input, obj) => obj.value.toLowerCase().includes(input.toLowerCase()) || obj.category.toLowerCase().startsWith(input.toLowerCase()) } bind:inputValue={tempEdu.subject}/>                          
+                            <DataList dataList={chooseSubjectDatalist(tempEdu.degree)} filterFunction={(input, obj) => obj.value.toLowerCase().includes(input.toLowerCase()) || obj.category.toLowerCase().startsWith(input.toLowerCase()) } bind:inputValue={tempEdu.subject} placeholder={`Skriv inn ${['Fagbrev', 'Sertifisering'].includes(tempEdu.degree) ? tempEdu.degree.toLowerCase() : 'fagområde'} eller velg fra listen`} />
                         </div>
                         <div>
                             <label for="from">Fra</label><br>

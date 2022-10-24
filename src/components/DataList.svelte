@@ -181,7 +181,7 @@
         background-color: #fff;
         min-width: 100px;
         height: 2rem;
-        padding: 0 1rem;
+        padding: 0 0.4rem;
         border: 1px solid var(--mork);
         border-radius: 0.5rem;
         box-sizing: border-box;
