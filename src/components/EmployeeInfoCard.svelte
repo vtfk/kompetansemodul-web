@@ -96,13 +96,5 @@
         font-weight: bold;
         font-style: italic;
     }
-    .secondaryPosition {
-        margin-top: 1rem;
-    }
-    label {
-        font-size: 0.9em;
-        font-weight: bold;
-        font-style: italic;
-    }
 
 </style>

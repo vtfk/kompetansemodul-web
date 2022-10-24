@@ -84,14 +84,11 @@
         max-width: 50rem;
         justify-content: space-between;
     }
-    .soloRadio {
-        padding: 0.2rem;
-    }
-    label {
+    /* label {
         font-size: 0.9em;
         font-weight: bold;
         font-style: italic;
-    }
+    } */
 
     select {
         width: 100%;
@@ -101,33 +98,10 @@
         box-sizing: border-box;
     }
 
-    input[type=radio] {
-        margin: 5px 5px;
-        display: inline-block;
-        border: 1px solid var(--mork);
-        border-radius: 0.5rem;
-        box-sizing: border-box;
-    }
-
-    textarea {
-        padding: 5px 5px;
-        border: 1px solid var(--mork);
-        border-radius: 0.5rem;
-        resize: none;
-        width: 100%;
-    }
-
-    .textareaContainer {
-        width: 19rem;
-    }
-
     .firstContainer {
         max-width: 25rem;
         padding-right: 2rem;
         padding-bottom: 2rem;
-    }
-    .validation {
-        color: var(--red)
     }
 
 </style>
