@@ -1,5 +1,3 @@
-<svelte:options tag="my-dropdown-item" />
-
 <script>
   import { createEventDispatcher } from 'svelte';
 	

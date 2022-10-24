@@ -1,5 +1,3 @@
-<svelte:options tag="my-dropdown" />
-
 <script>
   import IconDropdownNav from "../Icons/IconKebabMenu.svelte";
   import {clickOutside} from '../../lib/Helpers/clickOutside'
