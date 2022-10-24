@@ -221,6 +221,7 @@
     }
     .hide {
         color: var(--mork);
+        filter: grayscale(100%);
     }
     .hide .headerIcon {
         display: none;
