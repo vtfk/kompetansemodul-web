@@ -261,6 +261,20 @@ input[type=text] {
   padding: 0 1rem;
 }
 
+@media (prefers-color-scheme: dark) {
+  :root {
+    color: #3b3b3b;
+    background-color: #ffffff;
+  }
+  input {
+    color: #3b3b3b;
+    background-color: #ffffff;
+  }
+  select {
+    color: #3b3b3b;
+    background-color: #ffffff;
+  }
+}
 
 @media (prefers-color-scheme: light) {
   :root {
