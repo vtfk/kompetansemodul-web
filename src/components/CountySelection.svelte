@@ -44,7 +44,7 @@
         tempPerfCounty = JSON.parse(JSON.stringify(competence.perfCounty))
     }
 
-    const infoText = "<p>Vi ber også om at du tar stilling til foretrukken fylkeskommune. Her ønsker vi at du svarer på hvilken fylkeskommune du foretrekker (Telemark eller Vestfold). Du kan også trykke “vet ikke” om du ikke har bestemt deg eller om ønsket ditt er avhengig av andre rammebetingelser.</p><br><p>MERK: Ditt svar er ikke bindende og er kun ment for at arbeidsgiver skal få en oversikt over hva de ansatte ønsker. Det betyr at ditt svar ikke automatisk vil få følger for innplasseringen. </p>"
+    const infoText = "<p>Vi ber også om at du tar stilling til foretrukken fylkeskommune. Her ønsker vi at du svarer på hvilken fylkeskommune du foretrekker (Telemark eller Vestfold). Du kan også trykke “vet ikke” om du ikke har bestemt deg eller om ønsket ditt er avhengig av andre rammebetingelser.</p><br><p><b>MERK</b>: Ditt svar er ikke bindende og er kun ment for at arbeidsgiver skal få en oversikt over hva de ansatte ønsker. Det betyr at ditt svar ikke automatisk vil få følger for innplasseringen. </p>"
 </script>
 
 <Card title={title} saveFunc={saveFunc} cancelFunc={cancelFunc} backgroundColor={backgroundColor} editable={true} infoBox={ {content: infoText} } canSave={true} >
@@ -58,7 +58,7 @@
                         <option value="Vet ikke">Vet ikke</option>
                         <option value="Telemark fylkeskommune">Telemark fylkeskommune</option>
                         <option value="Vestfold fylkeskommune">Vestfold fylkeskommune</option>
-                        <option value="Samma for meg hvor jeg havner(hr - gi oss innspill)">Samma for meg hvor jeg havner(hr - gi oss innspill)</option>
+                        <option value="Samma for meg hvor jeg havner(hr - gi oss innspill)">Samma for meg hvor jeg havner(hr - gi oss innspill)</option> <!-- // TODO: Hent innspill fra HR -->
                     </select>
                 </div>  
             </div>

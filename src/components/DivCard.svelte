@@ -49,7 +49,7 @@
         tempOther = JSON.parse(JSON.stringify(competence.other))
     }
 
-    const infoText = "<h4>Til slutt trenger vi litt annen informasjon fra deg.</h4><br><p>Du har en solorolle dersom dine arbeidsoppgaver og/eller fagfelt er unikt innenfor din sektor og at du alene har en nøkkelfunksjon som andre er avhengige. Et eksempel: Kari er den eneste i BDK som har funksjonen som programmerer av verktøyet PowerBI som er viktig i mange utviklingsområder.</p><br><p>Vi ber også om at du tar stilling til foretrukken fylkeskommune. Her ønsker vi at du svarer på hvilken fylkeskommune du foretrekker (Telemark eller Vestfold). Du kan også trykke “vet ikke” om du ikke har bestemt deg eller om ønsket ditt er avhengig av andre rammebetingelser.</p><br><p>MERK: Ditt svar er ikke bindende og er kun ment for at arbeidsgiver skal få en oversikt over hva de ansatte ønsker. Det betyr at ditt svar ikke automatisk vil få følger for innplasseringen. </p>"
+    const infoText = "<p>Du har en solorolle dersom dine arbeidsoppgaver og/eller fagfelt er unikt innenfor din sektor og at du alene har en nøkkelfunksjon som andre er avhengige av.<br><br><b>Et eksempel</b>: Kari er den eneste i BDK som har funksjonen som programmerer av verktøyet PowerBI som er viktig i mange utviklingsområder.</p>"
 </script>
 
 <Card title={title} saveFunc={saveFunc} cancelFunc={cancelFunc} backgroundColor={backgroundColor} editable={true} infoBox={ {content: infoText} } canSave={canSave} >
@@ -66,7 +66,7 @@
                 {#if tempOther.soloRole === 'Ja'}
                     <div class="textareaContainer">
                         <label for="description">Beskriv din solorolle (maks 200 tegn)</label><label for="description" class="validation">{!canSave ? '*' : '' }</label><br />
-                        <textarea id="description" rows="6" maxlength="200" bind:value={tempOther.soloRoleDescription}/>
+                        <textarea id="description" rows="7" maxlength="200" bind:value={tempOther.soloRoleDescription}/>
                         <!-- gjorde en liten endring her frem til vi validerer data, dette for å unngå at noen lagrere noe tomt og ikke får mulighet til å redigere igjen. -->
                         <span>{tempOther.soloRoleDescription?.length ?? 0}/200</span> 
                     </div>

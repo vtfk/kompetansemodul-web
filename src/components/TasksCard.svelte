@@ -41,7 +41,7 @@
         other: ''
     }
 
-    const infoText = "<p>Hovedstilling er den primære stillingen du har per i dag. Andre oppgaver kan være midlertidige oppgaver du utfører i en periode for eksempel i et prosjekt eller ved byggingen av nye fylkeskommuner.</p><br><p>Hvorfor spør vi om dette? Dette trenger vi for å få en mest god oversikt over oppgaver som ligger til din stilling i dag. Det er ment å fange opp informasjon om ansatte som kan ha endret nøkkeloppgaver, jobbe i matrise eller midlertidig i prosjekter.</p>" 
+    const infoText = "<p>Hovedstilling er den primære stillingen du har per i dag. Andre oppgaver kan være midlertidige oppgaver du utfører i en periode for eksempel i et prosjekt eller ved byggingen av nye fylkeskommuner.</p><br><p>Hvorfor spør vi om dette? Dette trenger vi for å få en best mulig oversikt over oppgaver som ligger til din stilling i dag. Det er ment å fange opp informasjon om ansatte som kan ha endret nøkkeloppgaver, jobbe i matrise eller midlertidig i prosjekter.</p>" 
     
 
     const saveFunc = async () => {
