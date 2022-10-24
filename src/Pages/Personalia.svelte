@@ -1,18 +1,18 @@
 <script>
 	import { getMe, vitnemaal }  from '../lib/services/useApi'
 	import { get } from 'svelte/store'
-    import { editingPersonalia, infoOpen } from '../lib/services/store'
+  import { editingPersonalia, infoOpen } from '../lib/services/store'
 	import EmployeeCard from '../components/EmployeeCard.svelte'
-    import IconSpinner from '../components/Icons/IconSpinner.svelte';
-    import EducationCard from '../components/EducationCard.svelte';
-    import TasksCard from '../components/TasksCard.svelte';
-    import DivCard from '../components/DivCard.svelte';
-    import ExperienceCard from '../components/ExperienceCard.svelte';
-    import PositionsCard from '../components/PositionsCard.svelte';
-    import WorkExperienceCard from '../components/WorkExperienceCard.svelte';
-    import IconHelp from '../components/Icons/IconHelp.svelte';
-    import InfoBox from '../components/InfoBox.svelte';
-    import EmployeeInfoCard from '../components/EmployeeInfoCard.svelte';
+  import IconSpinner from '../components/Icons/IconSpinner.svelte';
+  import EducationCard from '../components/EducationCard.svelte';
+  import TasksCard from '../components/TasksCard.svelte';
+  import DivCard from '../components/DivCard.svelte';
+  import ExperienceCard from '../components/ExperienceCard.svelte';
+  import PositionsCard from '../components/PositionsCard.svelte';
+  import WorkExperienceCard from '../components/WorkExperienceCard.svelte';
+  import IconHelp from '../components/Icons/IconHelp.svelte';
+  import InfoBox from '../components/InfoBox.svelte';
+  import EmployeeInfoCard from '../components/EmployeeInfoCard.svelte';
 	import CountySelection from '../components/CountySelection.svelte'
 
 	// State
@@ -74,13 +74,13 @@
 	}
 	.headerIcon {
 		flex-shrink: 0;
-        display: flex;
-        align-items: center;
-        width: 1.6rem;
-        margin-left: 4px;
-    }
+		display: flex;
+		align-items: center;
+		width: 1.6rem;
+		margin-left: 4px;
+	}
 	.headerIcon:hover {
-        cursor: pointer;
-        transform: scale(1.2);
-    }
+		cursor: pointer;
+		transform: scale(1.2);
+	}
 </style>

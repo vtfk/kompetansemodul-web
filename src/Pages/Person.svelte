@@ -2,9 +2,9 @@
 	import { getPerson }  from '../lib/services/useApi'
 	import { searchParameter }  from '../lib/services/store'
 	import EmployeeCard from '../components/EmployeeCard.svelte'
-    import IconSpinner from '../components/Icons/IconSpinner.svelte';
-    import PositionsCard from '../components/PositionsCard.svelte';
-    import EmployeeInfoCard from '../components/EmployeeInfoCard.svelte';
+	import IconSpinner from '../components/Icons/IconSpinner.svelte';
+	import PositionsCard from '../components/PositionsCard.svelte';
+	import EmployeeInfoCard from '../components/EmployeeInfoCard.svelte';
 
 	let personParameter
 

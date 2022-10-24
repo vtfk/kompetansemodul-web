@@ -7,9 +7,9 @@
 
   function selectValue() {
 		dispatch("clicked", value);
-        // console.log(value)
-        // const { select } =  getContext('dropdown');
-        // select(value)
+    // console.log(value)
+    // const { select } =  getContext('dropdown');
+    // select(value)
   }
 
 </script>
