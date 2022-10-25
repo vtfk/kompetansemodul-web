@@ -1,62 +1,62 @@
 [
-    {
-        "value": "Teknologi- og industrifag",
-        "category": "VGS" 
-    }, 
-    {
-        "value": "Salg, service og reiseliv",
-        "category": "VGS" 
-    },
-    {
-        "value": "Resturant- og matfag",
-        "category": "VGS" 
-    },
-    {
-        "value": "Naturbruk",
-        "category": "VGS" 
-    },
-    {
-        "value": "Informasjonsteknologi og medieproduksjon",
-        "category": "VGS" 
-    },
-    {
-        "value": "Håndverk, design og produktutvikling",
-        "category": "VGS" 
-    },
-    {
-        "value": "Helse- og oppvekstfag",
-        "category": "VGS" 
-    },
-    {
-        "value": "Frisør, blomster, interiør og eksponeringsdesign",
-        "category": "VGS" 
-    },
-    {
-        "value": "Elektro og datateknologi",
-        "category": "VGS" 
-    },
-    {
-        "value": "Bygg- og anleggsteknikk",
-        "category": "VGS" 
-    },
-    {
-        "value": "Studiespesialisering",
-        "category": "VGS" 
-    },
-    {
-        "value": "Musikk, dans og drama",
-        "category": "VGS" 
-    },
-    {
-        "value": "Medier og kommunikasjon",
-        "category": "VGS" 
-    },
-    {
-        "value": "Kunst, desing og arkitektur",
-        "category": "VGS" 
-    },
-    {
-        "value": "Idrettsfag",
-        "category": "VGS" 
-    }
+  {
+    "value": "Teknologi- og industrifag",
+    "category": "VGS"
+  },
+  {
+    "value": "Salg, service og reiseliv",
+    "category": "VGS"
+  },
+  {
+    "value": "Resturant- og matfag",
+    "category": "VGS"
+  },
+  {
+    "value": "Naturbruk",
+    "category": "VGS"
+  },
+  {
+    "value": "Informasjonsteknologi og medieproduksjon",
+    "category": "VGS"
+  },
+  {
+    "value": "Håndverk, design og produktutvikling",
+    "category": "VGS"
+  },
+  {
+    "value": "Helse- og oppvekstfag",
+    "category": "VGS"
+  },
+  {
+    "value": "Frisør, blomster, interiør og eksponeringsdesign",
+    "category": "VGS"
+  },
+  {
+    "value": "Elektro og datateknologi",
+    "category": "VGS"
+  },
+  {
+    "value": "Bygg- og anleggsteknikk",
+    "category": "VGS"
+  },
+  {
+    "value": "Studiespesialisering",
+    "category": "VGS"
+  },
+  {
+    "value": "Musikk, dans og drama",
+    "category": "VGS"
+  },
+  {
+    "value": "Medier og kommunikasjon",
+    "category": "VGS"
+  },
+  {
+    "value": "Kunst, desing og arkitektur",
+    "category": "VGS"
+  },
+  {
+    "value": "Idrettsfag",
+    "category": "VGS"
+  }
 ]
