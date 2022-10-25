@@ -33,8 +33,8 @@
     let newEducation = {
         fromYear: 2019,
         toYear: 2022,
-        fromMonth: 'Januar',
-        toMonth: 'Februar'
+        fromMonth: 'August',
+        toMonth: 'Juni'
     }
 
     let degreeInfo = [
@@ -132,8 +132,8 @@
 		newEducation = {
             fromYear: 2019,
             toYear: 2022,
-            fromMonth: 'Januar',
-            toMonth: 'Februar'
+            fromMonth: 'August',
+            toMonth: 'Juni'
         }
 	}
 
