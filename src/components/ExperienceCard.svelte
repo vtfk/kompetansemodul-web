@@ -43,6 +43,7 @@
             const valid = {
                 position: true,
                 organization: true,
+                toMonthOrYear: true
             }
             // Validation of each field
             if (!exp.position || exp.position.length < 1) {
@@ -53,10 +54,24 @@
                 valid.organization = false
                 canSave = false
             }
+            if (!exp.isActive && ((!exp.toMonth || exp.toMonth.length < 1) || (!exp.toYear || exp.toYear.length < 1))) {
+                valid.toMonthOrYear = false
+                canSave = false
+            }
 
             tempValidation.push(valid)
         }
         validation = JSON.parse(JSON.stringify(tempValidation))
+    }
+
+    // Reactive state changes
+    $: {
+        for (const exp of tempExperience) {
+            if (exp.isActive) {
+                exp.toMonth = ''
+                exp.toYear = ''
+            }
+        }
     }
 
     // Functions
@@ -111,7 +126,8 @@
             dates.toYear = ''
             dates.toMonth = 'Dagens dato'
         }
-        return `${dates.fromMonth} ${dates.fromYear} - ${dates.toMonth} ${dates.toYear}`
+
+        return !exp.isActive ? `${dates.fromMonth} ${dates.fromYear} - ${dates.toMonth} ${dates.toYear}` : `${dates.fromMonth} ${dates.fromYear} ->`
     }
 
     const infoText = "<p>Dette handler om relevante verv du har hatt de siste årene. Du trenger ikke fylle ut frivillige verv eller verv i fritidsaktiviteter.<p>"
@@ -138,14 +154,22 @@
                                 <SelectMonth bind:monthValue={tempExp.fromMonth}/>
                                 <SelectYears startYear={1950} bind:yearValue={tempExp.fromYear} on:change={() => tempExp.toYear = tempExp.fromYear}/>
                             </div>
-                            <label for="to">Til</label><br>
-                            <div class="peroidContainer">
-                                <SelectMonth addTodaysDate={true} bind:monthValue={tempExp.toMonth}/>
-                                    {#if newExperience.fromYear}
-                                        <SelectYears startYear={tempExp.fromYear} addTodaysDate={true} bind:yearValue={tempExp.toYear}/>
-                                    {/if}
-                            </div>
                         </div>
+                        <div>
+                            <label for="active">Aktiv</label><br>
+                            <input type="checkbox" id="active" bind:checked={tempExp.isActive} />
+                        </div>
+                        {#if !tempExp.isActive }
+                            <div>
+                                <label for="to">Til</label><label for="to" class='validation'>{!validation[i].toMonthOrYear ? '*' : '' }</label><br>
+                                <div class="peroidContainer">
+                                    <SelectMonth addTodaysDate={true} bind:monthValue={tempExp.toMonth} />
+                                        {#if newExperience.fromYear}
+                                            <SelectYears startYear={tempExp.fromYear} addTodaysDate={true} bind:yearValue={tempExp.toYear} />
+                                        {/if}
+                                </div>
+                            </div>
+                        {/if}
                     </div>
                     <div slot="right">
                         <Button buttonText="Fjern" onClick={() => removeExperience(tempExp)}><IconDelete slot="before" /></Button>
