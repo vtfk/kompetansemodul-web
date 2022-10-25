@@ -122,8 +122,8 @@
     const onKeydown = (e) => {
         if (focusing && showPreview && previewData.length > 0) {
             if (e.key === 'ArrowUp') {
-            changeActivePreviewItem('up')
-            e.preventDefault()
+                changeActivePreviewItem('up')
+                e.preventDefault()
             } else if (e.key === 'ArrowDown') {
                 changeActivePreviewItem('down')
                 e.preventDefault()
