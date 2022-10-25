@@ -133,13 +133,15 @@
             }  else if (e.key === 'Enter') {
                 previewData.find(ele => ele.active).onClick()
                 e.preventDefault()
+            } else if (e.key === 'Tab') {
+                previewData.find(ele => ele.active).onClick()
             }
         }
         if (focusing) {
             if (e.key === 'Escape') {
                 clear()
                 e.preventDefault()
-            } else if (e.key !== 'Enter') {
+            } else if (e.key !== 'Enter' && e.key !== 'Tab') {
                 showPreview = true
             }
         }
