@@ -116,18 +116,8 @@
     }
 
     const getPeriod = (exp) => {
-        const dates = {
-            fromMonth: exp.fromMonth ?? 'Ukjent mnd',
-            fromYear: exp.fromYear ?? 'Ukjent år',
-            toMonth: exp.toMonth ?? 'Ukjent mnd',
-            toYear: exp.toYear ?? 'Ukjent år'
-        }
-        if (dates.toMonth === 'Dagens dato' || dates.toYear === 'Dagens dato') {
-            dates.toYear = ''
-            dates.toMonth = 'Dagens dato'
-        }
-
-        return !exp.isActive ? `${dates.fromMonth} ${dates.fromYear} - ${dates.toMonth} ${dates.toYear}` : `${dates.fromMonth} ${dates.fromYear} ->`
+        const from = `${exp.fromMonth ?? 'Ukjent mnd'} ${exp.fromYear}`
+        return !exp.isActive ? `${from} - ${exp.toMonth ?? 'Ukjent mnd'} ${exp.toYear ?? 'Ukjent år'}` : `${from} ->`
     }
 
     const infoText = "<p>Dette handler om relevante verv du har hatt de siste årene. Du trenger ikke fylle ut frivillige verv eller verv i fritidsaktiviteter.<p>"
@@ -163,9 +153,9 @@
                             <div>
                                 <label for="to">Til</label><label for="to" class='validation'>{!validation[i].toMonthOrYear ? '*' : '' }</label><br>
                                 <div class="peroidContainer">
-                                    <SelectMonth addTodaysDate={true} bind:monthValue={tempExp.toMonth} />
+                                    <SelectMonth bind:monthValue={tempExp.toMonth} />
                                         {#if newExperience.fromYear}
-                                            <SelectYears startYear={tempExp.fromYear} addTodaysDate={true} bind:yearValue={tempExp.toYear} />
+                                            <SelectYears startYear={tempExp.fromYear} bind:yearValue={tempExp.toYear} />
                                         {/if}
                                 </div>
                             </div>
