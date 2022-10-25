@@ -12,7 +12,7 @@
     <div class="infoContainer">
         <div class="content">
             {#if html}
-                {@html content}
+                {@html content} <!-- eslint-disable-line - Disabled for " `{@html}` can lead to XSS attack  svelte/no-at-html-tags " -->
             {:else}
                 {content}
             {/if}
