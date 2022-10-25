@@ -4,6 +4,9 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
+    "svelte-lint": "eslint --ext .svelte src",
+    "js-lint": "standard",
+    "test": "npm run svelte-lint && npm run js-lint",
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview"
