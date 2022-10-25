@@ -1,5 +1,5 @@
 
-import { PublicClientApplication, InteractionStatus } from '@azure/msal-browser'
+import { PublicClientApplication } from '@azure/msal-browser'
 import { authConfig } from '../../../config'
 import { msalClientStore } from '../services/store'
 import { get } from 'svelte/store'

@@ -1,4 +1,4 @@
-/* 
+/*
   0 = Postnummer, 1 = Poststed, 2 = Kommunekode, 3 = Kommunenavn, 4 = Kategori
   Kategori:
     B = Både gateadresser og postbokser

@@ -13,9 +13,9 @@ const apiRequest = async (method, endpoint, body) => {
     accessToken = (await msalClient.acquireTokenSilent({ scopes: api.scopes })).accessToken
   } catch (error) {
     // If acquireTokenSilent failed - we assume the user has been logged out or the refresh token has expired - simply log in again :)
-   await login(true)
-   const msalClient = get(msalClientStore)
-   accessToken = (await msalClient.acquireTokenSilent({ scopes: api.scopes })).accessToken
+    await login(true)
+    const msalClient = get(msalClientStore)
+    accessToken = (await msalClient.acquireTokenSilent({ scopes: api.scopes })).accessToken
   }
 
   const headers = {
@@ -34,8 +34,8 @@ const apiRequest = async (method, endpoint, body) => {
 
 export const vitnemaal = async () => {
   const payload = {
-    sessionId: "hubbabubba",
-    returnUrl: "https://kompetansemodul-test.vercel.app"
+    sessionId: 'hubbabubba',
+    returnUrl: 'https://kompetansemodul-test.vercel.app'
   }
   const res = await axios.post('https://app.vitnemalsportalen.no/vp/init', payload)
   return res
