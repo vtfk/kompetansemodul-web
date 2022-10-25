@@ -1,7 +1,8 @@
 <script>
     import Card from "./Card.svelte"
     import { get } from 'svelte/store'
-    import { saveCompetence }  from '../lib/services/useApi'
+    import { onMount } from 'svelte'
+    import { getPositions, saveCompetence }  from '../lib/services/useApi'
     import { editingPersonalia } from '../lib/services/store'
     import occupations from '../assets/yrker.json'
     import DataList from "./DataList.svelte";
@@ -11,6 +12,18 @@
     import IconDelete from "./Icons/IconDelete.svelte";
     import IconAdd from "./Icons/IconAdd.svelte";
     import InnerCard from "./InnerCard.svelte";
+
+    let positions = occupations
+    onMount(async () => {
+        const tempPositions = await getPositions()
+        positions.push(...tempPositions.map(pos => {
+            return {
+                value: pos,
+                category: 'Stilling'
+            }
+        }))
+        positions = positions.sort((a, b) => a.category.localeCompare(b.category))
+    })
 
     // Props
     export let title = 'Tidligere arbeidserfaring'
@@ -127,7 +140,7 @@
                     <div slot="first">
                         <div>
                             <label for="position">Stilling</label><label for="position" class="validation">{!validation[i].position ? '*' : '' }</label><br>
-                            <DataList dataList={occupations} filterFunction={(input, obj) => obj.value.toLowerCase().includes(input.toLowerCase()) || obj.category.toLowerCase().startsWith(input.toLowerCase())} bind:inputValue={tempWork.position} />
+                            <DataList dataList={positions} filterFunction={(input, obj) => obj.value.toLowerCase().includes(input.toLowerCase()) || obj.category.toLowerCase().startsWith(input.toLowerCase())} bind:inputValue={tempWork.position} />
                         </div>
                         <div>
                             <div>

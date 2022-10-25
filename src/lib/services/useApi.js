@@ -52,3 +52,6 @@ export const getOrg = async () => await apiRequest('get', 'GetOrg')
 
 // Save my edited competence
 export const saveCompetence = async (competence) => await apiRequest('post', 'UpsertCompetence', competence)
+
+// Get employee positions (data list)
+export const getPositions = async () => await apiRequest('get', 'GetPositions')
