@@ -100,7 +100,18 @@
                 }
             )
         }, 0.1)*/
-        window.scrollTo({ top: topOfCard, left: 0, behavior: 'smooth' })
+
+        if (navigator.userAgent.toLowerCase().includes('chrome')) {
+            // this needs to be here because Chrome on Mac uses AppleWebKit/Safari...
+            window.scrollTo({ top: topOfCard, left: 0, behavior: 'smooth' })
+        }
+        else if (navigator.userAgent.toLowerCase().includes('firefox') || navigator.userAgent.toLowerCase().includes('safari')) {
+            // workaround for FireFox / Safari (because they suck!!) - scroll doesn't work when behavior smooth it set by code or by css (scroll-behavior: smooth)
+            window.scrollTo({ top: topOfCard, left: 0 })
+            console.log('USE A REAL BROWSER 🤬')
+        } else {
+            window.scrollTo({ top: topOfCard, left: 0, behavior: 'smooth' })
+        }
     }
 
     const saveChanges = async () => {
