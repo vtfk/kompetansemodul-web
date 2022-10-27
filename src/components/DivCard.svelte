@@ -115,14 +115,6 @@
         font-style: italic;
     }
 
-    /* select {
-        width: 100%;
-        padding: 5px 5px;
-        border: 1px solid var(--mork);
-        border-radius: 0.5rem;
-        box-sizing: border-box;
-    } */
-
     input[type=radio] {
         margin: 5px 5px;
         display: inline-block;

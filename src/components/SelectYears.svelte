@@ -25,12 +25,7 @@
 
 <style>
 .customSelect {
-        width: 100%;
-        padding: 5px 5px;
         margin-bottom: 0.5rem;
         display: inline-block;
-        border: 1px solid var(--mork);
-        border-radius: 0.5rem;
-        box-sizing: border-box;
     }
 </style>
