@@ -29,6 +29,26 @@
     let tempMainTasks = JSON.parse(JSON.stringify(competence.mainTasks)) // Create a copy to display correct information (and maybe alert if user has edited) if user aborts edit
     let tempOtherTasks = JSON.parse(JSON.stringify(competence.otherTasks)) // Create a copy to display correct information (and maybe alert if user has edited) if user aborts edit
 
+    // Validation
+    let canSave = true
+    let validation = []
+
+    // Reactive validation
+    $: {
+        canSave = true
+        const tempValidation = []
+        for (const task of tempOtherTasks) {
+            if (!task.other || task.other.length < 1) {
+                tempValidation.push(false)
+                canSave = false
+            } else {
+                tempValidation.push(true)
+                canSave = true
+            }
+        }
+
+        validation = JSON.parse(JSON.stringify(tempValidation))
+    }
 
     // const removeWorkExperience = exp => {
 	// 	tempWorkExperience = tempWorkExperience.filter(workExperience => workExperience !== exp)
@@ -106,7 +126,7 @@
     }
 </script>
 
-<Card title={title} editable={true} backgroundColor={backgroundColor} infoBox={ {content: infoText}} saveFunc={saveFunc} cancelFunc={cancelFunc}>
+<Card title={title} editable={true} backgroundColor={backgroundColor} infoBox={ {content: infoText}} canSave={canSave} saveFunc={saveFunc} cancelFunc={cancelFunc}>
     <div>
         {#if editInfo.isEditing && editInfo.editBlock === title}
             <InnerCard emoji='💼'>
@@ -127,6 +147,7 @@
                     {#each tempOtherTasks as other, i }
                         <div class="tasks">
                             <input id={i.toString()} type="text" bind:value={tempOtherTasks[i].other} placeholder="Andre oppgaver"/>
+                            <label for={i.toString()} class="validation">{!validation[i] ? '*' : '' }</label>
                             <Button size="medium" noBorder={true} onClick={() => removeOtherTask(tempOtherTasks[i])}><IconDelete slot="before"/></Button>
                         </div>
                     {/each}
@@ -167,6 +188,10 @@ label {
     font-size: 0.9em;
     font-weight: bold;
     font-style: italic;
+}
+
+.validation {
+    color: var(--red)
 }
 
 .tasks {
