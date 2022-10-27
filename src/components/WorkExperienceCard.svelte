@@ -174,7 +174,9 @@
                         <div>
                             <label for="tasks">Hovedoppgaver</label><br>
                             {#each tempWork.tasks as task}
-                                <input type="text" bind:value={task}>
+                                <div class="task">
+                                    <input type="text" bind:value={task}>
+                                </div>
                             {/each}
                         </div>
                     </div>
@@ -221,5 +223,7 @@
     .validation {
         color: var(--red)
     }
-
+    .task {
+        margin-bottom: 0.20rem;
+    }
 </style>

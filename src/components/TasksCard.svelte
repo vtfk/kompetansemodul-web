@@ -171,6 +171,6 @@ label {
 
 .tasks {
     display: flex;
-    margin: 0.25rem
+    margin-bottom: 0.20rem;
 }
 </style>

@@ -132,7 +132,9 @@
                         <div>
                             <label for="tasks">Nøkkeloppgaver</label><br>
                             {#each tempPositionTasks.find(pt => pt.positionId === position.systemId).tasks as task}
-                                <input type="text" bind:value={task}>
+                                <div class="task">
+                                    <input type="text" bind:value={task}>
+                                </div>
                             {/each}
                         </div>
                     </div>
@@ -171,5 +173,7 @@
         font-weight: bold;
         font-style: italic;
     }
-
+    .task {
+        margin-bottom: 0.20rem;
+    }
 </style>
