@@ -5,7 +5,7 @@
     import { editingPersonalia } from '../lib/services/store'
 
     // Props
-    export let title = 'Ønsket fylkeskommune/arbeidssted etter oppdeling'
+    export let title = 'Ønsket fylkeskommune / arbeidssted etter oppdeling'
     export let backgroundColor = '--ecruWhite'
     export let competence = {
 		perfCounty: []
