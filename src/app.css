@@ -31,9 +31,8 @@ select {
     line-height: 24px;
     font-weight: 400;
 
-    color-scheme: light dark;
+    color-scheme: light only;
     color: rgba(255, 255, 255, 0.87);
-    background-color: #242424;
     
     /* units */
     --baseUnit: 8px;
@@ -267,21 +266,6 @@ input[type=text] {
   border: 1px solid var(--mork);
   border-radius: 0.5rem;
   box-sizing: border-box;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    color: #3b3b3b;
-    background-color: #ffffff;
-  }
-  input {
-    color: #3b3b3b;
-    background-color: #ffffff;
-  }
-  select {
-    color: #3b3b3b;
-    background-color: #ffffff;
-  }
 }
 
 @media (prefers-color-scheme: light) {
