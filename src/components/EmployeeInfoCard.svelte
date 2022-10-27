@@ -48,6 +48,13 @@
         zipCode: employeeData.bostedsadresse?.postnummer ?? 'Ukjent postnummer'
     }
 
+    const leaders = employeeData.aktiveArbeidsforhold.map(forhold => {
+        return {
+            name: forhold.arbeidssted?.leder.navn || 'Ukjent ledernavn',
+            upn: forhold.arbeidssted?.leder?.upn || false,
+            workPlace: forhold.arbeidssted?.navn || 'Ukjent plass'
+        }
+    }).filter(upn => upn !== false && upn !== '' && upn !== 'Ukjent leder')
 </script>
 
 <Card title="Ansattinformasjon" backgroundColor={backgroundColor} infoBox={ {content: infoText}}>
@@ -79,6 +86,9 @@
             </div>
         </div>
     </div>
+    <div class="actionContent">
+        <p>Hvis noe av informasjonen her ikke stemmer, klikk <a href={`mailto:${leaders.map(leader => leader.upn).join(';')}?subject=Kompetanse - Feil informasjon`}>her</a> for å sende en mail via Outlook til {leaders.length === 1 ? 'din nærmeste leder:' : 'dine nærmeste ledere:'} <b>{leaders.length === 1 ? leaders.map(leader => leader.name).join(', ') : leaders.map(leader => `${leader.name} (${leader.workPlace})`).join(', ')}</b>, da dette må rettes i HR-systemet</p>
+    </div>
 </Card>
 
 <style>
@@ -94,6 +104,13 @@
         font-size: 0.9rem;
         font-weight: bold;
         font-style: italic;
+    }
+
+    .actionContent {
+        margin-top: 1rem;
+        padding: 1.5rem;
+        background-color: var(--ecruWhite);
+        border-radius: 1rem;
     }
 
 </style>
