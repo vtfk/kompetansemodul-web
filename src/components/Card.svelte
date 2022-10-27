@@ -142,7 +142,15 @@
             infoOpen.set(title)
         }  
     }
+
+    const handleComponentKeyUp = event => {
+        if (editInfo.isEditing && editInfo.editBlock === title && event.key === 'Escape') {
+            console.log('Escape clicked on', title, '- Will abort editing')
+            cancelEdit()
+        }
+    }
 </script>
+    <svelte:body on:keyup={handleComponentKeyUp} />
 
     <div id={title ?? 'har ikke tittel'} class="panel{(editInfo.isEditing && editInfo.editBlock !== title) ? ' hide' : ''}" style="background-color: var({backgroundColor});">
         {#if title}
