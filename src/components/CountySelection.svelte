@@ -49,19 +49,19 @@
 
 <Card title={title} saveFunc={saveFunc} cancelFunc={cancelFunc} backgroundColor={backgroundColor} editable={true} infoBox={ {content: infoText} } canSave={true} >
     {#if editInfo.isEditing && editInfo.editBlock === title}
-    <div class="contentContainer">
-        <div class="innerContainer firstContainer">
-            <div class="innerContainer">
-                <!-- <label>Velg ønsket fylkeskommune/arbeidssted etter oppdeling</label> -->
-                <select name="preferredCounty" id="preferredCounty" bind:value={tempPerfCounty}>
-                    <option value="Vet ikke">Vet ikke</option>
-                    <option value="Telemark fylkeskommune">Telemark fylkeskommune</option>
-                    <option value="Vestfold fylkeskommune">Vestfold fylkeskommune</option>
-                    <option value="Samma for meg hvor jeg havner(hr - gi oss innspill)">Samma for meg hvor jeg havner(hr - gi oss innspill)</option> <!-- // TODO: Hent innspill fra HR -->
-                </select>
+        <div class="contentContainer">
+            <div class="innerContainer firstContainer">
+                <div class="innerContainer">
+                    <!-- <label>Velg ønsket fylkeskommune/arbeidssted etter oppdeling</label> -->
+                    <select name="preferredCounty" id="preferredCounty" bind:value={tempPerfCounty}>
+                        <option value="Vet ikke">Vet ikke</option>
+                        <option value="Telemark fylkeskommune">Telemark fylkeskommune</option>
+                        <option value="Vestfold fylkeskommune">Vestfold fylkeskommune</option>
+                        <option value="Samma for meg hvor jeg havner(hr - gi oss innspill)">Samma for meg hvor jeg havner(hr - gi oss innspill)</option> <!-- // TODO: Hent innspill fra HR -->
+                    </select>
+                </div>
             </div>
         </div>
-    </div>
     {:else}
         <div class="contentContainer">
             <div class="innerContainer">
