@@ -169,15 +169,6 @@ label {
     font-style: italic;
 }
 
-input[type=text] {
-    width: 100%;
-    padding: 5px 5px;
-    display: inline-block;
-    border: 1px solid var(--mork);
-    border-radius: 0.5rem;
-    box-sizing: border-box;
-}
-
 .tasks {
     display: flex;
     margin: 0.25rem

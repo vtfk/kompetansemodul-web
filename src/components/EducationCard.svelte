@@ -261,14 +261,6 @@
         font-weight: bold;
         font-style: italic;
     }
-    input[type=text], select {
-        width: 100%;
-        padding: 5px 5px;
-        display: inline-block;
-        border: 1px solid var(--mork);
-        border-radius: 0.5rem;
-        box-sizing: border-box;
-    }
     .peroidContainer {
         display: flex;
     }
