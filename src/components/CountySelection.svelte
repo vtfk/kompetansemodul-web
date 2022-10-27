@@ -50,26 +50,24 @@
 <Card title={title} saveFunc={saveFunc} cancelFunc={cancelFunc} backgroundColor={backgroundColor} editable={true} infoBox={ {content: infoText} } canSave={true} >
     {#if editInfo.isEditing && editInfo.editBlock === title}
         <div class="contentContainer">
-            <div class="innerContainer firstContainer">
-                <div class="innerContainer">
-                    <!-- <label>Velg ønsket fylkeskommune/arbeidssted etter oppdeling</label> -->
-                    <select name="preferredCounty" id="preferredCounty" bind:value={tempPerfCounty}>
-                        <option value="Vet ikke">Vet ikke</option>
-                        <option value="Telemark fylkeskommune">Telemark fylkeskommune</option>
-                        <option value="Vestfold fylkeskommune">Vestfold fylkeskommune</option>
-                        <option value="Samma for meg hvor jeg havner(hr - gi oss innspill)">Samma for meg hvor jeg havner(hr - gi oss innspill)</option> <!-- // TODO: Hent innspill fra HR -->
-                    </select>
-                </div>
+            <div>
+                <!-- <label>Velg ønsket fylkeskommune/arbeidssted etter oppdeling</label> -->
+                <select name="preferredCounty" id="preferredCounty" bind:value={tempPerfCounty}>
+                    <option value="Vet ikke">Vet ikke</option>
+                    <option value="Telemark fylkeskommune">Telemark fylkeskommune</option>
+                    <option value="Vestfold fylkeskommune">Vestfold fylkeskommune</option>
+                    <option value="Samma for meg hvor jeg havner(hr - gi oss innspill)">Samma for meg hvor jeg havner(hr - gi oss innspill)</option> <!-- // TODO: Hent innspill fra HR -->
+                </select>
             </div>
         </div>
     {:else}
         <div class="contentContainer">
-            <div class="innerContainer">
+            <div>
                 <!-- <label>Valgt ønsket fylkeskommune/arbeidssted etter oppdeling</label> -->
                 {#if competence.perfCounty.length === 0}
-                    <div>Ikke fylt ut av ansatt</div>
+                    Ikke fylt ut av ansatt
                 {:else}
-                    <div>{competence.perfCounty}</div>
+                    {competence.perfCounty}
                 {/if}
             </div>
         </div>
@@ -88,11 +86,4 @@
         font-weight: bold;
         font-style: italic;
     } */
-
-    .firstContainer {
-        max-width: 25rem;
-        padding-right: 2rem;
-        padding-bottom: 2rem;
-    }
-
 </style>
