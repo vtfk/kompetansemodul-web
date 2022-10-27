@@ -194,6 +194,9 @@
     .searchBar.rounded.focused {
         border-radius: 24px 24px 0px 0px;
     }
+    .searchBar.focused {
+        border-radius: 0.5rem 0.5rem 0 0;
+    }
     input {
         width: 100%;
         height: 100%;
