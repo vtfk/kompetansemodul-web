@@ -1,5 +1,5 @@
 <script>
-	import { getMe, vitnemaal }  from '../lib/services/useApi'
+	import { getMe/* , vitnemaal */ }  from '../lib/services/useApi'
 	import { get } from 'svelte/store'
   import { editingPersonalia, infoOpen } from '../lib/services/store'
 	import EmployeeCard from '../components/EmployeeCard.svelte'

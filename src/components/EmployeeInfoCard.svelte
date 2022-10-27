@@ -1,7 +1,6 @@
 <script>
     import Card from "./Card.svelte";
     import { getZipCodeInfo } from '../lib/Helpers/zipCode'
-    import InnerCard from "./InnerCard.svelte";
 
     // Props
     export let backgroundColor = '--catSkillWhite'
@@ -12,7 +11,7 @@
         return `${dateList[2]}.${dateList[1]}.${dateList[0]}`
     }
 
-    const getDepartment = (structure) => {
+    /* const getDepartment = (structure) => {
         const info = {
             department: structure[0].navn
         }
@@ -36,7 +35,7 @@
             info.company = 'Ukjent sektor'
         }
         return info
-    }
+    } */
 
     const infoText = "<p>Her finner du ferdig utfylt informasjon om deg. Dette er informasjon som arbeidsgiver allerede har lagret om deg. Hvis dette ikke stemmer, kan du kontakte nærmeste leder.</p>"
  
