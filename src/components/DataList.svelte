@@ -144,6 +144,9 @@
             } else if (e.key !== 'Enter' && e.key !== 'Tab') {
                 showPreview = true
             }
+        } else if (e.key !== 'Enter' && e.key !== 'Tab' && e.key !== 'Escape') {
+            focusing = true
+            showPreview = true
         }
     }
 
