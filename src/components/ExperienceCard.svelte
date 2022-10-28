@@ -24,10 +24,11 @@
     
     let newExperience = {
         fromYear: 2019,
-        toYear: 2022,
+        toYear: '',
         fromMonth: 'Januar',
-        toMonth: 'Februar',
-        type: 'Verv'
+        toMonth: '',
+        type: 'Verv',
+        isActive: true
     }
 
     // Validation
@@ -80,10 +81,11 @@
 		tempExperience = [ ...tempExperience, newExperience ]
 		newExperience = {
             fromYear: 2019,
-            toYear: 2022,
+            toYear: '',
             fromMonth: 'Januar',
-            toMonth: 'Februar',
-            type: 'Verv'
+            toMonth: '',
+            type: 'Verv',
+            isActive: true
         }
 	}
 
@@ -138,16 +140,16 @@
                             <label for="organization ">Organisasjon</label><label for="organization" class="validation">{!validation[i].organization ? '*' : '' }</label>
                             <input id="organization" type="text" bind:value={tempExp.organization}>
                         </div>
+                        <div class="checkboxContainer">
+                            <input type="checkbox" id="active" bind:checked={tempExp.isActive} />
+                            <label for="active">Pågår</label>
+                        </div>
                         <div>
                             <label for="from">Fra</label><br>
                             <div class="peroidContainer">
                                 <SelectMonth bind:monthValue={tempExp.fromMonth}/>
                                 <SelectYears startYear={1950} bind:yearValue={tempExp.fromYear} on:change={() => tempExp.toYear = tempExp.fromYear}/>
                             </div>
-                        </div>
-                        <div>
-                            <label for="active">Aktiv</label><br>
-                            <input type="checkbox" id="active" bind:checked={tempExp.isActive} />
                         </div>
                         {#if !tempExp.isActive }
                             <div>
