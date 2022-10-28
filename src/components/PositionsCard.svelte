@@ -113,7 +113,6 @@
     const cancelFunc = async () => {
         tempPositionTasks = JSON.parse(JSON.stringify(competence.positionTasks))
     }
-
 </script>
 
 <Card title={title} backgroundColor={backgroundColor} infoBox={ {content: infoText}} editable={canEdit} canSave={true} saveFunc={saveFunc} cancelFunc={cancelFunc}>
@@ -126,7 +125,7 @@
                         <h3>{position.stillingstittel ?? 'Ukjent tittel'} ({Math.ceil(position.lonnsprosent/100)}%)</h3>
                         <h4>{getDepartment(position.arbeidssted.struktur).department}</h4>
                         <p>{getDepartment(position.arbeidssted.struktur).company}</p>
-                        <p><strong>Leder: </strong>{position.arbeidssted?.leder?.navn ?? 'Ukjent leder'}</p>
+                        <p><strong>Leder: </strong>{position.arbeidssted?.leder?.navn === `${employeeData.fornavn} ${employeeData.etternavn}` ? position.arbeidssted.struktur[1].ledernavn : position.arbeidssted?.leder?.navn ?? 'Ukjent leder'}</p>
                     </div>
                     <div slot="second">
                         <div>
@@ -149,7 +148,7 @@
                         <h3>{position.stillingstittel ?? 'Ukjent tittel'} ({Math.ceil(position.lonnsprosent/100)}%)</h3>
                         <h4>{getDepartment(position.arbeidssted.struktur).department}</h4>
                         <p>{getDepartment(position.arbeidssted.struktur).company}</p>
-                        <p><strong>Leder: </strong>{position.arbeidssted?.leder?.navn ?? 'Ukjent leder'}</p>
+                        <p><strong>Leder: </strong>{position.arbeidssted?.leder?.navn === `${employeeData.fornavn} ${employeeData.etternavn}` ? position.arbeidssted.struktur[1].ledernavn : position.arbeidssted?.leder?.navn ?? 'Ukjent leder'}</p>
                     </div>
                     <div slot="second">
                         <label for="tull">Nøkkeloppgaver</label>
