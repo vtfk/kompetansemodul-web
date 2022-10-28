@@ -8,3 +8,7 @@ export const editingPersonalia = writable({
   editBlock: 'ingen akkurat nå'
 })
 export const infoOpen = writable('')
+export const cardAction = writable({
+  open: false,
+  block: 'ingen akkurat nå'
+})
