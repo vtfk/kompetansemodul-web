@@ -1,19 +1,19 @@
 <script>
 	import { getMe/* , vitnemaal */ }  from '../lib/services/useApi'
 	import { get } from 'svelte/store'
-  import { editingPersonalia, infoOpen } from '../lib/services/store'
+	import { editingPersonalia, infoOpen } from '../lib/services/store'
 	import EmployeeCard from '../components/EmployeeCard.svelte'
-  import IconSpinner from '../components/Icons/IconSpinner.svelte';
-  import EducationCard from '../components/EducationCard.svelte';
-  import TasksCard from '../components/TasksCard.svelte';
-  import DivCard from '../components/DivCard.svelte';
-  import ExperienceCard from '../components/ExperienceCard.svelte';
-  import PositionsCard from '../components/PositionsCard.svelte';
-  import WorkExperienceCard from '../components/WorkExperienceCard.svelte';
-  import IconHelp from '../components/Icons/IconHelp.svelte';
-  import InfoBox from '../components/InfoBox.svelte';
-  import EmployeeInfoCard from '../components/EmployeeInfoCard.svelte';
-	import CountySelection from '../components/CountySelection.svelte'
+	import IconSpinner from '../components/Icons/IconSpinner.svelte';
+	import EducationCard from '../components/EducationCard.svelte';
+	import TasksCard from '../components/TasksCard.svelte';
+	import DivCard from '../components/DivCard.svelte';
+	import ExperienceCard from '../components/ExperienceCard.svelte';
+	import PositionsCard from '../components/PositionsCard.svelte';
+	import WorkExperienceCard from '../components/WorkExperienceCard.svelte';
+	import IconHelp from '../components/Icons/IconHelp.svelte';
+	import InfoBox from '../components/InfoBox.svelte';
+	import EmployeeInfoCard from '../components/EmployeeInfoCard.svelte';
+	import CountySelectionCard from '../components/CountySelectionCard.svelte'
 
 	// State
 	let showInfoBox = false
@@ -52,7 +52,7 @@
 		<EmployeeInfoCard employeeData={res} />
 		<PositionsCard employeeData={res} competence={res.competenceData} />
 		<TasksCard competence={res.competenceData}/>
-		<CountySelection competence={res.competenceData}/>
+		<CountySelectionCard competence={res.competenceData}/>
 		<DivCard competence={res.competenceData}/>
 		<WorkExperienceCard competence={res.competenceData} />
 		<EducationCard competence={res.competenceData} />
