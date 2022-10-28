@@ -140,7 +140,7 @@
                     <div slot="first">
                         <div>
                             <label for="position">Stilling</label><label for="position" class="validation">{!validation[i].position ? '*' : '' }</label><br>
-                            <DataList dataList={positions} filterFunction={(input, obj) => obj.value.toLowerCase().includes(input.toLowerCase()) || obj.category.toLowerCase().startsWith(input.toLowerCase())} bind:inputValue={tempWork.position} />
+                            <DataList dataList={positions} filterFunction={(input, obj) => obj.value.toLowerCase().includes(input.toLowerCase()) || obj.category.toLowerCase().startsWith(input.toLowerCase())} bind:inputValue={tempWork.position} placeholder="Skriv inn stillingstittel eller velg fra listen" />
                         </div>
                         <div>
                             <div>
