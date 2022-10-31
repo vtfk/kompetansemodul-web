@@ -7,6 +7,7 @@
     import { searchParameter, displayedPage }  from '../lib/services/store'
     import Logo from "./Icons/Logo.svelte";
     import IconMenu from "./Icons/IconMenu.svelte";
+    import { changePage } from '../lib/Helpers/changePage'
 
     // Props
     export let name;
@@ -16,11 +17,9 @@
     let showMenu = false;
 
     // Functions
-    const changePage = (pageName) => {
-        // window.history.replaceState(null, null, pageName)
-        displayedPage.set(pageName)
+    const changePageSearch = (pageName) => {
+        changePage(pageName)
         showMenu = false
-        console.log(window.location.pathname)
     }
 
     let currentPage = get(displayedPage)
@@ -43,7 +42,7 @@
                 third: arbeidsforhold.arbeidssted.navn,
                 onClick: () => {
                     searchParameter.set(item.ansattnummer)
-                    displayedPage.set('person')
+                    changePage('person')
                 }
             }
         })
@@ -87,9 +86,9 @@
         </div>
     </div>
     <div class="mobileMenu{showMenu ? ' showMenu' : ''}">
-        <div class="menuOption{currentPage === 'personalia' ? ' active' : ''}" on:click={() => {changePage('personalia')}}>Meg</div>
-        <div class="menuOption{currentPage === 'person' ? ' active' : ''}" on:click={() => {changePage('person')}}>Finn ansatt</div>
-        <div class="menuOption{currentPage === 'hjelp' ? ' active' : ''}" on:click={() => {changePage('hjelp')}}>Hjelp</div>
+        <div class="menuOption{currentPage === 'personalia' ? ' active' : ''}" on:click={() => {changePageSearch('personalia')}}>Meg</div>
+        <div class="menuOption{currentPage === 'person' ? ' active' : ''}" on:click={() => {changePageSearch('person')}}>Finn ansatt</div>
+        <div class="menuOption{currentPage === 'hjelp' ? ' active' : ''}" on:click={() => {changePageSearch('hjelp')}}>Hjelp</div>
         <div class="menuOption">Logg ut</div>
         <div class="menuOption" on:click={() => {showMenu = false}}>Lukk meny</div>
     </div>

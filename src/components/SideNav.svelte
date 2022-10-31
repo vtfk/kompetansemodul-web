@@ -6,13 +6,8 @@
     import IconPerson from './Icons/IconPerson.svelte';
     import IconOrg from './Icons/IconOrg.svelte'
     import IconSearch from './Icons/IconSearch.svelte';
+    import { changePage } from '../lib/Helpers/changePage'
     
-
-    const changePage = (pageName) => {
-        // window.history.replaceState(null, null, pageName)
-        displayedPage.set(pageName)
-        console.log(window.location.pathname)
-    }
 
     let currentPage = get(displayedPage)
     displayedPage.subscribe(() => {
