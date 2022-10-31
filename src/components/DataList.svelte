@@ -6,6 +6,7 @@
     export let displayNumberOfItems = 80
     export let rounded = false
     export let inputValue = ''
+    export let maxLength = 2000
     export let dataList = [
         {
             value: "Kjøttkak KjøttkaakKjøttkakKjøttkak Kjøttkak Kjøttkak Kjøttkak KjøttkakKjøttkakKjøttkakKjøttkak  Kjøttkak KjøttkakKjøttkak Kjøttkakv ",
@@ -160,7 +161,7 @@
 
 <div class="searchContainer" use:clickOutside on:click_outside={onBlur}>
     <div class="searchBar{rounded ? ' rounded' : ''}{focusing && showPreview && (previewData.length > 0) ? ' focused' : ''}">
-        <input bind:value={inputValue} {placeholder} on:keydown={onKeydown} on:focus={onFocus} on:click={focusOnClick} on:input={filterPreviewData} />
+        <input bind:value={inputValue} {placeholder} on:keydown={onKeydown} on:focus={onFocus} on:click={focusOnClick} on:input={filterPreviewData} maxlength={maxLength} />
     </div>
     {#if focusing && showPreview && (previewData.length > 0)}
         <div class="previewContainer">

@@ -220,9 +220,6 @@
     .peroidContainer {
         display: flex;
     }
-    .validation {
-        color: var(--red)
-    }
     .task {
         margin-bottom: 0.20rem;
     }

@@ -264,10 +264,6 @@
     .peroidContainer {
         display: flex;
     }
-    
-    .validation {
-        color: var(--red)
-    }
 
     input[type=text]:read-only {
         color: grey;

@@ -137,10 +137,32 @@
         tempPositionTasks.find(task => task.positionId === position.systemId).tasks.splice(i, 1)
         tempPositionTasks = tempPositionTasks
     }
+    
+    
+    // Reactive validation
+    let canSave = true
+    let validation = []
+    
+    $: {
+        canSave = true
+        for (const positionTask of tempPositionTasks) {
+            const tempValidation = []
+            for (const task of positionTask.tasks) {
+                if (!task || task.length < 1) {
+                    tempValidation.push(false)
+                    canSave = false
+                } else {
+                    tempValidation.push(true)
+                }
+            }
+            validation[positionTask.positionParent] = JSON.parse(JSON.stringify(tempValidation))
+        }
+    }
+
 
 </script>
 
-<Card title={title} backgroundColor={backgroundColor} infoBox={ {content: infoText}} editable={canEdit} canSave={true} saveFunc={saveFunc} cancelFunc={cancelFunc}>
+<Card title={title} backgroundColor={backgroundColor} infoBox={ {content: infoText}} editable={canEdit} canSave={canSave} saveFunc={saveFunc} cancelFunc={cancelFunc}>
     <div class="halla">
         {#if editInfo.isEditing && editInfo.editBlock === title}
             {#each displayData.positions as position, i}
@@ -157,8 +179,8 @@
                             <label for="tasks">Nøkkeloppgaver</label><br>
                             {#each tempPositionTasks.find(pt => pt.positionId === position.systemId).tasks as task, i}
                                 <div class="tasks">
-                                    <DataList dataList={availableTasks[tempPositionTasks.find(pt => pt.positionId === position.systemId).positionParent]} filterFunction={(input, obj) => obj.value.toLowerCase().includes(input.toLowerCase()) || obj.category.toLowerCase().startsWith(input.toLowerCase()) } bind:inputValue={task} />
-                                    <!--<label for={i.toString()} class="validation">{!validation[i] ? '*' : '' }</label>-->
+                                    <DataList maxLength={30} dataList={availableTasks[tempPositionTasks.find(pt => pt.positionId === position.systemId).positionParent]} filterFunction={(input, obj) => obj.value.toLowerCase().includes(input.toLowerCase()) || obj.category.toLowerCase().startsWith(input.toLowerCase()) } bind:inputValue={task} />
+                                    <label for={i.toString()} class="validation">{!validation[tempPositionTasks.find(pt => pt.positionId === position.systemId).positionParent][i] ? '*' : '' }</label>
                                     <Button size="medium" onlyIcon={true} noBorder={true} onClick={() => removeTask(position, i)}><IconDelete slot="before"/></Button>
                                 </div>
                             {/each}

@@ -275,6 +275,10 @@ input[type=text] {
   gap: 0.5rem;
 }
 
+.validation {
+  color: var(--red)
+}
+
 input[type=checkbox], input[type=radio] {
   height: 1.2rem;
   width: 1.2rem;

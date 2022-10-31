@@ -37,6 +37,7 @@
         padding-left: 0.5rem;
         padding-right: 0.5rem;
         height: 2rem;
+        /* background-color: rgba(50, 107, 18, 0.096) */
         /* background-color: var(--catSkillWhite); */
     }
     button:hover {

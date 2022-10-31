@@ -29,7 +29,7 @@
 			<EmployeeCard employeeData={res} />
 			{#if res.isPrivileged}
 				<EmployeeInfoCard employeeData={res} disableInfoBox={true} hideTextBox={true}/>
-				<PositionsCard employeeData={res} canEdit={false}/>
+				<PositionsCard employeeData={res} competence={res.competenceData} canEdit={false}/>
 			{/if}
 		{:catch error}
 			<p style="color: red">{error.message}</p>

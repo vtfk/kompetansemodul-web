@@ -194,8 +194,5 @@
     .peroidContainer {
         display: flex;
     }
-    .validation {
-        color: var(--red)
-    }
 
 </style>

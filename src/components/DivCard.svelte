@@ -140,8 +140,5 @@
         padding-right: 2rem;
         padding-bottom: 2rem;
     }
-    .validation {
-        color: var(--red)
-    }
 
 </style>
