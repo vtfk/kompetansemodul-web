@@ -5,11 +5,12 @@
     export let size = 'medium'
     export let title = 'a button'
     export let noBorder = false
+    export let onlyIcon = false
 
 </script>
 
 
-<button on:click={onClick} title={title} class={`${size} ${disabled ? 'disabled' : ''} ${noBorder ? 'true' : ''}`}>
+<button on:click={onClick} title={title} class={`${size} ${disabled ? ' disabled' : ''}${noBorder ? ' noBorder' : ''}${onlyIcon ? ' onlyIcon' : ''}`}>
     <div class="beforeContainer"><slot name="before"></slot></div>
     <div class="buttonText">{buttonText}</div>
     <div class="afterContainer"><slot name="after"></slot></div>
@@ -19,6 +20,9 @@
     .beforeContainer, .buttonText, .afterContainer {
         align-self: center;
         padding: 0 0.1rem;
+    }
+    .onlyIcon .beforeContainer, .onlyIcon .buttonText, .onlyIcon .afterContainer {
+        padding: 0;
     }
     .beforeContainer {
         height: 1.2rem;
@@ -44,7 +48,7 @@
     }
 
     /* No border === true */
-    button.true { 
+    button.noBorder { 
         border: 0px solid black;
     }
     button.disabled:hover {
