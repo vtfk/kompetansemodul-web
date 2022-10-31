@@ -32,15 +32,6 @@ const apiRequest = async (method, endpoint, body) => {
   }
 }
 
-export const vitnemaal = async () => {
-  const payload = {
-    sessionId: 'hubbabubba',
-    returnUrl: 'https://kompetansemodul-test.vercel.app'
-  }
-  const res = await axios.post('https://app.vitnemalsportalen.no/vp/init', payload)
-  return res
-}
-
 // Get me
 export const getMe = async () => await apiRequest('get', 'me')
 
@@ -55,3 +46,14 @@ export const saveCompetence = async (competence) => await apiRequest('post', 'Up
 
 // Get employee positions (data list)
 export const getPositions = async () => await apiRequest('get', 'GetPositions')
+
+// Get chucky
+export const getChuck = async () => {
+  const res = (await axios.get('https://api.chucknorris.io/jokes/categories')).data
+  return res.map(ele => {
+    return {
+      value: ele,
+      category: 'Et valg'
+    }
+  })
+}

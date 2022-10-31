@@ -1,13 +1,18 @@
 <script>
     import Card from "./Card.svelte";
+    import { onMount } from 'svelte'
     import { getZipCodeInfo } from '../lib/Helpers/zipCode'
     import InnerCard from "./InnerCard.svelte";
     import { get } from 'svelte/store'
-    import { saveCompetence }  from '../lib/services/useApi'
+    import { saveCompetence, getChuck }  from '../lib/services/useApi'
     import { editingPersonalia } from '../lib/services/store'
+    import DataList from "./DataList.svelte";
+    import Button from "./Button.svelte";
+    import IconAdd from "./Icons/IconAdd.svelte";
+    import IconDelete from "./Icons/IconDelete.svelte";
 
     // Props
-    export let title = 'Dagens stillinger'
+    export let title = 'Dagens stillinger og oppgaver'
     export let backgroundColor = '--springWood'
     export let employeeData = {}
     export let canEdit = true
@@ -15,19 +20,23 @@
 		positionTasks: []
 	}
 
-
     if (!competence.positionTasks) competence.positionTasks = []
     
-
     // Nedenfor endrer vi antall tasks med maxTasks
-    const maxTasks = 5
+    const maxTasks = 20
     // Add tasks if needed
     for (const forhold of employeeData.aktiveArbeidsforhold) {
-        if (!competence.positionTasks.find(task => task.positionId === forhold.systemId)) {
+        const positionTask = competence.positionTasks.find(task => task.positionId === forhold.systemId)
+        const level = forhold.arbeidssted.struktur.length > 4 ? forhold.arbeidssted.struktur.length - 4 : 0
+        console.log(forhold.arbeidssted.struktur[level].kortnavn) // Høre om hvilke oppgaver lederne ønsker å se
+        if (!positionTask) {
             competence.positionTasks.push({
                 positionId: forhold.systemId,
-                tasks: Array(maxTasks).fill('')
+                positionParent: forhold.arbeidssted.struktur[level].kortnavn,
+                tasks: []
             })
+        } else if (!positionTask.positionParent || positionTask.positionParent !== forhold.arbeidssted.struktur[level]) {
+            positionTask.positionParent = forhold.arbeidssted.struktur[level].kortnavn
         }
     }
 
@@ -40,18 +49,13 @@
     // State
     let tempPositionTasks = JSON.parse(JSON.stringify(competence.positionTasks)) // Create a copy to display correct information (and maybe alert if user has edited) if user aborts edit
 
-    // usikker på om vi trenger denne???
-    tempPositionTasks = tempPositionTasks.map(pos => {
-        if (pos.tasks && pos.tasks.length !== maxTasks) {
-            for (let i=pos.tasks.length; i < maxTasks; i++) {
-                pos.tasks.push('')
-            }
-        }
-        return {
-            ...pos,
-            tasks: pos.tasks ?? Array(maxTasks).fill('')
-        }
-    })
+    let availableTasks = []
+
+    //
+    onMount(async () => {
+		const res = await getChuck()
+		availableTasks = res;
+	});
 
     const convertDate = (date) => {
         const dateList = date.slice(0,10).split('-')
@@ -113,6 +117,17 @@
     const cancelFunc = async () => {
         tempPositionTasks = JSON.parse(JSON.stringify(competence.positionTasks))
     }
+
+    const addTask = (position) => {
+		tempPositionTasks.find(task => task.positionId === position.systemId).tasks.push('')
+        tempPositionTasks = tempPositionTasks
+	}
+
+    const removeTask = (position, i) => {
+        tempPositionTasks.find(task => task.positionId === position.systemId).tasks.splice(i, 1)
+        tempPositionTasks = tempPositionTasks
+    }
+
 </script>
 
 <Card title={title} backgroundColor={backgroundColor} infoBox={ {content: infoText}} editable={canEdit} canSave={true} saveFunc={saveFunc} cancelFunc={cancelFunc}>
@@ -130,11 +145,14 @@
                     <div slot="second">
                         <div>
                             <label for="tasks">Nøkkeloppgaver</label><br>
-                            {#each tempPositionTasks.find(pt => pt.positionId === position.systemId).tasks as task}
-                                <div class="task">
-                                    <input type="text" bind:value={task}>
+                            {#each tempPositionTasks.find(pt => pt.positionId === position.systemId).tasks as task, i}
+                                <div class="tasks">
+                                    <DataList dataList={availableTasks} filterFunction={(input, obj) => obj.value.toLowerCase().includes(input.toLowerCase()) || obj.category.toLowerCase().startsWith(input.toLowerCase()) } bind:inputValue={task} />
+                                    <!--<label for={i.toString()} class="validation">{!validation[i] ? '*' : '' }</label>-->
+                                    <Button size="medium" onlyIcon={true} noBorder={true} onClick={() => removeTask(position, i)}><IconDelete slot="before"/></Button>
                                 </div>
                             {/each}
+                            <Button size="small" buttonText="Legg til" onClick={() => addTask(position)}><IconAdd slot="before" /></Button>
                         </div>
                     </div>
                 </InnerCard>  
@@ -172,7 +190,8 @@
         font-weight: bold;
         font-style: italic;
     }
-    .task {
+    .tasks {
         margin-bottom: 0.20rem;
+        display: flex;
     }
 </style>
