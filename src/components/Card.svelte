@@ -15,6 +15,7 @@
     export let backgroundColor = '--ecruWhite'
     export let infoBox = undefined // { content: "Det som kommer til å stå på hjelpeboksen, om du vil ha hjelpeboks" }
     export let editable = false
+    export let disableInfoBox = false
     export let canSave = true
     export let saveFunc = async () => { // Only need if editable
         console.log('Æ lagrer')
@@ -157,9 +158,13 @@
             <div class="header">
                 <div class="headerTitle">
                     <h3 class="title">{title}</h3>
-                    {#if infoBox}
-                        <div class="headerIcon" title={showInfoBox ? 'Lukk infoboks' : 'Åpne infoboks'} on:click={() => {handleInfoClick()}}><IconHelp /></div>
-                    {/if}
+                    {#if disableInfoBox === false}
+                        {#if infoBox}
+                            <div class="headerIcon" title={showInfoBox ? 'Lukk infoboks' : 'Åpne infoboks'} on:click={() => {handleInfoClick()}}><IconHelp /></div>
+                        {/if}
+                    {:else}
+                        <div></div>
+                {/if}
                 </div>
                 {#if editable}
                     {#if editInfo.isEditing && editInfo.editBlock === title}

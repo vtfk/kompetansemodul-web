@@ -147,7 +147,7 @@
                         <div class="tasks">
                             <input id={i.toString()} type="text" bind:value={tempOtherTasks[i].other} placeholder="Andre oppgaver"/>
                             <label for={i.toString()} class="validation">{!validation[i] ? '*' : '' }</label>
-                            <Button size="medium" noBorder={true} onClick={() => removeOtherTask(tempOtherTasks[i])}><IconDelete slot="before"/></Button>
+                            <!-- <Button size="medium" noBorder={true} onClick={() => removeOtherTask(tempOtherTasks[i])}><IconDelete slot="before"/></Button> -->
                         </div>
                     {/each}
                     <Button size="small" buttonText="Legg til" onClick={() => addOtherTask()}><IconAdd slot="before" /></Button>

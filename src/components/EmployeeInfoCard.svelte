@@ -5,6 +5,8 @@
     // Props
     export let backgroundColor = '--catSkillWhite'
     export let employeeData = {}
+    export let disableInfoBox = false
+    export let hideTextBox = false
 
     const convertDate = (date) => {
         const dateList = date.slice(0,10).split('-')
@@ -54,10 +56,10 @@
             upn: forhold.arbeidssted?.leder?.upn || false,
             workPlace: forhold.arbeidssted?.navn || 'Ukjent plass'
         }
-    }).filter(upn => upn !== false && upn !== '' && upn !== 'Ukjent leder')
+    }).filter(upn => upn !== false && upn !== '' && upn !== 'Ukjent leder') 
 </script>
 
-<Card title="Ansattinformasjon" backgroundColor={backgroundColor} infoBox={ {content: infoText}}>
+<Card title="Ansattinformasjon" backgroundColor={backgroundColor} disableInfoBox={disableInfoBox} infoBox={{content: infoText}}>
     <div class="cardContent">
         <div class="generalInfo">
             <div class="infoPair">
@@ -86,9 +88,13 @@
             </div>
         </div>
     </div>
-    <div class="actionContent">
-        <p>Hvis noe av informasjonen her ikke stemmer, klikk <a href={`mailto:${leaders.map(leader => leader.upn).join(';')}?subject=Kompetanse - Feil informasjon`}>her</a> for å sende en mail via Outlook til {leaders.length === 1 ? 'din nærmeste leder:' : 'dine nærmeste ledere:'} <b>{leaders.length === 1 ? leaders.map(leader => leader.name).join(', ') : leaders.map(leader => `${leader.name} (${leader.workPlace})`).join(', ')}</b>, da dette må rettes i HR-systemet</p>
-    </div>
+    {#if hideTextBox === false}
+        <div class="actionContent">
+            <p>Hvis noe av informasjonen her ikke stemmer, klikk <a href={`mailto:${leaders.map(leader => leader.upn).join(';')}?subject=Kompetanse - Feil informasjon`}>her</a> for å sende en mail via Outlook til {leaders.length === 1 ? 'din nærmeste leder:' : 'dine nærmeste ledere:'} <b>{leaders.length === 1 ? leaders.map(leader => leader.name).join(', ') : leaders.map(leader => `${leader.name} (${leader.workPlace})`).join(', ')}</b>, da dette må rettes i HR-systemet</p>
+        </div>
+    {:else}
+        <div></div>
+    {/if}
 </Card>
 
 <style>
