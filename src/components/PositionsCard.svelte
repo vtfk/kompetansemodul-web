@@ -20,8 +20,10 @@
 		positionTasks: []
 	}
 
+    if (!competence) competence = { positionTasks: [] }
     if (!competence.positionTasks) competence.positionTasks = []
     
+    console.log(competence.positionTasks)
 
     // state
     let availableTasks = {}
@@ -54,16 +56,18 @@
     let tempPositionTasks = JSON.parse(JSON.stringify(competence.positionTasks)) // Create a copy to display correct information (and maybe alert if user has edited) if user aborts edit
     
     onMount(async () => {
-        const updateAvailableTasks = async () => {
-            if (editInfo.isEditing && editInfo.editBlock === title) {
-                for (const kortnavn of Object.keys(availableTasks)) {
-                    availableTasks[kortnavn] = await getTasks(kortnavn)
+        if (canEdit) {
+            const updateAvailableTasks = async () => {
+                if (editInfo.isEditing && editInfo.editBlock === title) {
+                    for (const kortnavn of Object.keys(availableTasks)) {
+                        availableTasks[kortnavn] = await getTasks(kortnavn)
+                    }
                 }
             }
+            const interval = setInterval(updateAvailableTasks, 5000);
+            updateAvailableTasks();
+            return () => clearInterval(interval)
         }
-        const interval = setInterval(updateAvailableTasks, 5000);
-        updateAvailableTasks();
-        return () => clearInterval(interval)
 	});
 
 
@@ -194,7 +198,7 @@
             {#each displayData.positions as position}
                 <InnerCard emoji='💼'>
                     <div slot="first">
-                        <h4>{position.hovedstilling ? 'Hovedstilling' : 'Tillegsstilling'}</h4>
+                        <h4>{position.hovedstilling ? 'Hovedstilling' : 'Tilleggsstilling'}</h4>
                         <h3>{position.stillingstittel ?? 'Ukjent tittel'} ({Math.ceil(position.lonnsprosent/100)}%)</h3>
                         <h4>{getDepartment(position.arbeidssted.struktur).department}</h4>
                         <p>{getDepartment(position.arbeidssted.struktur).company}</p>
