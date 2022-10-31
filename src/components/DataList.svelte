@@ -2,7 +2,7 @@
     import { clickOutside } from "../lib/Helpers/clickOutside";
 
     // props
-    export let placeholder = 'Skriv inn noe a!'
+    export let placeholder = 'Skriv inn egen verdi, eller velg fra listen'
     export let displayNumberOfItems = 80
     export let rounded = false
     export let inputValue = ''
