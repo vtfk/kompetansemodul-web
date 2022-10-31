@@ -4,7 +4,7 @@
     import { getZipCodeInfo } from '../lib/Helpers/zipCode'
     import InnerCard from "./InnerCard.svelte";
     import { get } from 'svelte/store'
-    import { saveCompetence, getChuck }  from '../lib/services/useApi'
+    import { saveCompetence, getTasks }  from '../lib/services/useApi'
     import { editingPersonalia } from '../lib/services/store'
     import DataList from "./DataList.svelte";
     import Button from "./Button.svelte";
@@ -22,6 +22,9 @@
 
     if (!competence.positionTasks) competence.positionTasks = []
     
+
+    // state
+    let availableTasks = {}
     // Nedenfor endrer vi antall tasks med maxTasks
     const maxTasks = 20
     // Add tasks if needed
@@ -29,6 +32,7 @@
         const positionTask = competence.positionTasks.find(task => task.positionId === forhold.systemId)
         const level = forhold.arbeidssted.struktur.length > 4 ? forhold.arbeidssted.struktur.length - 4 : 0
         console.log(forhold.arbeidssted.struktur[level].kortnavn) // Høre om hvilke oppgaver lederne ønsker å se
+        availableTasks[forhold.arbeidssted.struktur[level].kortnavn] = []
         if (!positionTask) {
             competence.positionTasks.push({
                 positionId: forhold.systemId,
@@ -48,14 +52,20 @@
 
     // State
     let tempPositionTasks = JSON.parse(JSON.stringify(competence.positionTasks)) // Create a copy to display correct information (and maybe alert if user has edited) if user aborts edit
-
-    let availableTasks = []
-
-    //
+    
     onMount(async () => {
-		const res = await getChuck()
-		availableTasks = res;
+        const updateAvailableTasks = async () => {
+            if (editInfo.isEditing && editInfo.editBlock === title) {
+                for (const kortnavn of Object.keys(availableTasks)) {
+                    availableTasks[kortnavn] = await getTasks(kortnavn)
+                }
+            }
+        }
+        const interval = setInterval(updateAvailableTasks, 5000);
+        updateAvailableTasks();
+        return () => clearInterval(interval)
 	});
+
 
     const convertDate = (date) => {
         const dateList = date.slice(0,10).split('-')
@@ -147,7 +157,7 @@
                             <label for="tasks">Nøkkeloppgaver</label><br>
                             {#each tempPositionTasks.find(pt => pt.positionId === position.systemId).tasks as task, i}
                                 <div class="tasks">
-                                    <DataList dataList={availableTasks} filterFunction={(input, obj) => obj.value.toLowerCase().includes(input.toLowerCase()) || obj.category.toLowerCase().startsWith(input.toLowerCase()) } bind:inputValue={task} />
+                                    <DataList dataList={availableTasks[tempPositionTasks.find(pt => pt.positionId === position.systemId).positionParent]} filterFunction={(input, obj) => obj.value.toLowerCase().includes(input.toLowerCase()) || obj.category.toLowerCase().startsWith(input.toLowerCase()) } bind:inputValue={task} />
                                     <!--<label for={i.toString()} class="validation">{!validation[i] ? '*' : '' }</label>-->
                                     <Button size="medium" onlyIcon={true} noBorder={true} onClick={() => removeTask(position, i)}><IconDelete slot="before"/></Button>
                                 </div>

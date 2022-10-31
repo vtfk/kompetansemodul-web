@@ -8,5 +8,3 @@ export const changePage = (pageName) => {
     console.log(window.location.pathname)
 }
 
-
-

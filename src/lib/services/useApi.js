@@ -38,6 +38,9 @@ export const getMe = async () => await apiRequest('get', 'me')
 // Get user
 export const getPerson = async (parameter) => await apiRequest('get', `GetEmployee/${parameter}`)
 
+// Get tasks
+export const getTasks = async (parameter) => await apiRequest('get', `GetTasks/${parameter}`)
+
 // Get org
 export const getOrg = async () => await apiRequest('get', 'GetOrg')
 
