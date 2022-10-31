@@ -13,32 +13,6 @@
         return `${dateList[2]}.${dateList[1]}.${dateList[0]}`
     }
 
-    /* const getDepartment = (structure) => {
-        const info = {
-            department: structure[0].navn
-        }
-        if (structure.length === 1) {
-            // Must be whaaat, top level?
-            info.company = structure[0].navn
-        }
-        else if (structure.length === 2) {
-            // Must be fylkesdirektor level, we use the main company
-            info.company = structure[1].navn
-        } else if (structure.length === 3) {
-            // Must be sector level, we use the main company
-            info.company = structure[2].navn
-        } else if (structure.length === 4) {
-            // Must be section level, we use the sector
-            info.company = structure[1].navn
-        } else if (structure.length > 4) {
-            // Must be something lower like me, we use sector
-            info.company = structure[structure.length-3].navn
-        } else {
-            info.company = 'Ukjent sektor'
-        }
-        return info
-    } */
-
     const infoText = "<p>Her finner du ferdig utfylt informasjon om deg. Dette er informasjon som arbeidsgiver allerede har lagret om deg. Hvis dette ikke stemmer, kan du kontakte nærmeste leder.</p>"
  
     const displayData = {
@@ -53,7 +27,7 @@
     const leaders = employeeData.aktiveArbeidsforhold.map(forhold => {
         return {
             name: forhold.arbeidssted?.leder.navn || 'Ukjent ledernavn',
-            upn: forhold.arbeidssted?.leder?.upn || false,
+            upn: forhold.arbeidssted?.struktur[0].leder || false,
             workPlace: forhold.arbeidssted?.navn || 'Ukjent plass'
         }
     }).filter(upn => upn !== false && upn !== '' && upn !== 'Ukjent leder') 
