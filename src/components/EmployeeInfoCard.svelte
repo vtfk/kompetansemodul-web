@@ -63,12 +63,21 @@
         </div>
     </div>
     {#if hideTextBox === false}
-        <div class="actionContent">
-            <p>Hvis noe av informasjonen her ikke stemmer, klikk <a href={`mailto:${leaders.map(leader => leader.upn).join(';')}?subject=Kompetanse - Feil informasjon`}>her</a> for å sende en mail via Outlook til {leaders.length === 1 ? 'din nærmeste leder:' : 'dine nærmeste ledere:'} <b>{leaders.length === 1 ? leaders.map(leader => leader.name).join(', ') : leaders.map(leader => `${leader.name} (${leader.workPlace})`).join(', ')}</b>, da dette må rettes i HR-systemet</p>
-        </div>
+        {#each leaders.map(leader => leader.upn) as leader}
+            {#if leaders.length > 1 && leader === employeeData.userPrincipalName}
+                <div class="actionContent">
+                    <!-- TODO Her trenger vi en mail til de som er ansvarlig i HR for å endre data -->
+                    <p>Hvis noe av informasjonen her ikke stemmer, klikk <a href={`mailto:HR-AVDELINGEN?subject=Kompetanse - Feil informasjon`}>her</a> for å sende en mail via Outlook til HR, da dette må rettes i HR-systemet.</p>
+                </div>
+            {:else if leaders.length <= 1}
+                <div class="actionContent">
+                    <p>Hvis noe av informasjonen her ikke stemmer, klikk <a href={`mailto:${leaders.map(leader => leader.upn).join(';')}?subject=Kompetanse - Feil informasjon`}>her</a> for å sende en mail via Outlook til {leaders.length === 1 ? 'din nærmeste leder:' : 'dine nærmeste ledere:'} <b>{leaders.length === 1 ? leaders.map(leader => leader.name).join(', ') : leaders.map(leader => `${leader.name} (${leader.workPlace})`).join(', ')}</b>, da dette må rettes i HR-systemet.</p>
+                </div>
+            {/if}
+        {/each}
     {:else}
         <div></div>
-    {/if}
+    {/if}  
 </Card>
 
 <style>
