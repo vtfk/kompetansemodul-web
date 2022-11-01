@@ -1,0 +1,2938 @@
+[
+  {
+    "value": "Astronaut",
+    "category": "Annet fagområde"
+  },
+  {
+    "value": "Avisbud",
+    "category": "Annet fagområde"
+  },
+  {
+    "value": "Befal i forsvaret",
+    "category": "Annet fagområde"
+  },
+  {
+    "value": "Brannkonstabel",
+    "category": "Annet fagområde"
+  },
+  {
+    "value": "Bussjåfør",
+    "category": "Annet fagområde"
+  },
+  {
+    "value": "Dekksoffiser",
+    "category": "Annet fagområde"
+  },
+  {
+    "value": "Flygeleder",
+    "category": "Annet fagområde"
+  },
+  {
+    "value": "Flyger",
+    "category": "Annet fagområde"
+  },
+  {
+    "value": "Flyinstruktør",
+    "category": "Annet fagområde"
+  },
+  {
+    "value": "Forsker",
+    "category": "Annet fagområde"
+  },
+  {
+    "value": "Instruktør",
+    "category": "Annet fagområde"
+  },
+  {
+    "value": "Konsulent",
+    "category": "Annet fagområde"
+  },
+  {
+    "value": "Lokfører",
+    "category": "Annet fagområde"
+  },
+  {
+    "value": "Modell",
+    "category": "Annet fagområde"
+  },
+  {
+    "value": "Mystery Shopper",
+    "category": "Annet fagområde"
+  },
+  {
+    "value": "Nattevakt",
+    "category": "Annet fagområde"
+  },
+  {
+    "value": "Offiser",
+    "category": "Annet fagområde"
+  },
+  {
+    "value": "Ombordansvarlig",
+    "category": "Annet fagområde"
+  },
+  {
+    "value": "Postbud",
+    "category": "Annet fagområde"
+  },
+  {
+    "value": "Pølsemaker",
+    "category": "Annet fagområde"
+  },
+  {
+    "value": "Renholdsoperatør",
+    "category": "Annet fagområde"
+  },
+  {
+    "value": "Røykdykker",
+    "category": "Annet fagområde"
+  },
+  {
+    "value": "Sjøoffiser",
+    "category": "Annet fagområde"
+  },
+  {
+    "value": "Sjåfør",
+    "category": "Annet fagområde"
+  },
+  {
+    "value": "Stipendiat",
+    "category": "Annet fagområde"
+  },
+  {
+    "value": "Toller",
+    "category": "Annet fagområde"
+  },
+  {
+    "value": "Trainee",
+    "category": "Annet fagområde"
+  },
+  {
+    "value": "Trikkefører",
+    "category": "Annet fagområde"
+  },
+  {
+    "value": "Vaktmester / Driftstekniker",
+    "category": "Annet fagområde"
+  },
+  {
+    "value": "Vekter",
+    "category": "Annet fagområde"
+  },
+  {
+    "value": "Yrkesdykker",
+    "category": "Annet fagområde"
+  },
+  {
+    "value": "Rådgiver",
+    "category": "Annet fagområde"
+  },
+  {
+    "value": "Akkompagnatør",
+    "category": "Estetiske fag, kunst- og musikkfag"
+  },
+  {
+    "value": "Akustiker",
+    "category": "Estetiske fag, kunst- og musikkfag"
+  },
+  {
+    "value": "Animatør",
+    "category": "Estetiske fag, kunst- og musikkfag"
+  },
+  {
+    "value": "Billedkunstner",
+    "category": "Estetiske fag, kunst- og musikkfag"
+  },
+  {
+    "value": "Blomsterdekoratør",
+    "category": "Estetiske fag, kunst- og musikkfag"
+  },
+  {
+    "value": "Bunadtilvirker",
+    "category": "Estetiske fag, kunst- og musikkfag"
+  },
+  {
+    "value": "Buntmaker",
+    "category": "Estetiske fag, kunst- og musikkfag"
+  },
+  {
+    "value": "Dansepedagog",
+    "category": "Estetiske fag, kunst- og musikkfag"
+  },
+  {
+    "value": "Danser",
+    "category": "Estetiske fag, kunst- og musikkfag"
+  },
+  {
+    "value": "Dekoratør",
+    "category": "Estetiske fag, kunst- og musikkfag"
+  },
+  {
+    "value": "Dirigent",
+    "category": "Estetiske fag, kunst- og musikkfag"
+  },
+  {
+    "value": "Dramaturg",
+    "category": "Estetiske fag, kunst- og musikkfag"
+  },
+  {
+    "value": "Duodjar",
+    "category": "Estetiske fag, kunst- og musikkfag"
+  },
+  {
+    "value": "Forgyller",
+    "category": "Estetiske fag, kunst- og musikkfag"
+  },
+  {
+    "value": "Fotograf",
+    "category": "Estetiske fag, kunst- og musikkfag"
+  },
+  {
+    "value": "Frisør",
+    "category": "Estetiske fag, kunst- og musikkfag"
+  },
+  {
+    "value": "Gallerist",
+    "category": "Estetiske fag, kunst- og musikkfag"
+  },
+  {
+    "value": "Garnframstiller",
+    "category": "Estetiske fag, kunst- og musikkfag"
+  },
+  {
+    "value": "Garver",
+    "category": "Estetiske fag, kunst- og musikkfag"
+  },
+  {
+    "value": "Gjørtler",
+    "category": "Estetiske fag, kunst- og musikkfag"
+  },
+  {
+    "value": "Grafisk designer",
+    "category": "Estetiske fag, kunst- og musikkfag"
+  },
+  {
+    "value": "Gravør",
+    "category": "Estetiske fag, kunst- og musikkfag"
+  },
+  {
+    "value": "Herreskredder",
+    "category": "Estetiske fag, kunst- og musikkfag"
+  },
+  {
+    "value": "Håndvever",
+    "category": "Estetiske fag, kunst- og musikkfag"
+  },
+  {
+    "value": "Illustratør",
+    "category": "Estetiske fag, kunst- og musikkfag"
+  },
+  {
+    "value": "Inspisient",
+    "category": "Estetiske fag, kunst- og musikkfag"
+  },
+  {
+    "value": "Interiørarkitekt",
+    "category": "Estetiske fag, kunst- og musikkfag"
+  },
+  {
+    "value": "Interiørkonsulent",
+    "category": "Estetiske fag, kunst- og musikkfag"
+  },
+  {
+    "value": "Kantor / Kirkemusiker",
+    "category": "Estetiske fag, kunst- og musikkfag"
+  },
+  {
+    "value": "Keramiker",
+    "category": "Estetiske fag, kunst- og musikkfag"
+  },
+  {
+    "value": "Kjole- og draktsyer",
+    "category": "Estetiske fag, kunst- og musikkfag"
+  },
+  {
+    "value": "Klesdesigner / Kostymedesigner",
+    "category": "Estetiske fag, kunst- og musikkfag"
+  },
+  {
+    "value": "Komponist",
+    "category": "Estetiske fag, kunst- og musikkfag"
+  },
+  {
+    "value": "Koreograf",
+    "category": "Estetiske fag, kunst- og musikkfag"
+  },
+  {
+    "value": "Kostymesyer",
+    "category": "Estetiske fag, kunst- og musikkfag"
+  },
+  {
+    "value": "Kunst- og kulturformidler",
+    "category": "Estetiske fag, kunst- og musikkfag"
+  },
+  {
+    "value": "Kunsthåndverker",
+    "category": "Estetiske fag, kunst- og musikkfag"
+  },
+  {
+    "value": "Kunstner",
+    "category": "Estetiske fag, kunst- og musikkfag"
+  },
+  {
+    "value": "Kurator",
+    "category": "Estetiske fag, kunst- og musikkfag"
+  },
+  {
+    "value": "Kurvmaker",
+    "category": "Estetiske fag, kunst- og musikkfag"
+  },
+  {
+    "value": "Lydkunstner",
+    "category": "Estetiske fag, kunst- og musikkfag"
+  },
+  {
+    "value": "Lysdesigner",
+    "category": "Estetiske fag, kunst- og musikkfag"
+  },
+  {
+    "value": "Lystekniker",
+    "category": "Estetiske fag, kunst- og musikkfag"
+  },
+  {
+    "value": "Make Up Artist",
+    "category": "Estetiske fag, kunst- og musikkfag"
+  },
+  {
+    "value": "Maskør- og parykkmaker",
+    "category": "Estetiske fag, kunst- og musikkfag"
+  },
+  {
+    "value": "Mediedesigner",
+    "category": "Estetiske fag, kunst- og musikkfag"
+  },
+  {
+    "value": "Mediegrafiker",
+    "category": "Estetiske fag, kunst- og musikkfag"
+  },
+  {
+    "value": "Modist",
+    "category": "Estetiske fag, kunst- og musikkfag"
+  },
+  {
+    "value": "Musiker",
+    "category": "Estetiske fag, kunst- og musikkfag"
+  },
+  {
+    "value": "Musikkprodusent",
+    "category": "Estetiske fag, kunst- og musikkfag"
+  },
+  {
+    "value": "Musikkterapeut",
+    "category": "Estetiske fag, kunst- og musikkfag"
+  },
+  {
+    "value": "Møbeldesigner",
+    "category": "Estetiske fag, kunst- og musikkfag"
+  },
+  {
+    "value": "Negldesigner",
+    "category": "Estetiske fag, kunst- og musikkfag"
+  },
+  {
+    "value": "Organist",
+    "category": "Estetiske fag, kunst- og musikkfag"
+  },
+  {
+    "value": "Pianostemmer",
+    "category": "Estetiske fag, kunst- og musikkfag"
+  },
+  {
+    "value": "Produktdesigner",
+    "category": "Estetiske fag, kunst- og musikkfag"
+  },
+  {
+    "value": "Rekvisitør",
+    "category": "Estetiske fag, kunst- og musikkfag"
+  },
+  {
+    "value": "Sanger",
+    "category": "Estetiske fag, kunst- og musikkfag"
+  },
+  {
+    "value": "Scenograf",
+    "category": "Estetiske fag, kunst- og musikkfag"
+  },
+  {
+    "value": "Skuespiller",
+    "category": "Estetiske fag, kunst- og musikkfag"
+  },
+  {
+    "value": "Sminkør",
+    "category": "Estetiske fag, kunst- og musikkfag"
+  },
+  {
+    "value": "Strikkehåndverker",
+    "category": "Estetiske fag, kunst- og musikkfag"
+  },
+  {
+    "value": "Stylist",
+    "category": "Estetiske fag, kunst- og musikkfag"
+  },
+  {
+    "value": "Sølvsmed",
+    "category": "Estetiske fag, kunst- og musikkfag"
+  },
+  {
+    "value": "Tekstildesigner",
+    "category": "Estetiske fag, kunst- og musikkfag"
+  },
+  {
+    "value": "Treskjærer",
+    "category": "Estetiske fag, kunst- og musikkfag"
+  },
+  {
+    "value": "Utstillingsdesigner",
+    "category": "Estetiske fag, kunst- og musikkfag"
+  },
+  {
+    "value": "Videokunstner",
+    "category": "Estetiske fag, kunst- og musikkfag"
+  },
+  {
+    "value": "Rådgiver",
+    "category": "Estetiske fag, kunst- og musikkfag"
+  },
+  {
+    "value": "Agronom",
+    "category": "Fiskeri-, husdyr- og landbruksfag"
+  },
+  {
+    "value": "Anleggsgartner",
+    "category": "Fiskeri-, husdyr- og landbruksfag"
+  },
+  {
+    "value": "Bonde",
+    "category": "Fiskeri-, husdyr- og landbruksfag"
+  },
+  {
+    "value": "Fagarbeider i sjømatproduksjon",
+    "category": "Fiskeri-, husdyr- og landbruksfag"
+  },
+  {
+    "value": "Fiskeoppdretter",
+    "category": "Fiskeri-, husdyr- og landbruksfag"
+  },
+  {
+    "value": "Fisker",
+    "category": "Fiskeri-, husdyr- og landbruksfag"
+  },
+  {
+    "value": "Fylkesjordsjef",
+    "category": "Fiskeri-, husdyr- og landbruksfag"
+  },
+  {
+    "value": "Fylkesskogmester",
+    "category": "Fiskeri-, husdyr- og landbruksfag"
+  },
+  {
+    "value": "Fylkesskogsjef",
+    "category": "Fiskeri-, husdyr- og landbruksfag"
+  },
+  {
+    "value": "Gartner",
+    "category": "Fiskeri-, husdyr- og landbruksfag"
+  },
+  {
+    "value": "Hestefaglært",
+    "category": "Fiskeri-, husdyr- og landbruksfag"
+  },
+  {
+    "value": "Hortonom",
+    "category": "Fiskeri-, husdyr- og landbruksfag"
+  },
+  {
+    "value": "Hovslager",
+    "category": "Fiskeri-, husdyr- og landbruksfag"
+  },
+  {
+    "value": "Iktyolog",
+    "category": "Fiskeri-, husdyr- og landbruksfag"
+  },
+  {
+    "value": "Jordbrukssjef",
+    "category": "Fiskeri-, husdyr- og landbruksfag"
+  },
+  {
+    "value": "Naturforvalter",
+    "category": "Fiskeri-, husdyr- og landbruksfag"
+  },
+  {
+    "value": "Nettmann",
+    "category": "Fiskeri-, husdyr- og landbruksfag"
+  },
+  {
+    "value": "Ornitolog",
+    "category": "Fiskeri-, husdyr- og landbruksfag"
+  },
+  {
+    "value": "Reindriftsutøver",
+    "category": "Fiskeri-, husdyr- og landbruksfag"
+  },
+  {
+    "value": "Ridelærer",
+    "category": "Fiskeri-, husdyr- og landbruksfag"
+  },
+  {
+    "value": "Skogbrukssjef",
+    "category": "Fiskeri-, husdyr- og landbruksfag"
+  },
+  {
+    "value": "Skogsoperatør",
+    "category": "Fiskeri-, husdyr- og landbruksfag"
+  },
+  {
+    "value": "Slakter",
+    "category": "Fiskeri-, husdyr- og landbruksfag"
+  },
+  {
+    "value": "Utmarkskonsulent",
+    "category": "Fiskeri-, husdyr- og landbruksfag"
+  },
+  {
+    "value": "Rådgiver",
+    "category": "Fiskeri-, husdyr- og landbruksfag"
+  },
+  {
+    "value": "Arkeolog",
+    "category": "Historie, religion, idéfag"
+  },
+  {
+    "value": "Byantikvar",
+    "category": "Historie, religion, idéfag"
+  },
+  {
+    "value": "Diakon",
+    "category": "Historie, religion, idéfag"
+  },
+  {
+    "value": "Etnolog / Kulturhistoriker",
+    "category": "Historie, religion, idéfag"
+  },
+  {
+    "value": "Eurytmist",
+    "category": "Historie, religion, idéfag"
+  },
+  {
+    "value": "Filosof",
+    "category": "Historie, religion, idéfag"
+  },
+  {
+    "value": "Historiker",
+    "category": "Historie, religion, idéfag"
+  },
+  {
+    "value": "Idehistoriker",
+    "category": "Historie, religion, idéfag"
+  },
+  {
+    "value": "Institusjonsprest",
+    "category": "Historie, religion, idéfag"
+  },
+  {
+    "value": "Kateket",
+    "category": "Historie, religion, idéfag"
+  },
+  {
+    "value": "Kirketjener",
+    "category": "Historie, religion, idéfag"
+  },
+  {
+    "value": "Konservator og arkivar",
+    "category": "Historie, religion, idéfag"
+  },
+  {
+    "value": "Kunsthistoriker",
+    "category": "Historie, religion, idéfag"
+  },
+  {
+    "value": "Misjonær",
+    "category": "Historie, religion, idéfag"
+  },
+  {
+    "value": "Palentolog",
+    "category": "Historie, religion, idéfag"
+  },
+  {
+    "value": "Prest / Teolog",
+    "category": "Historie, religion, idéfag"
+  },
+  {
+    "value": "Rådgiver",
+    "category": "Historie, religion, idéfag"
+  },
+  {
+    "value": "Baker",
+    "category": "Hotell- og reiselivsfag"
+  },
+  {
+    "value": "Barista",
+    "category": "Hotell- og reiselivsfag"
+  },
+  {
+    "value": "Bartender",
+    "category": "Hotell- og reiselivsfag"
+  },
+  {
+    "value": "Guide",
+    "category": "Hotell- og reiselivsfag"
+  },
+  {
+    "value": "Hotell og resturantsadministrator",
+    "category": "Hotell- og reiselivsfag"
+  },
+  {
+    "value": "Hotellsjef",
+    "category": "Hotell- og reiselivsfag"
+  },
+  {
+    "value": "Hovmester",
+    "category": "Hotell- og reiselivsfag"
+  },
+  {
+    "value": "Institusjonskokk",
+    "category": "Hotell- og reiselivsfag"
+  },
+  {
+    "value": "Kabinpersonale",
+    "category": "Hotell- og reiselivsfag"
+  },
+  {
+    "value": "Kjøkkenmedarbeider",
+    "category": "Hotell- og reiselivsfag"
+  },
+  {
+    "value": "Kjøkkensjef",
+    "category": "Hotell- og reiselivsfag"
+  },
+  {
+    "value": "Kokk",
+    "category": "Hotell- og reiselivsfag"
+  },
+  {
+    "value": "Konditor",
+    "category": "Hotell- og reiselivsfag"
+  },
+  {
+    "value": "Pikkolo",
+    "category": "Hotell- og reiselivsfag"
+  },
+  {
+    "value": "Reisekonsulent",
+    "category": "Hotell- og reiselivsfag"
+  },
+  {
+    "value": "Reiseleder",
+    "category": "Hotell- og reiselivsfag"
+  },
+  {
+    "value": "Reiselivskoordinator",
+    "category": "Hotell- og reiselivsfag"
+  },
+  {
+    "value": "Resepsjonist",
+    "category": "Hotell- og reiselivsfag"
+  },
+  {
+    "value": "Restaurantsjef",
+    "category": "Hotell- og reiselivsfag"
+  },
+  {
+    "value": "Servitør",
+    "category": "Hotell- og reiselivsfag"
+  },
+  {
+    "value": "Turistguide",
+    "category": "Hotell- og reiselivsfag"
+  },
+  {
+    "value": "Vinkelner / Sommelier",
+    "category": "Hotell- og reiselivsfag"
+  },
+  {
+    "value": "Rådgiver",
+    "category": "Hotell- og reiselivsfag"
+  },
+  {
+    "value": "Idrettskonsulent",
+    "category": "Idrettsfag, kroppsøving og friluftsliv"
+  },
+  {
+    "value": "Idrettstrener",
+    "category": "Idrettsfag, kroppsøving og friluftsliv"
+  },
+  {
+    "value": "Personlig trener",
+    "category": "Idrettsfag, kroppsøving og friluftsliv"
+  },
+  {
+    "value": "Profesjonell idrettsutøver",
+    "category": "Idrettsfag, kroppsøving og friluftsliv"
+  },
+  {
+    "value": "Rådgiver",
+    "category": "Idrettsfag, kroppsøving og friluftsliv"
+  },
+  {
+    "value": "Databasekonsulent / Databaseutvikler",
+    "category": "Informasjonsteknologi og informatikk"
+  },
+  {
+    "value": "Dataingeniør",
+    "category": "Informasjonsteknologi og informatikk"
+  },
+  {
+    "value": "IKT-Servicemedarbeider",
+    "category": "Informasjonsteknologi og informatikk"
+  },
+  {
+    "value": "Infrastruktur-arkitekt",
+    "category": "Informasjonsteknologi og informatikk"
+  },
+  {
+    "value": "Infrastruktur-konsulent",
+    "category": "Informasjonsteknologi og informatikk"
+  },
+  {
+    "value": "Integrasjonsarkitekt",
+    "category": "Informasjonsteknologi og informatikk"
+  },
+  {
+    "value": "Interaksjonsdesigner",
+    "category": "Informasjonsteknologi og informatikk"
+  },
+  {
+    "value": "IT-arkitekt",
+    "category": "Informasjonsteknologi og informatikk"
+  },
+  {
+    "value": "IT-Rådgiver",
+    "category": "Informasjonsteknologi og informatikk"
+  },
+  {
+    "value": "IT-driftskonsulent",
+    "category": "Informasjonsteknologi og informatikk"
+  },
+  {
+    "value": "IT-Konsulent",
+    "category": "Informasjonsteknologi og informatikk"
+  },
+  {
+    "value": "IT-sjef",
+    "category": "Informasjonsteknologi og informatikk"
+  },
+  {
+    "value": "Kvalitetssikrer / Qa Ingeniør",
+    "category": "Informasjonsteknologi og informatikk"
+  },
+  {
+    "value": "MAC designer",
+    "category": "Informasjonsteknologi og informatikk"
+  },
+  {
+    "value": "Microsoft- arkitekt",
+    "category": "Informasjonsteknologi og informatikk"
+  },
+  {
+    "value": "Microsoftutvikler",
+    "category": "Informasjonsteknologi og informatikk"
+  },
+  {
+    "value": "Nettverks og systemadministrator",
+    "category": "Informasjonsteknologi og informatikk"
+  },
+  {
+    "value": "Programmerer",
+    "category": "Informasjonsteknologi og informatikk"
+  },
+  {
+    "value": "Programmerer .Net",
+    "category": "Informasjonsteknologi og informatikk"
+  },
+  {
+    "value": "Programmerer C++",
+    "category": "Informasjonsteknologi og informatikk"
+  },
+  {
+    "value": "Programmerer Java",
+    "category": "Informasjonsteknologi og informatikk"
+  },
+  {
+    "value": "Programmerer PHP",
+    "category": "Informasjonsteknologi og informatikk"
+  },
+  {
+    "value": "Programutvikler / Softwareutvikler",
+    "category": "Informasjonsteknologi og informatikk"
+  },
+  {
+    "value": "Prosjektleder IT",
+    "category": "Informasjonsteknologi og informatikk"
+  },
+  {
+    "value": "SAP-Konsulent",
+    "category": "Informasjonsteknologi og informatikk"
+  },
+  {
+    "value": "Sikkerhetskonsulent",
+    "category": "Informasjonsteknologi og informatikk"
+  },
+  {
+    "value": "Spilldesigner",
+    "category": "Informasjonsteknologi og informatikk"
+  },
+  {
+    "value": "Spillprogrammerer",
+    "category": "Informasjonsteknologi og informatikk"
+  },
+  {
+    "value": "Systemarkitekt",
+    "category": "Informasjonsteknologi og informatikk"
+  },
+  {
+    "value": "Systemkonsulent",
+    "category": "Informasjonsteknologi og informatikk"
+  },
+  {
+    "value": "Systemutvikler",
+    "category": "Informasjonsteknologi og informatikk"
+  },
+  {
+    "value": "Teknisk Support IT / Helpdesk",
+    "category": "Informasjonsteknologi og informatikk"
+  },
+  {
+    "value": "Webadministrator / Webmaster",
+    "category": "Informasjonsteknologi og informatikk"
+  },
+  {
+    "value": "Webdesigner / Webutvikler",
+    "category": "Informasjonsteknologi og informatikk"
+  },
+  {
+    "value": "Rådgiver",
+    "category": "Informasjonsteknologi og informatikk"
+  },
+  {
+    "value": "Advokat",
+    "category": "Jus"
+  },
+  {
+    "value": "Advokatfullmektig",
+    "category": "Jus"
+  },
+  {
+    "value": "Advokatsekretær",
+    "category": "Jus"
+  },
+  {
+    "value": "Compliance officer",
+    "category": "Jus"
+  },
+  {
+    "value": "Dommer",
+    "category": "Jus"
+  },
+  {
+    "value": "Dommerfullmektig",
+    "category": "Jus"
+  },
+  {
+    "value": "Domstolsjurist",
+    "category": "Jus"
+  },
+  {
+    "value": "Etterforsker",
+    "category": "Jus"
+  },
+  {
+    "value": "Fengselsbetjent",
+    "category": "Jus"
+  },
+  {
+    "value": "Jurist",
+    "category": "Jus"
+  },
+  {
+    "value": "Jurist i fiskenæringen",
+    "category": "Jus"
+  },
+  {
+    "value": "Jurist innen politi og påtalemyndighet",
+    "category": "Jus"
+  },
+  {
+    "value": "Kriminolog",
+    "category": "Jus"
+  },
+  {
+    "value": "Politi / politibetjent",
+    "category": "Jus"
+  },
+  {
+    "value": "Sorenskriver",
+    "category": "Jus"
+  },
+  {
+    "value": "Statsadvokat",
+    "category": "Jus"
+  },
+  {
+    "value": "Tingrettsdommer",
+    "category": "Jus"
+  },
+  {
+    "value": "Rådgiver",
+    "category": "Jus"
+  },
+  {
+    "value": "Adjunkt",
+    "category": "Lærer- og lektorutdanning"
+  },
+  {
+    "value": "Allmennlærer",
+    "category": "Lærer- og lektorutdanning"
+  },
+  {
+    "value": "Allmennlærer for døve",
+    "category": "Lærer- og lektorutdanning"
+  },
+  {
+    "value": "Assisterende rektor",
+    "category": "Lærer- og lektorutdanning"
+  },
+  {
+    "value": "Avdelingsleder",
+    "category": "Lærer- og lektorutdanning"
+  },
+  {
+    "value": "Barnehageleder",
+    "category": "Lærer- og lektorutdanning"
+  },
+  {
+    "value": "Dekan",
+    "category": "Lærer- og lektorutdanning"
+  },
+  {
+    "value": "Doktorgradstipendiat",
+    "category": "Lærer- og lektorutdanning"
+  },
+  {
+    "value": "Faglærer",
+    "category": "Lærer- og lektorutdanning"
+  },
+  {
+    "value": "Faglærer i drama og teaterkommunikasjon",
+    "category": "Lærer- og lektorutdanning"
+  },
+  {
+    "value": "Faglærer i formgiving, kunst og håndverk",
+    "category": "Lærer- og lektorutdanning"
+  },
+  {
+    "value": "Faglærer i kroppsøving og idrettsfag",
+    "category": "Lærer- og lektorutdanning"
+  },
+  {
+    "value": "Faglærer i musikk",
+    "category": "Lærer- og lektorutdanning"
+  },
+  {
+    "value": "Førerhundtrener",
+    "category": "Lærer- og lektorutdanning"
+  },
+  {
+    "value": "Førskolelærer",
+    "category": "Lærer- og lektorutdanning"
+  },
+  {
+    "value": "Førsteamanuensis",
+    "category": "Lærer- og lektorutdanning"
+  },
+  {
+    "value": "Grunnskolelærer",
+    "category": "Lærer- og lektorutdanning"
+  },
+  {
+    "value": "Lektor",
+    "category": "Lærer- og lektorutdanning"
+  },
+  {
+    "value": "Rektor",
+    "category": "Lærer- og lektorutdanning"
+  },
+  {
+    "value": "SFO-assistent",
+    "category": "Lærer- og lektorutdanning"
+  },
+  {
+    "value": "SFO-leder",
+    "category": "Lærer- og lektorutdanning"
+  },
+  {
+    "value": "Skoleassistent",
+    "category": "Lærer- og lektorutdanning"
+  },
+  {
+    "value": "Studieinspektør (undervisningsinspektør, inspektør)",
+    "category": "Lærer- og lektorutdanning"
+  },
+  {
+    "value": "Studiekonsulent",
+    "category": "Lærer- og lektorutdanning"
+  },
+  {
+    "value": "Trafikklærer",
+    "category": "Lærer- og lektorutdanning"
+  },
+  {
+    "value": "Universitetslektor",
+    "category": "Lærer- og lektorutdanning"
+  },
+  {
+    "value": "Yrkesfaglærer",
+    "category": "Lærer- og lektorutdanning"
+  },
+  {
+    "value": "Rådgiver",
+    "category": "Lærer- og lektorutdanning"
+  },
+  {
+    "value": "Astrofysiker",
+    "category": "Matematikk og naturfag"
+  },
+  {
+    "value": "Astronom",
+    "category": "Matematikk og naturfag"
+  },
+  {
+    "value": "Biokjemiker",
+    "category": "Matematikk og naturfag"
+  },
+  {
+    "value": "Biolog",
+    "category": "Matematikk og naturfag"
+  },
+  {
+    "value": "Bioteknolog",
+    "category": "Matematikk og naturfag"
+  },
+  {
+    "value": "Botaniker",
+    "category": "Matematikk og naturfag"
+  },
+  {
+    "value": "Cellebiolog",
+    "category": "Matematikk og naturfag"
+  },
+  {
+    "value": "Entomolog",
+    "category": "Matematikk og naturfag"
+  },
+  {
+    "value": "Fiskehelsebiolog",
+    "category": "Matematikk og naturfag"
+  },
+  {
+    "value": "Fysiker",
+    "category": "Matematikk og naturfag"
+  },
+  {
+    "value": "Geofysiker",
+    "category": "Matematikk og naturfag"
+  },
+  {
+    "value": "Geograf",
+    "category": "Matematikk og naturfag"
+  },
+  {
+    "value": "Geokjemiker",
+    "category": "Matematikk og naturfag"
+  },
+  {
+    "value": "Geolog",
+    "category": "Matematikk og naturfag"
+  },
+  {
+    "value": "Havforsker",
+    "category": "Matematikk og naturfag"
+  },
+  {
+    "value": "Hydrolog",
+    "category": "Matematikk og naturfag"
+  },
+  {
+    "value": "Kjemiker",
+    "category": "Matematikk og naturfag"
+  },
+  {
+    "value": "Kjemilaborant",
+    "category": "Matematikk og naturfag"
+  },
+  {
+    "value": "Landbrukskonsulent",
+    "category": "Matematikk og naturfag"
+  },
+  {
+    "value": "Limnolog",
+    "category": "Matematikk og naturfag"
+  },
+  {
+    "value": "Mammalog",
+    "category": "Matematikk og naturfag"
+  },
+  {
+    "value": "Marin bioteknolog",
+    "category": "Matematikk og naturfag"
+  },
+  {
+    "value": "Marinbiolog",
+    "category": "Matematikk og naturfag"
+  },
+  {
+    "value": "Marinteknolog",
+    "category": "Matematikk og naturfag"
+  },
+  {
+    "value": "Matematiker",
+    "category": "Matematikk og naturfag"
+  },
+  {
+    "value": "Matteknolog / Næringsmiddeltekniker",
+    "category": "Matematikk og naturfag"
+  },
+  {
+    "value": "Meteorolog",
+    "category": "Matematikk og naturfag"
+  },
+  {
+    "value": "Mikrobiolog",
+    "category": "Matematikk og naturfag"
+  },
+  {
+    "value": "Miljøvernleder",
+    "category": "Matematikk og naturfag"
+  },
+  {
+    "value": "Miljøvernrådgiver",
+    "category": "Matematikk og naturfag"
+  },
+  {
+    "value": "Mykolog",
+    "category": "Matematikk og naturfag"
+  },
+  {
+    "value": "Naturgeograf",
+    "category": "Matematikk og naturfag"
+  },
+  {
+    "value": "Næringsmiddeltekniker",
+    "category": "Matematikk og naturfag"
+  },
+  {
+    "value": "Planteinspektør",
+    "category": "Matematikk og naturfag"
+  },
+  {
+    "value": "Seismolog",
+    "category": "Matematikk og naturfag"
+  },
+  {
+    "value": "Statistiker",
+    "category": "Matematikk og naturfag"
+  },
+  {
+    "value": "Taksidermist",
+    "category": "Matematikk og naturfag"
+  },
+  {
+    "value": "Toksikolog",
+    "category": "Matematikk og naturfag"
+  },
+  {
+    "value": "Virolog",
+    "category": "Matematikk og naturfag"
+  },
+  {
+    "value": "Zoolog",
+    "category": "Matematikk og naturfag"
+  },
+  {
+    "value": "Rådgiver",
+    "category": "Matematikk og naturfag"
+  },
+  {
+    "value": "Arkivar",
+    "category": "Mediefag, bibliotekfag og journalistfag"
+  },
+  {
+    "value": "Art director",
+    "category": "Mediefag, bibliotekfag og journalistfag"
+  },
+  {
+    "value": "Bibliotekar",
+    "category": "Mediefag, bibliotekfag og journalistfag"
+  },
+  {
+    "value": "Blogger",
+    "category": "Mediefag, bibliotekfag og journalistfag"
+  },
+  {
+    "value": "Filmfotograf",
+    "category": "Mediefag, bibliotekfag og journalistfag"
+  },
+  {
+    "value": "Forlagskonsulent",
+    "category": "Mediefag, bibliotekfag og journalistfag"
+  },
+  {
+    "value": "Fotoassistent",
+    "category": "Mediefag, bibliotekfag og journalistfag"
+  },
+  {
+    "value": "Fotojournalist",
+    "category": "Mediefag, bibliotekfag og journalistfag"
+  },
+  {
+    "value": "Informasjonskonsulent",
+    "category": "Mediefag, bibliotekfag og journalistfag"
+  },
+  {
+    "value": "Journalist",
+    "category": "Mediefag, bibliotekfag og journalistfag"
+  },
+  {
+    "value": "Lydtekniker",
+    "category": "Mediefag, bibliotekfag og journalistfag"
+  },
+  {
+    "value": "Produsent (Film / TV)",
+    "category": "Mediefag, bibliotekfag og journalistfag"
+  },
+  {
+    "value": "Programmedarbeider",
+    "category": "Mediefag, bibliotekfag og journalistfag"
+  },
+  {
+    "value": "Redaksjonssekretær",
+    "category": "Mediefag, bibliotekfag og journalistfag"
+  },
+  {
+    "value": "Redaktør",
+    "category": "Mediefag, bibliotekfag og journalistfag"
+  },
+  {
+    "value": "Redigerer (film/tv)",
+    "category": "Mediefag, bibliotekfag og journalistfag"
+  },
+  {
+    "value": "Regissør",
+    "category": "Mediefag, bibliotekfag og journalistfag"
+  },
+  {
+    "value": "Tekstforfatter",
+    "category": "Mediefag, bibliotekfag og journalistfag"
+  },
+  {
+    "value": "Webredaktør",
+    "category": "Mediefag, bibliotekfag og journalistfag"
+  },
+  {
+    "value": "Rådgiver",
+    "category": "Mediefag, bibliotekfag og journalistfag"
+  },
+  {
+    "value": "Akupunktør",
+    "category": "Medisin, odontologi, helse- og sosialfag"
+  },
+  {
+    "value": "Akuttsykepleier",
+    "category": "Medisin, odontologi, helse- og sosialfag"
+  },
+  {
+    "value": "Allmennlege",
+    "category": "Medisin, odontologi, helse- og sosialfag"
+  },
+  {
+    "value": "Ambulansearbeider",
+    "category": "Medisin, odontologi, helse- og sosialfag"
+  },
+  {
+    "value": "Anestesilege",
+    "category": "Medisin, odontologi, helse- og sosialfag"
+  },
+  {
+    "value": "Anestesisykepleier",
+    "category": "Medisin, odontologi, helse- og sosialfag"
+  },
+  {
+    "value": "Apoteker",
+    "category": "Medisin, odontologi, helse- og sosialfag"
+  },
+  {
+    "value": "Apotektekniker",
+    "category": "Medisin, odontologi, helse- og sosialfag"
+  },
+  {
+    "value": "Audiograf",
+    "category": "Medisin, odontologi, helse- og sosialfag"
+  },
+  {
+    "value": "Barnelege",
+    "category": "Medisin, odontologi, helse- og sosialfag"
+  },
+  {
+    "value": "Barnesykepleier",
+    "category": "Medisin, odontologi, helse- og sosialfag"
+  },
+  {
+    "value": "Barnevernspedagog",
+    "category": "Medisin, odontologi, helse- og sosialfag"
+  },
+  {
+    "value": "Bedriftslege",
+    "category": "Medisin, odontologi, helse- og sosialfag"
+  },
+  {
+    "value": "Billedterapeut",
+    "category": "Medisin, odontologi, helse- og sosialfag"
+  },
+  {
+    "value": "Bioingeniør",
+    "category": "Medisin, odontologi, helse- og sosialfag"
+  },
+  {
+    "value": "Biopat",
+    "category": "Medisin, odontologi, helse- og sosialfag"
+  },
+  {
+    "value": "Bryst- og endokrinkirurg",
+    "category": "Medisin, odontologi, helse- og sosialfag"
+  },
+  {
+    "value": "Dyrepleier",
+    "category": "Medisin, odontologi, helse- og sosialfag"
+  },
+  {
+    "value": "Ergoterapeut",
+    "category": "Medisin, odontologi, helse- og sosialfag"
+  },
+  {
+    "value": "Ernæringsfysiolog",
+    "category": "Medisin, odontologi, helse- og sosialfag"
+  },
+  {
+    "value": "Faglaborant",
+    "category": "Medisin, odontologi, helse- og sosialfag"
+  },
+  {
+    "value": "Farmasøyt",
+    "category": "Medisin, odontologi, helse- og sosialfag"
+  },
+  {
+    "value": "Fotterapeut",
+    "category": "Medisin, odontologi, helse- og sosialfag"
+  },
+  {
+    "value": "Fysioterapeut",
+    "category": "Medisin, odontologi, helse- og sosialfag"
+  },
+  {
+    "value": "Geriater",
+    "category": "Medisin, odontologi, helse- og sosialfag"
+  },
+  {
+    "value": "Geriatrisk sosionom",
+    "category": "Medisin, odontologi, helse- og sosialfag"
+  },
+  {
+    "value": "Gestaltterapeut",
+    "category": "Medisin, odontologi, helse- og sosialfag"
+  },
+  {
+    "value": "Gynekolog",
+    "category": "Medisin, odontologi, helse- og sosialfag"
+  },
+  {
+    "value": "Helse- og treningsterapeut",
+    "category": "Medisin, odontologi, helse- og sosialfag"
+  },
+  {
+    "value": "Helsefagarbeider",
+    "category": "Medisin, odontologi, helse- og sosialfag"
+  },
+  {
+    "value": "Helsesekretær",
+    "category": "Medisin, odontologi, helse- og sosialfag"
+  },
+  {
+    "value": "Helsesøster",
+    "category": "Medisin, odontologi, helse- og sosialfag"
+  },
+  {
+    "value": "Hematolog",
+    "category": "Medisin, odontologi, helse- og sosialfag"
+  },
+  {
+    "value": "Hjemmehjelp",
+    "category": "Medisin, odontologi, helse- og sosialfag"
+  },
+  {
+    "value": "Hjertespesialist / kardiolog",
+    "category": "Medisin, odontologi, helse- og sosialfag"
+  },
+  {
+    "value": "Homeopat",
+    "category": "Medisin, odontologi, helse- og sosialfag"
+  },
+  {
+    "value": "Hudlege",
+    "category": "Medisin, odontologi, helse- og sosialfag"
+  },
+  {
+    "value": "Hudpleier",
+    "category": "Medisin, odontologi, helse- og sosialfag"
+  },
+  {
+    "value": "Jordmor",
+    "category": "Medisin, odontologi, helse- og sosialfag"
+  },
+  {
+    "value": "Kiropraktor",
+    "category": "Medisin, odontologi, helse- og sosialfag"
+  },
+  {
+    "value": "Kirurg",
+    "category": "Medisin, odontologi, helse- og sosialfag"
+  },
+  {
+    "value": "Kjeveortoped",
+    "category": "Medisin, odontologi, helse- og sosialfag"
+  },
+  {
+    "value": "Klinisk ernæringsfysiolog",
+    "category": "Medisin, odontologi, helse- og sosialfag"
+  },
+  {
+    "value": "Klinisk sosionom",
+    "category": "Medisin, odontologi, helse- og sosialfag"
+  },
+  {
+    "value": "Kosmetolog",
+    "category": "Medisin, odontologi, helse- og sosialfag"
+  },
+  {
+    "value": "Kostholdsveileder",
+    "category": "Medisin, odontologi, helse- og sosialfag"
+  },
+  {
+    "value": "Kreftlege / onkolog",
+    "category": "Medisin, odontologi, helse- og sosialfag"
+  },
+  {
+    "value": "Kreftsykepleier",
+    "category": "Medisin, odontologi, helse- og sosialfag"
+  },
+  {
+    "value": "Laborant",
+    "category": "Medisin, odontologi, helse- og sosialfag"
+  },
+  {
+    "value": "Lege",
+    "category": "Medisin, odontologi, helse- og sosialfag"
+  },
+  {
+    "value": "Legemiddelkonsulent",
+    "category": "Medisin, odontologi, helse- og sosialfag"
+  },
+  {
+    "value": "Legesekretær",
+    "category": "Medisin, odontologi, helse- og sosialfag"
+  },
+  {
+    "value": "Logoped",
+    "category": "Medisin, odontologi, helse- og sosialfag"
+  },
+  {
+    "value": "Manuellterapeut",
+    "category": "Medisin, odontologi, helse- og sosialfag"
+  },
+  {
+    "value": "Massasjeterapeut",
+    "category": "Medisin, odontologi, helse- og sosialfag"
+  },
+  {
+    "value": "Medisinsk sekretær",
+    "category": "Medisin, odontologi, helse- og sosialfag"
+  },
+  {
+    "value": "Miljøarbeider",
+    "category": "Medisin, odontologi, helse- og sosialfag"
+  },
+  {
+    "value": "Miljøterapeut",
+    "category": "Medisin, odontologi, helse- og sosialfag"
+  },
+  {
+    "value": "Naprapat",
+    "category": "Medisin, odontologi, helse- og sosialfag"
+  },
+  {
+    "value": "Nevrolog",
+    "category": "Medisin, odontologi, helse- og sosialfag"
+  },
+  {
+    "value": "Nevrosykepleier",
+    "category": "Medisin, odontologi, helse- og sosialfag"
+  },
+  {
+    "value": "Operasjonssykepleier",
+    "category": "Medisin, odontologi, helse- og sosialfag"
+  },
+  {
+    "value": "Optiker",
+    "category": "Medisin, odontologi, helse- og sosialfag"
+  },
+  {
+    "value": "Ortopediingeniør",
+    "category": "Medisin, odontologi, helse- og sosialfag"
+  },
+  {
+    "value": "Ortopedisk kirurg",
+    "category": "Medisin, odontologi, helse- og sosialfag"
+  },
+  {
+    "value": "Ortopeditekniker",
+    "category": "Medisin, odontologi, helse- og sosialfag"
+  },
+  {
+    "value": "Osteopat",
+    "category": "Medisin, odontologi, helse- og sosialfag"
+  },
+  {
+    "value": "Patolog",
+    "category": "Medisin, odontologi, helse- og sosialfag"
+  },
+  {
+    "value": "Perfusjonist",
+    "category": "Medisin, odontologi, helse- og sosialfag"
+  },
+  {
+    "value": "Personlige assistent",
+    "category": "Medisin, odontologi, helse- og sosialfag"
+  },
+  {
+    "value": "Plastikkirurg",
+    "category": "Medisin, odontologi, helse- og sosialfag"
+  },
+  {
+    "value": "Portør",
+    "category": "Medisin, odontologi, helse- og sosialfag"
+  },
+  {
+    "value": "Provisorfarmasøyt",
+    "category": "Medisin, odontologi, helse- og sosialfag"
+  },
+  {
+    "value": "Psykiater",
+    "category": "Medisin, odontologi, helse- og sosialfag"
+  },
+  {
+    "value": "Psykiatrisk sykepleier",
+    "category": "Medisin, odontologi, helse- og sosialfag"
+  },
+  {
+    "value": "Radiograf",
+    "category": "Medisin, odontologi, helse- og sosialfag"
+  },
+  {
+    "value": "Radiolog",
+    "category": "Medisin, odontologi, helse- og sosialfag"
+  },
+  {
+    "value": "Reseptar",
+    "category": "Medisin, odontologi, helse- og sosialfag"
+  },
+  {
+    "value": "Reseptarfarmasøyt",
+    "category": "Medisin, odontologi, helse- og sosialfag"
+  },
+  {
+    "value": "Revmatolog",
+    "category": "Medisin, odontologi, helse- og sosialfag"
+  },
+  {
+    "value": "Soneterapeut",
+    "category": "Medisin, odontologi, helse- og sosialfag"
+  },
+  {
+    "value": "Sosialarbeider",
+    "category": "Medisin, odontologi, helse- og sosialfag"
+  },
+  {
+    "value": "Sosionom",
+    "category": "Medisin, odontologi, helse- og sosialfag"
+  },
+  {
+    "value": "Spa- terapeut",
+    "category": "Medisin, odontologi, helse- og sosialfag"
+  },
+  {
+    "value": "Sykepleier",
+    "category": "Medisin, odontologi, helse- og sosialfag"
+  },
+  {
+    "value": "Tannhelsesekretær",
+    "category": "Medisin, odontologi, helse- og sosialfag"
+  },
+  {
+    "value": "Tannlege / Odontolog",
+    "category": "Medisin, odontologi, helse- og sosialfag"
+  },
+  {
+    "value": "Tannlegesekretær / Tannlegeassistent",
+    "category": "Medisin, odontologi, helse- og sosialfag"
+  },
+  {
+    "value": "Tannpleier",
+    "category": "Medisin, odontologi, helse- og sosialfag"
+  },
+  {
+    "value": "Tanntekniker",
+    "category": "Medisin, odontologi, helse- og sosialfag"
+  },
+  {
+    "value": "Urolog",
+    "category": "Medisin, odontologi, helse- og sosialfag"
+  },
+  {
+    "value": "Vernepleier",
+    "category": "Medisin, odontologi, helse- og sosialfag"
+  },
+  {
+    "value": "Veterinær / Dyrlege",
+    "category": "Medisin, odontologi, helse- og sosialfag"
+  },
+  {
+    "value": "Øre-Nese-Halsspesialist",
+    "category": "Medisin, odontologi, helse- og sosialfag"
+  },
+  {
+    "value": "Øyelege",
+    "category": "Medisin, odontologi, helse- og sosialfag"
+  },
+  {
+    "value": "Rådgiver",
+    "category": "Medisin, odontologi, helse- og sosialfag"
+  },
+  {
+    "value": "Audiopedagog",
+    "category": "Pedagogiske fag"
+  },
+  {
+    "value": "Barne- og ungdomsmedarbeider",
+    "category": "Pedagogiske fag"
+  },
+  {
+    "value": "Barnehageassistent",
+    "category": "Pedagogiske fag"
+  },
+  {
+    "value": "Instrumentalpedagog / Musikkpedagog",
+    "category": "Pedagogiske fag"
+  },
+  {
+    "value": "Karriereveileder",
+    "category": "Pedagogiske fag"
+  },
+  {
+    "value": "Pedagog",
+    "category": "Pedagogiske fag"
+  },
+  {
+    "value": "Pedagogisk leder",
+    "category": "Pedagogiske fag"
+  },
+  {
+    "value": "Professor",
+    "category": "Pedagogiske fag"
+  },
+  {
+    "value": "Sangpedagog",
+    "category": "Pedagogiske fag"
+  },
+  {
+    "value": "Spesialpedagog",
+    "category": "Pedagogiske fag"
+  },
+  {
+    "value": "Rådgiver",
+    "category": "Pedagogiske fag"
+  },
+  {
+    "value": "Ambassadør",
+    "category": "Samfunnsfag, psykologi"
+  },
+  {
+    "value": "Bistandsarbeider",
+    "category": "Samfunnsfag, psykologi"
+  },
+  {
+    "value": "Coach",
+    "category": "Samfunnsfag, psykologi"
+  },
+  {
+    "value": "Demograf",
+    "category": "Samfunnsfag, psykologi"
+  },
+  {
+    "value": "Diplomat",
+    "category": "Samfunnsfag, psykologi"
+  },
+  {
+    "value": "Familieterapeut",
+    "category": "Samfunnsfag, psykologi"
+  },
+  {
+    "value": "Flyktningskonsulent",
+    "category": "Samfunnsfag, psykologi"
+  },
+  {
+    "value": "Politiker",
+    "category": "Samfunnsfag, psykologi"
+  },
+  {
+    "value": "Politisk rådgiver",
+    "category": "Samfunnsfag, psykologi"
+  },
+  {
+    "value": "Psykolog",
+    "category": "Samfunnsfag, psykologi"
+  },
+  {
+    "value": "Psykoterapeut",
+    "category": "Samfunnsfag, psykologi"
+  },
+  {
+    "value": "Samfunnsgeograf",
+    "category": "Samfunnsfag, psykologi"
+  },
+  {
+    "value": "Sosialantropolog",
+    "category": "Samfunnsfag, psykologi"
+  },
+  {
+    "value": "Sosiolog",
+    "category": "Samfunnsfag, psykologi"
+  },
+  {
+    "value": "Statsviter",
+    "category": "Samfunnsfag, psykologi"
+  },
+  {
+    "value": "Stortingsrepresentant",
+    "category": "Samfunnsfag, psykologi"
+  },
+  {
+    "value": "Utenrikstjenestemann",
+    "category": "Samfunnsfag, psykologi"
+  },
+  {
+    "value": "Rådgiver",
+    "category": "Samfunnsfag, psykologi"
+  },
+  {
+    "value": "Filolog / Litteraturviter",
+    "category": "Språk, litteratur"
+  },
+  {
+    "value": "Forfatter",
+    "category": "Språk, litteratur"
+  },
+  {
+    "value": "Korrekturleser",
+    "category": "Språk, litteratur"
+  },
+  {
+    "value": "Lingvist / Språkviter",
+    "category": "Språk, litteratur"
+  },
+  {
+    "value": "Manusforfatter",
+    "category": "Språk, litteratur"
+  },
+  {
+    "value": "Oversetter / Translatør",
+    "category": "Språk, litteratur"
+  },
+  {
+    "value": "Skriftgransker",
+    "category": "Språk, litteratur"
+  },
+  {
+    "value": "Språkkonsulent",
+    "category": "Språk, litteratur"
+  },
+  {
+    "value": "Tegnspråktolk",
+    "category": "Språk, litteratur"
+  },
+  {
+    "value": "Tolk",
+    "category": "Språk, litteratur"
+  },
+  {
+    "value": "Rådgiver",
+    "category": "Språk, litteratur"
+  },
+  {
+    "value": "3D-tegner",
+    "category": "Teknologi, ingeniørfag og arkitektur"
+  },
+  {
+    "value": "Aluminiumskonstruktør",
+    "category": "Teknologi, ingeniørfag og arkitektur"
+  },
+  {
+    "value": "Anleggsleder / Byggleder",
+    "category": "Teknologi, ingeniørfag og arkitektur"
+  },
+  {
+    "value": "Arealplanlegger",
+    "category": "Teknologi, ingeniørfag og arkitektur"
+  },
+  {
+    "value": "Arkitekt",
+    "category": "Teknologi, ingeniørfag og arkitektur"
+  },
+  {
+    "value": "Asfaltør",
+    "category": "Teknologi, ingeniørfag og arkitektur"
+  },
+  {
+    "value": "Automatiker",
+    "category": "Teknologi, ingeniørfag og arkitektur"
+  },
+  {
+    "value": "Automatiseringsingeniør",
+    "category": "Teknologi, ingeniørfag og arkitektur"
+  },
+  {
+    "value": "Avdelingsingeniør",
+    "category": "Teknologi, ingeniørfag og arkitektur"
+  },
+  {
+    "value": "Avioniker",
+    "category": "Teknologi, ingeniørfag og arkitektur"
+  },
+  {
+    "value": "Banemontør",
+    "category": "Teknologi, ingeniørfag og arkitektur"
+  },
+  {
+    "value": "Betongfagarbeider",
+    "category": "Teknologi, ingeniørfag og arkitektur"
+  },
+  {
+    "value": "Bid Manager",
+    "category": "Teknologi, ingeniørfag og arkitektur"
+  },
+  {
+    "value": "Billakkerer",
+    "category": "Teknologi, ingeniørfag og arkitektur"
+  },
+  {
+    "value": "Bilmekaniker",
+    "category": "Teknologi, ingeniørfag og arkitektur"
+  },
+  {
+    "value": "Bilskadeoperatør",
+    "category": "Teknologi, ingeniørfag og arkitektur"
+  },
+  {
+    "value": "BIM-tekniker",
+    "category": "Teknologi, ingeniørfag og arkitektur"
+  },
+  {
+    "value": "Blikkenslager",
+    "category": "Teknologi, ingeniørfag og arkitektur"
+  },
+  {
+    "value": "Blyglasshåndverker",
+    "category": "Teknologi, ingeniørfag og arkitektur"
+  },
+  {
+    "value": "Bokbinder",
+    "category": "Teknologi, ingeniørfag og arkitektur"
+  },
+  {
+    "value": "Bore- og vedlikeholdsoperatør",
+    "category": "Teknologi, ingeniørfag og arkitektur"
+  },
+  {
+    "value": "Branningeniør",
+    "category": "Teknologi, ingeniørfag og arkitektur"
+  },
+  {
+    "value": "Brønnoperatør",
+    "category": "Teknologi, ingeniørfag og arkitektur"
+  },
+  {
+    "value": "Brønnoperatør hydrauliske rør",
+    "category": "Teknologi, ingeniørfag og arkitektur"
+  },
+  {
+    "value": "Brønnoperatør kabel",
+    "category": "Teknologi, ingeniørfag og arkitektur"
+  },
+  {
+    "value": "Brønnoperatør komplettering",
+    "category": "Teknologi, ingeniørfag og arkitektur"
+  },
+  {
+    "value": "Brønnoperatør sementering",
+    "category": "Teknologi, ingeniørfag og arkitektur"
+  },
+  {
+    "value": "By og trafikkplanlegger",
+    "category": "Teknologi, ingeniørfag og arkitektur"
+  },
+  {
+    "value": "Byggingeniør",
+    "category": "Teknologi, ingeniørfag og arkitektur"
+  },
+  {
+    "value": "Bøkker",
+    "category": "Teknologi, ingeniørfag og arkitektur"
+  },
+  {
+    "value": "Båtbygger",
+    "category": "Teknologi, ingeniørfag og arkitektur"
+  },
+  {
+    "value": "Chassispåbygger",
+    "category": "Teknologi, ingeniørfag og arkitektur"
+  },
+  {
+    "value": "CNC-operatør",
+    "category": "Teknologi, ingeniørfag og arkitektur"
+  },
+  {
+    "value": "Dimensjonskontrollør",
+    "category": "Teknologi, ingeniørfag og arkitektur"
+  },
+  {
+    "value": "Driftsingeniør / Driftstekniker",
+    "category": "Teknologi, ingeniørfag og arkitektur"
+  },
+  {
+    "value": "Drillingeniør",
+    "category": "Teknologi, ingeniørfag og arkitektur"
+  },
+  {
+    "value": "Elektriker",
+    "category": "Teknologi, ingeniørfag og arkitektur"
+  },
+  {
+    "value": "Elektroingeniør",
+    "category": "Teknologi, ingeniørfag og arkitektur"
+  },
+  {
+    "value": "Elektroreparatør",
+    "category": "Teknologi, ingeniørfag og arkitektur"
+  },
+  {
+    "value": "Elkraftingeniør",
+    "category": "Teknologi, ingeniørfag og arkitektur"
+  },
+  {
+    "value": "Energi og miljøingeniør",
+    "category": "Teknologi, ingeniørfag og arkitektur"
+  },
+  {
+    "value": "Energimontør",
+    "category": "Teknologi, ingeniørfag og arkitektur"
+  },
+  {
+    "value": "Energioperatør",
+    "category": "Teknologi, ingeniørfag og arkitektur"
+  },
+  {
+    "value": "ERP-spesialist",
+    "category": "Teknologi, ingeniørfag og arkitektur"
+  },
+  {
+    "value": "Fabrikksjef",
+    "category": "Teknologi, ingeniørfag og arkitektur"
+  },
+  {
+    "value": "Fagarbeider i industriell matproduksjon",
+    "category": "Teknologi, ingeniørfag og arkitektur"
+  },
+  {
+    "value": "Fagoperatør grafisk emballasje",
+    "category": "Teknologi, ingeniørfag og arkitektur"
+  },
+  {
+    "value": "Fagoperatør i farging, trykking og etterbehandling",
+    "category": "Teknologi, ingeniørfag og arkitektur"
+  },
+  {
+    "value": "Fagoperatør i kjemisk prosessindustri",
+    "category": "Teknologi, ingeniørfag og arkitektur"
+  },
+  {
+    "value": "Fagoperatør i metallurgiske prosessfag",
+    "category": "Teknologi, ingeniørfag og arkitektur"
+  },
+  {
+    "value": "Fagoperatør kran- og løfteoperasjoner",
+    "category": "Teknologi, ingeniørfag og arkitektur"
+  },
+  {
+    "value": "Feier",
+    "category": "Teknologi, ingeniørfag og arkitektur"
+  },
+  {
+    "value": "Feltingeniør",
+    "category": "Teknologi, ingeniørfag og arkitektur"
+  },
+  {
+    "value": "Finmekaniker",
+    "category": "Teknologi, ingeniørfag og arkitektur"
+  },
+  {
+    "value": "Fjell- og bergverksarbeider",
+    "category": "Teknologi, ingeniørfag og arkitektur"
+  },
+  {
+    "value": "Flymotormekaniker",
+    "category": "Teknologi, ingeniørfag og arkitektur"
+  },
+  {
+    "value": "Flysystemmekaniker",
+    "category": "Teknologi, ingeniørfag og arkitektur"
+  },
+  {
+    "value": "Forskalkingssnekker",
+    "category": "Teknologi, ingeniørfag og arkitektur"
+  },
+  {
+    "value": "FU-operatør",
+    "category": "Teknologi, ingeniørfag og arkitektur"
+  },
+  {
+    "value": "Fysikkingeniør",
+    "category": "Teknologi, ingeniørfag og arkitektur"
+  },
+  {
+    "value": "Geotekniker",
+    "category": "Teknologi, ingeniørfag og arkitektur"
+  },
+  {
+    "value": "Gipsmaker",
+    "category": "Teknologi, ingeniørfag og arkitektur"
+  },
+  {
+    "value": "Glassfagarbeider",
+    "category": "Teknologi, ingeniørfag og arkitektur"
+  },
+  {
+    "value": "Glasshåndverker",
+    "category": "Teknologi, ingeniørfag og arkitektur"
+  },
+  {
+    "value": "Grafisk trykker",
+    "category": "Teknologi, ingeniørfag og arkitektur"
+  },
+  {
+    "value": "Graver",
+    "category": "Teknologi, ingeniørfag og arkitektur"
+  },
+  {
+    "value": "Gullsmed",
+    "category": "Teknologi, ingeniørfag og arkitektur"
+  },
+  {
+    "value": "Havbunninstallatør",
+    "category": "Teknologi, ingeniørfag og arkitektur"
+  },
+  {
+    "value": "Heismontør",
+    "category": "Teknologi, ingeniørfag og arkitektur"
+  },
+  {
+    "value": "Hjelpearbeider",
+    "category": "Teknologi, ingeniørfag og arkitektur"
+  },
+  {
+    "value": "HVAC ingeniør",
+    "category": "Teknologi, ingeniørfag og arkitektur"
+  },
+  {
+    "value": "Industridesigner",
+    "category": "Teknologi, ingeniørfag og arkitektur"
+  },
+  {
+    "value": "Industrimaler",
+    "category": "Teknologi, ingeniørfag og arkitektur"
+  },
+  {
+    "value": "Industrimekaniker",
+    "category": "Teknologi, ingeniørfag og arkitektur"
+  },
+  {
+    "value": "Industrirørlegger",
+    "category": "Teknologi, ingeniørfag og arkitektur"
+  },
+  {
+    "value": "Industrisnekker",
+    "category": "Teknologi, ingeniørfag og arkitektur"
+  },
+  {
+    "value": "Industrisyer",
+    "category": "Teknologi, ingeniørfag og arkitektur"
+  },
+  {
+    "value": "Industritapetserer",
+    "category": "Teknologi, ingeniørfag og arkitektur"
+  },
+  {
+    "value": "Ingeniør – HMS",
+    "category": "Teknologi, ingeniørfag og arkitektur"
+  },
+  {
+    "value": "Ingeniør – Marin teknikk",
+    "category": "Teknologi, ingeniørfag og arkitektur"
+  },
+  {
+    "value": "Ingeniør - offshoreteknologi",
+    "category": "Teknologi, ingeniørfag og arkitektur"
+  },
+  {
+    "value": "Ingeniør – VVS",
+    "category": "Teknologi, ingeniørfag og arkitektur"
+  },
+  {
+    "value": "Ingeniør i kommunikasjonsteknologi",
+    "category": "Teknologi, ingeniørfag og arkitektur"
+  },
+  {
+    "value": "Ingeniør i prosess og gassteknologi",
+    "category": "Teknologi, ingeniørfag og arkitektur"
+  },
+  {
+    "value": "Ingeniør i prosessteknologi",
+    "category": "Teknologi, ingeniørfag og arkitektur"
+  },
+  {
+    "value": "Ingeniør Subsea",
+    "category": "Teknologi, ingeniørfag og arkitektur"
+  },
+  {
+    "value": "Ingeniørgeolog",
+    "category": "Teknologi, ingeniørfag og arkitektur"
+  },
+  {
+    "value": "Inspektør",
+    "category": "Teknologi, ingeniørfag og arkitektur"
+  },
+  {
+    "value": "Instrumentingeniør",
+    "category": "Teknologi, ingeniørfag og arkitektur"
+  },
+  {
+    "value": "Isolatør",
+    "category": "Teknologi, ingeniørfag og arkitektur"
+  },
+  {
+    "value": "Jernbaneingeniør",
+    "category": "Teknologi, ingeniørfag og arkitektur"
+  },
+  {
+    "value": "Kjemiingeniør",
+    "category": "Teknologi, ingeniørfag og arkitektur"
+  },
+  {
+    "value": "Kjølemaskinist / kuldetekniker",
+    "category": "Teknologi, ingeniørfag og arkitektur"
+  },
+  {
+    "value": "Kjøttskjærer",
+    "category": "Teknologi, ingeniørfag og arkitektur"
+  },
+  {
+    "value": "Kommunaltekniker",
+    "category": "Teknologi, ingeniørfag og arkitektur"
+  },
+  {
+    "value": "Komposittbåtbygger",
+    "category": "Teknologi, ingeniørfag og arkitektur"
+  },
+  {
+    "value": "Kraftsystemanalytiker",
+    "category": "Teknologi, ingeniørfag og arkitektur"
+  },
+  {
+    "value": "Kranfører",
+    "category": "Teknologi, ingeniørfag og arkitektur"
+  },
+  {
+    "value": "Kulde- og varmepumpemontør",
+    "category": "Teknologi, ingeniørfag og arkitektur"
+  },
+  {
+    "value": "Kuldeingeniør",
+    "category": "Teknologi, ingeniørfag og arkitektur"
+  },
+  {
+    "value": "Kvalitetsleder",
+    "category": "Teknologi, ingeniørfag og arkitektur"
+  },
+  {
+    "value": "Kybernetiker",
+    "category": "Teknologi, ingeniørfag og arkitektur"
+  },
+  {
+    "value": "Kystskipper",
+    "category": "Teknologi, ingeniørfag og arkitektur"
+  },
+  {
+    "value": "Landbruksmekaniker",
+    "category": "Teknologi, ingeniørfag og arkitektur"
+  },
+  {
+    "value": "Landmåler / Kartograf",
+    "category": "Teknologi, ingeniørfag og arkitektur"
+  },
+  {
+    "value": "Landskapsarkitekt",
+    "category": "Teknologi, ingeniørfag og arkitektur"
+  },
+  {
+    "value": "Landskapsingeniør",
+    "category": "Teknologi, ingeniørfag og arkitektur"
+  },
+  {
+    "value": "Limtrearbeider",
+    "category": "Teknologi, ingeniørfag og arkitektur"
+  },
+  {
+    "value": "Los",
+    "category": "Teknologi, ingeniørfag og arkitektur"
+  },
+  {
+    "value": "Låsesmed",
+    "category": "Teknologi, ingeniørfag og arkitektur"
+  },
+  {
+    "value": "Maler",
+    "category": "Teknologi, ingeniørfag og arkitektur"
+  },
+  {
+    "value": "Maskiningeniør",
+    "category": "Teknologi, ingeniørfag og arkitektur"
+  },
+  {
+    "value": "Maskinoffiser",
+    "category": "Teknologi, ingeniørfag og arkitektur"
+  },
+  {
+    "value": "Materialteknolog",
+    "category": "Teknologi, ingeniørfag og arkitektur"
+  },
+  {
+    "value": "Matros",
+    "category": "Teknologi, ingeniørfag og arkitektur"
+  },
+  {
+    "value": "Miljørådgiver / Miljøkonsulent",
+    "category": "Teknologi, ingeniørfag og arkitektur"
+  },
+  {
+    "value": "Motormann",
+    "category": "Teknologi, ingeniørfag og arkitektur"
+  },
+  {
+    "value": "Motormekaniker",
+    "category": "Teknologi, ingeniørfag og arkitektur"
+  },
+  {
+    "value": "Motorsykkelmekaniker",
+    "category": "Teknologi, ingeniørfag og arkitektur"
+  },
+  {
+    "value": "Murer",
+    "category": "Teknologi, ingeniørfag og arkitektur"
+  },
+  {
+    "value": "Møbelsnekker",
+    "category": "Teknologi, ingeniørfag og arkitektur"
+  },
+  {
+    "value": "Møbeltapetserer",
+    "category": "Teknologi, ingeniørfag og arkitektur"
+  },
+  {
+    "value": "Nautisk instrumentmaker",
+    "category": "Teknologi, ingeniørfag og arkitektur"
+  },
+  {
+    "value": "Navigatør",
+    "category": "Teknologi, ingeniørfag og arkitektur"
+  },
+  {
+    "value": "Optroniker",
+    "category": "Teknologi, ingeniørfag og arkitektur"
+  },
+  {
+    "value": "Orgelbygger",
+    "category": "Teknologi, ingeniørfag og arkitektur"
+  },
+  {
+    "value": "Petroleumsingeniør",
+    "category": "Teknologi, ingeniørfag og arkitektur"
+  },
+  {
+    "value": "Pilot",
+    "category": "Teknologi, ingeniørfag og arkitektur"
+  },
+  {
+    "value": "Platearbeider",
+    "category": "Teknologi, ingeniørfag og arkitektur"
+  },
+  {
+    "value": "Produksjonselektroniker",
+    "category": "Teknologi, ingeniørfag og arkitektur"
+  },
+  {
+    "value": "Produksjonstekniker",
+    "category": "Teknologi, ingeniørfag og arkitektur"
+  },
+  {
+    "value": "Produktutvikler",
+    "category": "Teknologi, ingeniørfag og arkitektur"
+  },
+  {
+    "value": "Prosessingeniør",
+    "category": "Teknologi, ingeniørfag og arkitektur"
+  },
+  {
+    "value": "Prosesstekniker",
+    "category": "Teknologi, ingeniørfag og arkitektur"
+  },
+  {
+    "value": "Prosjektingeniør",
+    "category": "Teknologi, ingeniørfag og arkitektur"
+  },
+  {
+    "value": "Prosjektleder (ingeniør / teknisk)",
+    "category": "Teknologi, ingeniørfag og arkitektur"
+  },
+  {
+    "value": "Reservedelsekspeditør",
+    "category": "Teknologi, ingeniørfag og arkitektur"
+  },
+  {
+    "value": "Reservoaringeniør",
+    "category": "Teknologi, ingeniørfag og arkitektur"
+  },
+  {
+    "value": "Romteknolog",
+    "category": "Teknologi, ingeniørfag og arkitektur"
+  },
+  {
+    "value": "Rørlegger",
+    "category": "Teknologi, ingeniørfag og arkitektur"
+  },
+  {
+    "value": "Salmaker",
+    "category": "Teknologi, ingeniørfag og arkitektur"
+  },
+  {
+    "value": "Seilmaker",
+    "category": "Teknologi, ingeniørfag og arkitektur"
+  },
+  {
+    "value": "Serigraf",
+    "category": "Teknologi, ingeniørfag og arkitektur"
+  },
+  {
+    "value": "Serviceelektroniker",
+    "category": "Teknologi, ingeniørfag og arkitektur"
+  },
+  {
+    "value": "Servicetekniker",
+    "category": "Teknologi, ingeniørfag og arkitektur"
+  },
+  {
+    "value": "Signalingeniør",
+    "category": "Teknologi, ingeniørfag og arkitektur"
+  },
+  {
+    "value": "Sikkerhetsingeniør",
+    "category": "Teknologi, ingeniørfag og arkitektur"
+  },
+  {
+    "value": "Sivilingeniør / Ingeniør",
+    "category": "Teknologi, ingeniørfag og arkitektur"
+  },
+  {
+    "value": "Skadedyrbekjemper",
+    "category": "Teknologi, ingeniørfag og arkitektur"
+  },
+  {
+    "value": "Skipselektriker",
+    "category": "Teknologi, ingeniørfag og arkitektur"
+  },
+  {
+    "value": "Skipsoffiser",
+    "category": "Teknologi, ingeniørfag og arkitektur"
+  },
+  {
+    "value": "Skipsoperatør",
+    "category": "Teknologi, ingeniørfag og arkitektur"
+  },
+  {
+    "value": "Skomaker",
+    "category": "Teknologi, ingeniørfag og arkitektur"
+  },
+  {
+    "value": "Smed",
+    "category": "Teknologi, ingeniørfag og arkitektur"
+  },
+  {
+    "value": "Snekker",
+    "category": "Teknologi, ingeniørfag og arkitektur"
+  },
+  {
+    "value": "Steinfagarbeider",
+    "category": "Teknologi, ingeniørfag og arkitektur"
+  },
+  {
+    "value": "Stillasbygger",
+    "category": "Teknologi, ingeniørfag og arkitektur"
+  },
+  {
+    "value": "Storurmaker",
+    "category": "Teknologi, ingeniørfag og arkitektur"
+  },
+  {
+    "value": "Styrmann",
+    "category": "Teknologi, ingeniørfag og arkitektur"
+  },
+  {
+    "value": "Sveiser",
+    "category": "Teknologi, ingeniørfag og arkitektur"
+  },
+  {
+    "value": "Systemingeniør",
+    "category": "Teknologi, ingeniørfag og arkitektur"
+  },
+  {
+    "value": "Taktekker",
+    "category": "Teknologi, ingeniørfag og arkitektur"
+  },
+  {
+    "value": "Teknisk forfatter",
+    "category": "Teknologi, ingeniørfag og arkitektur"
+  },
+  {
+    "value": "Teknisk sjef",
+    "category": "Teknologi, ingeniørfag og arkitektur"
+  },
+  {
+    "value": "Teknisk tegner",
+    "category": "Teknologi, ingeniørfag og arkitektur"
+  },
+  {
+    "value": "Tekstilrenser",
+    "category": "Teknologi, ingeniørfag og arkitektur"
+  },
+  {
+    "value": "Telekommunikasjonsmontør",
+    "category": "Teknologi, ingeniørfag og arkitektur"
+  },
+  {
+    "value": "Testingeniør",
+    "category": "Teknologi, ingeniørfag og arkitektur"
+  },
+  {
+    "value": "Togelektriker",
+    "category": "Teknologi, ingeniørfag og arkitektur"
+  },
+  {
+    "value": "Trebåtbygger",
+    "category": "Teknologi, ingeniørfag og arkitektur"
+  },
+  {
+    "value": "Tredreier",
+    "category": "Teknologi, ingeniørfag og arkitektur"
+  },
+  {
+    "value": "Trevaresnekker",
+    "category": "Teknologi, ingeniørfag og arkitektur"
+  },
+  {
+    "value": "Tømrer",
+    "category": "Teknologi, ingeniørfag og arkitektur"
+  },
+  {
+    "value": "Vaskerioperatør",
+    "category": "Teknologi, ingeniørfag og arkitektur"
+  },
+  {
+    "value": "Vedlikeholdsingeniør",
+    "category": "Teknologi, ingeniørfag og arkitektur"
+  },
+  {
+    "value": "Vei- og anleggsarbeider",
+    "category": "Teknologi, ingeniørfag og arkitektur"
+  },
+  {
+    "value": "Verktøymaker",
+    "category": "Teknologi, ingeniørfag og arkitektur"
+  },
+  {
+    "value": "Vikler- og transformatormontør",
+    "category": "Teknologi, ingeniørfag og arkitektur"
+  },
+  {
+    "value": "Rådgiver",
+    "category": "Teknologi, ingeniørfag og arkitektur"
+  },
+  {
+    "value": "Account  Manager / Key Account Manager",
+    "category": "Økonomi, marked og administrasjon"
+  },
+  {
+    "value": "Administrasjonssekretær",
+    "category": "Økonomi, marked og administrasjon"
+  },
+  {
+    "value": "Aksjemegler",
+    "category": "Økonomi, marked og administrasjon"
+  },
+  {
+    "value": "Aktuar",
+    "category": "Økonomi, marked og administrasjon"
+  },
+  {
+    "value": "Analytiker",
+    "category": "Økonomi, marked og administrasjon"
+  },
+  {
+    "value": "Autorisert regnskapsfører",
+    "category": "Økonomi, marked og administrasjon"
+  },
+  {
+    "value": "Bankkonsulent / Kundebehandler (bank)",
+    "category": "Økonomi, marked og administrasjon"
+  },
+  {
+    "value": "Bedriftsrådgiver",
+    "category": "Økonomi, marked og administrasjon"
+  },
+  {
+    "value": "Bestyrer / Styrer",
+    "category": "Økonomi, marked og administrasjon"
+  },
+  {
+    "value": "Bilselger",
+    "category": "Økonomi, marked og administrasjon"
+  },
+  {
+    "value": "Brand manager / Produktansvarlig",
+    "category": "Økonomi, marked og administrasjon"
+  },
+  {
+    "value": "Butikkmedarbeider / Butikkselger",
+    "category": "Økonomi, marked og administrasjon"
+  },
+  {
+    "value": "Butikksjef / Butikkledelse",
+    "category": "Økonomi, marked og administrasjon"
+  },
+  {
+    "value": "Controller",
+    "category": "Økonomi, marked og administrasjon"
+  },
+  {
+    "value": "Daglig leder",
+    "category": "Økonomi, marked og administrasjon"
+  },
+  {
+    "value": "Dispasjør / Skadebehandler",
+    "category": "Økonomi, marked og administrasjon"
+  },
+  {
+    "value": "Dokumentcontroller",
+    "category": "Økonomi, marked og administrasjon"
+  },
+  {
+    "value": "Driftsleder",
+    "category": "Økonomi, marked og administrasjon"
+  },
+  {
+    "value": "Eiendomsmegler / Statsautorisert eiendomsmegler",
+    "category": "Økonomi, marked og administrasjon"
+  },
+  {
+    "value": "Eksportmedarbeider",
+    "category": "Økonomi, marked og administrasjon"
+  },
+  {
+    "value": "Eksportsjef",
+    "category": "Økonomi, marked og administrasjon"
+  },
+  {
+    "value": "Fakturamedarbeider",
+    "category": "Økonomi, marked og administrasjon"
+  },
+  {
+    "value": "Finansmegler",
+    "category": "Økonomi, marked og administrasjon"
+  },
+  {
+    "value": "Finansrådgiver / Økonomisk rådgiver",
+    "category": "Økonomi, marked og administrasjon"
+  },
+  {
+    "value": "Fondsmegler",
+    "category": "Økonomi, marked og administrasjon"
+  },
+  {
+    "value": "Forretningsutvikler",
+    "category": "Økonomi, marked og administrasjon"
+  },
+  {
+    "value": "Forsikringsrådgiver",
+    "category": "Økonomi, marked og administrasjon"
+  },
+  {
+    "value": "Franchisetaker",
+    "category": "Økonomi, marked og administrasjon"
+  },
+  {
+    "value": "Fylkesrådmann",
+    "category": "Økonomi, marked og administrasjon"
+  },
+  {
+    "value": "Førstekonsulent / Rådgiver",
+    "category": "Økonomi, marked og administrasjon"
+  },
+  {
+    "value": "Gravferdskonsulent",
+    "category": "Økonomi, marked og administrasjon"
+  },
+  {
+    "value": "Handels og skipsmegler",
+    "category": "Økonomi, marked og administrasjon"
+  },
+  {
+    "value": "Havnefogd",
+    "category": "Økonomi, marked og administrasjon"
+  },
+  {
+    "value": "Husøkonom",
+    "category": "Økonomi, marked og administrasjon"
+  },
+  {
+    "value": "Innkjøper / Innkjøpsmedarbeider",
+    "category": "Økonomi, marked og administrasjon"
+  },
+  {
+    "value": "Innkjøpssjef / Innkjøpsansvarlig",
+    "category": "Økonomi, marked og administrasjon"
+  },
+  {
+    "value": "Innovasjonsleder",
+    "category": "Økonomi, marked og administrasjon"
+  },
+  {
+    "value": "Instituttleder",
+    "category": "Økonomi, marked og administrasjon"
+  },
+  {
+    "value": "International Management Assistant",
+    "category": "Økonomi, marked og administrasjon"
+  },
+  {
+    "value": "Investeringsrådgiver",
+    "category": "Økonomi, marked og administrasjon"
+  },
+  {
+    "value": "IT-Økonom",
+    "category": "Økonomi, marked og administrasjon"
+  },
+  {
+    "value": "Kommunikasjonsrådgiver / PR-rådgiver",
+    "category": "Økonomi, marked og administrasjon"
+  },
+  {
+    "value": "Kommunikasjonssjef",
+    "category": "Økonomi, marked og administrasjon"
+  },
+  {
+    "value": "Konduktør",
+    "category": "Økonomi, marked og administrasjon"
+  },
+  {
+    "value": "Konsul",
+    "category": "Økonomi, marked og administrasjon"
+  },
+  {
+    "value": "Konsulent: Business Intelligence",
+    "category": "Økonomi, marked og administrasjon"
+  },
+  {
+    "value": "Konsulent: Datavarehus",
+    "category": "Økonomi, marked og administrasjon"
+  },
+  {
+    "value": "Konsulent: Strategi og ledelse (management consultant)",
+    "category": "Økonomi, marked og administrasjon"
+  },
+  {
+    "value": "Kontormedarbeider",
+    "category": "Økonomi, marked og administrasjon"
+  },
+  {
+    "value": "Kostøkonom",
+    "category": "Økonomi, marked og administrasjon"
+  },
+  {
+    "value": "Kredittmedarbeider",
+    "category": "Økonomi, marked og administrasjon"
+  },
+  {
+    "value": "Kultursekretær",
+    "category": "Økonomi, marked og administrasjon"
+  },
+  {
+    "value": "Kundekonsulent / Kunderådgiver",
+    "category": "Økonomi, marked og administrasjon"
+  },
+  {
+    "value": "Kundeservice / Servicemedarbeider",
+    "category": "Økonomi, marked og administrasjon"
+  },
+  {
+    "value": "Lagerarbeider",
+    "category": "Økonomi, marked og administrasjon"
+  },
+  {
+    "value": "Likningssekretær",
+    "category": "Økonomi, marked og administrasjon"
+  },
+  {
+    "value": "Logistiker / Logistikkøkonom / Logistikkandidat",
+    "category": "Økonomi, marked og administrasjon"
+  },
+  {
+    "value": "Logistikkoperatør",
+    "category": "Økonomi, marked og administrasjon"
+  },
+  {
+    "value": "Logistikksjef / Supply Chain Manager",
+    "category": "Økonomi, marked og administrasjon"
+  },
+  {
+    "value": "Lønn og personalmedarbeider",
+    "category": "Økonomi, marked og administrasjon"
+  },
+  {
+    "value": "Manager",
+    "category": "Økonomi, marked og administrasjon"
+  },
+  {
+    "value": "Markedsanalytiker / Markedsforsker",
+    "category": "Økonomi, marked og administrasjon"
+  },
+  {
+    "value": "Markedsfører / Markedskoordinator",
+    "category": "Økonomi, marked og administrasjon"
+  },
+  {
+    "value": "Markedsføringskonsulent",
+    "category": "Økonomi, marked og administrasjon"
+  },
+  {
+    "value": "Markedssjef",
+    "category": "Økonomi, marked og administrasjon"
+  },
+  {
+    "value": "Markedsøkonom",
+    "category": "Økonomi, marked og administrasjon"
+  },
+  {
+    "value": "Obligasjonsmegler",
+    "category": "Økonomi, marked og administrasjon"
+  },
+  {
+    "value": "Organisasjonskonsulent",
+    "category": "Økonomi, marked og administrasjon"
+  },
+  {
+    "value": "Personalkonsulent / HR-Konsulent / Organisasjonskonsulent",
+    "category": "Økonomi, marked og administrasjon"
+  },
+  {
+    "value": "Personalsjef",
+    "category": "Økonomi, marked og administrasjon"
+  },
+  {
+    "value": "Programkoordinator",
+    "category": "Økonomi, marked og administrasjon"
+  },
+  {
+    "value": "Prosjektdesigner",
+    "category": "Økonomi, marked og administrasjon"
+  },
+  {
+    "value": "Prosjektleder - Generelt",
+    "category": "Økonomi, marked og administrasjon"
+  },
+  {
+    "value": "Prosjektleder (økonomi, marked, administrasjon)",
+    "category": "Økonomi, marked og administrasjon"
+  },
+  {
+    "value": "Regnskapskonsulent",
+    "category": "Økonomi, marked og administrasjon"
+  },
+  {
+    "value": "Regnskapsmedarbeider / Økonomiassistent / Revisjonsassistent",
+    "category": "Økonomi, marked og administrasjon"
+  },
+  {
+    "value": "Reklamekonsulent",
+    "category": "Økonomi, marked og administrasjon"
+  },
+  {
+    "value": "Rekrutterer / Headhunter",
+    "category": "Økonomi, marked og administrasjon"
+  },
+  {
+    "value": "Revisor",
+    "category": "Økonomi, marked og administrasjon"
+  },
+  {
+    "value": "Råvaremegler",
+    "category": "Økonomi, marked og administrasjon"
+  },
+  {
+    "value": "Saksbehandler",
+    "category": "Økonomi, marked og administrasjon"
+  },
+  {
+    "value": "Sales Manager",
+    "category": "Økonomi, marked og administrasjon"
+  },
+  {
+    "value": "Salgssjef / Salgsleder",
+    "category": "Økonomi, marked og administrasjon"
+  },
+  {
+    "value": "Samfunnsøkonom",
+    "category": "Økonomi, marked og administrasjon"
+  },
+  {
+    "value": "Sekretær / Management assistant",
+    "category": "Økonomi, marked og administrasjon"
+  },
+  {
+    "value": "Selger / Salgskonsulent / Salgsmedarbeider",
+    "category": "Økonomi, marked og administrasjon"
+  },
+  {
+    "value": "Siviløkonom",
+    "category": "Økonomi, marked og administrasjon"
+  },
+  {
+    "value": "Sjømathandler",
+    "category": "Økonomi, marked og administrasjon"
+  },
+  {
+    "value": "Skadeoppgjørskonsulent",
+    "category": "Økonomi, marked og administrasjon"
+  },
+  {
+    "value": "Skattefogd",
+    "category": "Økonomi, marked og administrasjon"
+  },
+  {
+    "value": "Skattespesialist",
+    "category": "Økonomi, marked og administrasjon"
+  },
+  {
+    "value": "Speditør / befrakter",
+    "category": "Økonomi, marked og administrasjon"
+  },
+  {
+    "value": "Stenograf / Referent",
+    "category": "Økonomi, marked og administrasjon"
+  },
+  {
+    "value": "Styreleder / Styremedlem",
+    "category": "Økonomi, marked og administrasjon"
+  },
+  {
+    "value": "Takstmann",
+    "category": "Økonomi, marked og administrasjon"
+  },
+  {
+    "value": "Togleder",
+    "category": "Økonomi, marked og administrasjon"
+  },
+  {
+    "value": "Toppleder i offentlig administrasjon",
+    "category": "Økonomi, marked og administrasjon"
+  },
+  {
+    "value": "Transportøkonom",
+    "category": "Økonomi, marked og administrasjon"
+  },
+  {
+    "value": "Underwriter",
+    "category": "Økonomi, marked og administrasjon"
+  },
+  {
+    "value": "Varemegler",
+    "category": "Økonomi, marked og administrasjon"
+  },
+  {
+    "value": "Webmarkedsfører",
+    "category": "Økonomi, marked og administrasjon"
+  },
+  {
+    "value": "Økonom",
+    "category": "Økonomi, marked og administrasjon"
+  },
+  {
+    "value": "Økonomikonsulent",
+    "category": "Økonomi, marked og administrasjon"
+  },
+  {
+    "value": "Økonomisekretær",
+    "category": "Økonomi, marked og administrasjon"
+  },
+  {
+    "value": "Økonomisjef / Finanssjef / Finansdirektør",
+    "category": "Økonomi, marked og administrasjon"
+  },
+  {
+    "value": "Rådgiver",
+    "category": "Økonomi, marked og administrasjon"
+  }
+]

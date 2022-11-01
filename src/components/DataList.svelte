@@ -104,7 +104,7 @@
             dataToPreview.unshift(
                 {
                     value: inputValue,
-                    category: "Annet"
+                    category: "Egendefinert"
                 }
             )
         }

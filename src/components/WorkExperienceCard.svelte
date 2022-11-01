@@ -14,16 +14,6 @@
     import InnerCard from "./InnerCard.svelte";
 
     let positions = occupations
-    onMount(async () => {
-        const tempPositions = await getPositions()
-        positions.push(...tempPositions.map(pos => {
-            return {
-                value: pos,
-                category: 'Stilling'
-            }
-        }))
-        positions = positions.sort((a, b) => a.category.localeCompare(b.category))
-    })
 
     // Props
     export let title = 'Tidligere arbeidserfaring'
@@ -140,7 +130,7 @@
                     <div slot="first">
                         <div>
                             <label for="position">Stilling</label><label for="position" class="validation">{!validation[i].position ? '*' : '' }</label><br>
-                            <DataList dataList={positions} filterFunction={(input, obj) => obj.value.toLowerCase().includes(input.toLowerCase()) || obj.category.toLowerCase().startsWith(input.toLowerCase())} bind:inputValue={tempWork.position} placeholder="Skriv inn stillingstittel eller velg fra listen" />
+                            <DataList dataList={positions} filterFunction={(input, obj) => obj.value.toLowerCase().includes(input.toLowerCase())} bind:inputValue={tempWork.position} placeholder="Skriv inn stillingstittel eller velg fra listen" />
                         </div>
                         <div>
                             <div>
