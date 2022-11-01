@@ -163,11 +163,6 @@
             validation[positionTask.positionParent] = JSON.parse(JSON.stringify(tempValidation))
         }
     }
-
-    const getLeader = (name) => {
-
-    }
-
 </script>
 
 <Card title={title} backgroundColor={backgroundColor} disableInfoBox={disableInfoBox} infoBox={ {content: infoText}} editable={canEdit} canSave={canSave} saveFunc={saveFunc} cancelFunc={cancelFunc}>
