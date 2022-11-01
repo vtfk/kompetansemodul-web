@@ -4,7 +4,7 @@
     import { getZipCodeInfo } from '../lib/Helpers/zipCode'
     import InnerCard from "./InnerCard.svelte";
     import { get } from 'svelte/store'
-    import { saveCompetence, getTasks }  from '../lib/services/useApi'
+    import { saveCompetence, getTasks, getOrg }  from '../lib/services/useApi'
     import { editingPersonalia } from '../lib/services/store'
     import DataList from "./DataList.svelte";
     import Button from "./Button.svelte";
@@ -164,8 +164,27 @@
         }
     }
 
+    const getLeader = (name) => {
+
+    }
+
+	// import { displayedPage, searchParameter } from '../lib/services/store'
 
 </script>
+
+<!-- {#await getOrg()}
+<p></p>
+    {:then res}
+    {#each res as unit}
+        {#if unit.navn === 'Fylkesdirektør'}
+            {#each unit.arbeidsforhold as employee}
+            {#if employee.lonnsprosent > 0}
+                <p on:click={() => { searchParameter.set(employee.userPrincipalName); displayedPage.set('person') } } style="color: green">{employee.navn}</p>
+            {/if}
+        {/each}
+    {/if}
+    {/each}
+{/await} -->
 
 <Card title={title} backgroundColor={backgroundColor} disableInfoBox={disableInfoBox} infoBox={ {content: infoText}} editable={canEdit} canSave={canSave} saveFunc={saveFunc} cancelFunc={cancelFunc}>
     <div class="halla">
@@ -177,7 +196,9 @@
                         <h3>{position.stillingstittel ?? 'Ukjent tittel'} ({Math.ceil(position.lonnsprosent/100)}%)</h3>
                         <h4>{getDepartment(position.arbeidssted.struktur).department}</h4>
                         <p>{getDepartment(position.arbeidssted.struktur).company}</p>
-                        <p><strong>Leder: </strong>{position.arbeidssted?.leder?.navn === `${employeeData.fornavn} ${employeeData.etternavn}` ? position.arbeidssted.struktur[1].ledernavn : position.arbeidssted?.leder?.navn ?? 'Ukjent leder'}</p>
+                        {#if position.arbeidssted.struktur.length > 1}
+                            <p><strong>Leder: </strong>{position.arbeidssted?.leder?.navn === `${employeeData.fornavn} ${employeeData.etternavn}` ? position.arbeidssted.struktur[1].ledernavn : position.arbeidssted?.leder?.navn ?? 'Ukjent leder'}</p>
+                        {/if}
                     </div>
                     <div slot="second">
                         <div>
@@ -203,7 +224,9 @@
                         <h3>{position.stillingstittel ?? 'Ukjent tittel'} ({Math.ceil(position.lonnsprosent/100)}%)</h3>
                         <h4>{getDepartment(position.arbeidssted.struktur).department}</h4>
                         <p>{getDepartment(position.arbeidssted.struktur).company}</p>
-                        <p><strong>Leder: </strong>{position.arbeidssted?.leder?.navn === `${employeeData.fornavn} ${employeeData.etternavn}` ? position.arbeidssted.struktur[1].ledernavn : position.arbeidssted?.leder?.navn ?? 'Ukjent leder'}</p>
+                        {#if position.arbeidssted.struktur.length > 2}
+                            <p><strong>Leder: </strong>{position.arbeidssted?.leder?.navn === `${employeeData.fornavn} ${employeeData.etternavn}` ? position.arbeidssted.struktur[1].ledernavn : position.arbeidssted?.leder?.navn ?? 'Ukjent leder'}</p>
+                        {/if}
                     </div>
                     <div slot="second">
                         <label for="tull">Nøkkeloppgaver</label>
