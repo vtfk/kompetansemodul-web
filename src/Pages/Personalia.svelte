@@ -5,7 +5,6 @@
 	import EmployeeCard from '../components/EmployeeCard.svelte'
 	import IconSpinner from '../components/Icons/IconSpinner.svelte';
 	import EducationCard from '../components/EducationCard.svelte';
-	import TasksCard from '../components/TasksCard.svelte';
 	import DivCard from '../components/DivCard.svelte';
 	import ExperienceCard from '../components/ExperienceCard.svelte';
 	import PositionsCard from '../components/PositionsCard.svelte';
@@ -51,7 +50,6 @@
 		<EmployeeCard employeeData={res} />
 		<EmployeeInfoCard employeeData={res} />
 		<PositionsCard employeeData={res} competence={res.competenceData} />
-		<TasksCard competence={res.competenceData}/>
 		<CountySelectionCard competence={res.competenceData}/>
 		<DivCard competence={res.competenceData}/>
 		<WorkExperienceCard competence={res.competenceData} />

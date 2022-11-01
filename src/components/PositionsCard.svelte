@@ -23,6 +23,7 @@
 
     if (!competence) competence = { positionTasks: [] }
     if (!competence.positionTasks) competence.positionTasks = []
+    if (!competence.otherPositions) competence.otherPositions = []
     
     // console.log(competence.positionTasks)
 
@@ -55,7 +56,13 @@
 
     // State
     let tempPositionTasks = JSON.parse(JSON.stringify(competence.positionTasks)) // Create a copy to display correct information (and maybe alert if user has edited) if user aborts edit
-    
+    let tempOtherPositions = JSON.parse(JSON.stringify(competence.otherPositions))
+
+    let newOtherPosition = {
+        systemId: new Date().toISOString(),
+        title: ''
+    }
+
     onMount(async () => {
         if (canEdit) {
             const updateAvailableTasks = async () => {
@@ -65,7 +72,7 @@
                     }
                 }
             }
-            const interval = setInterval(updateAvailableTasks, 5000);
+            const interval = setInterval(updateAvailableTasks, 60000);
             updateAvailableTasks();
             return () => clearInterval(interval)
         }
@@ -117,8 +124,9 @@
 
     const saveFunc = async () => {
         if (checkIfChanges()) {
-            await saveCompetence({...competence, positionTasks: tempPositionTasks})
+            await saveCompetence({...competence, positionTasks: tempPositionTasks, otherPositions: tempOtherPositions})
             competence.positionTasks = JSON.parse(JSON.stringify(tempPositionTasks))
+            competence.otherPositions = JSON.parse(JSON.stringify(tempOtherPositions))
         } else {
             console.log('Ingen endring, gidder ikke lagre')
         }
@@ -126,11 +134,13 @@
 
     const checkIfChanges = () => {
         if (JSON.stringify(competence.positionTasks) !== JSON.stringify(tempPositionTasks)) return true
+        if (JSON.stringify(competence.otherPositions) !== JSON.stringify(tempOtherPositions)) return true
         return false
     }
 
     const cancelFunc = async () => {
         tempPositionTasks = JSON.parse(JSON.stringify(competence.positionTasks))
+        tempOtherPositions = JSON.parse(JSON.stringify(competence.otherPositions))
     }
 
     const addTask = (position) => {
@@ -142,11 +152,32 @@
         tempPositionTasks.find(task => task.positionId === position.systemId).tasks.splice(i, 1)
         tempPositionTasks = tempPositionTasks
     }
+
+    const addOtherPosition = () => {
+		// need to assign as a new object to make it "reactive"
+		tempOtherPositions = [ ...tempOtherPositions, newOtherPosition ]
+        tempPositionTasks.push(
+            {
+                positionId: newOtherPosition.systemId,
+                positionParent: 'Ingen enda',
+                tasks: []
+            }
+        )
+		newOtherPosition = {
+            systemId: new Date().toISOString(),
+            title: ''
+        }
+	}
+
+    const removeEducation = pos => {
+		tempOtherPositions = tempOtherPositions.filter(position => position !== pos)
+	}
     
     
-    // Reactive validation
+    // Reactive validation of tasks
     let canSave = true
     let validation = []
+    let otherValidation = []
     
     $: {
         canSave = true
@@ -160,14 +191,31 @@
                     tempValidation.push(true)
                 }
             }
-            validation[positionTask.positionParent] = JSON.parse(JSON.stringify(tempValidation))
+            validation[positionTask.positionId] = JSON.parse(JSON.stringify(tempValidation))
         }
+        const tempOtherValidation = []
+        for (const pos of tempOtherPositions) {
+            // What fields are we validating
+            const valid = {
+                title: true,
+            }
+            // Validation of each field
+            if (!pos.title || pos.title.length < 1) {
+                valid.title = false
+                canSave = false
+            }
+
+            tempOtherValidation.push(valid)
+        }
+        otherValidation = JSON.parse(JSON.stringify(tempOtherValidation))
     }
+    // Reactive validation of otherTasks
 </script>
 
 <Card title={title} backgroundColor={backgroundColor} disableInfoBox={disableInfoBox} infoBox={ {content: infoText}} editable={canEdit} canSave={canSave} saveFunc={saveFunc} cancelFunc={cancelFunc}>
     <div class="halla">
         {#if editInfo.isEditing && editInfo.editBlock === title}
+        <!-- Data fra HR -->
             {#each displayData.positions as position, i}
                 <InnerCard emoji='💼'>
                     <div slot="first">
@@ -184,7 +232,7 @@
                             {#each tempPositionTasks.find(pt => pt.positionId === position.systemId).tasks as task, i}
                                 <div class="tasks">
                                     <DataList maxLength={30} dataList={availableTasks[tempPositionTasks.find(pt => pt.positionId === position.systemId).positionParent]} filterFunction={(input, obj) => obj.value.toLowerCase().includes(input.toLowerCase()) || obj.category.toLowerCase().startsWith(input.toLowerCase()) } bind:inputValue={task} />
-                                    <label for={i.toString()} class="validation">{!validation[tempPositionTasks.find(pt => pt.positionId === position.systemId).positionParent][i] ? '*' : '' }</label>
+                                    <label for={i.toString()} class="validation">{!validation[position.systemId][i] ? '*' : '' }</label>
                                     <Button size="medium" onlyIcon={true} noBorder={true} onClick={() => removeTask(position, i)}><IconDelete slot="before"/></Button>
                                 </div>
                             {/each}
@@ -193,8 +241,35 @@
                     </div>
                 </InnerCard>  
             {/each}
-
+            <!-- Data fra Competence db -->
+            <br />
+            <h3>Andre midlertidige oppgaver</h3>
+            <h4>Som ikke dekkes i stillingene over</h4>
+            {#each tempOtherPositions as position, i}
+                <InnerCard emoji='🛠' size="medium">
+                    <div slot="first">
+                        <label for="posTitle-{i}">Oppgave</label><label for="subject" class="validation">{!otherValidation[i].title ? '*' : '' }</label>
+                        <input type="text" placeholder="F. eks 'Prosjektarbeid'" bind:value={position.title}  />
+                    </div>
+                    <div slot="second">
+                        <label for="tasks">Underoppgaver</label><br>
+                        {#each tempPositionTasks.find(pt => pt.positionId === position.systemId).tasks as task, i}
+                            <div class="tasks">
+                                <DataList maxLength={30} dataList={[]} filterFunction={(input, obj) => obj.value.toLowerCase().includes(input.toLowerCase()) || obj.category.toLowerCase().startsWith(input.toLowerCase()) } bind:inputValue={task} />
+                                    <label for={i.toString()} class="validation">{!validation[position.systemId][i] ? '*' : '' }</label>
+                                <Button size="medium" onlyIcon={true} noBorder={true} onClick={() => removeTask(position, i)}><IconDelete slot="before"/></Button>
+                            </div>
+                        {/each}
+                        <Button size="small" buttonText="Legg til" onClick={() => addTask(position)}><IconAdd slot="before" /></Button>
+                    </div>
+                    <div slot="right">
+                        <Button buttonText="Fjern" onClick={() => removeEducation(position)}><IconDelete slot="before" /></Button>
+                    </div>
+                </InnerCard>  
+            {/each}
+            <Button buttonText="Legg til" onClick={() => addOtherPosition()}><IconAdd slot="before" /></Button>
         {:else}
+            <!-- Data fra HR -->
             {#each displayData.positions as position}
                 <InnerCard emoji='💼'>
                     <div slot="first">
@@ -217,6 +292,30 @@
                     </div>
                 </InnerCard>     
             {/each}
+            <!-- Data fra Competence db -->
+            <br />
+            <h3>Andre midlertidige oppgaver</h3>
+            {#each competence.otherPositions as position}
+                <InnerCard emoji='🛠' size="medium">
+                    <div slot="first">
+                        <h3>{position.title ?? 'Ukjent tittel'}</h3>
+                        <!--<h4>{getDepartment(position.arbeidssted.struktur).department}</h4>-->
+                    </div>
+                    <div slot="second">
+                        <label for="tull">Underoppgaver</label>
+                        {#if !(competence.positionTasks.find(pt => pt.positionId === position.systemId)).tasks.find(t => t.length > 0)}
+                            <div><p>Ingen underoppgaver lagt inn</p></div>
+                        {:else}
+                            {#each competence.positionTasks.find(pt => pt.positionId === position.systemId).tasks as task}
+                                <div>{task}</div>
+                            {/each}
+                        {/if}
+                    </div>
+                </InnerCard>     
+            {/each}
+            {#if competence.otherPositions.length < 1}
+                <em>Ingen oppgaver lagt inn</em>
+            {/if}
         {/if}
     </div>
 </Card>
