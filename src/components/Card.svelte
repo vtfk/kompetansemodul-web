@@ -9,6 +9,7 @@
     import IconCheck from './Icons/IconCheck.svelte';
     import InfoBox from './InfoBox.svelte';
     import IconRetry from './Icons/IconRetry.svelte';
+    import { confetti } from '@neoconfetti/svelte';
 
     // Props
     export let title = 'Ein tittel'
@@ -152,7 +153,6 @@
     }
 </script>
     <svelte:body on:keyup={handleComponentKeyUp} />
-
     <div id={title ?? 'har ikke tittel'} class="panel{(editInfo.isEditing && editInfo.editBlock !== title) ? ' hide' : ''}" style="background-color: var({backgroundColor});">
         {#if title}
             <div class="header">
@@ -177,6 +177,7 @@
                         <div class="editButton">
                             {#if showSavedMsg}
                                 <div class="success slide fadeInOut">Lagret 👍</div>&nbsp&nbsp
+                                <div use:confetti />
                             {/if}
                             <Button buttonText="Rediger" onClick={() => openEdit()}><IconEdit slot="before" /></Button>
                         </div>
