@@ -171,7 +171,6 @@
             {#each displayData.positions as position, i}
                 <InnerCard emoji='💼'>
                     <div slot="first">
-                        <h4>{position.hovedstilling ? 'Hovedstilling' : 'Tillegsstilling'}</h4>
                         <h3>{position.stillingstittel ?? 'Ukjent tittel'} ({Math.ceil(position.lonnsprosent/100)}%)</h3>
                         <h4>{getDepartment(position.arbeidssted.struktur).department}</h4>
                         <p>{getDepartment(position.arbeidssted.struktur).company}</p>
@@ -181,7 +180,7 @@
                     </div>
                     <div slot="second">
                         <div>
-                            <label for="tasks">Nøkkeloppgaver</label><br>
+                            <label for="tasks">Nøkkeloppgaver i denne stillingen</label><br>
                             {#each tempPositionTasks.find(pt => pt.positionId === position.systemId).tasks as task, i}
                                 <div class="tasks">
                                     <DataList maxLength={30} dataList={availableTasks[tempPositionTasks.find(pt => pt.positionId === position.systemId).positionParent]} filterFunction={(input, obj) => obj.value.toLowerCase().includes(input.toLowerCase()) || obj.category.toLowerCase().startsWith(input.toLowerCase()) } bind:inputValue={task} />
@@ -199,7 +198,6 @@
             {#each displayData.positions as position}
                 <InnerCard emoji='💼'>
                     <div slot="first">
-                        <h4>{position.hovedstilling ? 'Hovedstilling' : 'Tilleggsstilling'}</h4>
                         <h3>{position.stillingstittel ?? 'Ukjent tittel'} ({Math.ceil(position.lonnsprosent/100)}%)</h3>
                         <h4>{getDepartment(position.arbeidssted.struktur).department}</h4>
                         <p>{getDepartment(position.arbeidssted.struktur).company}</p>
@@ -208,7 +206,7 @@
                         {/if}
                     </div>
                     <div slot="second">
-                        <label for="tull">Nøkkeloppgaver</label>
+                        <label for="tull">Nøkkeloppgaver i denne stillingen</label>
                         {#if !(competence.positionTasks.find(pt => pt.positionId === position.systemId)).tasks.find(t => t.length > 0)}
                             <div><p>Ingen nøkkeloppgaver lagt inn</p></div>
                         {:else}
