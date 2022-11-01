@@ -9,7 +9,7 @@
     import IconDelete from "./Icons/IconDelete.svelte";
 
     // Props
-    export let title = 'Andre oppgaver'
+    export let title = 'Andre oppgaver jeg jobber med'
     export let backgroundColor = '--springWood'
     export let competence = {
 		mainTasks: [],
