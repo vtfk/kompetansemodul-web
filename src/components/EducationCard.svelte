@@ -203,7 +203,7 @@
                             </div>
                         </div>
                         <div>
-                            <label for="credit">Studiepoeng</label><br>
+                            <label for="credit">Studiepoeng/Vekttall</label><br>
                             <input type="text" bind:value={tempEdu.credit} readonly={tempEdu.degree && !!!degreeInfo.find(degree => degree.name === tempEdu.degree).score} placeholder="Utdanningsgraden gir ikke studiepoeng" />
                         </div>
                         <div>
