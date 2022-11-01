@@ -168,23 +168,7 @@
 
     }
 
-	// import { displayedPage, searchParameter } from '../lib/services/store'
-
 </script>
-
-<!-- {#await getOrg()}
-<p></p>
-    {:then res}
-    {#each res as unit}
-        {#if unit.navn === 'Fylkesdirektør'}
-            {#each unit.arbeidsforhold as employee}
-            {#if employee.lonnsprosent > 0}
-                <p on:click={() => { searchParameter.set(employee.userPrincipalName); displayedPage.set('person') } } style="color: green">{employee.navn}</p>
-            {/if}
-        {/each}
-    {/if}
-    {/each}
-{/await} -->
 
 <Card title={title} backgroundColor={backgroundColor} disableInfoBox={disableInfoBox} infoBox={ {content: infoText}} editable={canEdit} canSave={canSave} saveFunc={saveFunc} cancelFunc={cancelFunc}>
     <div class="halla">
