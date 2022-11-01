@@ -28,8 +28,8 @@
 		{:then res}
 			<EmployeeCard employeeData={res} />
 			{#if res.isPrivileged}
-				<EmployeeInfoCard employeeData={res} disableInfoBox={true} hideTextBox={true}/>
-				<PositionsCard employeeData={res} competence={res.competenceData} canEdit={false}/>
+				<EmployeeInfoCard employeeData={res} disableInfoBox={true} hideTextBox={true} />
+				<PositionsCard employeeData={res} competence={res.competenceData} canEdit={false} disableInfoBox={true} />
 			{/if}
 		{:catch error}
 			<p style="color: red">{error.message}</p>

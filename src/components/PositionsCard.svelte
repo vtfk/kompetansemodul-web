@@ -16,6 +16,7 @@
     export let backgroundColor = '--springWood'
     export let employeeData = {}
     export let canEdit = true
+    export let disableInfoBox = false
     export let competence = {
 		positionTasks: []
 	}
@@ -23,7 +24,7 @@
     if (!competence) competence = { positionTasks: [] }
     if (!competence.positionTasks) competence.positionTasks = []
     
-    console.log(competence.positionTasks)
+    // console.log(competence.positionTasks)
 
     // state
     let availableTasks = {}
@@ -33,7 +34,7 @@
     for (const forhold of employeeData.aktiveArbeidsforhold) {
         const positionTask = competence.positionTasks.find(task => task.positionId === forhold.systemId)
         const level = forhold.arbeidssted.struktur.length > 4 ? forhold.arbeidssted.struktur.length - 4 : 0
-        console.log(forhold.arbeidssted.struktur[level].kortnavn) // Høre om hvilke oppgaver lederne ønsker å se
+        // console.log(forhold.arbeidssted.struktur[level].kortnavn) // Høre om hvilke oppgaver lederne ønsker å se
         availableTasks[forhold.arbeidssted.struktur[level].kortnavn] = []
         if (!positionTask) {
             competence.positionTasks.push({
@@ -166,7 +167,7 @@
 
 </script>
 
-<Card title={title} backgroundColor={backgroundColor} infoBox={ {content: infoText}} editable={canEdit} canSave={canSave} saveFunc={saveFunc} cancelFunc={cancelFunc}>
+<Card title={title} backgroundColor={backgroundColor} disableInfoBox={disableInfoBox} infoBox={ {content: infoText}} editable={canEdit} canSave={canSave} saveFunc={saveFunc} cancelFunc={cancelFunc}>
     <div class="halla">
         {#if editInfo.isEditing && editInfo.editBlock === title}
             {#each displayData.positions as position, i}
