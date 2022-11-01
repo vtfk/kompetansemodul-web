@@ -169,8 +169,9 @@
         }
 	}
 
-    const removeEducation = pos => {
+    const removeOtherPosition = pos => {
 		tempOtherPositions = tempOtherPositions.filter(position => position !== pos)
+        tempPositionTasks = tempPositionTasks.filter(task => task.positionId !== pos.systemId)
 	}
     
     
@@ -263,7 +264,7 @@
                         <Button size="small" buttonText="Legg til" onClick={() => addTask(position)}><IconAdd slot="before" /></Button>
                     </div>
                     <div slot="right">
-                        <Button buttonText="Fjern" onClick={() => removeEducation(position)}><IconDelete slot="before" /></Button>
+                        <Button buttonText="Fjern" onClick={() => removeOtherPosition(position)}><IconDelete slot="before" /></Button>
                     </div>
                 </InnerCard>  
             {/each}
