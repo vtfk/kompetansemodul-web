@@ -5,7 +5,7 @@
     import { editingPersonalia } from '../lib/services/store'
 
     // Props
-    export let title = 'Solorolle'
+    export let title = 'Kritiske oppgaver'
     export let backgroundColor = '--ecruWhite'
     export let competence = {
 		other: {}
