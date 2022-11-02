@@ -209,6 +209,7 @@
         if (score) tempEdu.credit = score
         else {
             tempEdu.credit = 0
+            tempEdu.specialization = null
         }
         tempEdu.subject = ""
     }
@@ -275,7 +276,10 @@
                 <InnerCard emoji={getEmoji(edu.degree)}>
                     <div slot="first">
                         <h3>{edu.degree ?? 'Ukjent grad'}</h3>
-                        <h4>{edu.subject ?? 'Ukjent fag'}</h4>
+                        <h4>{edu.subject ?? 'Ukjent fagområde'}</h4>
+                        {#if edu.specialization}
+                            <h4><em>{edu.specialization}</em></h4>
+                        {/if}
                         {#if edu.credit}
                             <p>Studiepoeng: {edu.credit}</p>
                         {/if}
