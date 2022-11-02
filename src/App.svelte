@@ -30,7 +30,8 @@
   {#await Login()}
     Loading...
   {:then response}
-    {#if !validateUsername(response.username)}
+    {#if response && response.username}
+      {#if !validateUsername(response.username)}
       Kun VTFK-ansatte har tilgang på denne portalen. Ta kontakt med IT-service desk dersom du mener du skal ha tilgang.
       {:else}
         <div class="sidenavWrapper">
@@ -52,6 +53,7 @@
               {/if }
             </div>
         </div>
+      {/if}
     {/if}
   {:catch error}
     <h1>App app app: {error}</h1>
