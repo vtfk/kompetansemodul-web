@@ -33,7 +33,7 @@
     // State
     let tempWorkExperience = JSON.parse(JSON.stringify(competence.workExperience)) // Create a copy to display correct information (and maybe alert if user has edited) if user aborts edit
     // Nedenfor endrer vi antall tasks med maxTasks
-    const maxTasks = 5
+    const maxTasks = 1
     tempWorkExperience = tempWorkExperience.map(exp => {
         if (exp.tasks && exp.tasks.length !== maxTasks) {
             for (let i=exp.tasks.length; i < maxTasks; i++) {
@@ -177,7 +177,7 @@
             {/each}
             <Button buttonText="Legg til" onClick={() => addWorkExperience()}><IconAdd slot="before" /></Button>
         {:else if competence.workExperience.length === 0}
-            <div><p>Ingen arbeidserfaring lagt inn</p></div> 
+            <div><em>Ingen arbeidserfaring lagt inn</em></div> 
         {:else}
             {#each competence.workExperience as work}
                 <InnerCard emoji='💼'>
@@ -188,10 +188,14 @@
                         <p>📅 {(work.fromMonth && work.toMonth) ? `${work.fromMonth} ${work.fromYear} - ${work.toMonth} ${work.toYear}` : 'Ukjent periode'}</p>
                     </div>
                     <div slot="second">
+                        <label for='noe'>Hovedoppgaver</label><br />
                         {#if work.tasks && work.tasks.length > 0}
-                            <label for='noe'>Hovedoppgaver</label><br />
-                            {#each work.tasks as task}
-                                <div>{task}</div>
+                            {#each work.tasks as task, i}
+                                {#if task[i] === undefined}
+                                    <div><em>Ingen hovedoppgaver lagt inn</em></div>
+                                {:else}
+                                    <div>{task}</div>
+                                {/if}
                             {/each}
                         {/if}
                     </div>
