@@ -170,7 +170,7 @@
             {/each}
             <Button buttonText="Legg til" onClick={() => addExperience()}><IconAdd slot="before" /></Button>
         {:else if competence.experience.length === 0}
-            <div><p>Ingen verv lagt inn</p></div> 
+            <div><em>Ingen verv lagt inn</em></div> 
         {:else} 
             {#each competence.experience as exp}
                 <InnerCard emoji={'🦸‍♀️'}>
