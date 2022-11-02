@@ -12,7 +12,8 @@
     import Button from "./Button.svelte"
     import IconDelete from "./Icons/IconDelete.svelte"
     import IconAdd from "./Icons/IconAdd.svelte"
-    import InnerCard from "./InnerCard.svelte";
+    import InnerCard from "./InnerCard.svelte"
+    import { educationCardHelp } from '../lib/Helpers/helptexts'
 
     // Props
     export let title = 'Utdanning'
@@ -183,10 +184,9 @@
         else return []
     }
     
-    const infoText = "<p>Informasjon om hvilken utdanning du har. Vi er interessert i enkeltemner, videreutdanninger, fagbrev eller andre grader av utdanning. Her kan du også legge inn sertifiseringer.<p><br><p>Din utdanning er beskrivende for din formelle kompetanse og er dermed nødvendig i forbindelse med kartleggingen av din kompetanse.</p>"
 </script>
 
-<Card title={title} editable={true} backgroundColor={backgroundColor} infoBox={ {content: infoText}} canSave={canSave} saveFunc={saveFunc} cancelFunc={cancelFunc}>
+<Card title={title} editable={true} backgroundColor={backgroundColor} infoBox={ {content: educationCardHelp}} canSave={canSave} saveFunc={saveFunc} cancelFunc={cancelFunc}>
     <div>
         {#if editInfo.isEditing && editInfo.editBlock === title}
             {#each tempEducation as tempEdu, i}
