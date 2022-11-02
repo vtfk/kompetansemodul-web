@@ -65,7 +65,7 @@
             <div>
                 <!-- <label>Valgt ønsket fylkeskommune/arbeidssted etter oppdeling</label> -->
                 {#if competence.perfCounty.length === 0}
-                    Ikke fylt ut av ansatt
+                    <div><em>Ikke fylt ut av ansatt</em></div>
                 {:else}
                     {competence.perfCounty}
                 {/if}
