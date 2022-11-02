@@ -5,7 +5,7 @@ import { msalClientStore } from '../services/store'
 import { get } from 'svelte/store'
 // import authProvider from './authProvider.js'
 
-const login = async (forceLogin = false) => {
+const popupLogin = async (forceLogin = false) => {
   const msalClient = get(msalClientStore) || new PublicClientApplication(authConfig)
   const accounts = msalClient.getAllAccounts()
   if (accounts.length === 0 || forceLogin) {
@@ -15,6 +15,18 @@ const login = async (forceLogin = false) => {
     return loginResponse.account
   }
   return accounts[0]
+}
+
+const login = async (forceLogin = false) => {
+  const msalClient = get(msalClientStore) || new PublicClientApplication(authConfig)
+  const loginResponse = await msalClient.handleRedirectPromise()
+  if (loginResponse && !forceLogin) {
+    msalClient.setActiveAccount(loginResponse.account)
+    msalClientStore.set(msalClient)
+    return loginResponse.account
+  } else {
+    msalClient.loginRedirect({ scopes: ['User.Read '] })
+  }
 }
 
 export default login
