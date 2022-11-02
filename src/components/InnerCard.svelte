@@ -5,13 +5,12 @@
     export let size = 'large'
     export let badgeColor = 'peppermint'
     export let opacity = '0.1'
-    export let hideBadge = false
 
 </script>
 
 <div class="cardContainer" style="background-color: rgba(163, 163, 163, {opacity}">
     <div class="badge">
-        <InitialsBadge size={size} initials={emoji} color={badgeColor} hideBadge={hideBadge} />
+        <InitialsBadge size={size} initials={emoji} color={badgeColor} />
     </div>
     <div class="cardContent">
         <div class="contentItem first">

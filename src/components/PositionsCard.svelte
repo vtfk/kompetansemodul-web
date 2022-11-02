@@ -65,18 +65,19 @@
 
     onMount(async () => {
         if (canEdit) {
-            const updateAvailableTasks = async () => {
-                if (editInfo.isEditing && editInfo.editBlock === title) {
+            const updateAvailableTasks = async (force = false) => {
+                if ((editInfo.isEditing && editInfo.editBlock === title) || force) {
                     for (const kortnavn of Object.keys(availableTasks)) {
                         availableTasks[kortnavn] = await getTasks(kortnavn)
                     }
                 }
             }
-            const interval = setInterval(updateAvailableTasks, 60000);
+            await updateAvailableTasks(true)
+            const interval = setInterval(updateAvailableTasks, 30000);
             updateAvailableTasks();
             return () => clearInterval(interval)
         }
-	});
+	})
 
 
     const convertDate = (date) => {

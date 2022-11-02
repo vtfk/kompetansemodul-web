@@ -2,13 +2,13 @@
     export let initials = '? ?'
     export let size = 'small'
     export let color = 'peppermint'
-    export let hideBadge = false
+    export let image = undefined
 </script>
 
 <main>
-    {#if hideBadge === true}
-        <div></div>
-        {:else}
+    {#if image}
+        <img src="{image}" class="initialsBadge {size}" style="background: var(--{color})" alt="bilde av bruker" />
+    {:else}
         <div class="initialsBadge {size}" style="background: var(--{color})">{initials}</div>
     {/if}
 </main>

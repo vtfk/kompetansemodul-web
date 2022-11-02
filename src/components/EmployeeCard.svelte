@@ -1,6 +1,7 @@
 <script>
     import Card from "./Card.svelte";
-    import InitialsBadge from "./InitialsBadge.svelte";
+    import InitialsBadge from "./InitialsBadge.svelte"
+    import { getPhoto } from '../lib/services/useApi'
     
     // Props
     export let employeeData = {}
@@ -16,12 +17,26 @@
         email: employeeData.userPrincipalName ?? 'Ukjent e-post',
     }
 
+    // Handle photo
+    const handlePhoto = async () => {
+        const url = window.URL || window.webkitURL;
+        const photoData = await getPhoto(employeeInfo.email)
+        const blobUrl = url.createObjectURL(photoData);
+        return blobUrl
+    }
+
 </script>
 
 <Card title={null}>
     <div class="employeeHeader">
         <div class ="employeeBadge">
-            <InitialsBadge size='large' initials={employeeInfo.initials} />
+            {#await handlePhoto()}
+                <InitialsBadge size='large' initials={employeeInfo.initials} />
+            {:then res}
+                <InitialsBadge size='large' image={res}  />
+            {:catch error}
+                <InitialsBadge size='large' initials={employeeInfo.initials} />
+            {/await}
         </div>
         <div class="mainStuff">
             <div class="employeeTitle">

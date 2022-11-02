@@ -32,6 +32,26 @@ const apiRequest = async (method, endpoint, body) => {
   }
 }
 
+export const getPhoto = async (upn) => {
+  let accessToken
+  try {
+    const msalClient = get(msalClientStore)
+    accessToken = (await msalClient.acquireTokenSilent({ scopes: ['User.ReadBasic.All'] })).accessToken
+  } catch (error) {
+    // If acquireTokenSilent failed - we assume the user has been logged out or the refresh token has expired - simply log in again :)
+    await login(true)
+    const msalClient = get(msalClientStore)
+    accessToken = (await msalClient.acquireTokenSilent({ scopes: ['User.ReadBasic.All'] })).accessToken
+  }
+
+  const headers = {
+    authorization: `Bearer ${accessToken}`
+  }
+  
+  const res = await axios.get(`https://graph.microsoft.com/v1.0/users/${upn}/photo/$value`, { headers, responseType: 'blob' })
+  return res.data
+}
+
 // Get me
 export const getMe = async () => await apiRequest('get', 'me')
 
@@ -49,6 +69,8 @@ export const saveCompetence = async (competence) => await apiRequest('post', 'Up
 
 // Get employee positions (data list)
 export const getPositions = async () => await apiRequest('get', 'GetPositions')
+
+// Get profile picture
 
 // Get chucky
 export const getChuck = async () => {
