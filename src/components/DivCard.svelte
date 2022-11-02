@@ -85,7 +85,8 @@
         {:else}
             <div class="contentContainer">
                 <div class="innerContainer firstContainer">
-                    <div>{competence.other?.soloRole || 'Ikke fylt ut av ansatt'}
+                    <div>
+                        {competence.other?.soloRole || 'Ikke fylt ut av ansatt'}
                         {#if competence.other.soloRole === 'Ja'}
                             - {competence.other.soloRoleDescription ?? 'Beskrivelse av solorole er ikke fylt ut av ansatt'}
                         {/if}
