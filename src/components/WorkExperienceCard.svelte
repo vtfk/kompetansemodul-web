@@ -1,8 +1,7 @@
 <script>
     import Card from "./Card.svelte"
     import { get } from 'svelte/store'
-    import { onMount } from 'svelte'
-    import { getPositions, saveCompetence }  from '../lib/services/useApi'
+    import { saveCompetence }  from '../lib/services/useApi'
     import { editingPersonalia } from '../lib/services/store'
     import occupations from '../assets/yrker.json'
     import DataList from "./DataList.svelte";
@@ -32,37 +31,23 @@
 
     // State
     let tempWorkExperience = JSON.parse(JSON.stringify(competence.workExperience)) // Create a copy to display correct information (and maybe alert if user has edited) if user aborts edit
-    // Nedenfor endrer vi antall tasks med maxTasks
-    const maxTasks = 1
-    tempWorkExperience = tempWorkExperience.map(exp => {
-        if (exp.tasks && exp.tasks.length !== maxTasks) {
-            for (let i=exp.tasks.length; i < maxTasks; i++) {
-                exp.tasks.push('')
-            }
-        }
-        return {
-            ...exp,
-            tasks: exp.tasks ?? Array(maxTasks).fill('')
-        }
-    })
-
-
+    
     let newWorkExperience = {
         fromYear: 2019,
         toYear: 2022,
         fromMonth: 'Januar',
         toMonth: 'Februar',
-        tasks: Array(maxTasks).fill('')
+        tasks: []
     }
 
     // Validation
     let canSave = false
     let validation = []
-
     // Reactive validation
     $: {
         canSave = true
         const tempValidation = []
+        let index = 0
         for (const exp of tempWorkExperience) {
             // What fields are we validating
             const valid = {
@@ -78,8 +63,19 @@
                 valid.employer = false
                 canSave = false
             }
+            const tempTaskValidation = []
+            for(const task of exp.tasks) {
+                if (!task || task < 1) {
+                    tempTaskValidation.push(false)
+                    canSave = false
+                } else {
+                    tempTaskValidation.push(true)
+                }
+            }
 
             tempValidation.push(valid)
+            tempValidation[index].tasks = (JSON.parse(JSON.stringify(tempTaskValidation)))
+            index++
         }
         validation = JSON.parse(JSON.stringify(tempValidation))
     }
@@ -93,7 +89,7 @@
             toYear: 2022,
             fromMonth: 'Januar',
             toMonth: 'Februar',
-            tasks: Array(maxTasks).fill('')
+            tasks: []
         }
 	}
 
@@ -117,6 +113,16 @@
 
     const cancelFunc = async () => {
         tempWorkExperience = JSON.parse(JSON.stringify(competence.workExperience))
+    }
+
+    const addTask = (i) => {
+		tempWorkExperience[i].tasks.push('')
+        tempWorkExperience = tempWorkExperience
+	}
+
+    const removeTask = (tempWork, taskValue, tasksIndex) => {
+        tempWork.tasks.splice(tasksIndex, 1)        
+        tempWorkExperience = tempWorkExperience
     }
 
     const infoText ="<p>Dette feltet omfatter tidligere stillinger du har hatt, dvs. ikke den stillingen du har i VTFK per i dag. Ta utgangspunkt i de siste 10-15 årene når du legger inn.</p><br><p>Hvorfor spør vi om dette? Din arbeidserfaring er èn del av din realkompetanse og er dermed nødvendig i forbindelse med kartlegging av din kompetanse.</p>"
@@ -163,11 +169,14 @@
                     <div slot="second">
                         <div>
                             <label for="tasks">Hovedoppgaver</label><br>
-                            {#each tempWork.tasks as task}
-                                <div class="task">
-                                    <input type="text" bind:value={task}>
+                            {#each  tempWork.tasks as task, j}
+                                <div class="tasks">
+                                    <input type="text" maxlength="30" bind:value={task} />
+                                    <label for={task.toString()} class="validation">{!validation[i].tasks[j] ? '*' : '' }</label>
+                                    <Button size="medium" onlyIcon={true} noBorder={true} onClick={() => removeTask(tempWork, task, j)} ><IconDelete slot="before"/></Button>
                                 </div>
                             {/each}
+                            <Button size="small" buttonText="Legg til" onClick={() => addTask(i)} ><IconAdd slot="before" /></Button>
                         </div>
                     </div>
                     <div slot="right">
@@ -214,7 +223,8 @@
     .peroidContainer {
         display: flex;
     }
-    .task {
+    .tasks {
         margin-bottom: 0.20rem;
+        display: flex;
     }
 </style>
