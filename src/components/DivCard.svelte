@@ -50,6 +50,8 @@
     }
 
     const infoText = "<p>Du har en solorolle dersom dine arbeidsoppgaver og/eller fagfelt er unikt innenfor din sektor og at du alene har en nøkkelfunksjon som andre er avhengige av.<br><br><b>Et eksempel</b>: Kari er den eneste i BDK som har funksjonen som programmerer av verktøyet PowerBI som er viktig i mange utviklingsområder.</p>"
+    const noneSoloText = "Ikke fylt ut av ansatt"
+    const noneDescText = "Beskrivelse av solorole er ikke fylt ut av ansatt"
 </script>
 
 <Card title={title} saveFunc={saveFunc} cancelFunc={cancelFunc} backgroundColor={backgroundColor} editable={true} infoBox={ {content: infoText} } canSave={canSave} >
@@ -86,9 +88,17 @@
             <div class="contentContainer">
                 <div class="innerContainer firstContainer">
                     <div>
-                        {competence.other?.soloRole || 'Ikke fylt ut av ansatt'}
+                        <div><em id = "noneSolo"> </em></div>
+                        <div><em id = "noneDesctription"> </em></div>
+                        {#if !competence.other?.soloRole}
+                            <div><em>{noneSoloText}</em></div>
+                        {:else}
+                            {competence.other.soloRole}
+                        {/if}
                         {#if competence.other.soloRole === 'Ja'}
-                            - {competence.other.soloRoleDescription ?? 'Beskrivelse av solorole er ikke fylt ut av ansatt'}
+                        <!-- Trenger kanskje ikke denne? Brukeren får ikke lagret om brukeren ikke fyller ut noen informasjon -->
+                        <!-- Forsalg: - {competence.other.soloRoleDescription} -->    
+                        - {competence.other.soloRoleDescription ?? noneDescText}
                         {/if}
                     </div>
                 </div>
