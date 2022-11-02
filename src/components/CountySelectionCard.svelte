@@ -56,7 +56,7 @@
                     <option value="Vet ikke">Vet ikke</option>
                     <option value="Telemark fylkeskommune">Telemark fylkeskommune</option>
                     <option value="Vestfold fylkeskommune">Vestfold fylkeskommune</option>
-                    <option value="Samma for meg hvor jeg havner(hr - gi oss innspill)">Samma for meg hvor jeg havner(hr - gi oss innspill)</option> <!-- // TODO: Hent innspill fra HR -->
+                    <option value="Begge alternativene er like gode for meg">Begge alternativene er like gode for meg</option>
                 </select>
             </div>
         </div>
