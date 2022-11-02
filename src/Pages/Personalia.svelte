@@ -13,6 +13,7 @@
 	import InfoBox from '../components/InfoBox.svelte';
 	import EmployeeInfoCard from '../components/EmployeeInfoCard.svelte';
 	import CountySelectionCard from '../components/CountySelectionCard.svelte'
+	import CertificationCard from '../components/CertificationCard.svelte'
 
 	// State
 	let showInfoBox = false
@@ -54,6 +55,7 @@
 		<DivCard competence={res.competenceData}/>
 		<WorkExperienceCard competence={res.competenceData} />
 		<EducationCard competence={res.competenceData} />
+		<CertificationCard competence={res.competenceData} />
 		<ExperienceCard competence={res.competenceData}/>
 	{:catch error}
 		<p style="color: red">{error.message}</p>

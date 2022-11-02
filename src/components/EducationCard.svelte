@@ -192,16 +192,12 @@
             {#each tempEducation as tempEdu, i}
                 <InnerCard emoji={getEmoji(tempEdu.degree)}>
                     <div slot="first">
-                        <div>
-                            <div>
-                                <label for="degree">Utdanningsgrad</label><br>
-                                <select name="degree" id="degree" bind:value={tempEdu.degree}>
-                                    {#each degreeInfo as degree}
-                                        <option value={degree.value}>{degree.name}</option>
-                                    {/each}
-                                </select>
-                            </div>
-                        </div>
+                            <label for="degree">Utdanningsgrad</label><br>
+                            <select name="degree" id="degree" bind:value={tempEdu.degree}>
+                                {#each degreeInfo as degree}
+                                    <option value={degree.value}>{degree.name}</option>
+                                {/each}
+                            </select>
                         <div>
                             <label for="credit">Studiepoeng/Vekttall</label><br>
                             <input type="text" bind:value={tempEdu.credit} readonly={tempEdu.degree && !!!degreeInfo.find(degree => degree.name === tempEdu.degree).score} placeholder="Utdanningsgraden gir ikke studiepoeng" />
