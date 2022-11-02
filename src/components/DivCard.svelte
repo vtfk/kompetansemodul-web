@@ -6,7 +6,7 @@
 
     // Props
     export let title = 'Kritiske oppgaver'
-    export let backgroundColor = '--ecruWhite'
+    export let backgroundColor = '--potPourri'
     export let competence = {
 		other: {}
 	}

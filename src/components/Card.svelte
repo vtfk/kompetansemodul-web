@@ -13,7 +13,7 @@
 
     // Props
     export let title = 'Ein tittel'
-    export let backgroundColor = '--ecruWhite'
+    export let backgroundColor = '--springWood'
     export let infoBox = undefined // { content: "Det som kommer til å stå på hjelpeboksen, om du vil ha hjelpeboks" }
     export let editable = false
     export let disableInfoBox = false

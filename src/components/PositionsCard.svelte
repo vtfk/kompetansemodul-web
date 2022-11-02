@@ -13,7 +13,7 @@
 
     // Props
     export let title = 'Dagens stillinger og oppgaver'
-    export let backgroundColor = '--springWood'
+    export let backgroundColor = '--gin'
     export let employeeData = {}
     export let canEdit = true
     export let disableInfoBox = false
@@ -63,18 +63,19 @@
         title: ''
     }
 
+    const updateAvailableTasks = async (force = false) => {
+        console.log('Nå kjører jeg')
+        if ((editInfo.isEditing && editInfo.editBlock === title) || force) {
+            for (const kortnavn of Object.keys(availableTasks)) {
+                availableTasks[kortnavn] = await getTasks(kortnavn)
+            }
+        }
+    }
+
     onMount(async () => {
         if (canEdit) {
-            const updateAvailableTasks = async (force = false) => {
-                if ((editInfo.isEditing && editInfo.editBlock === title) || force) {
-                    for (const kortnavn of Object.keys(availableTasks)) {
-                        availableTasks[kortnavn] = await getTasks(kortnavn)
-                    }
-                }
-            }
             await updateAvailableTasks(true)
             const interval = setInterval(updateAvailableTasks, 30000);
-            updateAvailableTasks();
             return () => clearInterval(interval)
         }
 	})
@@ -144,9 +145,10 @@
         tempOtherPositions = JSON.parse(JSON.stringify(competence.otherPositions))
     }
 
-    const addTask = (position) => {
+    const addTask = async (position) => {
 		tempPositionTasks.find(task => task.positionId === position.systemId).tasks.push('')
         tempPositionTasks = tempPositionTasks
+        await updateAvailableTasks(true)
 	}
 
     const removeTask = (position, i) => {
@@ -212,6 +214,16 @@
         otherValidation = JSON.parse(JSON.stringify(tempOtherValidation))
     }
     // Reactive validation of otherTasks
+
+    const getAvailableTasks = (position, tempPT) => {
+        const tempTask = tempPT.find(pt => pt.positionId === position.systemId)
+        const test = availableTasks[tempTask.positionParent].filter(task => {
+            return !tempTask.tasks.some(t => {
+                return t === task.value
+            })
+        })
+        return test
+    }
 </script>
 
 <Card title={title} backgroundColor={backgroundColor} disableInfoBox={disableInfoBox} infoBox={ {content: infoText}} editable={canEdit} canSave={canSave} saveFunc={saveFunc} cancelFunc={cancelFunc}>
@@ -233,7 +245,7 @@
                             <label for="tasks">Nøkkeloppgaver i denne stillingen</label><br>
                             {#each tempPositionTasks.find(pt => pt.positionId === position.systemId).tasks as task, i}
                                 <div class="tasks">
-                                    <DataList maxLength={30} dataList={availableTasks[tempPositionTasks.find(pt => pt.positionId === position.systemId).positionParent]} filterFunction={(input, obj) => obj.value.toLowerCase().includes(input.toLowerCase()) || obj.category.toLowerCase().startsWith(input.toLowerCase()) } bind:inputValue={task} />
+                                    <DataList maxLength={30} dataList={getAvailableTasks(position, tempPositionTasks)} filterFunction={(input, obj) => obj.value.toLowerCase().includes(input.toLowerCase()) || obj.category.toLowerCase().startsWith(input.toLowerCase()) } bind:inputValue={task} />
                                     <label for={i.toString()} class="validation">{!validation[position.systemId][i] ? '*' : '' }</label>
                                     <Button size="medium" onlyIcon={true} noBorder={true} onClick={() => removeTask(position, i)}><IconDelete slot="before"/></Button>
                                 </div>

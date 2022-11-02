@@ -11,7 +11,7 @@
 
     // Props
     export let title = 'Kurs og Sertifiseringer'
-    export let backgroundColor = '--potPourri'
+    export let backgroundColor = '--ecruWhite'
     export let competence = {
 		certifications: []
 	}

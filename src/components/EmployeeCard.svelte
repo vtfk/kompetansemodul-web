@@ -5,6 +5,7 @@
     
     // Props
     export let employeeData = {}
+    export let backgroundColor = "--springWood"
 
     let mainPosition = employeeData.harAktivtArbeidsforhold ? employeeData.aktiveArbeidsforhold.find(forhold => forhold.hovedstilling) : undefined
 
@@ -27,7 +28,7 @@
 
 </script>
 
-<Card title={null}>
+<Card title={null} backgroundColor={backgroundColor}>
     <div class="employeeHeader">
         <div class ="employeeBadge">
             {#await handlePhoto()}

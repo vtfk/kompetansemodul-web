@@ -16,7 +16,7 @@
 
     // Props
     export let title = 'Tidligere arbeidserfaring'
-    export let backgroundColor = '--springWood'
+    export let backgroundColor = '--catSkillWhite'
     export let competence = {
 		workExperience: []
 	}
