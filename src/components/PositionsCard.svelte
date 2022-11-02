@@ -284,7 +284,7 @@
                     <div slot="second">
                         <label for="tull">Nøkkeloppgaver i denne stillingen</label>
                         {#if !(competence.positionTasks.find(pt => pt.positionId === position.systemId)).tasks.find(t => t.length > 0)}
-                            <div><p>Ingen nøkkeloppgaver lagt inn</p></div>
+                            <div><em>Ingen nøkkeloppgaver lagt inn</em></div>
                         {:else}
                             {#each competence.positionTasks.find(pt => pt.positionId === position.systemId).tasks as task}
                                 <div>{task}</div>
@@ -305,7 +305,7 @@
                     <div slot="second">
                         <label for="tull">Underoppgaver</label>
                         {#if !(competence.positionTasks.find(pt => pt.positionId === position.systemId)).tasks.find(t => t.length > 0)}
-                            <div><p>Ingen underoppgaver lagt inn</p></div>
+                            <div><em>Ingen underoppgaver lagt inn</em></div>
                         {:else}
                             {#each competence.positionTasks.find(pt => pt.positionId === position.systemId).tasks as task}
                                 <div>{task}</div>
@@ -315,7 +315,7 @@
                 </InnerCard>     
             {/each}
             {#if competence.otherPositions.length < 1}
-                <em>Ingen oppgaver lagt inn</em>
+                <div><em>Ingen oppgaver lagt inn</em></div>
             {/if}
         {/if}
     </div>
