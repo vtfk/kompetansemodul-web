@@ -3,9 +3,11 @@
     export let onClick = () => {console.log('click click')}
     export let disabled = false
     export let size = 'medium'
-    export let title = 'a button'
+    export let title = undefined
     export let noBorder = false
     export let onlyIcon = false
+
+    if (!title) title = buttonText
 
 </script>
 

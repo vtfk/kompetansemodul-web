@@ -82,27 +82,6 @@
     }
 
     const scrollIfNeeded = () => {
-        /*
-        const elm = document.getElementById(title)
-        const rect = elm.getBoundingClientRect()
-        const viewHeight = Math.max(document.documentElement.clientHeight, window.innerHeight)
-        const needToScroll = (rect.top < 0)
-        console.log(title, elm)
-        if (needToScroll || true) {
-            console.log('må scrolle')
-           elm.scrollIntoView({ behavior: 'smooth' })
-        }*/
-        /*
-        setTimeout(() => {
-            window.scrollTo(
-                {
-                    top: topOfCard,
-                    left: 0,
-                    behavior: 'smooth'
-                }
-            )
-        }, 0.1)*/
-
         if (navigator.userAgent.toLowerCase().includes('chrome')) {
             // this needs to be here because Chrome on Mac uses AppleWebKit/Safari...
             window.scrollTo({ top: topOfCard, left: 0, behavior: 'smooth' })
@@ -235,7 +214,7 @@
         flex-wrap: wrap;
     }
     .panel {
-        margin-bottom: 3rem;
+        margin-bottom: 4rem;
         padding: 40px 32px;
     }
     .headerIcon {

@@ -1,0 +1,250 @@
+[
+  {
+    "value": "Språkvitenskapelige fag",
+    "category": "Humaniora"
+  },
+  {
+    "value": "Litteraturvitenskapelige fag",
+    "category": "Humaniora"
+  },
+  {
+    "value": "Kulturkunnskap",
+    "category": "Humaniora"
+  },
+  {
+    "value": "Historie",
+    "category": "Humaniora"
+  },
+  {
+    "value": "Arkeologi",
+    "category": "Humaniora"
+  },
+  {
+    "value": "Folkloristikk, etnologi",
+    "category": "Humaniora"
+  },
+  {
+    "value": "Musikkvitenskap",
+    "category": "Humaniora"
+  },
+  {
+    "value": "Kunsthistorie",
+    "category": "Humaniora"
+  },
+  {
+    "value": "Arkitektur og design",
+    "category": "Humaniora"
+  },
+  {
+    "value": "Teologi og religionsvitenskap",
+    "category": "Humaniora"
+  },
+  {
+    "value": "Filosofiske fag",
+    "category": "Humaniora"
+  },
+  {
+    "value": "Filmvitenskap",
+    "category": "Humaniora"
+  },
+  {
+    "value": "Teatervitenskap",
+    "category": "Humaniora"
+  },
+  {
+    "value": "Annet",
+    "category": "Humaniora"
+  },
+  {
+    "value": "Økonomi",
+    "category": "Samfunnsvitenskap"
+  },
+  {
+    "value": "Sosiologi",
+    "category": "Samfunnsvitenskap"
+  },
+  {
+    "value": "Urbanisme og fysisk planlegging",
+    "category": "Samfunnsvitenskap"
+  },
+  {
+    "value": "Statsvitenskap og organisasjonsteori",
+    "category": "Samfunnsvitenskap"
+  },
+  {
+    "value": "Sosialantropologi",
+    "category": "Samfunnsvitenskap"
+  },
+  {
+    "value": "Psykologi",
+    "category": "Samfunnsvitenskap"
+  },
+  {
+    "value": "Pedagogiske fag",
+    "category": "Samfunnsvitenskap"
+  },
+  {
+    "value": "Samfunnsgeografi",
+    "category": "Samfunnsvitenskap"
+  },
+  {
+    "value": "Demografi",
+    "category": "Samfunnsvitenskap"
+  },
+  {
+    "value": "Medievitenskap og journalistikk",
+    "category": "Samfunnsvitenskap"
+  },
+  {
+    "value": "Biblioteks- og informasjonsvitenskap",
+    "category": "Samfunnsvitenskap"
+  },
+  {
+    "value": "Samfunnsvitenskapelige idrettsfag",
+    "category": "Samfunnsvitenskap"
+  },
+  {
+    "value": "Rettsvitenskap og kriminologi",
+    "category": "Samfunnsvitenskap"
+  },
+  {
+    "value": "Sosialt arbeid",
+    "category": "Samfunnsvitenskap"
+  },
+  {
+    "value": "Kvinne- og kjønnsstudier",
+    "category": "Samfunnsvitenskap"
+  },
+  {
+    "value": "Annet",
+    "category": "Samfunnsvitenskap"
+  },
+  {
+    "value": "Matematikk",
+    "category": "Matematikk og naturvitenskap"
+  },
+  {
+    "value": "Informatikk",
+    "category": "Matematikk og naturvitenskap"
+  },
+  {
+    "value": "Fysikk",
+    "category": "Matematikk og naturvitenskap"
+  },
+  {
+    "value": "Geofag",
+    "category": "Matematikk og naturvitenskap"
+  },
+  {
+    "value": "Kjemi",
+    "category": "Matematikk og naturvitenskap"
+  },
+  {
+    "value": "Biofag",
+    "category": "Matematikk og naturvitenskap"
+  },
+  {
+    "value": "Annet",
+    "category": "Matematikk og naturvitenskap"
+  },
+  {
+    "value": "Berg- og petroleumsfag",
+    "category": "Teknologi"
+  },
+  {
+    "value": "Materialteknologi",
+    "category": "Teknologi"
+  },
+  {
+    "value": "Bygningsfag, arkitektur",
+    "category": "Teknologi"
+  },
+  {
+    "value": "Elektrotekniske fag",
+    "category": "Teknologi"
+  },
+  {
+    "value": "Informasjons- og kommunikasjonsteknologi",
+    "category": "Teknologi"
+  },
+  {
+    "value": "Kjemisk teknologi",
+    "category": "Teknologi"
+  },
+  {
+    "value": "Maskinfag",
+    "category": "Teknologi"
+  },
+  {
+    "value": "Marin teknologi",
+    "category": "Teknologi"
+  },
+  {
+    "value": "Bioteknologi",
+    "category": "Teknologi"
+  },
+  {
+    "value": "Næringsmiddelteknologi",
+    "category": "Teknologi"
+  },
+  {
+    "value": "Miljøteknologi",
+    "category": "Teknologi"
+  },
+  {
+    "value": "Medisinsk teknologi",
+    "category": "Teknologi"
+  },
+  {
+    "value": "Nanoteknologi",
+    "category": "Teknologi"
+  },
+  {
+    "value": "Industri- og produktdesign",
+    "category": "Teknologi"
+  },
+  {
+    "value": "Annet",
+    "category": "Teknologi"
+  },
+  {
+    "value": "Basale medisinske/odontologiske fag",
+    "category": "Medisin og helsefag"
+  },
+  {
+    "value": "Klinisk medisinske fag",
+    "category": "Medisin og helsefag"
+  },
+  {
+    "value": "Helsefag",
+    "category": "Medisin og helsefag"
+  },
+  {
+    "value": "Klinisk odontologiske fag",
+    "category": "Medisin og helsefag"
+  },
+  {
+    "value": "Idrettsmedisinske fag",
+    "category": "Medisin og helsefag"
+  },
+  {
+    "value": "Annet",
+    "category": "Medisin og helsefag"
+  },
+  {
+    "value": "Landbruksfag",
+    "category": "Landbruks- og fiskerifag og veterinærmedisin"
+  },
+  {
+    "value": "Fiskerifag",
+    "category": "Landbruks- og fiskerifag og veterinærmedisin"
+  },
+  {
+    "value": "Veterinærmedisin",
+    "category": "Landbruks- og fiskerifag og veterinærmedisin"
+  },
+  {
+    "value": "Annet",
+    "category": "Landbruks- og fiskerifag og veterinærmedisin"
+  }
+]

@@ -17,7 +17,7 @@
 
     // Props
     export let title = 'Utdanning'
-    export let backgroundColor = '--ecruWhite'
+    export let backgroundColor = '--gin'
     export let competence = {
 		education: []
 	}
@@ -35,14 +35,31 @@
         fromYear: 2019,
         toYear: 2022,
         fromMonth: 'August',
-        toMonth: 'Juni'
+        toMonth: 'Juni',
+        credit: 450
     }
 
+    let higherDegrees = ['Master', 'Bachelor', 'Doktorgrad', 'Årsstudium', 'Enkeltemne', 'Fireårig profesjonsstudie', 'Cand.mag.', 'Seksårig profesjonsstudie']
     let degreeInfo = [
+        {
+            name: 'Doktorgrad',
+            score: 450,
+            value: 'Doktorgrad'
+        },
+        {
+            name: 'Seksårig profesjonsstudie',
+            score: 360,
+            value: 'Seksårig profesjonsstudie'
+        },
         {
             name: 'Master',
             score: 300,
             value: 'Master'
+        },
+        {
+            name: 'Fireårig profesjonsstudie',
+            score: 240,
+            value: 'Fireårig profesjonsstudie'
         },
         {
             name: 'Bachelor',
@@ -55,25 +72,22 @@
             value: 'Årsstudium'
         },
         {
+            name: 'Enkeltemne',
+            score: 7.5,
+            value: 'Enkeltemne'
+        },
+        {
+            name: 'Cand.mag.',
+            score: 210,
+            value: 'Cand.mag.'
+        },
+        {
             name: 'Fagbrev',
             value: 'Fagbrev'
         },
         {
             name: 'Videregående skole',
             value: 'Videregående skole'
-        },
-        {
-            name: 'Doktorgrad',
-            score: 450,
-            value: 'Doktorgrad'
-        },
-        {
-            name: 'Enkeltemne',
-            value: 'Enkeltemne'
-        },
-        {
-            name: 'Sertifisering',
-            value: 'Sertifisering'
         }
     ]
 
@@ -90,6 +104,7 @@
             const valid = {
                 subject: true,
                 school: true,
+                specialization: true,
             }
             // Validation of each field
             if (!edu.subject || edu.subject.length < 1) {
@@ -100,6 +115,10 @@
                 valid.school = false
                 canSave = false
             }
+            if (higherDegrees.includes(edu.degree) && (!edu.specialization || edu.specialization.length < 1)) {
+                valid.specialization = false
+                canSave = false
+            }
 
             tempValidation.push(valid)
         }
@@ -107,6 +126,7 @@
     }
 
     // Reactive on education degree
+    /*
     $: {
         if (Array.isArray(tempEducation) && tempEducation.length > 0) {
             tempEducation.forEach(edu => {
@@ -124,7 +144,7 @@
                 }
             })
         }
-    }
+    }*/
 
     // Functions
     const addEducation = () => {
@@ -134,7 +154,8 @@
             fromYear: 2019,
             toYear: 2022,
             fromMonth: 'August',
-            toMonth: 'Juni'
+            toMonth: 'Juni',
+            credit: 450
         }
 	}
 
@@ -170,18 +191,26 @@
     }
 
     const getEmoji = (degree) => {
-        if (degree === 'Fagbrev') return '🧾'
-        else if (degree === 'Sertifisering') return '📜'
+        if (degree === 'Fagbrev') return '📜'
         else if (degree === 'Enkeltemne') return '📄'
-        else if (degree === 'Videregående skole') return '📝'
+        else if (degree === 'Videregående skole') return '🏫'
+        else if (degree === 'Doktorgrad') return '🤓'
         else return '🎓'
     }
 
     const chooseSubjectDatalist = (degree) => {
         if (degree === 'Fagbrev') return utdanningsprogramvariantNavn()
-        else if (['Master', 'Bachelor', 'Doktorgrad', 'Årsstudium', 'Enkeltemne'].includes(degree)) return fagomraader
+        else if (higherDegrees.includes(degree)) return fagomraader
         else if (degree === 'Videregående skole') return utdanningsprogramVGS
         else return []
+    }
+    const onDegreeChange = (e, tempEdu) => {
+        const score = degreeInfo.find(degree => degree.name === e.srcElement.value).score
+        if (score) tempEdu.credit = score
+        else {
+            tempEdu.credit = 0
+        }
+        tempEdu.subject = ""
     }
     
 </script>
@@ -192,20 +221,28 @@
             {#each tempEducation as tempEdu, i}
                 <InnerCard emoji={getEmoji(tempEdu.degree)}>
                     <div slot="first">
-                            <label for="degree">Utdanningsgrad</label><br>
-                            <select name="degree" id="degree" bind:value={tempEdu.degree}>
-                                {#each degreeInfo as degree}
-                                    <option value={degree.value}>{degree.name}</option>
-                                {/each}
-                            </select>
+                        <label for="degree">Utdanningsgrad</label><br>
+                        <select on:change={(e) => {onDegreeChange(e, tempEdu)} } name="degree" id="degree" bind:value={tempEdu.degree}>
+                            {#each degreeInfo as degree}
+                                <option value={degree.value}>{degree.name}</option>
+                            {/each}
+                        </select>
+                        {#if tempEdu.degree && degreeInfo.find(degree => degree.name === tempEdu.degree).score}
                         <div>
                             <label for="credit">Studiepoeng/Vekttall</label><br>
-                            <input type="text" bind:value={tempEdu.credit} readonly={tempEdu.degree && !!!degreeInfo.find(degree => degree.name === tempEdu.degree).score} placeholder="Utdanningsgraden gir ikke studiepoeng" />
+                            <input type="number" bind:value={tempEdu.credit} />
                         </div>
+                        {/if}
                         <div>
-                            <label for="subject">{['Fagbrev', 'Sertifisering'].includes(tempEdu.degree) ? tempEdu.degree : 'Fagområde'}</label><label for="subject" class="validation">{!validation[i].subject ? '*' : '' }</label><br>
-                            <DataList dataList={chooseSubjectDatalist(tempEdu.degree)} filterFunction={(input, obj) => obj.value.toLowerCase().includes(input.toLowerCase()) || obj.category.toLowerCase().startsWith(input.toLowerCase()) } bind:inputValue={tempEdu.subject} placeholder={`Skriv inn ${['Fagbrev', 'Sertifisering'].includes(tempEdu.degree) ? tempEdu.degree.toLowerCase() : 'fagområde'} eller velg fra listen`} />
+                            <label for="subject">{tempEdu.degree === 'Fagbrev' ? tempEdu.degree : tempEdu.degree === 'Videregående skole' ? 'Retning' : 'Fagområde'}</label><label for="subject" class="validation">{!validation[i].subject ? '*' : '' }</label><br>
+                            <DataList dataList={chooseSubjectDatalist(tempEdu.degree)} filterFunction={(input, obj) => obj.value.toLowerCase().includes(input.toLowerCase())} bind:inputValue={tempEdu.subject} placeholder={`Skriv inn ${['Fagbrev', 'Sertifisering'].includes(tempEdu.degree) ? tempEdu.degree.toLowerCase() : 'fagområde'} eller velg fra listen`} />
                         </div>
+                        {#if higherDegrees.includes(tempEdu.degree)}
+                        <div>
+                            <label for="specialization">Fordypning</label><label for="specialization" class="validation">{!validation[i].specialization ? '*' : '' }</label><br>
+                            <input type="text" bind:value={tempEdu.specialization} />
+                        </div>
+                        {/if}
                         <div>
                             <label for="from">Fra</label><br>
                             <div class="peroidContainer">
@@ -221,7 +258,7 @@
                             </div>
                         </div>
                         <div>
-                            <label for="school">Skole{tempEdu.degree === 'Sertifisering' ? '/annet' : ''}</label><label for="school" class="validation">{!validation[i].school ? '*' : '' }</label><br>
+                            <label for="school">Skole</label><label for="school" class="validation">{!validation[i].school ? '*' : '' }</label><br>
                             <input type="text" bind:value={tempEdu.school}>
                         </div>
                     </div>

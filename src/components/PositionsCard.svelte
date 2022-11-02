@@ -64,7 +64,6 @@
     }
 
     const updateAvailableTasks = async (force = false) => {
-        console.log('Nå kjører jeg')
         if ((editInfo.isEditing && editInfo.editBlock === title) || force) {
             for (const kortnavn of Object.keys(availableTasks)) {
                 availableTasks[kortnavn] = await getTasks(kortnavn)
