@@ -89,7 +89,7 @@
     <div>
         {#if editInfo.isEditing && editInfo.editBlock === title}
             {#each tempCertification as tempCert, i}
-                <InnerCard emoji="🎃">
+                <InnerCard emoji="📄">
                     <div slot="first">
                         <label for="cert">Velg om det er et Kurs eller en Sertifisering</label><br>
                         <select name="cert" id="cert" bind:value={tempCert.type}>
@@ -116,7 +116,7 @@
             <div><em>Ingen Kurs eller Sertifiseringer lagt inn</em></div> 
         {:else}
             {#each competence.certifications as cert}
-                <InnerCard emoji="🎃">
+                <InnerCard emoji="📄">
                     <div slot="first">
                         <h3>{cert.name || 'Ukjent navn'}</h3>
                         <h4>{cert.type || 'Ukjent type'}</h4>
