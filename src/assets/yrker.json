@@ -3,9 +3,6 @@
     "value": "Adjunkt"
   },
   {
-    "value": "Adjunkt 1"
-  },
-  {
     "value": "Adjunkt m/tilleggsutdanning"
   },
   {
@@ -25,9 +22,6 @@
   },
   {
     "value": "Assistent"
-  },
-  {
-    "value": "Assistent 1"
   },
   {
     "value": "Avd. Leder"
@@ -52,9 +46,6 @@
   },
   {
     "value": "Bibliotekar"
-  },
-  {
-    "value": "Bibliotekar 1"
   },
   {
     "value": "Byggdrifter"
@@ -91,9 +82,6 @@
   },
   {
     "value": "Fagarbeider"
-  },
-  {
-    "value": "Fagarbeider 1"
   },
   {
     "value": "Fagarbeider m/fagskoleutdanning"
@@ -166,9 +154,6 @@
   },
   {
     "value": "Lektor"
-  },
-  {
-    "value": "Lektor 1"
   },
   {
     "value": "Lektor m/tilleggsutdanning"
@@ -271,9 +256,6 @@
   },
   {
     "value": "Tannpleier"
-  },
-  {
-    "value": "Tannpleier 1"
   },
   {
     "value": "Teamleder"
