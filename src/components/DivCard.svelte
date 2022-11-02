@@ -49,8 +49,8 @@
         tempOther = JSON.parse(JSON.stringify(competence.other))
     }
 
-    const infoText = "<p>Du har en solorolle dersom dine arbeidsoppgaver og/eller fagfelt er unikt innenfor din sektor og at du alene har en nøkkelfunksjon som andre er avhengige av.<br><br><b>Et eksempel</b>: Kari er den eneste i BDK som har funksjonen som programmerer av verktøyet PowerBI som er viktig i mange utviklingsområder.</p>"
-    const noneSoloText = "Ikke fylt ut av ansatt"
+    const infoText = "<p> Er du den eneste med din stilling i din enhet eller har kritiske oppgaver kun du jobber med? <br><br><b>Eksempel 1</b>: Knut (SIK) er den eneste som jobber med planlegging etter plan- og bygningsloven som er viktig for at sektor seksjonen Samfunn og plan skal kunne gjennomføre sine lovpålagte oppgaver.<br><br><b>Eksempel 2</b>: Hjalmar (NIK) er den eneste som følger opp fylkeskommunens partnerskap og engasjement i Horizon 2020 prosjektet IMPETUS. Fra 1.1.24 vil begge fylkeskommunene måtte følge opp dette prosjektet med minst en person.<br><br><b>Eksempel 3</b>: Mona (SMM) er den eneste som er kontaktpunkt og bindeledd i kollektivtrafikken.</p>"
+const noneSoloText = "Ikke fylt ut av ansatt"
     const noneDescText = "Beskrivelse av solorole er ikke fylt ut av ansatt"
 </script>
 
