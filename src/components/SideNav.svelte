@@ -32,8 +32,16 @@
                     <p>Meg</p>
                 </button>
             </div>
-            <div class="sideNavItem disabled">
-                <button on:click={() => { changePage('person') } } class={`disabled${currentPage === 'person' ? ' siteNavItemActive' : ''}`}>
+            <div class="sideNavItem">
+                <button on:click={() => { changePage('minenhet') } } class={`${currentPage === 'minenhet' ? ' siteNavItemActive' : ''}`}>
+                    <div class="icon">
+                        <IconOrg />
+                    </div>
+                    <p>Min enhet</p>
+                </button>
+            </div>
+            <div class="sideNavItem">
+                <button on:click={() => { changePage('person') } } class={`${currentPage === 'person' ? ' siteNavItemActive' : ''}`}>
                     <div class="icon">
                         <IconSearch />
                     </div>
