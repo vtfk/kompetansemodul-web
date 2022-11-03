@@ -9,6 +9,7 @@
     import IconAdd from "./Icons/IconAdd.svelte"
     import IconDelete from "./Icons/IconDelete.svelte"
     import InnerCard from "./InnerCard.svelte"
+    import { experienceCardHelp } from "../lib/Helpers/helptexts";
 
     // Props
     export let title = 'Verv'
@@ -121,12 +122,9 @@
         const from = `${exp.fromMonth ?? 'Ukjent mnd'} ${exp.fromYear}`
         return !exp.isActive ? `${from} - ${exp.toMonth ?? 'Ukjent mnd'} ${exp.toYear ?? 'Ukjent år'}` : `${from} ->`
     }
-
-    const infoText = "<p>Dette handler om relevante verv du har hatt de siste årene. Du trenger ikke fylle ut frivillige verv eller verv i fritidsaktiviteter.<p>"
-
 </script>
 
-<Card title={title} editable={true} backgroundColor={backgroundColor} infoBox={ {content: infoText}} canSave={canSave} saveFunc={saveFunc} cancelFunc={cancelFunc}>
+<Card title={title} editable={true} backgroundColor={backgroundColor} infoBox={ {content: experienceCardHelp}} canSave={canSave} saveFunc={saveFunc} cancelFunc={cancelFunc}>
     <div>
         {#if editInfo.isEditing && editInfo.editBlock === title}
             {#each tempExperience as tempExp, i}

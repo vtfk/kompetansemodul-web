@@ -1,9 +1,11 @@
 <script>
     import Card from "./Card.svelte";
     import { getZipCodeInfo } from '../lib/Helpers/zipCode'
+    import { employeeInfoCardHelp } from '../lib/Helpers/helptexts'
 
     // Props
     export let backgroundColor = '--catSkillWhite'
+    export let title="Ansattinformasjon"
     export let employeeData = {}
     export let disableInfoBox = false
     export let hideTextBox = false
@@ -12,8 +14,6 @@
         const dateList = date.slice(0,10).split('-')
         return `${dateList[2]}.${dateList[1]}.${dateList[0]}`
     }
-
-    const infoText = "<p>Her finner du ferdig utfylt informasjon om deg. Dette er informasjon som arbeidsgiver allerede har lagret om deg. Hvis dette ikke stemmer, kan du kontakte nærmeste leder.</p>"
  
     const displayData = {
         name: `${employeeData.fornavn} ${employeeData.etternavn}`,
@@ -33,7 +33,7 @@
     }).filter(upn => upn !== false && upn !== '' && upn !== 'Ukjent leder') 
 </script>
 
-<Card title="Ansattinformasjon" backgroundColor={backgroundColor} disableInfoBox={disableInfoBox} infoBox={{content: infoText}}>
+<Card title={title} backgroundColor={backgroundColor} disableInfoBox={disableInfoBox} infoBox={{content: employeeInfoCardHelp}}>
     <div class="cardContent">
         <div class="generalInfo">
             <div class="infoPair">

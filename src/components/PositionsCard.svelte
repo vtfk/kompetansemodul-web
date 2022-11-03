@@ -10,6 +10,7 @@
     import Button from "./Button.svelte";
     import IconAdd from "./Icons/IconAdd.svelte";
     import IconDelete from "./Icons/IconDelete.svelte";
+    import { positionsCardHelp } from '../lib/Helpers/helptexts'
 
     // Props
     export let title = 'Dagens stillinger og oppgaver'
@@ -110,8 +111,6 @@
         }
         return info
     }
-
-    const infoText = "<p>Dine aktive stillinger i organisajonen. Her legger du inn beskrivelse av dine nøkkeloppgaver i dagens stillinger i Vestfold og Telemark fylkeskommune. Om noe er galt i stillingsinformasjonen din, ta kontakt med nærmeste leder</p><br><p>Hvorfor spør vi om dette? Dette trenger vi for å få en best mulig oversikt over oppgaver som ligger til din stilling i dag. Det er ment å fange opp informasjon om ansatte som kan ha endret nøkkeloppgaver, jobbe i matrise eller midlertidig i prosjekter.</p>"
  
     const displayData = {
         name: `${employeeData.fornavn} ${employeeData.etternavn}`,
@@ -225,7 +224,7 @@
     }
 </script>
 
-<Card title={title} backgroundColor={backgroundColor} disableInfoBox={disableInfoBox} infoBox={ {content: infoText}} editable={canEdit} canSave={canSave} saveFunc={saveFunc} cancelFunc={cancelFunc}>
+<Card title={title} backgroundColor={backgroundColor} disableInfoBox={disableInfoBox} infoBox={ {content: positionsCardHelp}} editable={canEdit} canSave={canSave} saveFunc={saveFunc} cancelFunc={cancelFunc}>
     <div class="halla">
         {#if editInfo.isEditing && editInfo.editBlock === title}
         <!-- Data fra HR -->

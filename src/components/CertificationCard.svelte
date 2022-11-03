@@ -8,6 +8,7 @@
     import IconAdd from "./Icons/IconAdd.svelte"
     import InnerCard from "./InnerCard.svelte"
     import SelectYears from "./SelectYears.svelte";
+    import { certificationCardHelp } from "../lib/Helpers/helptexts";
 
     // Props
     export let title = 'Kurs og Sertifiseringer'
@@ -85,7 +86,7 @@
     }
 </script>
 
-<Card title={title} editable={true} backgroundColor={backgroundColor} infoBox={ {content: 'noe tekst her da'}} canSave={canSave} saveFunc={saveFunc} cancelFunc={cancelFunc}>
+<Card title={title} editable={true} backgroundColor={backgroundColor} infoBox={ {content: certificationCardHelp}} canSave={canSave} saveFunc={saveFunc} cancelFunc={cancelFunc}>
     <div>
         {#if editInfo.isEditing && editInfo.editBlock === title}
             {#each tempCertification as tempCert, i}

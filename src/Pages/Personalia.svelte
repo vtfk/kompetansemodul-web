@@ -14,10 +14,10 @@
 	import EmployeeInfoCard from '../components/EmployeeInfoCard.svelte';
 	import CountySelectionCard from '../components/CountySelectionCard.svelte'
 	import CertificationCard from '../components/CertificationCard.svelte'
+	import { personaliaHelp } from '../lib/Helpers/helptexts'
 
 	// State
 	let showInfoBox = false
-	let infoContent = "<h4>Hvorfor samler vi inn din kompetanse på denne måten?</h4><p>Vi ønsker en digital oversikt over kompetansen til ansatte i fylkesadministrasjonen. Intensjonen er å jobbe systematisk med rekruttering og kompetanseutvikling i både VTFK og de nye organisasjonene. Kompetansekartlegging er et verktøy for å anta om to nye fylkeskommuner personalmessig vil være i stand til å løse sitt samfunnsoppdrag</p> <br><p>Husk at du også finner informasjon om kartleggingsverktøyet, GDPR og hva informasjon skal brukes til på Innsida, i personvernerklæringen og i andre informasjonskanaler. Dersom du har spørsmål eller noe er uklart er du alltid velkommen til å kontakte  (sett inn kontaktopplysninger).</p" // TODO: Define contact information
 
 	const getMee = async () => {
 		const me = await getMe()
@@ -42,12 +42,12 @@
 			{#if !editInfo.isEditing}
 				<h2>Hei, {res.fornavn}! Her kan du se og redigere din kompetanse</h2>
 				<div class="headerIcon" title={showInfoBox ? 'Lukk infoboks' : 'Åpne infoboks'} on:click={() => {showInfoBox = !showInfoBox}}><IconHelp /></div>
-				<InfoBox content={infoContent} html={true} open={showInfoBox} onClose={() => {showInfoBox = !showInfoBox}} />
+				<InfoBox content={personaliaHelp} html={true} open={showInfoBox} onClose={() => {showInfoBox = !showInfoBox}} />
 			{:else}
 				<h2>Redigerer {editInfo.editBlock}</h2>
 			{/if}
 		</div>
-		<!-- <p style="color: var(--deepSeaGreen);"><strong>Til dagens workshop:</strong> Klikk her: <a href ="mailto:jorgen.thorsnes@vtfk.no;robin.ellingsen@vtfk.no?subject=Tilbakemelding på kompetanse-verktøy&body=Eksempler på hva vi ønsker tilbakemelding på:%0D%0A-Hva er vanskelig å forstå?%0D%0A-Er det noe du føler mangler?%0D%0A-Er det noe som ikke fungerer som forventet?%0D%0A-Er det noe du liker godt?%0D%0A-Er det noe du ikke liker?%0D%0A-Generelle tanker?%0D%0A%0D%0ASkriv inn her:"> Lag tilbakemeldings-epost.</a> Skriv inn tilbakemeldinger i e-posten som åpnes, og send når du er ferdig å teste</p><br/>  -->
+		<p style="color: var(--deepSeaGreen);"><strong>Til dagens seksjonsledermøte:</strong> Klikk her: <a href ="mailto:jorgen.thorsnes@vtfk.no;robin.ellingsen@vtfk.no?subject=Tilbakemelding på kompetanse-verktøy"> Lag tilbakemeldings-epost.</a> Skriv inn tilbakemeldinger i e-posten som åpnes, og send når du er ferdig å teste</p><br/> 
 		<EmployeeCard employeeData={res} />
 		<EmployeeInfoCard employeeData={res} />
 		<PositionsCard employeeData={res} competence={res.competenceData} />

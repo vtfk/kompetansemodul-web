@@ -3,6 +3,7 @@
     import { get } from 'svelte/store'
     import { saveCompetence }  from '../lib/services/useApi'
     import { editingPersonalia } from '../lib/services/store'
+    import { countySelectionCardHelp } from '../lib/Helpers/helptexts'
 
     // Props
     export let title = 'Ønsket fylkeskommune / arbeidssted etter oppdeling'
@@ -44,10 +45,9 @@
         tempPerfCounty = JSON.parse(JSON.stringify(competence.perfCounty))
     }
 
-    const infoText = "<p>Vi ber også om at du tar stilling til foretrukken fylkeskommune. Her ønsker vi at du svarer på hvilken fylkeskommune du foretrekker (Telemark eller Vestfold). Du kan også trykke “vet ikke” om du ikke har bestemt deg eller om ønsket ditt er avhengig av andre rammebetingelser.</p><br><p><b>MERK</b>: Ditt svar er ikke bindende og er kun ment for at arbeidsgiver skal få en oversikt over hva de ansatte ønsker. Det betyr at ditt svar ikke automatisk vil få følger for innplasseringen. </p>"
 </script>
 
-<Card title={title} saveFunc={saveFunc} cancelFunc={cancelFunc} backgroundColor={backgroundColor} editable={true} infoBox={ {content: infoText} } canSave={true} >
+<Card title={title} saveFunc={saveFunc} cancelFunc={cancelFunc} backgroundColor={backgroundColor} editable={true} infoBox={ {content: countySelectionCardHelp} } canSave={true} >
     {#if editInfo.isEditing && editInfo.editBlock === title}
         <div class="contentContainer">
             <div>

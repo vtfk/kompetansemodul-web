@@ -3,6 +3,7 @@
     import { get } from 'svelte/store'
     import { saveCompetence }  from '../lib/services/useApi'
     import { editingPersonalia } from '../lib/services/store'
+    import { divCardHelp } from '../lib/Helpers/helptexts'
 
     // Props
     export let title = 'Kritiske oppgaver'
@@ -49,12 +50,11 @@
         tempOther = JSON.parse(JSON.stringify(competence.other))
     }
 
-    const infoText = "<p><b>Eksempel 1</b>: Knut (SIK) er den eneste som jobber med planlegging etter plan- og bygningsloven som er viktig for at sektor seksjonen Samfunn og plan skal kunne gjennomføre sine lovpålagte oppgaver.<br><br><b>Eksempel 2</b>: Hjalmar (NIK) er den eneste som følger opp fylkeskommunens partnerskap og engasjement i Horizon 2020 prosjektet IMPETUS. Fra 1.1.24 vil begge fylkeskommunene måtte følge opp dette prosjektet med minst en person.<br><br><b>Eksempel 3</b>: Mona (SMM) er den eneste som er kontaktpunkt og bindeledd i kollektivtrafikken.</p>"
     const noneSoloText = "Ikke fylt ut av ansatt"
     const noneDescText = "Beskrivelse av solorole er ikke fylt ut av ansatt"
 </script>
 
-<Card title={title} saveFunc={saveFunc} cancelFunc={cancelFunc} backgroundColor={backgroundColor} editable={true} infoBox={ {content: infoText} } canSave={canSave} >
+<Card title={title} saveFunc={saveFunc} cancelFunc={cancelFunc} backgroundColor={backgroundColor} editable={true} infoBox={ {content: divCardHelp} } canSave={canSave} >
     <div>
         {#if editInfo.isEditing && editInfo.editBlock === title}
         <div class="contentContainer">

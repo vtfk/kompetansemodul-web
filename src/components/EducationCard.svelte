@@ -14,7 +14,7 @@
     import IconAdd from "./Icons/IconAdd.svelte"
     import InnerCard from "./InnerCard.svelte"
     import { educationCardHelp } from '../lib/Helpers/helptexts'
-
+    
     // Props
     export let title = 'Utdanning'
     export let backgroundColor = '--gin'
