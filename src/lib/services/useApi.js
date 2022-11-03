@@ -48,7 +48,7 @@ export const getPhoto = async (upn) => {
     authorization: `Bearer ${accessToken}`
   }
   
-  const res = await axios.get(`https://graph.microsoft.com/v1.0/users/${upn}/photo/$value`, { headers, responseType: 'blob' })
+  const res = await axios.get(`https://graph.microsoft.com/v1.0/users/${upn}/photos/120x120/$value`, { headers, responseType: 'blob' })
   return res.data
 }
 
@@ -58,11 +58,11 @@ export const getMe = async () => await apiRequest('get', 'me')
 // Get user
 export const getPerson = async (parameter) => await apiRequest('get', `GetEmployee/${parameter}`)
 
+// Get orgUnits
+export const getOrg = async (parameter) => await apiRequest('get', `GetOrg/${parameter}`)
+
 // Get tasks
 export const getTasks = async (parameter) => await apiRequest('get', `GetTasks/${parameter}`)
-
-// Get org
-export const getOrg = async () => await apiRequest('get', 'GetOrg')
 
 // Save my edited competence
 export const saveCompetence = async (competence) => await apiRequest('post', 'UpsertCompetence', competence)

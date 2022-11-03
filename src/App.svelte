@@ -10,6 +10,8 @@
   import Personalia from './Pages/Personalia.svelte';
   import Person from './Pages/Person.svelte';
   import SideNav from './components/SideNav.svelte';
+  import MinEnhet from './Pages/MinEnhet.svelte';
+
 
   let page = get(displayedPage)
   displayedPage.subscribe(value => {
@@ -42,6 +44,8 @@
             <Header initials={getInitials(response.name)} name={response.name} />
               { #if page === 'personalia'}
                   <Personalia />
+              { :else if page === 'minenhet' }
+                  <MinEnhet />
               { :else if page === 'person' }
                   <Person />
               { :else if page === 'organisasjon' }
