@@ -1,5 +1,6 @@
 <script>
 	import { getMe/* , vitnemaal */ }  from '../lib/services/useApi'
+	import { afterUpdate } from 'svelte'
 	import { get } from 'svelte/store'
 	import { editingPersonalia, infoOpen } from '../lib/services/store'
 	import EmployeeCard from '../components/EmployeeCard.svelte'
@@ -14,6 +15,7 @@
 	import EmployeeInfoCard from '../components/EmployeeInfoCard.svelte';
 	import CountySelectionCard from '../components/CountySelectionCard.svelte'
 	import CertificationCard from '../components/CertificationCard.svelte'
+	import TopNavBar from '../components/TopNavBar.svelte'
 
 	// State
 	let showInfoBox = false
@@ -29,9 +31,26 @@
     editingPersonalia.subscribe(value => {
         editInfo = value
     })
+	let sections
+	afterUpdate(() => {
+		// const tempSection = document.getElementsByClassName("panel")
+		// sections = [...document.getElementsByClassName("panel")]
+		// console.log(sections)
+		// console.log(document.getElementsByClassName("panel"))
+		// sections = [...tempSection]
+		setTimeout(() => {
+			sections = [...document.getElementsByClassName("panel")]
+			console.log(sections)
+		}, 1000)
+	} )
+	
+	// window.onscroll = () => {
+	// 	sections.forEach((section) => {
+	// 		console.log(section)
+	// 	})
+	// }
 
 </script>
-
 <div class="content">
 	{#await getMee()}
 		<div class="loadingContainer">
@@ -47,16 +66,17 @@
 				<h2>Redigerer {editInfo.editBlock}</h2>
 			{/if}
 		</div>
+		<TopNavBar />
 		<!-- <p style="color: var(--deepSeaGreen);"><strong>Til dagens workshop:</strong> Klikk her: <a href ="mailto:jorgen.thorsnes@vtfk.no;robin.ellingsen@vtfk.no?subject=Tilbakemelding på kompetanse-verktøy&body=Eksempler på hva vi ønsker tilbakemelding på:%0D%0A-Hva er vanskelig å forstå?%0D%0A-Er det noe du føler mangler?%0D%0A-Er det noe som ikke fungerer som forventet?%0D%0A-Er det noe du liker godt?%0D%0A-Er det noe du ikke liker?%0D%0A-Generelle tanker?%0D%0A%0D%0ASkriv inn her:"> Lag tilbakemeldings-epost.</a> Skriv inn tilbakemeldinger i e-posten som åpnes, og send når du er ferdig å teste</p><br/>  -->
-		<EmployeeCard employeeData={res} />
-		<EmployeeInfoCard employeeData={res} />
-		<PositionsCard employeeData={res} competence={res.competenceData} />
-		<CountySelectionCard competence={res.competenceData}/>
-		<DivCard competence={res.competenceData}/>
-		<WorkExperienceCard competence={res.competenceData} />
-		<EducationCard competence={res.competenceData} />
-		<CertificationCard competence={res.competenceData} />
-		<ExperienceCard competence={res.competenceData}/>
+		<div id="currentCard"><EmployeeCard employeeData={res} /></div>
+		<div id="currentCard"><EmployeeInfoCard employeeData={res} /></div>
+		<div id="currentCard"><PositionsCard employeeData={res} competence={res.competenceData} /></div>
+		<div id="currentCard"><CountySelectionCard competence={res.competenceData}/></div>
+		<div id="currentCard"><DivCard competence={res.competenceData}/></div>
+		<div id="currentCard"><WorkExperienceCard competence={res.competenceData} /></div>
+		<div id="currentCard"><EducationCard competence={res.competenceData} /></div>
+		<div id="currentCard"><CertificationCard competence={res.competenceData} /></div>
+		<div id="currentCard"><ExperienceCard competence={res.competenceData}/></div>
 	{:catch error}
 		<p style="color: red">{error.message}</p>
 	{/await}
