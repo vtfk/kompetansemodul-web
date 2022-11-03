@@ -1,5 +1,6 @@
 <script>
 	import { getOrg }  from '../lib/services/useApi'
+	import { changePage }  from '../lib/Helpers/changePage'
 	import IconSpinner from '../components/Icons/IconSpinner.svelte';
     import EmployeeBox from '../components/EmployeeBox.svelte';
 	import { msalClientStore } from '../lib/services/store'
@@ -22,9 +23,9 @@
 		{#each units as unit}
 			<h2 class="unitHeader">{unit.navn}</h2>
 			<div class="employeeContainer">
-				<EmployeeBox employeeData={{...unit.arbeidsforhold.find(forhold => forhold.userPrincipalName === unit.leder.userPrincipalName), department: unit.navn}} />
+				<EmployeeBox onClick={() => changePage('person', { setPerson: unit.leder.ansattnummer })} employeeData={{...unit.arbeidsforhold.find(forhold => forhold.userPrincipalName === unit.leder.userPrincipalName), department: unit.navn}} />
 				{#each unit.arbeidsforhold.filter(employee => employee.userPrincipalName !== unit.leder.userPrincipalName) as emp}
-					<EmployeeBox employeeData={{...emp, department: unit.navn}} />
+					<EmployeeBox onClick={() => changePage('person', { setPerson: emp.userPrincipalName })} employeeData={{...emp, department: unit.navn}} />
 				{/each}
 			</div>
 			<br /><br />

@@ -105,6 +105,7 @@ select {
     --whiteTone: #FFFFFF;
     --mork: #A3A3A3;
     --greyTone: rgb(215, 215, 215);
+    --lightGrey: #ebebeb;
 }
 
 /* Typography */
@@ -124,6 +125,16 @@ p.small {
 .error {
   color: var(--red);
   font-weight: bold;
+}
+
+a, a:visited {
+  color: #005260;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+  color: #005260;
 }
 
 .link {
@@ -298,9 +309,6 @@ input[type=checkbox], input[type=radio] {
   :root {
     color: #213547;
     background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
   }
   button {
     background-color: #f9f9f9;
