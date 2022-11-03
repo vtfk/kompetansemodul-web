@@ -49,8 +49,8 @@
         tempOther = JSON.parse(JSON.stringify(competence.other))
     }
 
-    const infoText = "<p> Er du den eneste med din stilling i din enhet eller har kritiske oppgaver kun du jobber med? <br><br><b>Eksempel 1</b>: Knut (SIK) er den eneste som jobber med planlegging etter plan- og bygningsloven som er viktig for at sektor seksjonen Samfunn og plan skal kunne gjennomføre sine lovpålagte oppgaver.<br><br><b>Eksempel 2</b>: Hjalmar (NIK) er den eneste som følger opp fylkeskommunens partnerskap og engasjement i Horizon 2020 prosjektet IMPETUS. Fra 1.1.24 vil begge fylkeskommunene måtte følge opp dette prosjektet med minst en person.<br><br><b>Eksempel 3</b>: Mona (SMM) er den eneste som er kontaktpunkt og bindeledd i kollektivtrafikken.</p>"
-const noneSoloText = "Ikke fylt ut av ansatt"
+    const infoText = "<p><b>Eksempel 1</b>: Knut (SIK) er den eneste som jobber med planlegging etter plan- og bygningsloven som er viktig for at sektor seksjonen Samfunn og plan skal kunne gjennomføre sine lovpålagte oppgaver.<br><br><b>Eksempel 2</b>: Hjalmar (NIK) er den eneste som følger opp fylkeskommunens partnerskap og engasjement i Horizon 2020 prosjektet IMPETUS. Fra 1.1.24 vil begge fylkeskommunene måtte følge opp dette prosjektet med minst en person.<br><br><b>Eksempel 3</b>: Mona (SMM) er den eneste som er kontaktpunkt og bindeledd i kollektivtrafikken.</p>"
+    const noneSoloText = "Ikke fylt ut av ansatt"
     const noneDescText = "Beskrivelse av solorole er ikke fylt ut av ansatt"
 </script>
 
@@ -59,6 +59,7 @@ const noneSoloText = "Ikke fylt ut av ansatt"
         {#if editInfo.isEditing && editInfo.editBlock === title}
         <div class="contentContainer">
             <div class="innerContainer firstContainer">
+                <label>Er du den eneste med din stilling i din enhet eller har som kritiske oppgaver kun du jobber med?</label>
                 <div class="soloRadio">
                     <label for="ja">Ja</label>
                     <input type="radio" id="ja" name="solo" value="Ja" bind:group={tempOther.soloRole}>
@@ -88,6 +89,7 @@ const noneSoloText = "Ikke fylt ut av ansatt"
             <div class="contentContainer">
                 <div class="innerContainer firstContainer">
                     <div>
+                        <label>Er du den eneste med din stilling i din enhet eller har som kritiske oppgaver kun du jobber med?</label>
                         <div><em id = "noneSolo"> </em></div>
                         <div><em id = "noneDesctription"> </em></div>
                         {#if !competence.other?.soloRole}
