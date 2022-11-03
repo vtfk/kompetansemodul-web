@@ -16,7 +16,6 @@ export const positionsCardHelp = "<p>Informasjon om din eller dine nåværende s
 export const countySelectionCardHelp = "<p>Vi ber også om at du tar stilling til foretrukken fylkeskommune. Her ønsker vi at du svarer på hvilken fylkeskommune du foretrekker (Telemark eller Vestfold). Du kan også trykke “vet ikke” om du ikke har bestemt deg eller om ønsket ditt er avhengig av andre rammebetingelser.</p><br><p><b>MERK</b>: Ditt svar er ikke bindende og er kun ment for at arbeidsgiver skal få en oversikt over hva de ansatte ønsker. Det betyr at ditt svar ikke automatisk vil få følger for innplasseringen. </p>"
 
 // DivCard
-
 export const divCardHelp = "<p><b>Eksempel 1</b>: Knut (SIK) er den eneste som jobber med planlegging etter plan- og bygningsloven som er viktig for at sektor seksjonen Samfunn og plan skal kunne gjennomføre sine lovpålagte oppgaver.<br><br><b>Eksempel 2</b>: Hjalmar (NIK) er den eneste som følger opp fylkeskommunens partnerskap og engasjement i Horizon 2020 prosjektet IMPETUS. Fra 1.1.24 vil begge fylkeskommunene måtte følge opp dette prosjektet med minst en person.<br><br><b>Eksempel 3</b>: Mona (SMM) er den eneste som er kontaktpunkt og bindeledd i kollektivtrafikken.</p>"
 
 // WorkExperienceCard
@@ -28,7 +27,7 @@ export const educationCardHelp = "<p>Informasjon om hvilken utdanning du har. Vi
 +"<br><br>Din utdanning er beskrivende for din formelle kompetanse og er dermed nødvendig i forbindelse med kartleggingen av din kompetanse.</p>"
 
 // CertificationCard
-export const certificationCardHelp = "<p>Kurs og sertifiseringer hvor du har tilegnet deg kompetanse som er relevant.<p>"
+export const certificationCardHelp = "<p>Kurs og sertifiseringer hvor du har tilegnet deg kompetanse som er relevant.</p>"
 
 // ExperienceCard
-export const experienceCardHelp = "<p>Verv hvor du har tilegnet deg kompetanse som er relevant.  </p>"
+export const experienceCardHelp = "<p>Verv hvor du har tilegnet deg kompetanse som er relevant. </p>"
