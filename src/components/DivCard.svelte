@@ -89,7 +89,7 @@
             <div class="contentContainer">
                 <div class="innerContainer firstContainer">
                     <div>
-                        <label>Er du den eneste med din stilling i din enhet eller har som kritiske oppgaver kun du jobber med?</label>
+                        <label>Er du den eneste i din stilling / enhet med kritiske oppgaver kun du jobber med?</label>
                         <div><em id = "noneSolo"> </em></div>
                         <div><em id = "noneDesctription"> </em></div>
                         {#if !competence.other?.soloRole}
