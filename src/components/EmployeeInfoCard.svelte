@@ -67,7 +67,7 @@
             {#if leaders.length > 1 && leader === employeeData.userPrincipalName}
                 <div class="actionContent">
                     <!-- TODO Her trenger vi en mail til de som er ansvarlig i HR for å endre data -->
-                    <p>Hvis noe av informasjonen her ikke stemmer, klikk <a href={`mailto:HR-AVDELINGEN?subject=Kompetanse - Feil informasjon`}>her</a> for å sende en mail via Outlook til HR, da dette må rettes i HR-systemet.</p>
+                    <p>Hvis noe av informasjonen her ikke stemmer må det endres i HR-systemet.</p>
                 </div>
             {:else if leaders.length <= 1}
                 <div class="actionContent">
