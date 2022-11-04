@@ -170,7 +170,7 @@
                             <label for="tasks">Hovedoppgaver</label><br>
                             {#each  tempWork.tasks as task, j}
                                 <div class="tasks">
-                                    <input type="text" maxlength="30" bind:value={task} />
+                                    <input type="text" maxlength="45" bind:value={task} />
                                     <label for={task.toString()} class="validation">{!validation[i].tasks[j] ? '*' : '' }</label>
                                     <Button size="medium" onlyIcon={true} noBorder={true} onClick={() => removeTask(tempWork, task, j)} ><IconDelete slot="before"/></Button>
                                 </div>

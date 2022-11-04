@@ -243,7 +243,7 @@
                             <label for="tasks">Nøkkeloppgaver i denne stillingen</label><br>
                             {#each tempPositionTasks.find(pt => pt.positionId === position.systemId).tasks as task, i}
                                 <div class="tasks">
-                                    <DataList maxLength={30} dataList={getAvailableTasks(position, tempPositionTasks)} filterFunction={(input, obj) => obj.value.toLowerCase().includes(input.toLowerCase()) || obj.category.toLowerCase().startsWith(input.toLowerCase()) } bind:inputValue={task} />
+                                    <DataList maxLength={45} dataList={getAvailableTasks(position, tempPositionTasks)} filterFunction={(input, obj) => obj.value.toLowerCase().includes(input.toLowerCase()) || obj.category.toLowerCase().startsWith(input.toLowerCase()) } bind:inputValue={task} />
                                     <label for={i.toString()} class="validation">{!validation[position.systemId][i] ? '*' : '' }</label>
                                     <Button size="medium" onlyIcon={true} noBorder={true} onClick={() => removeTask(position, i)}><IconDelete slot="before"/></Button>
                                 </div>
@@ -267,7 +267,7 @@
                         <label for="tasks">Underoppgaver</label><br>
                         {#each tempPositionTasks.find(pt => pt.positionId === position.systemId).tasks as task, i}
                             <div class="tasks">
-                                <DataList maxLength={30} dataList={[]} filterFunction={(input, obj) => obj.value.toLowerCase().includes(input.toLowerCase()) || obj.category.toLowerCase().startsWith(input.toLowerCase()) } bind:inputValue={task} />
+                                <DataList maxLength={45} dataList={[]} filterFunction={(input, obj) => obj.value.toLowerCase().includes(input.toLowerCase()) || obj.category.toLowerCase().startsWith(input.toLowerCase()) } bind:inputValue={task} />
                                     <label for={i.toString()} class="validation">{!validation[position.systemId][i] ? '*' : '' }</label>
                                 <Button size="medium" onlyIcon={true} noBorder={true} onClick={() => removeTask(position, i)}><IconDelete slot="before"/></Button>
                             </div>

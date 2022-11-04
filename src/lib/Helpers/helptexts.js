@@ -22,7 +22,7 @@ export const divCardHelp = "<p><b>Eksempel 1</b>: Knut (SIK) er den eneste som j
 export const workExperienceCardHelp ="<p>Dette feltet omfatter tidligere stillinger du har hatt, dvs. ikke den stillingen du har i VTFK per i dag. Ta utgangspunkt i de siste 10-15 årene når du legger inn.</p><br><p>Hvorfor spør vi om dette? Din arbeidserfaring er èn del av din realkompetanse og er dermed nødvendig i forbindelse med kartlegging av din kompetanse.</p>"
 
 // EducationCard
-export const educationCardHelp = "<p>Informasjon om hvilken utdanning du har. Vi er interessert i enkeltemner, videreutdanninger, fagbrev eller andre grader av utdanning. Her kan du også legge inn sertifiseringer."
+export const educationCardHelp = "<p>Informasjon om hvilken utdanning du har. Vi er interessert i enkeltemner, videreutdanninger, fagbrev eller andre grader av utdanning."
 +"<br><br>Dersom du ikke finner riktig kategori for din utdanning kan du taste inn denne manuelt. Du må ikke velge fra den forhåndsbestemte listen. "    
 +"<br><br>Din utdanning er beskrivende for din formelle kompetanse og er dermed nødvendig i forbindelse med kartleggingen av din kompetanse.</p>"
 
