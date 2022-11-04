@@ -74,7 +74,7 @@
             <div class="logoContainer">
                 <Logo />
             </div>
-            &nbsp&nbsp&nbsp<strong>Kompetanse</strong>
+            &nbsp&nbsp&nbsp<strong>Kompetanse TEST</strong>
         </div>
         <div class="mobileRight" on:click={() => {showMenu = !showMenu}}>
             <div class="menuButton">

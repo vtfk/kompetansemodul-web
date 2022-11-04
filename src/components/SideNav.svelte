@@ -21,6 +21,7 @@
     </div>
     <div style="text-align: center; width: 100%;">
         <p style="padding: 0px;"><strong>Kompetanse</strong></p>
+        <p style="padding: 0px;"><strong>TEST</strong></p>
     </div>
     <div class="sideNavItemsContainer">
         <div class="sideNavFlexHelper">
