@@ -18,6 +18,9 @@
         email: employeeData.userPrincipalName ?? 'Ukjent e-post',
     }
 
+    // EASTER EGG
+    if (employeeInfo.name === 'Jan Thomas Tørrestad') employeeInfo.name = "Jommas 🧔"
+
     // Handle photo
     const handlePhoto = async () => {
         const url = window.URL || window.webkitURL;
