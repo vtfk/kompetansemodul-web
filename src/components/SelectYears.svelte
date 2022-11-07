@@ -1,11 +1,12 @@
 <script>
     export let yearValue
     export let startYear = undefined
+    export let expandYear = 0
     
     const years = (startYear) => {
         const currentYear = new Date().getFullYear()
         let yearArr = []
-        for (let i = startYear; i <= currentYear; i++){
+        for (let i = startYear; i <= currentYear + expandYear; i++){
             yearArr.push(i)
         }
         return {

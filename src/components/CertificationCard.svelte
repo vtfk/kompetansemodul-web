@@ -106,6 +106,20 @@
                         <input type="text" id="navn" bind:value={tempCert.name}>
                         <label for="year">Når ble det gjennomført</label><br>
                         <SelectYears startYear={1950} bind:yearValue={tempCert.year}></SelectYears>
+                        <div class="checkboxContainer">
+                            <input type="checkbox" id="active" bind:checked={tempCert.isActive} />
+                            <label for="active">Ingen Utløpsdato</label>
+                        </div>
+                        {#if !tempCert.isActive }
+                            <div>
+                                <label for="year">Utløpsdato</label><br>
+                                {#if tempCert.year}
+                                    <SelectYears startYear={tempCert.year} expandYear={20} bind:yearValue={tempCert.yearEnd}/>
+                                {/if}
+                            </div>
+                        {:else}
+                            {tempCert.yearEnd = ''}
+                        {/if}
                     </div>
                     <div slot="right">
                         <Button buttonText="Fjern" onClick={() => removeCertification(tempCert)}><IconDelete slot="before" /></Button>
@@ -121,7 +135,7 @@
                     <div slot="first">
                         <h3>{cert.name || 'Ukjent navn'}</h3>
                         <h4>{cert.type || 'Ukjent type'}</h4>
-                        <p>{cert.year || 'Ukjent periode'}</p>
+                        <label for="year">📅 {(cert.year && cert.yearEnd) ? `${cert.year} - ${cert.yearEnd}` : `${cert.year} - Ingen utløpsdato`}</label>
                     </div>
                 </InnerCard>
             {/each} 
