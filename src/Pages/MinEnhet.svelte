@@ -9,7 +9,8 @@
 	const getMyOrgUnit = async () => {
 		const msalClient = get(msalClientStore)
 		const accounts = msalClient.getAllAccounts()
-		const p = await getOrg(accounts[0].username)
+		// const p = await getOrg(accounts[0].username)
+		const p = await getOrg('christoffer.corzani@vtfk.no')
 		console.log(p)
 		return p
 	}
@@ -23,8 +24,8 @@
 		{#each units as unit}
 			<h2 class="unitHeader">{unit.navn}</h2>
 			<div class="employeeContainer">
-				<EmployeeBox onClick={() => changePage('person', { setPerson: unit.leder.ansattnummer })} employeeData={{...unit.arbeidsforhold.find(forhold => forhold.userPrincipalName === unit.leder.userPrincipalName), department: unit.navn}} />
-				{#each unit.arbeidsforhold.filter(employee => employee.userPrincipalName !== unit.leder.userPrincipalName) as emp}
+				<EmployeeBox onClick={() => changePage('person', { setPerson: unit.leder.ansattnummer })} employeeData={{ ...unit.leder, stillingstittel: (unit.arbeidsforhold.find(forhold => forhold.userPrincipalName === unit.leder.userPrincipalName)?.stillingstittel ?? 'Leder'), department: unit.navn}} />
+				{#each unit.arbeidsforhold.filter(employee => employee.userPrincipalName !== unit.leder.userPrincipalName) as emp, i}
 					<EmployeeBox onClick={() => changePage('person', { setPerson: emp.userPrincipalName })} employeeData={{...emp, department: unit.navn}} />
 				{/each}
 			</div>

@@ -9,12 +9,12 @@
     export let onClick = undefined
 
     
-    // If org view or person view
+    if (!employeeData.navn) employeeData.navn = "Jeg er en bug som ikke skal være her..."
     employeeData.fornavn = employeeData.navn.split(' ').slice(0, employeeData.navn.split(' ').length-1).join(' ')
     employeeData.etternavn = employeeData.navn.split(' ')[employeeData.navn.split(' ').length-1]
     let employeeInfo = {
         initials: `${employeeData.fornavn.slice(0,1)} ${employeeData.etternavn.slice(0,1)}`,
-        name: `${employeeData.fornavn} ${employeeData.etternavn}`,
+        name: employeeData.navn,
         mainTitle: employeeData.stillingstittel ?? 'Ukjent tittel',
         mainDepartment: employeeData.department,
         officeLocation: employeeData.officeLocation ?? 'Ukjent kontorplass',
