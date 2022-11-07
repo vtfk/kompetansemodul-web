@@ -56,10 +56,11 @@
                 <div class="desc">Nåværende kontorplass</div>
                 <div class="value">{displayData.officeLocation}</div>
             </div>
-            <div class="infoPair">
+            <!-- Skjules inntil videre -->
+            <!-- <div class="infoPair">
                 <div class="desc">Fylkestilhørighet før sammenslåing</div>
                 <div class="value">{displayData.preLocation}</div>
-            </div>
+            </div> -->
         </div>
     </div>
     {#if hideTextBox === false}
