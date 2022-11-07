@@ -16,7 +16,7 @@
     let positions = occupations
 
     // Props
-    export let title = 'Tidligere arbeidserfaring'
+    export let title = 'Arbeidserfaring utover dagens stilling'
     export let backgroundColor = '--catSkillWhite'
     export let competence = {
 		workExperience: []
@@ -150,19 +150,30 @@
                                 <option value="Offentlig">Offentlig</option>
                             </select>
                         </div>
+                        <div class="checkboxContainer">
+                            <input type="checkbox" id="active" bind:checked={tempWork.isActive} />
+                            <label for="active">Pågår</label>
+                        </div>
                         <div>
                             <label for="from">Fra</label><br>
                             <div class="peroidContainer">
                                 <SelectMonth bind:monthValue={tempWork.fromMonth}/>
                                 <SelectYears startYear={1950} bind:yearValue={tempWork.fromYear} on:change={() => tempWork.toYear = tempWork.fromYear}/>
                             </div>
-                            <label for="to">Til</label><br>
-                            <div class="peroidContainer">
-                                <SelectMonth bind:monthValue={tempWork.toMonth}/>
-                                    {#if newWorkExperience.fromYear}
-                                        <SelectYears startYear={tempWork.fromYear} bind:yearValue={tempWork.toYear}/>
-                                    {/if}
+                            {#if !tempWork.isActive }
+                            <div>
+                                <label for="to">Til</label>
+                                <div class="peroidContainer">
+                                    <SelectMonth bind:monthValue={tempWork.toMonth}/>
+                                        {#if newWorkExperience.fromYear}
+                                            <SelectYears startYear={tempWork.fromYear} bind:yearValue={tempWork.toYear}/>
+                                        {/if}
+                                </div>
                             </div>
+                            {:else}
+                                {tempWork.toMonth = ''}
+                                {tempWork.toYear = ''}
+                            {/if}
                         </div>
                     </div>
                     <div slot="second">
@@ -193,7 +204,7 @@
                         <h3>{work.position ?? 'Ukjent stilling'}</h3>
                         <h4>{work.employer ?? 'Ukjent arbeidsgiver'}</h4>
                         <p>{work.sector ?? 'Ukjent'} sektor</p>
-                        <p>📅 {(work.fromMonth && work.toMonth) ? `${work.fromMonth} ${work.fromYear} - ${work.toMonth} ${work.toYear}` : 'Ukjent periode'}</p>
+                        <p>📅 {(work.fromMonth && work.toMonth) ? `${work.fromMonth} ${work.fromYear} - ${work.toMonth} ${work.toYear}` : `${work.fromMonth} ${work.fromYear} - `}</p>
                     </div>
                     <div slot="second">
                         <label for='noe'>Hovedoppgaver</label><br />
