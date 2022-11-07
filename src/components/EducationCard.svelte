@@ -245,18 +245,29 @@
                         </div>
                         {/if}
                         <div>
+                            <div class="checkboxContainer">
+                                <input type="checkbox" id="active" bind:checked={tempEdu.isActive} />
+                                <label for="active">Pågår</label>
+                            </div>
                             <label for="from">Fra</label><br>
                             <div class="peroidContainer">
                                 <SelectMonth bind:monthValue={tempEdu.fromMonth}/>
                                 <SelectYears startYear={1950} bind:yearValue={tempEdu.fromYear} on:change={() => tempEdu.toYear = tempEdu.fromYear}/>
                             </div>
-                            <label for="to">Til</label><br>
-                            <div class="peroidContainer">
-                                <SelectMonth bind:monthValue={tempEdu.toMonth}/>
-                                    {#if newEducation.fromYear}
-                                        <SelectYears startYear={tempEdu.fromYear} bind:yearValue={tempEdu.toYear}/>
-                                    {/if}
+                            {#if !tempEdu.isActive }
+                            <div>
+                                <label for="to">Til</label><br>
+                                <div class="peroidContainer">
+                                    <SelectMonth bind:monthValue={tempEdu.toMonth}/>
+                                        {#if newEducation.fromYear}
+                                            <SelectYears startYear={tempEdu.fromYear} bind:yearValue={tempEdu.toYear}/>
+                                        {/if}
+                                </div>
                             </div>
+                            {:else}
+                                {tempEdu.toMonth = ''}
+                                {tempEdu.toYear = ''}
+                            {/if}
                         </div>
                         <div>
                             <label for="school">Skole</label><label for="school" class="validation">{!validation[i].school ? '*' : '' }</label><br>
@@ -283,7 +294,7 @@
                         {#if edu.credit}
                             <p>Studiepoeng: {edu.credit}</p>
                         {/if}
-                        <p>📅 {(edu.fromMonth && edu.toMonth) ? `${edu.fromMonth} ${edu.fromYear} - ${edu.toMonth} ${edu.toYear}` : 'Ukjent periode'}</p>
+                        <p>📅 {(edu.fromMonth && edu.toMonth) ? `${edu.fromMonth} ${edu.fromYear} - ${edu.toMonth} ${edu.toYear}` : `${edu.fromMonth} ${edu.fromYear} - `}</p>
                         <p>🏫 {edu.school ?? 'Ukjent skole'}</p>
                     </div>
                 </InnerCard>
