@@ -64,7 +64,10 @@
     </div>
     {#if hideTextBox === false}
         {#each leaders.map(leader => leader.upn) as leader}
-            {#if leaders.length > 1 && leader === employeeData.userPrincipalName}
+        {console.log(leader)}
+        {console.log(employeeData.userPrincipalName)}
+        {console.log(leaders.length <= 1)}
+            {#if leader === employeeData.userPrincipalName}
                 <div class="actionContent">
                     <!-- TODO Her trenger vi en mail til de som er ansvarlig i HR for å endre data -->
                     <p>Hvis noe av informasjonen her ikke stemmer må det endres i HR-systemet.</p>
