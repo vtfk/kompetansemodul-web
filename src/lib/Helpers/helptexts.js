@@ -5,7 +5,10 @@ export const personaliaHelp = "<h4>Hvorfor samler vi inn din kompetanse på denn
 +"sende oss en epost på <a href=mailto:delprosjektHR@vtfk.no?subject=Spørsmål-kompetanse-verktøy>delprosjektHR@vtfk.no</a></p>" 
 
 // EmployeeInfoCard
-export const employeeInfoCardHelp = "<p>Her finner du ferdig utfylt informasjon om deg. Dette er informasjon som arbeidsgiver allerede har lagret om deg. Hvis dette ikke stemmer, kan du kontakte nærmeste leder.</p>"
+// Viser nå forsalg til ny tekst
+export const employeeInfoCardHelp = "<p>Her finner du ferdig utfylt informasjon om deg. Dette er informasjon som arbeidsgiver allerede har lagret om deg. <br><br><strong>NB!</strong> “Første ansettelses dato“ er den datoen du for første gang ble registrert i HR-systemet, den sier nødvendigvis ikke noe om hvor lenge du har vært ansatt.</p>"
+// Gammel teskt
+// "<p>Her finner du ferdig utfylt informasjon om deg. Dette er informasjon som arbeidsgiver allerede har lagret om deg. Hvis dette ikke stemmer, kan du kontakte nærmeste leder.</p>"
 
 // PositionsCard
 export const positionsCardHelp = "<p>Informasjon om din eller dine nåværende stilling(er). Fyll inn stikkord som beskriver dine nøkkeloppgaver i dagens stilling i Vestfold – og Telemark fylkeskommune. <br><br>Hvorfor spør vi om dette? Dette trenger vi for å få en mest god oversikt over oppgaver som ligger til din stilling i dag. Det er ment å fange opp informasjon om ansatte som kan ha endret nøkkeloppgaver, jobbe i matrise eller midlertidig i prosjekter."

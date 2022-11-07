@@ -45,7 +45,7 @@
                 <div class="value">{displayData.category}</div>
             </div>
             <div class="infoPair">
-                <div class="desc">Ansatt siden</div>
+                <div class="desc">Første ansettelses dato</div>
                 <div class="value">{displayData.employedSince}</div>
             </div>
             <div class="infoPair">
@@ -64,9 +64,6 @@
     </div>
     {#if hideTextBox === false}
         {#each leaders.map(leader => leader.upn) as leader}
-        {console.log(leader)}
-        {console.log(employeeData.userPrincipalName)}
-        {console.log(leaders.length <= 1)}
             {#if leader === employeeData.userPrincipalName}
                 <div class="actionContent">
                     <!-- TODO Her trenger vi en mail til de som er ansvarlig i HR for å endre data -->
