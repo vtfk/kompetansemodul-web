@@ -260,11 +260,11 @@
             {#each tempOtherPositions as position, i}
                 <InnerCard emoji='🛠' size="medium">
                     <div slot="first">
-                        <label for="posTitle-{i}">Oppgave</label><label for="subject" class="validation">{!otherValidation[i].title ? '*' : '' }</label>
+                        <label for="posTitle-{i}">Rolle</label><label for="subject" class="validation">{!otherValidation[i].title ? '*' : '' }</label>
                         <input type="text" placeholder="F. eks 'Prosjektarbeid'" bind:value={position.title}  />
                     </div>
                     <div slot="second">
-                        <label for="tasks">Underoppgaver</label><br>
+                        <label for="tasks">Oppgaver</label><br>
                         {#each tempPositionTasks.find(pt => pt.positionId === position.systemId).tasks as task, i}
                             <div class="tasks">
                                 <DataList maxLength={45} dataList={[]} filterFunction={(input, obj) => obj.value.toLowerCase().includes(input.toLowerCase()) || obj.category.toLowerCase().startsWith(input.toLowerCase()) } bind:inputValue={task} />
@@ -310,11 +310,12 @@
             {#each competence.otherPositions as position}
                 <InnerCard emoji='🛠' size="medium">
                     <div slot="first">
-                        <h3>{position.title ?? 'Ukjent tittel'}</h3>
+                        <label>Rolle</label>
+                        <h4>{position.title ?? 'Ukjent tittel'}</h4>
                         <!--<h4>{getDepartment(position.arbeidssted.struktur).department}</h4>-->
                     </div>
                     <div slot="second">
-                        <label for="tull">Underoppgaver</label>
+                        <label for="tull">Oppgaver</label>
                         {#if !(competence.positionTasks.find(pt => pt.positionId === position.systemId)).tasks.find(t => t.length > 0)}
                             <div><em>Ingen underoppgaver lagt inn</em></div>
                         {:else}
