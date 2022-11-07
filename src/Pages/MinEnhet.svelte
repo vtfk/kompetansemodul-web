@@ -9,8 +9,8 @@
 	const getMyOrgUnit = async () => {
 		const msalClient = get(msalClientStore)
 		const accounts = msalClient.getAllAccounts()
-		// const p = await getOrg(accounts[0].username)
-		const p = await getOrg('christoffer.corzani@vtfk.no')
+		const p = await getOrg(accounts[0].username)
+		// const p = await getOrg('joggeslogge@vtfk.no')
 		console.log(p)
 		return p
 	}
