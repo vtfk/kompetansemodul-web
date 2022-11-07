@@ -34,7 +34,7 @@
                 </button>
             </div>
             <div class="sideNavItem">
-                <button on:click={() => { changePage('minenhet') } } class={`${currentPage === 'minenhet' ? ' siteNavItemActive' : ''}`}>
+                <button on:click={() => { changePage('minenhet', { setUnit: 'myUnit' }) } } class={`${currentPage === 'minenhet' ? ' siteNavItemActive' : ''}`}>
                     <div class="icon">
                         <IconOrg />
                     </div>

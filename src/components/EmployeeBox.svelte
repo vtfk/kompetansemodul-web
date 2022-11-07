@@ -7,6 +7,7 @@
     export let employeeData = {}
     export let backgroundColor = "--whiteTone"
     export let onClick = undefined
+    export let expandedView = false
 
     
     if (!employeeData.navn) employeeData.navn = "Jeg er en bug som ikke skal være her..."
@@ -31,69 +32,61 @@
     }
 
 </script>
-<!--
-<div class="box" style="background-color: var({backgroundColor};">
-    <div class ="badgeContainer">
-        <div class="badge">
-            {#await handlePhoto()}
-                <InitialsBadge size='large' initials={employeeInfo.initials} />
-            {:then res}
-                <InitialsBadge size='large' image={res}  />
-            {:catch error}
-                <InitialsBadge size='large' initials={employeeInfo.initials} />
-            {/await}
-        </div>
-        <div class="employee">
-            <h4>{employeeInfo.name}</h4>
-            <p class="posTitle">{employeeInfo.mainTitle}</p>
-        </div>
-    </div>
-    <div class="employeeInfo">
-        <p class="info">{employeeInfo.officeLocation}</p>
-        <p class="info">✉ {employeeInfo.email}</p>
-    </div>
-    <div class="employeeTasks">
-        <p class="info"> • Oppgave1</p>
-        <p class="info"> • Oppgave2</p>
-        <p class="info"> • Oppgave3</p>
-    </div>
-</div>
--->
 
 <div class="box" style="background-color: var({backgroundColor};">
-    <div class="mainBox" on:click={onClick}>
-        <div class="employeeInfo">
-            <div class="badge">
-                {#await handlePhoto()}
-                    <InitialsBadge size='large' initials={employeeInfo.initials} />
-                {:then res}
-                    <InitialsBadge size='large' image={res}  />
-                {:catch error}
-                    <InitialsBadge size='large' initials={employeeInfo.initials} />
-                {/await}
+    {#if !expandedView}
+        <div class="smallMainBox" on:click={onClick}>
+            <div class="employeeInfo small">
+                <div class="badge">
+                    {#await handlePhoto()}
+                        <InitialsBadge size='medium' initials={employeeInfo.initials} />
+                    {:then res}
+                        <InitialsBadge size='medium' image={res}  />
+                    {:catch error}
+                        <InitialsBadge size='medium' initials={employeeInfo.initials} />
+                    {/await}
+                </div>
+                <div class="smallEmployeeInfo">
+                    <h4>{employeeInfo.name}</h4>
+                    <p class="posTitle">{employeeInfo.mainTitle}</p>
+                </div>
             </div>
-            <h4>{employeeInfo.name}</h4>
-            <p class="posTitle">{employeeInfo.mainTitle}</p>
-            <p class="info">{employeeInfo.officeLocation}</p>
         </div>
-        <div class="employeeTasks">
-           {#if employeeInfo.tasks.length > 0}
-            {#each employeeInfo.tasks as task, i}
-                {#if i === 4}
-                    <div class="task">...<!--{ (employeeInfo.tasks.length-4) }--></div>
-                {:else if i < 4}
-                    <div class="task">{task}</div>
-                {/if}
-            {/each}
-            {:else}
-                <p class="task"><em>Har ikke lagt inn oppgaver</em></p>
-           {/if}
+    {:else}
+        <div class="mainBox" on:click={onClick}>
+            <div class="employeeInfo">
+                <div class="badge">
+                    {#await handlePhoto()}
+                        <InitialsBadge size='large' initials={employeeInfo.initials} />
+                    {:then res}
+                        <InitialsBadge size='large' image={res}  />
+                    {:catch error}
+                        <InitialsBadge size='large' initials={employeeInfo.initials} />
+                    {/await}
+                </div>
+                <h4>{employeeInfo.name}</h4>
+                <p class="posTitle">{employeeInfo.mainTitle}</p>
+                <p class="info">{employeeInfo.officeLocation}</p>
+            </div>
+            <div class="employeeTasks">
+            {#if employeeInfo.tasks.length > 0}
+                {#each employeeInfo.tasks as task, i}
+                    {#if i === 4}
+                        <div class="task">...<!--{ (employeeInfo.tasks.length-4) }--></div>
+                    {:else if i < 4}
+                        <div class="task">{task}</div>
+                    {/if}
+                {/each}
+                {:else}
+                    <p class="task"><em>Har ikke lagt inn oppgaver</em></p>
+            {/if}
+            </div>
         </div>
-    </div>
-    <div class="footer">
-        <p class="info">💬 <a target="_blank" href="https://teams.microsoft.com/l/chat/0/0?users={employeeInfo.email}">Send melding på Teams</a></p>
-        <p class="info">✉ <a href ="mailto:{employeeInfo.email}">Send e-post</a></p>
-    </div>
+        <div class="footer">
+            <p class="info">💬 <a target="_blank" href="https://teams.microsoft.com/l/chat/0/0?users={employeeInfo.email}">Send melding på Teams</a></p>
+            <p class="info">✉ <a href ="mailto:{employeeInfo.email}">Send e-post</a></p>
+        </div>
+    {/if}
 </div>
 
 <style>
@@ -110,22 +103,21 @@
         cursor: pointer;
         height: 100%;
     }
+    .smallMainBox {
+        padding: 1rem;
+        cursor: pointer;
+    }
+    .smallMainBox:hover {
+        padding: 1rem;
+        background-color: var(--lightGrey) !important;
+    }
     .mainBox:hover {
         background-color: var(--lightGrey) !important;
         /*background-color: var(--springWood) !important;*/
     }
-    .badgeContainer {
-        width: 100%;
-        display: flex;
-        padding-bottom: 1rem;
-        align-items: center;
-    }
     .badge {
         display: flex;
         justify-content: center;
-    }
-    .employee {
-        padding-left: 1rem;
     }
     .employeeTasks {
         text-align: center;
@@ -138,6 +130,15 @@
         text-align: center;
         border-bottom: 1px solid var(--greyTone);
         padding-bottom: 0.5rem;
+    }
+    .employeeInfo.small {
+        border-bottom: none;
+        display: flex;
+        align-items: center;
+        text-align: left;
+    }
+    .smallEmployeeInfo {
+        padding-left: 16px;
     }
     .footer {
         border-top: 1px solid var(--greyTone);

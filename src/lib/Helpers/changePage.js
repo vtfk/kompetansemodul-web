@@ -3,7 +3,7 @@ import { displayedPage, editingPersonalia, infoOpen, searchParameter, unitParame
 export const changePage = (pageName, options) => {
     // window.history.replaceState(null, null, pageName)
     if (options?.setPerson) searchParameter.set(options.setPerson)
-    if (options?.setUnit) unitParameter.set(options.unitParameter)
+    if (options?.setUnit) unitParameter.set(options.setUnit)
     editingPersonalia.set( {isEditing: false, editBlock: 'ingen'} )
     infoOpen.set('')
     displayedPage.set(pageName)
