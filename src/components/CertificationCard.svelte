@@ -28,7 +28,8 @@
     let tempCertification = JSON.parse(JSON.stringify(competence.certifications)) // Create a copy to display correct information (and maybe alert if user has edited) if user aborts edit
     
     let newCertification = {
-        year: 2022
+        year: 2022,
+        isActive: true
     }
 
     // Validation
@@ -59,7 +60,8 @@
 		// need to assign as a new object to make it "reactive"
 		tempCertification = [ ...tempCertification, newCertification ]
 		newCertification = {
-            year: 2022
+            year: 2022,
+            isActive: true
         }
 	}
 

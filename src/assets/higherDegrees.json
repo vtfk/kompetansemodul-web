@@ -1,0 +1,128 @@
+[
+    {
+        "value": "cand.jur (rettsvitenskap)",
+        "name": "cand.jur (rettsvitenskap)",
+        "isHigher": true,
+        "hasSubject": true
+    },
+    {
+        "value": "cand.hort (hagebruksfag)",
+        "name": "cand.hort (hagebruksfag)",
+        "isHigher": true,
+        "hasSubject": true
+    },
+    {
+        "value": "cand.agric (landbruksvitenskap)",
+        "name": "cand.agric (landbruksvitenskap)",
+        "isHigher": true,
+        "hasSubject": true
+    },
+    {
+        "value": "cand.act (forsikringsfag)",
+        "name": "cand.act (forsikringsfag)",
+        "isHigher": true,
+        "hasSubject": true
+    },
+    {
+        "value": "cand.med (medisin)",
+        "name": "cand.med (medisin)",
+        "isHigher": true,
+        "hasSubject": true
+    },
+    {
+        "value": "cand.med.vet (veterinærmedisin)",
+        "name": "cand.med.vet (veterinærmedisin)",
+        "isHigher": true,
+        "hasSubject": true
+    },
+    {
+        "value": "cand.theol (teologi)",
+        "name": "cand.theol (teologi)",
+        "isHigher": true,
+        "hasSubject": true
+    },
+    {
+        "value": "cand.mag",
+        "name": "cand.mag",
+        "isHigher": true,
+        "hasSubject": true
+    },
+    {
+        "value": "cand.min (bergvitenskap)",
+        "name": "cand.min (bergvitenskap)",
+        "isHigher": true,
+        "hasSubject": true
+    },
+    {
+        "value": "cand.musicae (musikkvitenskap)",
+        "name": "cand.musicae (musikkvitenskap)",
+        "isHigher": true,
+        "hasSubject": true
+    },
+    {
+        "value": "cand.odont (odontologi)",
+        "name": "cand.odont (odontologi)",
+        "isHigher": true,
+        "hasSubject": true
+    },
+    {
+        "value": "cand.oecon (sosialøkonomi)",
+        "name": "cand.oecon (sosialøkonomi)",
+        "isHigher": true,
+        "hasSubject": true
+    },
+    {
+        "value": "cand.paed (pedagogikk)",
+        "name": "cand.paed (pedagogikk)",
+        "isHigher": true,
+        "hasSubject": true
+    },
+    {
+        "value": "cand.paed.spec (spesialpedagogikk)",
+        "name": "cand.paed.spec (spesialpedagogikk)",
+        "isHigher": true,
+        "hasSubject": true
+    },
+    {
+        "value": "cand.pharm (farmasi)",
+        "name": "cand.pharm (farmasi)",
+        "isHigher": true,
+        "hasSubject": true
+    },
+    {
+        "value": "cand.philol (humanistiske fag)",
+        "name": "cand.philol (humanistiske fag)",
+        "isHigher": true,
+        "hasSubject": true
+    },
+    {
+        "value": "cand.philos (anneneksamen)",
+        "name": "cand.philos (anneneksamen)",
+        "isHigher": true,
+        "hasSubject": true
+    },
+    {
+        "value": "cand.polit (samfunnsvitenskap)",
+        "name": "cand.polit (samfunnsvitenskap)",
+        "isHigher": true,
+        "hasSubject": true
+    },
+    {
+        "value": "cand.real (realfag)",
+        "name": "cand.real (realfag)",
+        "isHigher": true,
+        "hasSubject": true
+    },
+    {
+        "value": "cand.scient (realfag)",
+        "name": "cand.scient (realfag)",
+        "isHigher": true,
+        "hasSubject": true
+    },
+    {
+        "value": "cand.sociol(sosiologi)",
+        "name": "cand.sociol(sosiologi)",
+        "isHigher": true,
+        "hasSubject": true
+    },
+]
