@@ -120,7 +120,7 @@
 
     const getPeriod = (exp) => {
         const from = `${exp.fromMonth ?? 'Ukjent måned'} ${exp.fromYear}`
-        return !exp.isActive ? `${from} - ${exp.toMonth ?? 'Ukjent måned'} ${exp.toYear ?? 'Ukjent år'}` : `${from} - `
+        return !exp.isActive ? `${from} - ${exp.toMonth ?? 'Ukjent måned'} ${exp.toYear ?? 'Ukjent år'}` : `${from} - pågår`
     }
 </script>
 

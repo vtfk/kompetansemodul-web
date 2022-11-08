@@ -39,47 +39,38 @@
         credit: 450
     }
 
-    let higherDegrees = ['Master', 'Bachelor', 'Doktorgrad', 'Årsstudium', 'Enkeltemne', 'Fireårig profesjonsstudie', 'Cand.mag.', 'Seksårig profesjonsstudie']
+    const customDegreeTitle = 'Spesifiser selv'
+
     let degreeInfo = [
         {
             name: 'Doktorgrad',
-            score: 450,
+            //score: 450,
+            isHigher: true,
             value: 'Doktorgrad'
         },
         {
-            name: 'Seksårig profesjonsstudie',
-            score: 360,
-            value: 'Seksårig profesjonsstudie'
-        },
-        {
             name: 'Master',
-            score: 300,
+            //score: 300,
+            isHigher: true,
             value: 'Master'
         },
         {
-            name: 'Fireårig profesjonsstudie',
-            score: 240,
-            value: 'Fireårig profesjonsstudie'
-        },
-        {
             name: 'Bachelor',
-            score: 180,
+            //score: 180,
+            isHigher: true,
             value: 'Bachelor'
         },
         {
             name: 'Årsstudium',
-            score: 60,
+            //score: 60,
+            isHigher: true,
             value: 'Årsstudium'
         },
         {
             name: 'Enkeltemne',
             score: 7.5,
+            isHigher: true,
             value: 'Enkeltemne'
-        },
-        {
-            name: 'Cand.mag.',
-            score: 210,
-            value: 'Cand.mag.'
         },
         {
             name: 'Fagbrev',
@@ -88,8 +79,142 @@
         {
             name: 'Videregående skole',
             value: 'Videregående skole'
+        },
+        {
+            "value": "cand.med (medisin)",
+            "name": "cand.med (medisin)",
+            "isHigher": true,
+            "hasSubject": true
+        },
+        {
+            "value": "cand.med.vet (veterinærmedisin)",
+            "name": "cand.med.vet (veterinærmedisin)",
+            "isHigher": true,
+            "hasSubject": true
+        },
+        {
+            "value": "cand.theol (teologi)",
+            "name": "cand.theol (teologi)",
+            "isHigher": true,
+            "hasSubject": true
+        },
+        {
+            "value": "cand.mag",
+            "name": "cand.mag",
+            "isHigher": true,
+            "hasSubject": true
+        },
+        {
+            "value": "cand.jur (rettsvitenskap)",
+            "name": "cand.jur (rettsvitenskap)",
+            "isHigher": true,
+            "hasSubject": true
+        },
+        {
+            "value": "cand.hort (hagebruksfag)",
+            "name": "cand.hort (hagebruksfag)",
+            "isHigher": true,
+            "hasSubject": true
+        },
+        {
+            "value": "cand.agric (landbruksvitenskap)",
+            "name": "cand.agric (landbruksvitenskap)",
+            "isHigher": true,
+            "hasSubject": true
+        },
+        {
+            "value": "cand.act (forsikringsfag)",
+            "name": "cand.act (forsikringsfag)",
+            "isHigher": true,
+            "hasSubject": true
+        },
+        {
+            "value": "cand.min (bergvitenskap)",
+            "name": "cand.min (bergvitenskap)",
+            "isHigher": true,
+            "hasSubject": true
+        },
+        {
+            "value": "cand.musicae (musikkvitenskap)",
+            "name": "cand.musicae (musikkvitenskap)",
+            "isHigher": true,
+            "hasSubject": true
+        },
+        {
+            "value": "cand.odont (odontologi)",
+            "name": "cand.odont (odontologi)",
+            "isHigher": true,
+            "hasSubject": true
+        },
+        {
+            "value": "cand.oecon (sosialøkonomi)",
+            "name": "cand.oecon (sosialøkonomi)",
+            "isHigher": true,
+            "hasSubject": true
+        },
+        {
+            "value": "cand.paed (pedagogikk)",
+            "name": "cand.paed (pedagogikk)",
+            "isHigher": true,
+            "hasSubject": true
+        },
+        {
+            "value": "cand.paed.spec (spesialpedagogikk)",
+            "name": "cand.paed.spec (spesialpedagogikk)",
+            "isHigher": true,
+            "hasSubject": true
+        },
+        {
+            "value": "cand.pharm (farmasi)",
+            "name": "cand.pharm (farmasi)",
+            "isHigher": true,
+            "hasSubject": true
+        },
+        {
+            "value": "cand.philol (humanistiske fag)",
+            "name": "cand.philol (humanistiske fag)",
+            "isHigher": true,
+            "hasSubject": true
+        },
+        {
+            "value": "cand.philos (anneneksamen)",
+            "name": "cand.philos (anneneksamen)",
+            "isHigher": true,
+            "hasSubject": true
+        },
+        {
+            "value": "cand.polit (samfunnsvitenskap)",
+            "name": "cand.polit (samfunnsvitenskap)",
+            "isHigher": true,
+            "hasSubject": true
+        },
+        {
+            "value": "cand.real (realfag)",
+            "name": "cand.real (realfag)",
+            "isHigher": true,
+            "hasSubject": true
+        },
+        {
+            "value": "cand.scient (realfag)",
+            "name": "cand.scient (realfag)",
+            "isHigher": true,
+            "hasSubject": true
+        },
+        {
+            "value": "cand.sociol(sosiologi)",
+            "name": "cand.sociol(sosiologi)",
+            "isHigher": true,
+            "hasSubject": true
+        },
+        {
+            "value": customDegreeTitle,
+            "name": customDegreeTitle,
+            "isHigher": true,
+            custom: true
         }
     ]
+    let higherDegrees = degreeInfo.filter(degree => degree.isHigher).map(deg => deg.name)
+    let hasSubjects = degreeInfo.filter(degree => degree.hasSubject).map(deg => deg.name)
 
     // Validation
     let canSave = false
@@ -103,16 +228,23 @@
             // What fields are we validating
             const valid = {
                 subject: true,
-                school: true
+                school: true,
+                customDegree: true
                 // specialization: true,
             }
             // Validation of each field
             if (!edu.subject || edu.subject.length < 1) {
-                valid.subject = false
-                canSave = false
+                if (!hasSubjects.includes(edu.degree)) { // If hasSubjects includes the degree, it means that we dont need subject specified in the input field
+                    valid.subject = false
+                    canSave = false
+                }
             }
             if (!edu.school || edu.school.length < 1) {
                 valid.school = false
+                canSave = false
+            }
+            if (edu.degree === customDegreeTitle && (!edu.customDegree || edu.customDegree.length < 1)) {
+                valid.customDegree = false
                 canSave = false
             }
             /*
@@ -175,6 +307,7 @@
         else if (degree === 'Enkeltemne') return '📄'
         else if (degree === 'Videregående skole') return '🏫'
         else if (degree === 'Doktorgrad') return '🤓'
+        else if (degree === customDegreeTitle) return '😣'
         else return '🎓'
     }
 
@@ -204,20 +337,38 @@
                     <div slot="first">
                         <label for="degree">Utdanningsgrad</label><br>
                         <select on:change={(e) => {onDegreeChange(e, tempEdu)} } name="degree" id="degree" bind:value={tempEdu.degree}>
-                            {#each degreeInfo as degree}
-                                <option value={degree.value}>{degree.name}</option>
-                            {/each}
+                            <optgroup label="Generelle grader">
+                                {#each degreeInfo.filter(deg => !deg.hasSubject && !deg.custom) as degree}
+                                    <option value={degree.value}>{degree.name}</option>
+                                {/each}
+                            </optgroup>
+                            <optgroup label="Cand. grader">
+                                {#each degreeInfo.filter(deg => deg.hasSubject) as degree}
+                                    <option value={degree.value}>{degree.name}</option>
+                                {/each}
+                            </optgroup>
+                            <optgroup label="Annet">
+                                <option value={customDegreeTitle}>{customDegreeTitle}</option>
+                            </optgroup>
                         </select>
-                        {#if tempEdu.degree && degreeInfo.find(degree => degree.name === tempEdu.degree).score}
+                        {#if tempEdu.degree && degreeInfo.find(degree => degree.name === tempEdu.degree).custom}
+                        <div>
+                            <label for="customDegree">Grad</label><label for="customDegree" class="validation">{!validation[i].customDegree ? '*' : '' }</label><br>
+                            <input type="text" class="{!validation[i].customDegree ? 'required' : '' }" bind:value={tempEdu.customDegree}>
+                        </div>
+                        {/if}
+                        {#if tempEdu.degree && degreeInfo.find(degree => degree.name === tempEdu.degree).score || degreeInfo.find(degree => degree.name === tempEdu.degree).custom}
                         <div>
                             <label for="credit">Studiepoeng/Vekttall</label><br>
                             <input type="number" bind:value={tempEdu.credit} />
                         </div>
                         {/if}
-                        <div>
-                            <label for="subject">{tempEdu.degree === 'Fagbrev' ? tempEdu.degree : tempEdu.degree === 'Videregående skole' ? 'Retning' : 'Fagområde'}</label><label for="subject" class="validation">{!validation[i].subject ? '*' : '' }</label><br>
-                            <DataList dataList={chooseSubjectDatalist(tempEdu.degree)} filterFunction={(input, obj) => obj.value.toLowerCase().includes(input.toLowerCase())} bind:inputValue={tempEdu.subject} placeholder={`Skriv inn ${['Fagbrev', 'Sertifisering'].includes(tempEdu.degree) ? tempEdu.degree.toLowerCase() : 'fagområde'} eller velg fra listen`} validation={true} validated={validation[i].subject} />
-                        </div>
+                        {#if !hasSubjects.includes(tempEdu.degree)}
+                            <div>
+                                <label for="subject">{tempEdu.degree === 'Fagbrev' ? tempEdu.degree : tempEdu.degree === 'Videregående skole' ? 'Retning' : 'Fagområde'}</label><label for="subject" class="validation">{!validation[i].subject ? '*' : '' }</label><br>
+                                <DataList dataList={chooseSubjectDatalist(tempEdu.degree)} filterFunction={(input, obj) => obj.value.toLowerCase().includes(input.toLowerCase())} bind:inputValue={tempEdu.subject} placeholder={`Skriv inn ${['Fagbrev', 'Sertifisering'].includes(tempEdu.degree) ? tempEdu.degree.toLowerCase() : 'fagområde'} eller velg fra listen`} validation={true} validated={validation[i].subject} />
+                            </div>
+                        {/if}
                         {#if higherDegrees.includes(tempEdu.degree)}
                         <div>
                             <label for="specialization">Fordypning</label><br>
@@ -266,15 +417,17 @@
             {#each competence.education as edu}
                 <InnerCard emoji={getEmoji(edu.degree)}>
                     <div slot="first">
-                        <h3>{edu.degree ?? 'Ukjent grad'}</h3>
-                        <h4>{edu.subject ?? 'Ukjent fagområde'}</h4>
+                        <h3>{edu.customDegree ? edu.customDegree : edu.degree ?? 'Ukjent grad'}</h3>
+                        {#if edu.subject && edu.subject.length > 0}
+                            <h4>{edu.subject ?? 'Ukjent fagområde'}</h4>
+                        {/if}
                         {#if edu.specialization}
                             <h4><em>{edu.specialization}</em></h4>
                         {/if}
                         {#if edu.credit}
                             <p>Studiepoeng: {edu.credit}</p>
                         {/if}
-                        <p>📅 {(edu.fromMonth && edu.toMonth) ? `${edu.fromMonth} ${edu.fromYear} - ${edu.toMonth} ${edu.toYear}` : `${edu.fromMonth} ${edu.fromYear} - `}</p>
+                        <p>📅 {(edu.fromMonth && edu.toMonth) ? `${edu.fromMonth} ${edu.fromYear} - ${edu.toMonth} ${edu.toYear}` : `${edu.fromMonth} ${edu.fromYear} - pågår`}</p>
                         <p>🏫 {edu.school ?? 'Ukjent skole'}</p>
                     </div>
                 </InnerCard>
