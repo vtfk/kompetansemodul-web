@@ -193,7 +193,7 @@
                 <div></div>
                 <div class="saveCancel">
                     {#if !canSave}
-                        <div class="userWarning"><strong>Alle de obligatoriske feltene(*) må være fylt ut før du kan lagre</strong></div>
+                        <div class="userWarning"><strong>🚫 Alle de obligatoriske feltene(*) må være fylt ut før du kan lagre</strong></div>
                     {/if}
                     <Button buttonText="Lagre" disabled={!canSave} onClick={saveChanges}><IconCheck slot="before" /></Button>
                     &nbsp&nbsp
