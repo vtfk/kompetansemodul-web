@@ -1,6 +1,8 @@
 <script>
     export let yearValue
     export let startYear = undefined
+    export let validation = false
+    export let validated = false
     export let expandYear = 0
     
     const years = (startYear) => {
@@ -16,7 +18,7 @@
     }
 </script>
 
-<select class="customSelect" bind:value={yearValue}>
+<select class="customSelect{(validation && !validated) ? ' required' : ''}" bind:value={yearValue}>
     {#each years(startYear).years as year }
     <option value={year}>
         {year}
@@ -26,7 +28,12 @@
 
 <style>
 .customSelect {
-        margin-bottom: 0.5rem;
-        display: inline-block;
-    }
+    margin-bottom: 0.5rem;
+    display: inline-block;
+}
+
+.customSelect.required {
+    border-width: 2px;
+    border-color: var(--red)
+}
 </style>

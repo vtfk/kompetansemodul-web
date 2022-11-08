@@ -44,12 +44,21 @@
             // What fields are we validating
             const valid = {
                 name: true,
+                yearEnd: true
             }
             // Validation of each field
             if (!cert.name || cert.name.length < 1) {
                 valid.name = false
                 canSave = false
             }
+
+            if (!cert.yearEnd || cert.yearEnd.length < 1) {
+                if(!cert.isActive) {
+                    valid.yearEnd = false
+                    canSave = false
+                }
+            }
+
             tempValidation.push(valid)
         }
         validation = JSON.parse(JSON.stringify(tempValidation))
@@ -114,9 +123,9 @@
                         </div>
                         {#if !tempCert.isActive }
                             <div>
-                                <label for="year">Utløpsdato</label><br>
+                                <label for="year">Utløpsdato</label><label for="to" class='validation'>{!validation[i].yearEnd ? '*' : '' }</label><br>
                                 {#if tempCert.year}
-                                    <SelectYears startYear={tempCert.year} expandYear={20} bind:yearValue={tempCert.yearEnd}/>
+                                    <SelectYears startYear={tempCert.year} expandYear={20} bind:yearValue={tempCert.yearEnd} validation={true} validated={validation[i].yearEnd}/>
                                 {/if}
                             </div>
                         {:else}

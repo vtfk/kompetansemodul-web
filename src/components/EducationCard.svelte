@@ -229,7 +229,9 @@
             const valid = {
                 subject: true,
                 school: true,
-                customDegree: true
+                customDegree: true,
+                toYear: true, 
+                toMonth: true
                 // specialization: true,
             }
             // Validation of each field
@@ -246,6 +248,20 @@
             if (edu.degree === customDegreeTitle && (!edu.customDegree || edu.customDegree.length < 1)) {
                 valid.customDegree = false
                 canSave = false
+            }
+
+            if (!edu.toYear || edu.toYear.lenght < 1) {
+                if (!edu.isActive) {
+                    valid.toYear = false
+                    canSave = false
+                }
+            }
+
+            if (!edu.toMonth || edu.toMonth < 1) {
+                if (!edu.isActive) {
+                    valid.toMonth = false
+                    canSave = false
+                }
             }
             /*
             if (higherDegrees.includes(edu.degree) && (!edu.specialization || edu.specialization.length < 1)) {
@@ -357,7 +373,7 @@
                             <input type="text" class="{!validation[i].customDegree ? 'required' : '' }" bind:value={tempEdu.customDegree}>
                         </div>
                         {/if}
-                        {#if tempEdu.degree && degreeInfo.find(degree => degree.name === tempEdu.degree).score || degreeInfo.find(degree => degree.name === tempEdu.degree).custom}
+                        {#if tempEdu.degree && (degreeInfo.find(degree => degree.name === tempEdu.degree).score || degreeInfo.find(degree => degree.name === tempEdu.degree).custom)}
                         <div>
                             <label for="credit">Studiepoeng/Vekttall</label><br>
                             <input type="number" bind:value={tempEdu.credit} />
@@ -387,11 +403,11 @@
                             </div>
                             {#if !tempEdu.isActive }
                             <div>
-                                <label for="to">Til</label><br>
-                                <div class="peroidContainer">
-                                    <SelectMonth bind:monthValue={tempEdu.toMonth}/>
+                                <label for="to">Til</label><label for="to" class='validation'>{!validation[i].toMonth || !validation[i].toYear ? '*' : '' }<br>
+                                    <div class="peroidContainer">
+                                    <SelectMonth bind:monthValue={tempEdu.toMonth} validation={true} validated={validation[i].toMonth} />
                                         {#if newEducation.fromYear}
-                                            <SelectYears startYear={tempEdu.fromYear} bind:yearValue={tempEdu.toYear}/>
+                                            <SelectYears startYear={tempEdu.fromYear} bind:yearValue={tempEdu.toYear} validation={true} validated={validation[i].toYear}/>
                                         {/if}
                                 </div>
                             </div>
