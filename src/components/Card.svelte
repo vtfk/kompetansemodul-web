@@ -10,7 +10,6 @@
     import InfoBox from './InfoBox.svelte';
     import IconRetry from './Icons/IconRetry.svelte';
     import { confetti } from '@neoconfetti/svelte';
-    import IconDelete from './Icons/IconDelete.svelte';
 
     // Props
     export let title = 'Ein tittel'
@@ -140,7 +139,7 @@
                     <h3 class="title">{title}</h3>
                     {#if disableInfoBox === false}
                         {#if infoBox}
-                            <div class="headerIcon" title={showInfoBox ? 'Lukk infoboks' : 'Åpne infoboks'} on:click={() => {handleInfoClick()}}><IconDelete /></div>
+                            <div class="headerIcon" title={showInfoBox ? 'Lukk infoboks' : 'Åpne infoboks'} on:click={() => {handleInfoClick()}}><div class="helpIconContainer"><IconHelp /></div></div>
                         {/if}
                     {:else}
                         <div></div>
@@ -290,6 +289,11 @@
         display: flex;
         justify-content: center;
         align-items: center;
+    }
+
+    .helpIconContainer {
+        width: 1.3rem;
+        flex-shrink: 0;
     }
 
     @-webkit-keyframes slide {
