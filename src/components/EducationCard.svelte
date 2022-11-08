@@ -357,7 +357,7 @@
                             <input type="text" class="{!validation[i].customDegree ? 'required' : '' }" bind:value={tempEdu.customDegree}>
                         </div>
                         {/if}
-                        {#if tempEdu.degree && degreeInfo.find(degree => degree.name === tempEdu.degree).score || degreeInfo.find(degree => degree.name === tempEdu.degree).custom}
+                        {#if tempEdu.degree && (degreeInfo.find(degree => degree.name === tempEdu.degree).score || degreeInfo.find(degree => degree.name === tempEdu.degree).custom)}
                         <div>
                             <label for="credit">Studiepoeng/Vekttall</label><br>
                             <input type="number" bind:value={tempEdu.credit} />
