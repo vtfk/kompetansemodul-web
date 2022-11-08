@@ -293,7 +293,7 @@
                         {/if}
                     </div>
                     <div slot="second">
-                        <label for="tull">Nøkkeloppgaver i denne stillingen</label>
+                        <label for="keytasks">Nøkkeloppgaver i denne stillingen</label>
                         {#if !(competence.positionTasks.find(pt => pt.positionId === position.systemId)).tasks.find(t => t.length > 0)}
                             <div><em>Ingen nøkkeloppgaver lagt inn</em></div>
                         {:else}
@@ -310,12 +310,12 @@
             {#each competence.otherPositions as position}
                 <InnerCard emoji='🛠' size="medium">
                     <div slot="first">
-                        <label>Rolle</label>
+                        <label for="role">Rolle</label>
                         <h4>{position.title ?? 'Ukjent tittel'}</h4>
                         <!--<h4>{getDepartment(position.arbeidssted.struktur).department}</h4>-->
                     </div>
                     <div slot="second">
-                        <label for="tull">Oppgaver</label>
+                        <label for="tasks">Oppgaver</label>
                         {#if !(competence.positionTasks.find(pt => pt.positionId === position.systemId)).tasks.find(t => t.length > 0)}
                             <div><em>Ingen underoppgaver lagt inn</em></div>
                         {:else}

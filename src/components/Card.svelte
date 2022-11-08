@@ -192,6 +192,9 @@
             {:else}
                 <div></div>
                 <div class="saveCancel">
+                    {#if !canSave}
+                        <div class="userWarning"><strong>Alle de obligatoriske feltene(*) må være fylt ut før du kan lagre</strong></div>
+                    {/if}
                     <Button buttonText="Lagre" disabled={!canSave} onClick={saveChanges}><IconCheck slot="before" /></Button>
                     &nbsp&nbsp
                     <Button buttonText="Avbryt" onClick={cancelEdit}><IconClose slot="before" /></Button>
@@ -279,6 +282,15 @@
         opacity: 0;
     }
 
+    .userWarning {
+        font-size: 1.2rem;
+        padding-right: 2rem;
+        color: red;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
     @-webkit-keyframes slide {
         100% { right: 0; }
     }
@@ -307,6 +319,19 @@
         .panel {
             margin-bottom: 2rem;
             padding: 32px 16px;
+        }
+    }
+
+    @media(max-width: 450px) {
+        .userWarning {
+            font-size: 1rem;
+            padding-right: 1rem;
+        }
+    }
+
+    @media(max-width: 370px) {
+        .userWarning {
+            display: none;
         }
     }
 
