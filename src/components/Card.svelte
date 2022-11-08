@@ -283,7 +283,7 @@
     }
 
     .userWarning {
-        font-size: 1.2rem;
+        font-size: 1rem;
         padding-right: 2rem;
         color: red;
         display: flex;
