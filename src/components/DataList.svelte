@@ -6,6 +6,8 @@
     export let displayNumberOfItems = 80
     export let rounded = false
     export let inputValue = ''
+    export let validation = false
+    export let validated = false
     export let maxLength = 2000
     export let dataList = [
         {
@@ -160,7 +162,7 @@
 </script>
 
 <div class="searchContainer" use:clickOutside on:click_outside={onBlur}>
-    <div class="searchBar{rounded ? ' rounded' : ''}{focusing && showPreview && (previewData.length > 0) ? ' focused' : ''}">
+    <div class="searchBar{rounded ? ' rounded' : ''}{focusing && showPreview && (previewData.length > 0) ? ' focused' : ''}{(validation && !validated) ? ' required' : '' }">
         <input bind:value={inputValue} {placeholder} on:keydown={onKeydown} on:focus={onFocus} on:click={focusOnClick} on:input={filterPreviewData} maxlength={maxLength} />
     </div>
     {#if focusing && showPreview && (previewData.length > 0)}
@@ -200,6 +202,10 @@
     }
     .searchBar.focused {
         border-radius: 0.5rem 0.5rem 0 0;
+    }
+    .searchBar.required {
+        border-width: 2px;
+        border-color: var(--red);
     }
     input {
         width: 100%;

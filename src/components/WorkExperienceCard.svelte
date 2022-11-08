@@ -135,12 +135,12 @@
                     <div slot="first">
                         <div>
                             <label for="position">Stilling</label><label for="position" class="validation">{!validation[i].position ? '*' : '' }</label><br>
-                            <DataList dataList={positions} filterFunction={(input, obj) => obj.value.toLowerCase().includes(input.toLowerCase())} bind:inputValue={tempWork.position} placeholder="Skriv inn stillingstittel eller velg fra listen" />
+                            <DataList dataList={positions} filterFunction={(input, obj) => obj.value.toLowerCase().includes(input.toLowerCase())} bind:inputValue={tempWork.position} placeholder="Skriv inn stillingstittel eller velg fra listen" validation={true} validated={validation[i].position} />
                         </div>
                         <div>
                             <div>
                                 <label for="employer">Arbeidsgiver</label><label for="employer" class="validation">{!validation[i].employer ? '*' : '' }</label><br>
-                                <input id="employer" type="text" bind:value={tempWork.employer}>
+                                <input class="{!validation[i].employer ? 'required' : '' }" id="employer" type="text" bind:value={tempWork.employer}>
                             </div>
                         </div>
                         <div>
@@ -181,7 +181,7 @@
                             <label for="tasks">Hovedoppgaver</label><br>
                             {#each  tempWork.tasks as task, j}
                                 <div class="tasks">
-                                    <input type="text" maxlength="45" bind:value={task} />
+                                    <input class="{!validation[i].tasks[j] ? 'required' : '' }" type="text" maxlength="45" bind:value={task} />
                                     <label for={task.toString()} class="validation">{!validation[i].tasks[j] ? '*' : '' }</label>
                                     <Button size="medium" onlyIcon={true} noBorder={true} onClick={() => removeTask(tempWork, task, j)} ><IconDelete slot="before"/></Button>
                                 </div>

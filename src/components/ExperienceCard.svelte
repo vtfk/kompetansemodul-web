@@ -132,11 +132,11 @@
                     <div slot="first">
                         <div>
                             <label for="position">Verv</label><label for="position" class="validation">{!validation[i].position ? '*' : '' }</label>
-                            <input id="position" type="text" bind:value={tempExp.position}>
+                            <input class="{!validation[i].position ? 'required' : '' }" id="position" type="text" bind:value={tempExp.position}>
                         </div>
                         <div>
                             <label for="organization ">Organisasjon</label><label for="organization" class="validation">{!validation[i].organization ? '*' : '' }</label>
-                            <input id="organization" type="text" bind:value={tempExp.organization}>
+                            <input class="{!validation[i].organization ? 'required' : '' }" id="organization" type="text" bind:value={tempExp.organization}>
                         </div>
                         <div class="checkboxContainer">
                             <input type="checkbox" id="active" bind:checked={tempExp.isActive} />

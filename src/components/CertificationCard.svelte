@@ -103,7 +103,7 @@
                             <label for="navn">Navn på Sertifisering</label>
                         {/if}
                         <label for="navn" class="validation">{!validation[i].name ? '*' : '' }</label>
-                        <input type="text" id="navn" bind:value={tempCert.name}>
+                        <input class="{!validation[i].name ? 'required' : '' }" type="text" id="navn" bind:value={tempCert.name}>
                         <label for="year">Når ble det gjennomført</label><br>
                         <SelectYears startYear={1950} bind:yearValue={tempCert.year}></SelectYears>
                         <div class="checkboxContainer">

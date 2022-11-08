@@ -103,8 +103,8 @@
             // What fields are we validating
             const valid = {
                 subject: true,
-                school: true,
-                specialization: true,
+                school: true
+                // specialization: true,
             }
             // Validation of each field
             if (!edu.subject || edu.subject.length < 1) {
@@ -115,36 +115,16 @@
                 valid.school = false
                 canSave = false
             }
+            /*
             if (higherDegrees.includes(edu.degree) && (!edu.specialization || edu.specialization.length < 1)) {
                 valid.specialization = false
                 canSave = false
             }
-
+            */
             tempValidation.push(valid)
         }
         validation = JSON.parse(JSON.stringify(tempValidation))
     }
-
-    // Reactive on education degree
-    /*
-    $: {
-        if (Array.isArray(tempEducation) && tempEducation.length > 0) {
-            tempEducation.forEach(edu => {
-                if (edu.degree) {
-                    const score = degreeInfo.find(degree => degree.name === edu.degree).score
-                    if (score) {
-                        if (!edu.credit || edu.degree !== edu.creditDegree) {
-                            edu.credit = score
-                            edu.creditDegree = edu.degree
-                        }
-                    } else {
-                        delete edu.credit
-                        delete edu.creditDegree
-                    }
-                }
-            })
-        }
-    }*/
 
     // Functions
     const addEducation = () => {
@@ -236,11 +216,11 @@
                         {/if}
                         <div>
                             <label for="subject">{tempEdu.degree === 'Fagbrev' ? tempEdu.degree : tempEdu.degree === 'Videregående skole' ? 'Retning' : 'Fagområde'}</label><label for="subject" class="validation">{!validation[i].subject ? '*' : '' }</label><br>
-                            <DataList dataList={chooseSubjectDatalist(tempEdu.degree)} filterFunction={(input, obj) => obj.value.toLowerCase().includes(input.toLowerCase())} bind:inputValue={tempEdu.subject} placeholder={`Skriv inn ${['Fagbrev', 'Sertifisering'].includes(tempEdu.degree) ? tempEdu.degree.toLowerCase() : 'fagområde'} eller velg fra listen`} />
+                            <DataList dataList={chooseSubjectDatalist(tempEdu.degree)} filterFunction={(input, obj) => obj.value.toLowerCase().includes(input.toLowerCase())} bind:inputValue={tempEdu.subject} placeholder={`Skriv inn ${['Fagbrev', 'Sertifisering'].includes(tempEdu.degree) ? tempEdu.degree.toLowerCase() : 'fagområde'} eller velg fra listen`} validation={true} validated={validation[i].subject} />
                         </div>
                         {#if higherDegrees.includes(tempEdu.degree)}
                         <div>
-                            <label for="specialization">Fordypning</label><label for="specialization" class="validation">{!validation[i].specialization ? '*' : '' }</label><br>
+                            <label for="specialization">Fordypning</label><br>
                             <input type="text" bind:value={tempEdu.specialization} />
                         </div>
                         {/if}
@@ -271,7 +251,7 @@
                         </div>
                         <div>
                             <label for="school">Skole</label><label for="school" class="validation">{!validation[i].school ? '*' : '' }</label><br>
-                            <input type="text" bind:value={tempEdu.school}>
+                            <input type="text" class="{!validation[i].school ? 'required' : '' }" bind:value={tempEdu.school}>
                         </div>
                     </div>
                     <div slot="right">

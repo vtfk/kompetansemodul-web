@@ -305,6 +305,11 @@ input[type=checkbox], input[type=radio] {
   width: 1.2rem;
 }
 
+input.required {
+  outline: none !important;
+  border: 2px solid var(--red) !important;
+}
+
 @media (prefers-color-scheme: light) {
   :root {
     color: #213547;
