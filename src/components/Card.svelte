@@ -10,6 +10,7 @@
     import InfoBox from './InfoBox.svelte';
     import IconRetry from './Icons/IconRetry.svelte';
     import { confetti } from '@neoconfetti/svelte';
+    import IconDelete from './Icons/IconDelete.svelte';
 
     // Props
     export let title = 'Ein tittel'
@@ -139,7 +140,7 @@
                     <h3 class="title">{title}</h3>
                     {#if disableInfoBox === false}
                         {#if infoBox}
-                            <div class="headerIcon" title={showInfoBox ? 'Lukk infoboks' : 'Åpne infoboks'} on:click={() => {handleInfoClick()}}><IconHelp /></div>
+                            <div class="headerIcon" title={showInfoBox ? 'Lukk infoboks' : 'Åpne infoboks'} on:click={() => {handleInfoClick()}}><IconDelete /></div>
                         {/if}
                     {:else}
                         <div></div>
