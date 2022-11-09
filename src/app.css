@@ -138,6 +138,21 @@ a:hover {
 }
 
 .link {
+  color: #005260;
+  cursor: pointer;
+}
+.link:hover {
+  text-decoration: underline;
+  color: #005260;
+}
+.link-noColor {
+  cursor: pointer;
+}
+.link-noColor:hover {
+  text-decoration: underline;
+}
+
+.link2 {
   font-size: 16px;
   line-height: 24px;
   min-height: 24px;
@@ -145,42 +160,42 @@ a:hover {
   cursor: pointer;
 }
 
-.link.no-style {
+.link2.no-style {
   text-decoration: none;
 }
 
-.link.small {
+.link2.small {
   font-size: 14px;
   line-height: 24px;
   min-height: 24px;
 }
 
-.link.has-icon .link-icon {
+.link2.has-icon .link-icon {
     display: inline-block;
     transition: all 200ms ease-in-out;
 }
 
-.link.has-icon .link-icon.left-icon {
+.link2.has-icon .link-icon.left-icon {
   margin-right: calc(var(--baseUnit) * 2);
 }
 
-.link.has-icon .link-icon.right-icon {
+.link2.has-icon .link-icon.right-icon {
   margin-left: calc(var(--baseUnit) * 2);
 }
 
-.link.has-icon:hover {
+.link2.has-icon:hover {
   text-decoration: none;
 }
 
-.link.has-icon:hover .link-icon.left-icon {
+.link2.has-icon:hover .link-icon.left-icon {
   transform: translateX(-4px);
 }
 
-.link.has-icon:hover .link-icon.right-icon {
+.link2.has-icon:hover .link-icon.right-icon {
   transform: translateX(4px);
 }
 
-.link:hover {
+.link2:hover {
   text-decoration: underline;
 }
 
