@@ -1,5 +1,6 @@
 <script>
     import { get } from 'svelte/store'
+    import { environment } from '../../config'
     import { displayedPage } from '../lib/services/store';
     import Logo from './Icons/Logo.svelte'
     import IconHelp from './Icons/IconHelp.svelte';
@@ -21,7 +22,9 @@
     </div>
     <div style="text-align: center; width: 100%;">
         <p style="padding: 0px;"><strong>Kompetanse</strong></p>
-        <p style="padding: 0px;"><strong>TEST</strong></p>
+        {#if environment === 'test'}
+            <p style="padding: 0px;"><strong>TEST</strong></p>
+        {/if}
     </div>
     <div class="sideNavItemsContainer">
         <div class="sideNavFlexHelper">

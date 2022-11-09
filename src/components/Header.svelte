@@ -1,6 +1,6 @@
 <script>
     import InitialsBadge from "./InitialsBadge.svelte";
-    import Menu from "./Menu.svelte";
+    import { environment } from '../../config'
     import SearchBar from "./SearchBar.svelte";
     import { getPerson }  from '../lib/services/useApi'
     import { get } from 'svelte/store'
@@ -74,7 +74,7 @@
             <div class="logoContainer">
                 <Logo />
             </div>
-            &nbsp&nbsp&nbsp<strong>Kompetanse TEST</strong>
+            &nbsp&nbsp&nbsp<strong>Kompetanse{environment === 'test' ? ' TEST' : ''}</strong>
         </div>
         <div class="mobileRight" on:click={() => {showMenu = !showMenu}}>
             <div class="menuButton">

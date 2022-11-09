@@ -13,3 +13,4 @@ export const authConfig = {
     storeAuthStateInCookie: false // Set this to "true" if you are having issues on IE11 or Edge
   }
 }
+export const environment = import.meta.env.VITE_ENV ?? 'test'
