@@ -2,6 +2,7 @@
     import Card from "./Card.svelte";
     import InitialsBadge from "./InitialsBadge.svelte"
     import { getPhoto } from '../lib/services/useApi'
+    import { changePage } from '../lib/Helpers/changePage'
     
     // Props
     export let employeeData = {}
@@ -16,6 +17,7 @@
         mainDepartment: mainPosition?.arbeidssted?.navn ?? 'Har ikke aktiv hovedstilling',
         officeLocation: employeeData.azureAd?.officeLocation ?? 'Ukjent kontorplass',
         email: employeeData.userPrincipalName ?? 'Ukjent e-post',
+        orgId: mainPosition?.arbeidssted?.organisasjonsId ?? null
     }
 
     // EASTER EGG
@@ -49,7 +51,13 @@
                 </div>
                 <h3>{employeeInfo.name}</h3>
             </div>
-            <h4>{employeeInfo.mainTitle} - {employeeInfo.mainDepartment}</h4>
+            <h4>
+                {#if employeeInfo.orgId}
+                    {employeeInfo.mainTitle} - <span class="link-noColor" on:click={(() => { changePage('minenhet', { setUnit: employeeInfo.orgId }) })}>{employeeInfo.mainDepartment}</span>
+                {:else}
+                    {employeeInfo.mainTitle} - {employeeInfo.mainDepartment}
+                {/if}
+            </h4>
             <p>{employeeInfo.officeLocation}</p>
             <p>✉ {employeeInfo.email}</p>
         </div>

@@ -37,19 +37,19 @@
 		{#if units.length > 1 && !chosenUnit}
 			<h3>Du er ansatt i flere enheter, vennligst velg den du ønsker å se</h3>
 			{#each units as unit}
-				<p class="unitChoose" on:click={() => {changePage('minenhet', { setUnit: unit.organisasjonsId })}}>{unit.navn}</p>
+				<p class="link" on:click={() => {changePage('minenhet', { setUnit: unit.organisasjonsId })}}>{unit.navn}</p>
 			{/each}
 		{:else}
 			{#each units as unit}
 				{#if unit.overordnet && unit.overordnet.organisasjonsId !== unit.organisasjonsId}
-					<p class="unitChoose center" on:click={() => {changePage('minenhet', { setUnit: unit.overordnet.organisasjonsId })}}>{unit.overordnet.navn}</p>
+					<p class="link center" on:click={() => {changePage('minenhet', { setUnit: unit.overordnet.organisasjonsId })}}>{unit.overordnet.navn}</p>
 				{/if}
 				<h2 class="unitHeader center">{unit.navn}</h2>
 				{#if unit.underordnet.length > 0}
 					<h3 class="center">Underenheter</h3>
 					<div class="center childrenContainer">
 						{#each unit.underordnet as kid}
-							<p class="unitChoose center" on:click={() => {changePage('minenhet', { setUnit: kid.organisasjonsId })}}>{kid.navn}</p>
+							<p class="link center" on:click={() => {changePage('minenhet', { setUnit: kid.organisasjonsId })}}>{kid.navn}</p>
 						{/each}
 					</div>
 				{/if}
@@ -59,9 +59,9 @@
 						<div class="toggleView"><div class="toggleContainer"><label for="toggle">Utvidet visning</label><input id="toggle" type="checkbox" bind:checked={expandedView} /></div></div>
 					</div>
 					<div class="employeeContainer">
-						<EmployeeBox expandedView={expandedView} onClick={() => changePage('person', { setPerson: unit.leder.ansattnummer })} employeeData={{ ...unit.leder, stillingstittel: (unit.arbeidsforhold.find(forhold => forhold.userPrincipalName === unit.leder.userPrincipalName)?.stillingstittel ?? 'Leder'), tasks: (unit.arbeidsforhold.find(forhold => forhold.userPrincipalName === unit.leder.userPrincipalName)?.tasks ?? ['Leder']),  department: unit.navn}} />
+						<EmployeeBox expandedView={expandedView} onClick={() => changePage('person', { setPerson: unit.leder.ansattnummer, setPrevious: { activeUnit, name: unit.navn } } )} employeeData={{ ...unit.leder, stillingstittel: (unit.arbeidsforhold.find(forhold => forhold.userPrincipalName === unit.leder.userPrincipalName)?.stillingstittel ?? 'Leder'), tasks: (unit.arbeidsforhold.find(forhold => forhold.userPrincipalName === unit.leder.userPrincipalName)?.tasks ?? ['Leder']),  department: unit.navn}} />
 						{#each unit.arbeidsforhold.filter(employee => employee.userPrincipalName !== unit.leder.userPrincipalName) as emp, i}
-							<EmployeeBox expandedView={expandedView} onClick={() => changePage('person', { setPerson: emp.userPrincipalName })} employeeData={{...emp, department: unit.navn}} />
+							<EmployeeBox expandedView={expandedView} onClick={() => changePage('person', { setPerson: emp.userPrincipalName, setPrevious: { activeUnit, name: unit.navn } })} employeeData={{...emp, department: unit.navn}} />
 						{/each}
 					</div>
 				{/if}
@@ -100,18 +100,9 @@
 		gap: 8px;
 	}
 
-	.unitChoose {
-		color: #005260;
-		cursor: pointer;
-	}
 	.toggleView {
 		position: absolute;
 		right: 0px;
-	}
-
-	.unitChoose:hover {
-		text-decoration: underline;
-		color: #005260;
 	}
 
 </style>

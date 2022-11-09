@@ -1,7 +1,7 @@
 <script>
 	import { getMe/* , vitnemaal */ }  from '../lib/services/useApi'
 	import { get } from 'svelte/store'
-	import { editingPersonalia, infoOpen } from '../lib/services/store'
+	import { editingPersonalia, prevUnit } from '../lib/services/store'
 	import EmployeeCard from '../components/EmployeeCard.svelte'
 	import IconSpinner from '../components/Icons/IconSpinner.svelte';
 	import EducationCard from '../components/EducationCard.svelte';
@@ -15,6 +15,7 @@
 	import CountySelectionCard from '../components/CountySelectionCard.svelte'
 	import CertificationCard from '../components/CertificationCard.svelte'
 	import { personaliaHelp } from '../lib/Helpers/helptexts'
+	import { changePage } from '../lib/Helpers/changePage'
 
 	// State
 	let showInfoBox = false
@@ -29,6 +30,11 @@
     editingPersonalia.subscribe(value => {
         editInfo = value
     })
+	let previousUnit = get(prevUnit)
+    prevUnit.subscribe(value => {
+        previousUnit = value
+    })
+	console.log(previousUnit)
 
 </script>
 
@@ -38,6 +44,9 @@
 			<span style="display: inline-block;"><IconSpinner width="200px" /></span>
 		</div>
 	{:then res}
+		{#if previousUnit}
+			<p on:click={() => changePage('minenhet', { setUnit: previousUnit.activeUnit } )}>⬅ { previousUnit.name }</p>
+		{/if}
 		<div class="pageIntro">
 			{#if !editInfo.isEditing}
 				<h2>Hei, {res.fornavn}! Her kan du se og redigere din kompetanse</h2>

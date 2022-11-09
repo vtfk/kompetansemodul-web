@@ -1,16 +1,23 @@
 <script>
 	import { getPerson }  from '../lib/services/useApi'
-	import { searchParameter }  from '../lib/services/store'
+	import { get } from 'svelte/store'
+	import { searchParameter, prevUnit }  from '../lib/services/store'
 	import EmployeeCard from '../components/EmployeeCard.svelte'
 	import IconSpinner from '../components/Icons/IconSpinner.svelte';
 	import PositionsCard from '../components/PositionsCard.svelte';
 	import EmployeeInfoCard from '../components/EmployeeInfoCard.svelte';
+	import { changePage } from '../lib/Helpers/changePage'
 
 	let personParameter
 
 	searchParameter.subscribe(value => {
 		personParameter = value
 	})
+	let previousUnit = get(prevUnit)
+    prevUnit.subscribe(value => {
+        previousUnit = value
+    })
+	console.log(previousUnit)
 
 	const getPersoon = async (personParameter) => {
 		const p = await getPerson(personParameter)
@@ -22,6 +29,9 @@
 
 <div class="content">
 	{#if personParameter}
+		{#if previousUnit}
+			<p class="link" on:click={() => changePage('minenhet', { setUnit: previousUnit.activeUnit } )}>{"<-"}Tilbake til { previousUnit.name }</p>
+		{/if}
 		<h2>Ansattinformasjon</h2>
 		{#await getPersoon(personParameter)}
 		<p><IconSpinner width="2rem" /></p>
