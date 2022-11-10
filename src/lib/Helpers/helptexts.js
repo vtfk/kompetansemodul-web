@@ -6,7 +6,7 @@ export const personaliaHelp = "<h4>Hvorfor samler vi inn din kompetanse på denn
 
 // EmployeeInfoCard
 // Viser nå forsalg til ny tekst
-export const employeeInfoCardHelp = "<p>Her finner du ferdig utfylt informasjon om deg. Dette er informasjon som arbeidsgiver allerede har lagret om deg. <br><br><strong>NB!</strong> “Første ansettelses dato“ er den datoen du for første gang ble registrert i HR-systemet, den sier nødvendigvis ikke noe om hvor lenge du har vært ansatt.</p>"
+export const employeeInfoCardHelp = "<p>Her finner du ferdig utfylt informasjon om deg. Dette er informasjon som arbeidsgiver allerede har lagret om deg. <br><br><strong>NB!</strong> “Første ansettelses-dato“ er den datoen du for første gang ble registrert i HR-systemet, den sier nødvendigvis ikke noe om hvor lenge du har vært ansatt.</p>"
 // Gammel teskt
 // "<p>Her finner du ferdig utfylt informasjon om deg. Dette er informasjon som arbeidsgiver allerede har lagret om deg. Hvis dette ikke stemmer, kan du kontakte nærmeste leder.</p>"
 

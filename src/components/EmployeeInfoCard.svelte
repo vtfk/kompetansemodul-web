@@ -49,7 +49,7 @@
                 <div class="value">{displayData.category}</div>
             </div>
             <div class="infoPair">
-                <div class="desc">Første ansettelses dato</div>
+                <div class="desc">Første ansettelses-dato</div>
                 <div class="value">{displayData.employedSince}</div>
             </div>
             <div class="infoPair">
