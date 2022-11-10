@@ -55,7 +55,7 @@
             if (!cert.yearEnd || cert.yearEnd.length < 1) {
                 if(!cert.isActive) {
                     valid.yearEnd = false
-                    canSave = false
+                    canSave = false 
                 }
             }
 
