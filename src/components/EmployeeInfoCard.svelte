@@ -14,6 +14,9 @@
         const dateList = date.slice(0,10).split('-')
         return `${dateList[2]}.${dateList[1]}.${dateList[0]}`
     }
+
+
+    const zip = getZipCodeInfo(employeeData.bostedsadresse?.postnummer ?? 'Ukjent postnummer')
  
     const displayData = {
         name: `${employeeData.fornavn} ${employeeData.etternavn}`,
@@ -21,7 +24,7 @@
         preLocation: employeeData.azureAd?.city ?? 'Ansatt etter sammenslåing',
         category: employeeData.personalressurskategori?.navn ?? 'Ukjent',
         employedSince: employeeData.ansettelsesperiode?.start ? convertDate(employeeData.ansettelsesperiode.start) : '🤷‍♂️',
-        zipCode: employeeData.bostedsadresse?.postnummer ?? 'Ukjent postnummer'
+        zipPlace: (zip && zip.Poststed === zip.Kommunenavn) ? zip.Poststed : zip ? `${zip.Poststed}, ${zip.Kommunenavn}` : 'Har ikke gyldig postnummer i HR' 
     }
 
     const leaders = employeeData.aktiveArbeidsforhold.map(forhold => {
@@ -31,6 +34,7 @@
             workPlace: forhold.arbeidssted?.navn || 'Ukjent plass'
         }
     }).filter(upn => upn !== false && upn !== '' && upn !== 'Ukjent leder') 
+    
 </script>
 
 <Card title={title} backgroundColor={backgroundColor} disableInfoBox={disableInfoBox} infoBox={{content: employeeInfoCardHelp}}>
@@ -49,8 +53,8 @@
                 <div class="value">{displayData.employedSince}</div>
             </div>
             <div class="infoPair">
-                <div class="desc">Bostedskommune</div>
-                <div class="value">{getZipCodeInfo(displayData.zipCode)?.Kommunenavn ?? 'Har ikke gyldig postnummer i HR' }</div>
+                <div class="desc">Poststed/Kommune</div>
+                <div class="value">{displayData.zipPlace}</div>
             </div>
             <div class="infoPair">
                 <div class="desc">Nåværende kontorplass</div>
