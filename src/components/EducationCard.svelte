@@ -404,11 +404,11 @@
                             {#if !tempEdu.isActive }
                             <div>
                                 <label for="to">Til</label><label for="to" class='validation'>{!validation[i].toMonth || !validation[i].toYear ? '*' : '' }<br>
-                                    <div class="peroidContainer">
-                                    <SelectMonth bind:monthValue={tempEdu.toMonth} validation={true} validated={validation[i].toMonth} />
-                                        {#if newEducation.fromYear}
-                                            <SelectYears startYear={tempEdu.fromYear} bind:yearValue={tempEdu.toYear} validation={true} validated={validation[i].toYear}/>
-                                        {/if}
+                                <div class="peroidContainer">
+                                <SelectMonth bind:monthValue={tempEdu.toMonth} validation={true} validated={validation[i].toMonth} />
+                                    {#if newEducation.fromYear}
+                                        <SelectYears startYear={tempEdu.fromYear} bind:yearValue={tempEdu.toYear} validation={true} validated={validation[i].toYear}/>
+                                    {/if}
                                 </div>
                             </div>
                             {:else}
