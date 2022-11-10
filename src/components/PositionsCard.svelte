@@ -255,7 +255,7 @@
             {/each}
             <!-- Data fra Competence db -->
             <br />
-            <h3>Andre midlertidige oppgaver</h3>
+            <h3>Andre roller og oppgaver</h3>
             <h4>Som ikke dekkes i stillingene over</h4>
             {#each tempOtherPositions as position, i}
                 <InnerCard emoji='🛠' size="medium">
@@ -306,7 +306,7 @@
             {/each}
             <!-- Data fra Competence db -->
             <br />
-            <h3>Andre midlertidige oppgaver</h3>
+            <h3>Andre roller og oppgaver</h3>
             {#each competence.otherPositions as position}
                 <InnerCard emoji='🛠' size="medium">
                     <div slot="first">
