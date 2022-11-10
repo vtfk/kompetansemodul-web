@@ -45,7 +45,9 @@
             const valid = {
                 position: true,
                 organization: true,
-                toMonthOrYear: true
+                toMonthOrYear: true,
+                toYear: true,
+                toMonth: true
             }
             // Validation of each field
             if (!exp.position || exp.position.length < 1) {
@@ -59,6 +61,20 @@
             if (!exp.isActive && ((!exp.toMonth || exp.toMonth.length < 1) || (!exp.toYear || exp.toYear.length < 1))) {
                 valid.toMonthOrYear = false
                 canSave = false
+            }
+
+            if (!exp.toYear || exp.toYear.lenght < 1) {
+                if (!exp.isActive) {
+                    valid.toYear = false
+                    canSave = false
+                }
+            }
+
+            if (!exp.toMonth || exp.toMonth < 1) {
+                if (!exp.isActive) {
+                    valid.toMonth = false
+                    canSave = false
+                }
             }
 
             tempValidation.push(valid)
@@ -153,9 +169,9 @@
                             <div>
                                 <label for="to">Til</label><label for="to" class='validation'>{!validation[i].toMonthOrYear ? '*' : '' }</label><br>
                                 <div class="peroidContainer">
-                                    <SelectMonth bind:monthValue={tempExp.toMonth} />
+                                    <SelectMonth bind:monthValue={tempExp.toMonth} validation={true} validated={validation[i].toMonth} />
                                         {#if newExperience.fromYear}
-                                            <SelectYears startYear={tempExp.fromYear} bind:yearValue={tempExp.toYear} />
+                                            <SelectYears startYear={tempExp.fromYear} bind:yearValue={tempExp.toYear} validation={true} validated={validation[i].toYear} />
                                         {/if}
                                 </div>
                             </div>

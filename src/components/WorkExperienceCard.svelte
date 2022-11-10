@@ -54,6 +54,8 @@
             const valid = {
                 position: true,
                 employer: true,
+                toYear: true,
+                toMonth: true
             }
             // Validation of each field
             if (!exp.position || exp.position.length < 1) {
@@ -64,6 +66,21 @@
                 valid.employer = false
                 canSave = false
             }
+
+            if (!exp.toYear || exp.toYear.lenght < 1) {
+                if (!exp.isActive) {
+                    valid.toYear = false
+                    canSave = false
+                }
+            }
+
+            if (!exp.toMonth || exp.toMonth < 1) {
+                if (!exp.isActive) {
+                    valid.toMonth = false
+                    canSave = false
+                }
+            }
+
             const tempTaskValidation = []
             for(const task of exp.tasks) {
                 if (!task || task < 1) {
@@ -162,11 +179,11 @@
                             </div>
                             {#if !tempWork.isActive }
                             <div>
-                                <label for="to">Til</label>
+                                <label for="to">Til</label> <label for="to" class='validation'>{!validation[i].toMonth || !validation[i].toYear ? '*' : '' }
                                 <div class="peroidContainer">
-                                    <SelectMonth bind:monthValue={tempWork.toMonth}/>
+                                    <SelectMonth bind:monthValue={tempWork.toMonth} validation={true} validated={validation[i].toMonth}/>
                                         {#if newWorkExperience.fromYear}
-                                            <SelectYears startYear={tempWork.fromYear} bind:yearValue={tempWork.toYear}/>
+                                            <SelectYears startYear={tempWork.fromYear} validation={true} validated={validation[i].toYear} bind:yearValue={tempWork.toYear}/>
                                         {/if}
                                 </div>
                             </div>
@@ -178,7 +195,7 @@
                     </div>
                     <div slot="second">
                         <div>
-                            <label for="tasks">Hovedoppgaver</label><br>
+                            <label for="tasks">Nøkkeloppgaver</label><br>
                             {#each  tempWork.tasks as task, j}
                                 <div class="tasks">
                                     <input class="{!validation[i].tasks[j] ? 'required' : '' }" type="text" maxlength="45" bind:value={task} />
@@ -207,7 +224,7 @@
                         <p>📅 {(work.fromMonth && work.toMonth) ? `${work.fromMonth} ${work.fromYear} - ${work.toMonth} ${work.toYear}` : `${work.fromMonth} ${work.fromYear} - `}</p>
                     </div>
                     <div slot="second">
-                        <label for='noe'>Hovedoppgaver</label><br />
+                        <label for='noe'>Nøkkeloppgaver</label><br />
                         {#if work.tasks && work.tasks.length > 0}
                             {#each work.tasks as task, i}
                                 {#if task[i] === undefined}
