@@ -46,4 +46,4 @@ export const gdprCard = "Modulen følger bestemmelsene i personvernforordningen 
 export const dataCard = "Opplysningene beskrevet under formål 2.A i personvernerklæringen vil bli tilgjengelig for ledere i dagens sektortilhørighet VTFK i tillegg til relevante nøkkelpersoner i hovedprosjektet, HR og BDK. Opplysningene beskrevet under formål 2.B vil bli tilgjengelig for ledere i ny fylkeskommune og andre med tjenstlige behov."
 
 // Vil du lese mer? 
-export const moreCard = "Du finner mer informasjon på innsida under"
+export const moreCard = "Du finner mer informasjon på innsida under «vi bygger nye fylkeskommuner», eller ved å trykke"

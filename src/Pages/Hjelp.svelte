@@ -4,9 +4,9 @@
 
 	let name = 'Hjelp';
 	let dataTitle = 'Hvem kan se mine data?'
-	let dataBackgroundColor = '--varme-2'
+	let dataBackgroundColor = '--luft-2'
 	let personvernTitle = 'GDPR og personvern'
-	let personvernBackgroundColor = '--luft-2'
+	let personvernBackgroundColor = '--varme-2'
 	let infoTitle = 'Informasjon'
 	let infoBackgroundColor = '--gress-2'
 	let merTitle = 'Vil du lese mer?'
@@ -25,7 +25,7 @@
 		{dataCard}
 	</Card>
 	<Card title={merTitle} editable={false} backgroundColor={merBackgroundColor}>
-		{moreCard} <a href="https://vtfk.sharepoint.com/sites/innsida-varorganisasjon/SitePages/Vibyggernyefylker.aspx">"vi bygger nye fylkeskommuner".</a>
+		{moreCard} <a href="https://vtfk.sharepoint.com/sites/innsida-varorganisasjon/SitePages/Vibyggernyefylker.aspx">her.</a>
 	</Card>
 </div>
 
