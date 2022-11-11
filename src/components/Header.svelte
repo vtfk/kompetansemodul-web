@@ -68,6 +68,11 @@
         -->
     </div>
 </div>
+<div class="testEnvWarn">
+    {#if environment === 'test'}
+        <h1 style="padding: 0px; color:red;">{name}, DU ER NÅ I TEST</h1>
+    {/if}
+</div>
 <div class="mobileHeader">
     <div class="mobileNav">
         <div class="mobileLeft">
@@ -95,6 +100,11 @@
     </div>
     <div class="mobileSearchBar">
         <SearchBar rounded={true} debounceMs={1000} showPreview={true} placeholder="Søk etter ansatt her" search={searchFunc} callback={searchCallback} previewMapper={previewMapper} />
+    </div>
+    <div>
+        {#if environment === 'test'}
+            <h1 style="padding: 0px; color:red;">{name}, DU ER NÅ I TEST</h1>
+        {/if}
     </div>
 </div>
 
@@ -186,6 +196,9 @@
         }
         .mobileHeader {
             display: block;
+        }
+        .testEnvWarn {
+            display: none;
         }
     }
 
