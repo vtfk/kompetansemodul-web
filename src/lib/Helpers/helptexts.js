@@ -34,3 +34,16 @@ export const certificationCardHelp = "<p>Kurs og sertifiseringer hvor du har til
 
 // ExperienceCard
 export const experienceCardHelp = "<p>Verv hvor du har tilegnet deg kompetanse som er relevant. </p>"
+
+// HelpPage
+// Informasjon 
+export const infoCard = "Kompetansekartleggingen skal gi oss en helhetlig digital oversikt over kompetansen til ansatte i VTFK og bidra til å anta om begge de nye fylkeskommunene har tilstrekkelig kompetanse til å bemanne alle funksjoner."
+
+// GDPR og personvern
+export const gdprCard = "Modulen følger bestemmelsene i personvernforordningen (GDPR) for innsamling og lagring. Ansatte vil få tilsendt en personvernerklæring med utfyllende informasjon. Link til personvernerklæring finner du her:"
+
+// Hvem kan se mine data
+export const dataCard = "Opplysningene beskrevet under formål 2.A i personvernerklæringen vil bli tilgjengelig for ledere i dagens sektortilhørighet VTFK i tillegg til relevante nøkkelpersoner i hovedprosjektet, HR og BDK. Opplysningene beskrevet under formål 2.B vil bli tilgjengelig for ledere i ny fylkeskommune og andre med tjenstlige behov."
+
+// Vil du lese mer? 
+export const moreCard = "Du finner mer informasjon på innsida under"
