@@ -12,6 +12,7 @@
     // Props
     export let name;
     export let initials;
+    export let roles = []
 
     // State
     let showMenu = false;
