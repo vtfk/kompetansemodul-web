@@ -25,6 +25,11 @@
 		return p[0]
 	}
 
+	const isPrivileged = (isPrivileged) => {
+		if(isPrivileged) return true
+		if(!isPrivileged) return false
+		
+	}
 </script>
 
 <div class="content">
@@ -38,7 +43,8 @@
 		{:then res}
 			<EmployeeCard employeeData={res} />
 			{#if res.isPrivileged}
-				<EmployeeInfoCard employeeData={res} disableInfoBox={true} hideTextBox={true} />
+				<EmployeeInfoCard employeeData={res} disableInfoBox={true} hideTextBox={true} isPrivileged={isPrivileged(res.isPrivileged)}/>
+				{console.log(res.isPrivileged)}
 				<PositionsCard employeeData={res} competence={res.competenceData} canEdit={false} disableInfoBox={true} />
 			{/if}
 		{:catch error}
