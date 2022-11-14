@@ -53,7 +53,6 @@
 				return units.find(u => u.organisasjonsId === child.organisasjonsId)
 			}).filter(u => u !== null) // Filter out units with gyldighetsperiode slutt
 		}
-		console.log(units.find(unit => unit.organisasjonsId === 'hoved'))
 		return [units.find(unit => unit.organisasjonsId === 'hoved')]
 	} 
 
@@ -141,7 +140,6 @@
 
 	const getAdminSettings = async () => {
 		const res = await getSettings()
-		console.log(res)
 		adminSettings = res[0]
 		delete adminSettings._id
 		if (!adminSettings.oblig) adminSettings.oblig = {
@@ -164,7 +162,6 @@
 		try {
 			const res = await saveSettings(adminSettings)
 		} catch (error) {
-			console.log(error)
 		}
 		isSaving = false
 	}

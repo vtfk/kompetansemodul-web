@@ -32,7 +32,7 @@
         return await getPerson(query)
     }
     const searchCallback = searchRes => {
-        console.log('we got ', searchRes)
+        // Do something with the searchCallback
     }
     const previewMapper = (input) => {
         return input.map(item => {
@@ -55,7 +55,7 @@
     <div class="headerLeft">
         <SearchBar rounded={true} debounceMs={1000} showPreview={true} placeholder="Søk etter ansatt her" search={searchFunc} callback={searchCallback} previewMapper={previewMapper} />
     </div>
-    <div class="headerRight" style="cursor: pointer;" on:click={() => console.log('')}>
+    <div class="headerRight" style="cursor: pointer;">
         <div class="name">
             <p>{name}</p>
         </div>

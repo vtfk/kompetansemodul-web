@@ -119,9 +119,7 @@
         if (checkIfChanges()) {
             await saveCompetence({...competence, workExperience: tempWorkExperience})
             competence.workExperience = JSON.parse(JSON.stringify(tempWorkExperience))
-        } else {
-            console.log('Ingen endring, gidder ikke lagre')
-        }
+        } 
 	}
 
     const checkIfChanges = () => {

@@ -120,8 +120,6 @@
         if (checkIfChanges()) {
             await saveCompetence({...competence, experience: tempExperience})
             competence.experience = JSON.parse(JSON.stringify(tempExperience))
-        } else {
-            console.log('Ingen endring, gidder ikke lagre')
         }
 	}
 

@@ -7,10 +7,10 @@
     }
     export let extras = {}
 
-    $: {
-        const isChanged = newValue => console.log('Fra PersonCard:', newValue)
-        isChanged(personData)
-    }
+    // $: { //
+    //     const isChanged = newValue => console.log('Fra PersonCard:', newValue)
+    //     isChanged(personData)
+    // }
 </script>
 
 <div class="person-card">

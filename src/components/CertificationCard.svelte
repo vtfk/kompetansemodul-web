@@ -82,8 +82,6 @@
         if (checkIfChanges()) {
             await saveCompetence({...competence, certifications: tempCertification})
             competence.certifications = JSON.parse(JSON.stringify(tempCertification))
-        } else {
-            console.log('Ingen endring, gidder ikke lagre')
         }
 	}
 

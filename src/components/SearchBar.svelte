@@ -135,7 +135,6 @@
             if (error.response?.status === 404) searchError = 'Bruker ikke funnet... 😬'
             else if (error.response?.status === 401) searchError = 'Du har ikke lov å søke på det 🚫'
             else searchError = "En feil har oppstått - vennligst prøv igjen"
-            console.log(error)
         }
         timeout = null
     }

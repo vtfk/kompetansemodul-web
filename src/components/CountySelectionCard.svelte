@@ -22,18 +22,13 @@
 
     // State
     let tempPerfCounty = JSON.parse(JSON.stringify(competence.perfCounty)) // Create a copy to display correct information (and maybe alert if user has edited) if user aborts edit
-    
-    // Validation
-    let canSave = false
 
     // Functions
     const saveFunc = async () => {
         if (checkIfChanges()) {
             await saveCompetence({...competence, perfCounty: tempPerfCounty})
             competence.perfCounty = JSON.parse(JSON.stringify(tempPerfCounty))
-        } else {
-            console.log('Ingen endring, gidder ikke lagre')
-        }
+        } 
 	}
 
     const checkIfChanges = () => {

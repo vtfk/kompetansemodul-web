@@ -17,11 +17,9 @@
     prevUnit.subscribe(value => {
         previousUnit = value
     })
-	console.log(previousUnit)
 
 	const getPersoon = async (personParameter) => {
 		const p = await getPerson(personParameter)
-		console.log(p)
 		return p[0]
 	}
 

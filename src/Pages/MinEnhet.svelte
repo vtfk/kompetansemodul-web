@@ -24,7 +24,6 @@
 		} else {
 			res = await getOrg(unit)
 		}
-		console.log(res)
 		return res
 	}
 

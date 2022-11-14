@@ -89,7 +89,7 @@
         else if (navigator.userAgent.toLowerCase().includes('firefox') || navigator.userAgent.toLowerCase().includes('safari')) {
             // workaround for FireFox / Safari (because they suck!!) - scroll doesn't work when behavior smooth it set by code or by css (scroll-behavior: smooth)
             window.scrollTo({ top: topOfCard, left: 0 })
-            console.log('USE A REAL BROWSER 🤬')
+            // console.log('USE A REAL BROWSER 🤬')
         } else {
             window.scrollTo({ top: topOfCard, left: 0, behavior: 'smooth' })
         }
@@ -126,7 +126,6 @@
 
     const handleComponentKeyUp = event => {
         if (editInfo.isEditing && editInfo.editBlock === title && event.key === 'Escape') {
-            console.log('Escape clicked on', title, '- Will abort editing')
             cancelEdit()
         }
     }

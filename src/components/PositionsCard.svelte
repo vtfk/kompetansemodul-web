@@ -26,17 +26,15 @@
     if (!competence.positionTasks) competence.positionTasks = []
     if (!competence.otherPositions) competence.otherPositions = []
     
-    // console.log(competence.positionTasks)
+   
 
     // state
     let availableTasks = {}
-    // Nedenfor endrer vi antall tasks med maxTasks
-    const maxTasks = 20
+
     // Add tasks if needed
     for (const forhold of employeeData.aktiveArbeidsforhold) {
         const positionTask = competence.positionTasks.find(task => task.positionId === forhold.systemId)
         const level = forhold.arbeidssted.struktur.length > 4 ? forhold.arbeidssted.struktur.length - 4 : 0
-        // console.log(forhold.arbeidssted.struktur[level].kortnavn) // Høre om hvilke oppgaver lederne ønsker å se
         availableTasks[forhold.arbeidssted.struktur[level].kortnavn] = []
         if (!positionTask) {
             competence.positionTasks.push({
@@ -127,8 +125,6 @@
             await saveCompetence({...competence, positionTasks: tempPositionTasks, otherPositions: tempOtherPositions})
             competence.positionTasks = JSON.parse(JSON.stringify(tempPositionTasks))
             competence.otherPositions = JSON.parse(JSON.stringify(tempOtherPositions))
-        } else {
-            console.log('Ingen endring, gidder ikke lagre')
         }
 	}
 

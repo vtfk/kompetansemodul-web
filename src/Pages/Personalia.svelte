@@ -22,7 +22,6 @@
 
 	const getMee = async () => {
 		const me = await getMe()
-		console.log(me)
 		return me
 	}
 
@@ -34,7 +33,6 @@
     prevUnit.subscribe(value => {
         previousUnit = value
     })
-	console.log(previousUnit)
 
 </script>
 

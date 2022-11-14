@@ -12,6 +12,5 @@ export const changePage = (pageName, options) => {
     editingPersonalia.set( {isEditing: false, editBlock: 'ingen'} )
     infoOpen.set('')
     displayedPage.set(pageName)
-    console.log(window.location.pathname)
 }
 

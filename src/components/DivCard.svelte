@@ -36,9 +36,7 @@
         if (checkIfChanges()) {
             await saveCompetence({...competence, other: tempOther})
             competence.other = JSON.parse(JSON.stringify(tempOther))
-        } else {
-            console.log('Ingen endring, gidder ikke lagre')
-        }
+        } 
 	}
 
     const checkIfChanges = () => {
