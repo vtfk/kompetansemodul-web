@@ -42,6 +42,7 @@ select {
 
     /* colors */
     --red: #E40017;
+    --white: var(--whiteTone);
     --gin: #EAF3EF;
     --swansDown: #D4E6DC;
     --pixieGreen: #BFDCB2;
