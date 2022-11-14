@@ -89,4 +89,8 @@
 		min-height: 24px;
 		margin-left: 2rem;
 	}
+
+	img {
+		width: 100%;
+	}
 </style>
