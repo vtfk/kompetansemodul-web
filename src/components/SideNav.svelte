@@ -8,7 +8,11 @@
     import IconOrg from './Icons/IconOrg.svelte'
     import IconSearch from './Icons/IconSearch.svelte';
     import { changePage } from '../lib/Helpers/changePage'
+    import { adminRole } from '../../config'
+    import IconSettings from './Icons/IconSettings.svelte';
     
+    // Props
+    export let roles = []
 
     let currentPage = get(displayedPage)
     displayedPage.subscribe(() => {
@@ -62,6 +66,16 @@
                 </button>
             </div>
             -->
+            {#if roles.includes(adminRole)}
+                <div class="sideNavItem">
+                    <button on:click={() => { changePage('admin')} } class={currentPage === 'admin' ? 'siteNavItemActive' : ''}>
+                        <div class="icon">
+                            <IconSettings />
+                        </div>
+                        <p>Admin</p>
+                    </button>
+                </div>
+            {/if}
             <div class="sideNavItem">
                 <button on:click={() => { changePage('hjelp')} } class={currentPage === 'hjelp' ? 'siteNavItemActive' : ''}>
                     <div class="icon">
@@ -94,7 +108,7 @@
         align-items: center;
         justify-content: center;
         margin-top: 0px;
-        margin-bottom: 300px;
+        margin-bottom: 150px;
         width: 100%;
         text-align: center;
     }
