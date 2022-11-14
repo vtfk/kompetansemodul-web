@@ -71,7 +71,6 @@
             </div> -->
         </div>
     </div>
-    {console.log(isPrivileged)}
     {#if hideTextBox === false}
         {#each leaders.map(leader => leader.upn) as leader}
             {#if leader === employeeData.userPrincipalName}

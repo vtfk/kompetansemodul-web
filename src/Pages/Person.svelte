@@ -44,7 +44,6 @@
 			<EmployeeCard employeeData={res} />
 			{#if res.isPrivileged}
 				<EmployeeInfoCard employeeData={res} disableInfoBox={true} hideTextBox={true} isPrivileged={isPrivileged(res.isPrivileged)}/>
-				{console.log(res.isPrivileged)}
 				<PositionsCard employeeData={res} competence={res.competenceData} canEdit={false} disableInfoBox={true} />
 			{/if}
 		{:catch error}
