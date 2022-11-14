@@ -241,6 +241,7 @@
                     <div slot="second">
                         <div>
                             <label for="tasks">Nøkkeloppgaver i denne stillingen</label><br>
+                            <p class="keytaskInfo">I stikkordsform</p>
                             {#each tempPositionTasks.find(pt => pt.positionId === position.systemId).tasks as task, i}
                                 <div class="tasks">
                                     <DataList maxLength={45} dataList={getAvailableTasks(position, tempPositionTasks)} filterFunction={(input, obj) => obj.value.toLowerCase().includes(input.toLowerCase()) || obj.category.toLowerCase().startsWith(input.toLowerCase()) } bind:inputValue={task} validation={true} validated={validation[position.systemId][i]} />
@@ -342,5 +343,9 @@
     .tasks {
         margin-bottom: 0.20rem;
         display: flex;
+    }
+    .keytaskInfo {
+        font-size: 0.7rem;
+        font-style: italic;
     }
 </style>

@@ -81,6 +81,16 @@
             value: 'Videregående skole'
         },
         {
+            name: 'Ingeniør',
+            isHigher: true,
+            value: 'Ingeniør'
+        },
+        {
+            name: 'Sivilingeniør',
+            isHigher: true,
+            value: 'Sivilingeniør'
+        },
+        {
             "value": "cand.med (medisin)",
             "name": "cand.med (medisin)",
             "isHigher": true,
