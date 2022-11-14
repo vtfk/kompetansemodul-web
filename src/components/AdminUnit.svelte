@@ -91,9 +91,9 @@
 
 </script>
 
-<div class="unit level-{level}" style="padding-left: {level * 40}px;">
+<div class="unit level-{level}" style="margin-left: {level * 40}px;">
     <div class="unitContainer">
-        <span class="title {unit.underordnet.length > 0 ? 'hasChildren' : ''}" on:click={toggleOpen}><span class={unit.underordnet.length === 0 ? 'hideMe' : ''}>{open ? '↘ ' : '➡ '}</span>{unit.navn}</span>
+        <span class="title {unit.underordnet.length > 0 ? 'hasChildren' : ''}" on:click={toggleOpen}><span class={unit.underordnet.length === 0 ? 'hideMe' : ''}>{open ? '↘ ' : '➡ '}</span>{unit.navn} {adminSettings.oblig.chosenUnits.find(u => u.organisasjonsId === unit.organisasjonsId) ? '✅' : ''}</span>
         <span class="toggle" on:click={toggleEmployees}>
             {getChosen(unit.arbeidsforhold, adminSettings.oblig.chosenEmployees).length > 0 ? '👨🏻‍🤝‍👨🏻' : '👥'}{getChosen(unit.arbeidsforhold, adminSettings.oblig.chosenEmployees).length}/{unit.arbeidsforhold.length}
         </span>
@@ -102,18 +102,18 @@
         </span>
         <div>
             <p class="link" on:click={() => addUnit(unit)}>
-                Velg ansatte
+                Velg enhet
             </p>
             <p class="link" on:click={() => removeUnit(unit)}>
-                Fjern ansatte
+                Fjern enhet
             </p>
         </div>
         <div>
             <p class="link" on:click={() => { chooseUnitAndBelow = 1; addUnit(unit) }}>
-                Velg ansatte og ansatte i underenheter
+                Velg enhet og underenheter
             </p>
             <p class="link" on:click={() => { chooseUnitAndBelow = 2; removeUnit(unit) }}>
-                Fjern ansatte og ansatte i underenheter
+                Fjern enhet og underenheter
             </p>
         </div>
     </div>
@@ -151,9 +151,11 @@
         border-left: 1px solid var(--mork);
         padding-left: 24px;
         margin-left: 24px;
+        margin-bottom: 16px;
     }
     .unit {
-        padding: 0.3rem;
+        padding: 8px;
+        border-bottom: 1px solid var(--mork);
     }
 
     .hasChildren:hover {

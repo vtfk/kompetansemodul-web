@@ -126,13 +126,16 @@
 		for (const emp of unit.arbeidsforhold) {
 			if (!adminSettings.oblig.chosenEmployees.find(e => e.userPrincipalName === emp.userPrincipalName)) adminSettings.oblig.chosenEmployees.push(emp)
 		}
+		if (!adminSettings.oblig.chosenUnits.find(u => u.organisasjonsId === unit.organisasjonsId)) adminSettings.oblig.chosenUnits.push({ organisasjonsId: unit.organisasjonsId, navn: unit.navn, kortnavn: unit.kortnavn, leder: unit.leder.userPrincipalName })
 		adminSettings.oblig.chosenEmployees = adminSettings.oblig.chosenEmployees
+		adminSettings.oblig.chosenUnits = adminSettings.oblig.chosenUnits
 	}
 
 	const removeUnit = (unit) => {
 		for (const emp of unit.arbeidsforhold) {
             adminSettings.oblig.chosenEmployees = adminSettings.oblig.chosenEmployees.filter(e => e.userPrincipalName !== emp.userPrincipalName)
         }
+		adminSettings.oblig.chosenUnits = adminSettings.oblig.chosenUnits.filter(u => u.organisasjonsId !== unit.organisasjonsId)
 		adminSettings.oblig.chosenEmployees = adminSettings.oblig.chosenEmployees
 	}
 
@@ -212,10 +215,12 @@
 				{#if isSaving}
 					<IconSpinner />
 				{:else}
-					<Button buttonText="Lagre innstillinger" onClick={saveAdminSettings} ><IconCheck slot="before" /></Button>
+					<Button buttonText="Lagre innstillinger" onClick={saveAdminSettings} ><IconCheck slot="before" /></Button><br />
 				{/if}
 			</div>
 			<p>{adminSettings.oblig.chosenEmployees.length} av {employees.length} ansatte valgt</p>
+			<a href="mailto:{adminSettings.oblig.chosenUnits.map(u => u.leder).join(';')}">📧 Opprett e-post til ledere for valgte enheter</a>
+			<a href="mailto:{adminSettings.oblig.chosenEmployees.map(e => e.userPrincipalName).join(';')}">📧 Opprett e-post til alle valgte ansatte</a>
 			<AdminUnit unit={structurizeOrg(filteredOrg)[0]} adminSettings={adminSettings} getChosen={getChosen} chooseEmployee={chooseEmployee} addUnit={addUnit} removeUnit={removeUnit} />
 		{:catch error}
 			<p style="color: red">{error.message}</p>
