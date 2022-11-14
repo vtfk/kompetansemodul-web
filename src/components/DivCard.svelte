@@ -59,7 +59,8 @@
         {#if editInfo.isEditing && editInfo.editBlock === title}
         <div class="contentContainer">
             <div class="innerContainer firstContainer">
-                <label for="itteno">Er du den eneste i din stilling / enhet med kritiske oppgaver kun du jobber med?</label>
+                <label for="itteno">Er du den eneste med din stilling og/eller ansvarsområde i din enhet?</label><br><br>
+                <label for="jaaaaa">Hvis ja: uttyp hvilke oppgaver det gjelder</label><br>
                 <div class="soloRadio">
                     <label for="ja">Ja</label>
                     <input type="radio" id="ja" name="solo" value="Ja" bind:group={tempOther.soloRole}>
@@ -89,7 +90,8 @@
             <div class="contentContainer">
                 <div class="innerContainer firstContainer">
                     <div>
-                        <label for="itteno">Er du den eneste i din stilling / enhet med kritiske oppgaver kun du jobber med?</label>
+                        <label for="itteno">Er du den eneste med din stilling og/eller ansvarsområde i din enhet?</label><br><br>
+                        <label for="jaaaaa">Hvis ja: uttyp hvilke oppgaver det gjelder</label><br>
                         <div><em id = "noneSolo"> </em></div>
                         <div><em id = "noneDesctription"> </em></div>
                         {#if !competence.other?.soloRole}
