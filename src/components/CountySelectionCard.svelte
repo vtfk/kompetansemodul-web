@@ -9,10 +9,10 @@
     export let title = 'Ønsket fylkeskommune / arbeidssted etter oppdeling'
     export let backgroundColor = '--ecruWhite'
     export let competence = {
-		perfCounty: []
+		perfCounty: null
 	}
 
-    if (!competence.perfCounty) competence.perfCounty = []
+    if (!competence.perfCounty) competence.perfCounty = null
 
     // Store
     let editInfo = get(editingPersonalia)
