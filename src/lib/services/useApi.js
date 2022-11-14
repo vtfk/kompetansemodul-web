@@ -67,6 +67,12 @@ export const getTasks = async (parameter) => await apiRequest('get', `GetTasks/$
 // Save my edited competence
 export const saveCompetence = async (competence) => await apiRequest('post', 'UpsertCompetence', competence)
 
+// Get settings
+export const getSettings = async () => await apiRequest('get', 'Settings')
+
+// Save edited settings
+export const saveSettings = async (adminSettings) => await apiRequest('post', 'Settings', adminSettings)
+
 // Get employee positions (data list)
 export const getPositions = async () => await apiRequest('get', 'GetPositions')
 

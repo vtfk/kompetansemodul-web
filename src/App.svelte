@@ -11,6 +11,7 @@
   import Person from './Pages/Person.svelte';
   import SideNav from './components/SideNav.svelte';
   import MinEnhet from './Pages/MinEnhet.svelte';
+  import Admin from './Pages/Admin.svelte';
 
 
   let page = get(displayedPage)
@@ -37,11 +38,11 @@
       Kun VTFK-ansatte har tilgang på denne portalen. Ta kontakt med IT-service desk dersom du mener du skal ha tilgang.
       {:else}
         <div class="sidenavWrapper">
-          <SideNav />
+          <SideNav roles={response.idTokenClaims?.roles ?? []} />
           </div>
         <div class="contentWrapper">
           <div class="content">
-            <Header initials={getInitials(response.name)} name={response.name} />
+            <Header initials={getInitials(response.name)} name={response.name} roles={response.idTokenClaims?.roles ?? []} />
               { #if page === 'personalia'}
                   <Personalia />
               { :else if page === 'minenhet' }
@@ -50,6 +51,8 @@
                   <Person />
               { :else if page === 'organisasjon' }
                   <Orgstruktur />
+              { :else if page === 'admin' }
+                  <Admin />
               { :else if page === 'hjelp' }
                   <Hjelp />
               { :else if page === '' }
