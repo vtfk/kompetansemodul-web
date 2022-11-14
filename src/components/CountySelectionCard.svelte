@@ -59,7 +59,7 @@
         <div class="contentContainer">
             <div>
                 <!-- <label>Valgt ønsket fylkeskommune/arbeidssted etter oppdeling</label> -->
-                {#if competence.perfCounty.length === 0}
+                {#if !competence.perfCounty || competence.perfCounty.length === 0}
                     <div><em>Ikke fylt ut av ansatt</em></div>
                 {:else}
                     {competence.perfCounty}
