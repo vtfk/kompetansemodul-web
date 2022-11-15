@@ -15,7 +15,8 @@
     export let roles = []
 
     // State
-    let showMenu = false;
+    let showMenu = false
+    let showTempInfo = true
 
     // Functions
     const changePageSearch = (pageName) => {
@@ -108,6 +109,19 @@
         {/if}
     </div>
 </div>
+{#if showTempInfo}
+<div class="tempInfo">
+    <p><strong>Info:</strong> Løsningen er under kontinuerlig utvikling - noe av det vi jobber med å få på plass nå er:</p>
+    <ul style="padding-left: 24px">
+        <li><em>Informasjon til ledere om hvilke ansatte som skal/har lagt inn data inne på "Min enhet"</em></li>
+        <li><em>Legge på "Konstituert" og "Midlertidig" i stillingsinformasjon der det gjelder</em></li>
+        <li><em>Organisajonskart/oversikt</em></li>
+    </ul>
+    <p>Har du spørsmål om løsningen - sjekk ut "Hjelp"-siden eller <a href="mailto:delprosjektHR@vtfk.no?subject=Spørsmål-kompetanse-verktøy">send en e-post til delprosjektHR@vtfk.no</a></p>
+    <br />
+    <p class="link" on:click={() => {showTempInfo = false}}>Lukk info</p>
+</div>
+{/if}
 
 <style>
     .header {
@@ -179,6 +193,11 @@
     }
     .mobileMenu.showMenu {
         display: block;
+    }
+    .tempInfo {
+        margin-bottom: 24px;
+        padding: 24px;
+        background-color: var(--siv-2);
     }
     .menuOption {
         padding: 1rem;
