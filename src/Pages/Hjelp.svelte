@@ -33,7 +33,7 @@
 	</Card>
 	<Card title={veilederTitle} editable={false} backgroundColor={veilederBackgroundColor}>
 		<div>
-			<img src="src\assets\veileder.png" alt="veileder"/>
+			<img src="veileder.png" alt="veileder"/>
 		</div>
 		<dl>
 			<dt>1. Spørsmålstegn</dt>
@@ -57,7 +57,7 @@
 		</dl>
 		<br>
 		<div>
-			<img src="src\assets\veilderDatalist.png" alt="veileder2"/>
+			<img src="veilderDatalist.png" alt="veileder2"/>
 		</div>
 		<dl>
 		<dt>9. Dataliste</dt>
@@ -66,7 +66,7 @@
 		</dl>
 		<br>
 		<div>
-			<img src="src\assets\veilederPågår.png" alt="veileder3"/>
+			<img src="veilederPagar.png" alt="veileder3"/>
 		</div>
 		<dl>
 		<dt>10. Pågår/Ingen Utløpsdato</dt>
