@@ -116,6 +116,7 @@
         <li><em>Informasjon til ledere om hvilke ansatte som skal/har lagt inn data inne på "Min enhet"</em></li>
         <li><em>Legge på "Konstituert" og "Midlertidig" i stillingsinformasjon der det gjelder</em></li>
         <li><em>Organisajonskart/oversikt</em></li>
+        <li><em>At bruker kan selv velge rekkefølge på utdanning/arbeidserfaring osv..</em></li>
     </ul>
     <p>Har du spørsmål om løsningen - sjekk ut "Hjelp"-siden eller <a href="mailto:delprosjektHR@vtfk.no?subject=Spørsmål-kompetanse-verktøy">send en e-post til delprosjektHR@vtfk.no</a></p>
     <br />
