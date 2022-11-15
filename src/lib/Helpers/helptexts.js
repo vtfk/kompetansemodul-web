@@ -1,6 +1,6 @@
 // Personalia
 export const personaliaHelp = "<h4>Hvorfor samler vi inn din kompetanse på denne måten?</h4><p>Vi ønsker en digital oversikt over kompetansen til ansatte i fylkesadministrasjonen." 
-+"Intensjonen er å jobbe systematisk med rekruttering og kompetanseutvikling i både VTFK og de nye organisasjonene. Kompetansekartlegging er et verktøy for å anta om to nye fylkeskommuner personalmessig vil være i stand til å løse sitt samfunnsoppdrag</p> "
++" Intensjonen er å jobbe systematisk med rekruttering og kompetanseutvikling i både VTFK og de nye organisasjonene. Kompetansekartlegging er et verktøy for å anta om to nye fylkeskommuner personalmessig vil være i stand til å løse sitt samfunnsoppdrag</p> "
 +"<br><p>Husk at du også finner informasjon om kartleggingsverktøyet, GDPR og hva informasjon skal brukes til under fanen hjelp, på Innsida, i personvernerklæringen og i andre informasjonskanaler. Dersom du har spørsmål eller noe er uklart er du alltid velkommen til å "
 +"sende oss en epost på <a href=mailto:delprosjektHR@vtfk.no?subject=Spørsmål-kompetanse-verktøy>delprosjektHR@vtfk.no</a></p>"
 
