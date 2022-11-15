@@ -6,7 +6,7 @@
     import { divCardHelp } from '../lib/Helpers/helptexts'
 
     // Props
-    export let title = 'Kritiske oppgaver'
+    export let title = 'Er du den eneste med din stilling og/eller ansvarsområde i din enhet?'
     export let backgroundColor = '--potPourri'
     export let competence = {
 		other: {}
@@ -57,8 +57,7 @@
         {#if editInfo.isEditing && editInfo.editBlock === title}
         <div class="contentContainer">
             <div class="innerContainer firstContainer">
-                <label for="itteno">Er du den eneste med din stilling og/eller ansvarsområde i din enhet?</label><br><br>
-                <label for="jaaaaa">Hvis ja: uttyp hvilke oppgaver det gjelder</label><br>
+                <label for="jaaaaa">Hvis ja, utdyp hvilke oppgaver det gjelder</label><br>
                 <div class="soloRadio">
                     <label for="ja">Ja</label>
                     <input type="radio" id="ja" name="solo" value="Ja" bind:group={tempOther.soloRole}>
@@ -67,7 +66,7 @@
                 </div>
                 {#if tempOther.soloRole === 'Ja'}
                     <div class="textareaContainer">
-                        <label for="description">Beskriv dine kritiske oppgaver (maks 200 tegn)</label><label for="description" class="validation">{!canSave ? '*' : '' }</label><br />
+                        <label for="description">Beskriv hvilke oppgaver det gjelder (maks 200 tegn)</label><label for="description" class="validation">{!canSave ? '*' : '' }</label><br />
                         <textarea id="description" rows="7" maxlength="200" bind:value={tempOther.soloRoleDescription}/>
                         <!-- gjorde en liten endring her frem til vi validerer data, dette for å unngå at noen lagrere noe tomt og ikke får mulighet til å redigere igjen. -->
                         <span>{tempOther.soloRoleDescription?.length ?? 0}/200</span> 
@@ -88,8 +87,6 @@
             <div class="contentContainer">
                 <div class="innerContainer firstContainer">
                     <div>
-                        <label for="itteno">Er du den eneste med din stilling og/eller ansvarsområde i din enhet?</label><br><br>
-                        <label for="jaaaaa">Hvis ja: uttyp hvilke oppgaver det gjelder</label><br>
                         <div><em id = "noneSolo"> </em></div>
                         <div><em id = "noneDesctription"> </em></div>
                         {#if !competence.other?.soloRole}
