@@ -55,6 +55,7 @@
 			{/if}
 		</div>
 		<div>
+			<!--
 			{#if res.mandatoryCompetenceInput}
 				{#each res.competenceData.positionTasks as pos}
 					{#if pos.tasks.length <= 0}
@@ -70,6 +71,7 @@
 			{:else if !res.mandatoryCompetenceInput}
 				<p>Det er ikke obligatorisk for deg å fylle ut her - men du er hjertelig velkommen til å fylle ut det du ønsker</p>
 			{/if}
+			-->
 		</div>
 		<!--<p style="color: var(--deepSeaGreen);"><strong>Til dagens seksjonsledermøte:</strong> Klikk her: <a href ="mailto:jorgen.thorsnes@vtfk.no;robin.ellingsen@vtfk.no?subject=Tilbakemelding på kompetanse-verktøy"> Lag tilbakemeldings-epost.</a> Skriv inn tilbakemeldinger i e-posten som åpnes, og send når du er ferdig å teste</p><br/> -->
 		<EmployeeCard employeeData={res} />
