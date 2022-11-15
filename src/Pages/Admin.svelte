@@ -140,7 +140,7 @@
 
 	const getAdminSettings = async () => {
 		const res = await getSettings()
-		adminSettings = res[0]
+		adminSettings = res && res.length > 0 ? res[0] : {}
 		delete adminSettings._id
 		if (!adminSettings.oblig) adminSettings.oblig = {
 			chosenCategories: [],
@@ -234,28 +234,8 @@
 		padding-top: 16px;
 		border-bottom: 1px solid var(--mork);
 	}
-	h3 {
-		padding-top: 8px;
-	}
-	.boss {
-		font-weight: bold;
-	}
-	.toggle {
-		cursor: pointer;
-	}
-	.employees {
-		margin-left: 8px;
-		padding-left: 8px;
-		border-left: 1px solid var(--mork);
-	}
-	.employees p {
-		font-size: 0.9rem;
-	}
 	.content {
 		padding-bottom: 32px;
-	}
-	.hidden {
-		display: none;
 	}
 	.option {
 		display: flex;
