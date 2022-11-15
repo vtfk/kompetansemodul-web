@@ -14,9 +14,8 @@
 	import EmployeeInfoCard from '../components/EmployeeInfoCard.svelte';
 	import CountySelectionCard from '../components/CountySelectionCard.svelte'
 	import CertificationCard from '../components/CertificationCard.svelte'
-	import { countySelectionCardHelp, personaliaHelp } from '../lib/Helpers/helptexts'
+	import { personaliaHelp } from '../lib/Helpers/helptexts'
 	import { changePage } from '../lib/Helpers/changePage'
-  import { each, loop_guard } from 'svelte/internal';
 
 	// State
 	let showInfoBox = false
