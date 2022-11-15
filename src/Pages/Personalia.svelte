@@ -1,7 +1,7 @@
 <script>
 	import { getMe/* , vitnemaal */ }  from '../lib/services/useApi'
 	import { get } from 'svelte/store'
-	import { editingPersonalia, prevUnit } from '../lib/services/store'
+	import { editingPersonalia, prevUnit, mandatoryCompetence } from '../lib/services/store'
 	import EmployeeCard from '../components/EmployeeCard.svelte'
 	import IconSpinner from '../components/Icons/IconSpinner.svelte';
 	import EducationCard from '../components/EducationCard.svelte';
@@ -19,6 +19,12 @@
 
 	// State
 	let showInfoBox = false
+
+	let mandatoryData = get(mandatoryCompetence)
+
+	mandatoryCompetence.subscribe(value => {
+        mandatoryData = value
+    })
 
 	const getMee = async () => {
 		const me = await getMe()
@@ -55,23 +61,22 @@
 			{/if}
 		</div>
 		<div>
-			<!--
+			<!-- Validation of mandatory input fields -->
 			{#if res.mandatoryCompetenceInput}
-				{#each res.competenceData.positionTasks as pos}
-					{#if pos.tasks.length <= 0}
-						<p>Stillingen din i {pos.positionParent} har ingen nøkkelopppaver, dette er obligatorisk å fylle ut!</p>
+				{#each mandatoryData.positionTasks as pos}
+					{#if !pos.hasData}
+						<p class="mandatoryInfo">❗ Du har ikke fylt ut nøkkelopppaver i din stilling i {pos.department}</p>
 					{/if}
 				{/each}
-				{#if !res.competenceData.perfCounty}
-					<p>Du må velge et valg fra nedtrekksmenyen i Ønsket fylkeskommune / arbeidssted etter oppdeling!</p>
+				{#if mandatoryData.perfCounty === 'no input'}
+					<p class="mandatoryInfo">❗ Du har ikke valgt "Ønsket fylkeskommune / arbeidssted etter oppdeling"</p>
 				{/if}
-				{#if !res.competenceData.other?.soloRole}
-					<p>Du må si om du har noen kritiske oppgaver eller ikke!</p>
+				{#if mandatoryData.soloRole === 'no input'}
+					<p class="mandatoryInfo">❗ Du har ikke fylt ut "Er du den eneste med din stilling og/eller ansvarsområde i din enhet?"</p>
 				{/if}
-			{:else if !res.mandatoryCompetenceInput}
-				<p>Det er ikke obligatorisk for deg å fylle ut her - men du er hjertelig velkommen til å fylle ut det du ønsker</p>
+			{:else}
+				<p>Det er ikke obligatorisk for deg å fylle ut din kompetanse - men du er hjertelig velkommen til å fylle ut det du ønsker 😀</p>
 			{/if}
-			-->
 		</div>
 		<!--<p style="color: var(--deepSeaGreen);"><strong>Til dagens seksjonsledermøte:</strong> Klikk her: <a href ="mailto:jorgen.thorsnes@vtfk.no;robin.ellingsen@vtfk.no?subject=Tilbakemelding på kompetanse-verktøy"> Lag tilbakemeldings-epost.</a> Skriv inn tilbakemeldinger i e-posten som åpnes, og send når du er ferdig å teste</p><br/> -->
 		<EmployeeCard employeeData={res} />
@@ -108,5 +113,11 @@
 	.headerIcon:hover {
 		cursor: pointer;
 		transform: scale(1.2);
+	}
+	.mandatoryInfo {
+		font-style: italic;
+	}
+	.mandatoryInfo:last-child {
+		margin-bottom: 24px;
 	}
 </style>

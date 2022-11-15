@@ -2,7 +2,7 @@
     import Card from "./Card.svelte"
     import { get } from 'svelte/store'
     import { saveCompetence }  from '../lib/services/useApi'
-    import { editingPersonalia } from '../lib/services/store'
+    import { editingPersonalia, mandatoryCompetence } from '../lib/services/store'
     import { divCardHelp } from '../lib/Helpers/helptexts'
 
     // Props
@@ -32,10 +32,23 @@
     }
 
     // Functions
+    const validateMandatoryData = () => {
+        // Store card validation
+        const mandatoryData = get(mandatoryCompetence)
+        mandatoryData.soloRole = competence.other.soloRole ? 'set' : 'no input'
+        mandatoryCompetence.set(mandatoryData)
+    }
+
+    // Run if needed
+    if (get(mandatoryCompetence).soloRole === 'not checked') {
+        validateMandatoryData()
+    }
+
     const saveFunc = async () => {
         if (checkIfChanges()) {
             await saveCompetence({...competence, other: tempOther})
             competence.other = JSON.parse(JSON.stringify(tempOther))
+            validateMandatoryData()
         } 
 	}
 

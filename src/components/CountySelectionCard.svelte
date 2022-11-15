@@ -2,7 +2,7 @@
     import Card from "./Card.svelte"
     import { get } from 'svelte/store'
     import { saveCompetence }  from '../lib/services/useApi'
-    import { editingPersonalia } from '../lib/services/store'
+    import { editingPersonalia, mandatoryCompetence } from '../lib/services/store'
     import { countySelectionCardHelp } from '../lib/Helpers/helptexts'
 
     // Props
@@ -24,10 +24,26 @@
     let tempPerfCounty = JSON.parse(JSON.stringify(competence.perfCounty)) // Create a copy to display correct information (and maybe alert if user has edited) if user aborts edit
 
     // Functions
+
+    const validateMandatoryData = () => {
+        // Store card validation
+        const mandatoryData = get(mandatoryCompetence)
+        mandatoryData.perfCounty = competence.perfCounty ? 'set' : 'no input'
+        mandatoryCompetence.set(mandatoryData)
+    }
+
+    // Run if needed
+    if (get(mandatoryCompetence).perfCounty === 'not checked') {
+        validateMandatoryData()
+    }
+
+
+
     const saveFunc = async () => {
         if (checkIfChanges()) {
             await saveCompetence({...competence, perfCounty: tempPerfCounty})
             competence.perfCounty = JSON.parse(JSON.stringify(tempPerfCounty))
+            validateMandatoryData()
         } 
 	}
 

@@ -5,7 +5,7 @@
     import InnerCard from "./InnerCard.svelte";
     import { get } from 'svelte/store'
     import { saveCompetence, getTasks, getOrg }  from '../lib/services/useApi'
-    import { editingPersonalia } from '../lib/services/store'
+    import { editingPersonalia, mandatoryCompetence } from '../lib/services/store'
     import DataList from "./DataList.svelte";
     import Button from "./Button.svelte";
     import IconAdd from "./Icons/IconAdd.svelte";
@@ -47,6 +47,24 @@
         }
     }
 
+    const validateMandatoryData = () => {
+        // Store card validation
+        const mandatoryData = get(mandatoryCompetence)
+        mandatoryData.positionTasks = competence.positionTasks.map(t => {
+            console.log(t)
+            return {
+                department: t.positionParent ?? 'ukjent',
+                hasData: Array.isArray(t.tasks) && t.tasks.length > 0 ? true : false
+            }
+        })
+        mandatoryCompetence.set(mandatoryData)
+    }
+
+    // Run if needed (usually at start)
+    if (get(mandatoryCompetence).positionTasks.length !== employeeData.aktiveArbeidsforhold.length) {
+        validateMandatoryData()
+    }
+
     // Store
     let editInfo = get(editingPersonalia)
     editingPersonalia.subscribe(value => {
@@ -69,7 +87,7 @@
             }
         }
     }
-
+    
     onMount(async () => {
         if (canEdit) {
             await updateAvailableTasks(true)
@@ -125,6 +143,8 @@
             await saveCompetence({...competence, positionTasks: tempPositionTasks, otherPositions: tempOtherPositions})
             competence.positionTasks = JSON.parse(JSON.stringify(tempPositionTasks))
             competence.otherPositions = JSON.parse(JSON.stringify(tempOtherPositions))
+            // Store card validation
+            validateMandatoryData()
         }
 	}
 
