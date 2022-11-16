@@ -3,6 +3,7 @@
     import InitialsBadge from "./InitialsBadge.svelte"
     import { getPhoto } from '../lib/services/useApi'
     import { changePage } from '../lib/Helpers/changePage'
+    import { environment } from '../../config'
     
     // Props
     export let employeeData = {}
@@ -21,7 +22,7 @@
     }
 
     // EASTER EGG
-    if (employeeInfo.name === 'Jan Thomas Tørrestad') employeeInfo.name = "Jommas 🧔"
+    if (employeeInfo.name === 'Jan Thomas Tørrestad' && environment === 'test') employeeInfo.name = "Jommas 🧔"
 
     // Handle photo
     const handlePhoto = async () => {
