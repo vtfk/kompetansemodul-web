@@ -330,8 +330,8 @@
         if (degree === 'Fagbrev') return '📜'
         else if (degree === 'Enkeltemne') return '📄'
         else if (degree === 'Videregående skole') return '🏫'
-        else if (degree === 'Doktorgrad') return '🤓'
-        else if (degree === customDegreeTitle) return '😣'
+        else if (degree === 'Doktorgrad') return '🎓'
+        else if (degree === customDegreeTitle) return '🎓'
         else return '🎓'
     }
 
