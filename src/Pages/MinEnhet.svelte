@@ -27,6 +27,13 @@
 		return res
 	}
 
+	const isUnitLeader = (leaderUpn) => {
+		const msalClient = get(msalClientStore)
+		const accounts = msalClient.getAllAccounts()
+		if (leaderUpn === accounts[0].username) return true
+		return false
+	}
+
 	// Checks if leader also has employement in the same unit, or is only leader
 	const getLeaderEmployeeData = (unit) => {
 		const employment = unit.arbeidsforhold.find(forhold => forhold.userPrincipalName === unit.leder.userPrincipalName)
@@ -46,9 +53,11 @@
 		<p><IconSpinner width="2rem" /></p>
 	{:then units}
 		{#if units.length > 1 && !chosenUnit}
-			<h3>Du er ansatt i flere enheter, vennligst velg den du ønsker å se</h3>
+			<h3>Du er tilknyttet flere enheter, vennligst velg den du ønsker å se</h3>
 			{#each units as unit}
-				<p class="link" on:click={() => {changePage('minenhet', { setUnit: unit.organisasjonsId })}}>{unit.navn}</p>
+				<p class="link" on:click={() => {changePage('minenhet', { setUnit: unit.organisasjonsId })}}>
+					{unit.navn}<strong>{isUnitLeader(unit.leder.userPrincipalName) ? ' (Leder)' : ''}</strong>
+				</p>
 			{/each}
 		{:else}
 			{#each units as unit}
