@@ -27,11 +27,23 @@
 		return res
 	}
 
+	// Checks if leader also has employement in the same unit, or is only leader
+	const getLeaderEmployeeData = (unit) => {
+		const employment = unit.arbeidsforhold.find(forhold => forhold.userPrincipalName === unit.leder.userPrincipalName)
+		if (employment) return employment
+		else return {
+			...unit.leder,
+			stillingstittel: 'Leder',
+			leaderWithoutRelation: true,
+			tasks: ['Leder']
+		}
+	}
+
 </script>
 
 <div class="content">
 	{#await getMyOrgUnit(activeUnit)}
-	<p><IconSpinner width="2rem" /></p>
+		<p><IconSpinner width="2rem" /></p>
 	{:then units}
 		{#if units.length > 1 && !chosenUnit}
 			<h3>Du er ansatt i flere enheter, vennligst velg den du ønsker å se</h3>
@@ -58,9 +70,9 @@
 						<div class="toggleView"><div class="toggleContainer"><label for="toggle">Utvidet visning</label><input id="toggle" type="checkbox" bind:checked={expandedView} /></div></div>
 					</div>
 					<div class="employeeContainer">
-						<EmployeeBox expandedView={expandedView} onClick={() => changePage('person', { setPerson: unit.leder.ansattnummer, setPrevious: { activeUnit, name: unit.navn } } )} employeeData={{ ...unit.leder, stillingstittel: (unit.arbeidsforhold.find(forhold => forhold.userPrincipalName === unit.leder.userPrincipalName)?.stillingstittel ?? 'Leder'), tasks: (unit.arbeidsforhold.find(forhold => forhold.userPrincipalName === unit.leder.userPrincipalName)?.tasks ?? ['Leder']),  department: unit.navn}} />
+						<EmployeeBox expandedView={expandedView} onClick={() => changePage('person', { setPerson: unit.leder.ansattnummer, setPrevious: { activeUnit, name: unit.navn } } )} employeeData={{ ...getLeaderEmployeeData(unit), isPrivileged: unit.isPrivileged, department: unit.navn}} />
 						{#each unit.arbeidsforhold.filter(employee => employee.userPrincipalName !== unit.leder.userPrincipalName) as emp, i}
-							<EmployeeBox expandedView={expandedView} onClick={() => changePage('person', { setPerson: emp.userPrincipalName, setPrevious: { activeUnit, name: unit.navn } })} employeeData={{...emp, department: unit.navn}} />
+							<EmployeeBox expandedView={expandedView} onClick={() => changePage('person', { setPerson: emp.userPrincipalName, setPrevious: { activeUnit, name: unit.navn } })} employeeData={{...emp, department: unit.navn, isPrivileged: unit.isPrivileged}} />
 						{/each}
 					</div>
 				{/if}

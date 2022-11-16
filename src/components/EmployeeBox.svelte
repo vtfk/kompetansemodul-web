@@ -20,7 +20,16 @@
         mainDepartment: employeeData.department,
         officeLocation: employeeData.officeLocation ?? 'Ukjent kontorplass',
         email: employeeData.userPrincipalName ?? 'Ukjent e-post',
-        tasks: employeeData.tasks ?? []
+        tasks: employeeData.tasks ?? [],
+        isPrivileged: employeeData.isPrivileged ?? false,
+        mandatoryCompetenceInput: employeeData.mandatoryCompetenceInput ?? null,
+        soloRole: employeeData.soloRole,
+        perfCounty: employeeData.perfCounty,
+        leaderWithoutRelation: employeeData.leaderWithoutRelation ?? false
+    }
+
+    const checkIfFinished = (tasks, soloRole, perfCounty) => {
+        return (tasks.length > 0 && soloRole && perfCounty)
     }
 
     // Handle photo
@@ -49,6 +58,17 @@
                 <div class="smallEmployeeInfo">
                     <h4>{employeeInfo.name}</h4>
                     <p class="posTitle">{employeeInfo.mainTitle}</p>
+                    {#if employeeInfo.isPrivileged}
+                        {#if employeeInfo.mandatoryCompetenceInput}
+                            {#if checkIfFinished(employeeInfo.tasks, employeeInfo.soloRole, employeeInfo.perfCounty)}
+                                <div class="finished task">Har fylt ut obligatorisk data 👍</div>
+                            {:else}
+                                <div class="notFinished task">Har <strong>ikke</strong> fylt ut obligatorisk info 😢</div>
+                            {/if}
+                        {:else if !employeeInfo.leaderWithoutRelation}
+                            <div class="voluntary task">Ikke obligatorisk å legge inn data</div>
+                        {/if}
+                    {/if}
                 </div>
             </div>
         </div>
@@ -69,6 +89,17 @@
                 <p class="info">{employeeInfo.officeLocation}</p>
             </div>
             <div class="employeeTasks">
+            {#if employeeInfo.isPrivileged}
+                {#if employeeInfo.mandatoryCompetenceInput}
+                    {#if checkIfFinished(employeeInfo.tasks, employeeInfo.soloRole, employeeInfo.perfCounty)}
+                        <div class="finished task">Har fylt ut obligatorisk data 👍</div>
+                    {:else}
+                        <div class="notFinished task">Har <strong>ikke</strong> fylt ut obligatorisk info 😢</div>
+                    {/if}
+                {:else}
+                    <div class="voluntary task">Ikke obligatorisk å legge inn data</div>
+                {/if}
+            {/if}
             {#if employeeInfo.tasks.length > 0}
                 {#each employeeInfo.tasks as task, i}
                     {#if i === 4}
@@ -156,5 +187,14 @@
     }
     .task {
         font-size: 0.8rem;
+    }
+    .finished {
+        color: green;
+    }
+    .notFinished {
+        color: var(--red);
+    }
+    .voluntary {
+        color: var(--mork)
     }
 </style>
