@@ -5,11 +5,11 @@
     import Logo from './Icons/Logo.svelte'
     import IconHelp from './Icons/IconHelp.svelte';
     import IconPerson from './Icons/IconPerson.svelte';
-    import IconOrg from './Icons/IconOrg.svelte'
     import IconSearch from './Icons/IconSearch.svelte';
     import { changePage } from '../lib/Helpers/changePage'
     import { adminRole } from '../../config'
     import IconSettings from './Icons/IconSettings.svelte';
+    import IconClasses from './Icons/IconClasses.svelte';
     
     // Props
     export let roles = []
@@ -43,7 +43,7 @@
             <div class="sideNavItem">
                 <button on:click={() => { changePage('minenhet', { setUnit: 'myUnit' }) } } class={`${currentPage === 'minenhet' ? ' siteNavItemActive' : ''}`}>
                     <div class="icon">
-                        <IconOrg />
+                        <IconClasses />
                     </div>
                     <p>Min enhet</p>
                 </button>

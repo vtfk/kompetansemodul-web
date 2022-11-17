@@ -61,12 +61,12 @@
                     {#if employeeInfo.isPrivileged}
                         {#if employeeInfo.mandatoryCompetenceInput}
                             {#if checkIfFinished(employeeInfo.tasks, employeeInfo.soloRole, employeeInfo.perfCounty)}
-                                <div class="finished task">Har fylt ut obligatorisk data 👍</div>
+                                <div class="finished task">Har fylt ut obligatorisk info 👍</div>
                             {:else}
                                 <div class="notFinished task">Har <strong>ikke</strong> fylt ut obligatorisk info 😢</div>
                             {/if}
                         {:else if !employeeInfo.leaderWithoutRelation}
-                            <div class="voluntary task">Ikke obligatorisk å legge inn data</div>
+                            <div class="voluntary task">Ikke obligatorisk å legge inn info</div>
                         {/if}
                     {/if}
                 </div>
@@ -92,12 +92,12 @@
             {#if employeeInfo.isPrivileged}
                 {#if employeeInfo.mandatoryCompetenceInput}
                     {#if checkIfFinished(employeeInfo.tasks, employeeInfo.soloRole, employeeInfo.perfCounty)}
-                        <div class="finished task">Har fylt ut obligatorisk data 👍</div>
+                        <div class="finished task">Har fylt ut obligatorisk info 👍</div>
                     {:else}
                         <div class="notFinished task">Har <strong>ikke</strong> fylt ut obligatorisk info 😢</div>
                     {/if}
                 {:else}
-                    <div class="voluntary task">Ikke obligatorisk å legge inn data</div>
+                    <div class="voluntary task">Ikke obligatorisk å legge inn info</div>
                 {/if}
             {/if}
             {#if employeeInfo.tasks.length > 0}

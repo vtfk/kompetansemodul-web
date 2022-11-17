@@ -16,6 +16,8 @@
     export let competence = {
 		certifications: []
 	}
+    export let canEdit = true
+    export let disableInfoBox = false
 
     if (!competence.certifications) competence.certifications = []
 
@@ -95,7 +97,7 @@
     }
 </script>
 
-<Card title={title} editable={true} backgroundColor={backgroundColor} infoBox={ {content: certificationCardHelp}} canSave={canSave} saveFunc={saveFunc} cancelFunc={cancelFunc}>
+<Card title={title} disableInfoBox={disableInfoBox} editable={canEdit} backgroundColor={backgroundColor} infoBox={ {content: certificationCardHelp}} canSave={canSave} saveFunc={saveFunc} cancelFunc={cancelFunc}>
     <div>
         {#if editInfo.isEditing && editInfo.editBlock === title}
             {#each tempCertification as tempCert, i}

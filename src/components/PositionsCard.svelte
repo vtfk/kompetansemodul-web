@@ -5,7 +5,7 @@
     import InnerCard from "./InnerCard.svelte";
     import { get } from 'svelte/store'
     import { saveCompetence, getTasks, getOrg }  from '../lib/services/useApi'
-    import { editingPersonalia, mandatoryCompetence } from '../lib/services/store'
+    import { editingPersonalia } from '../lib/services/store'
     import DataList from "./DataList.svelte";
     import Button from "./Button.svelte";
     import IconAdd from "./Icons/IconAdd.svelte";
@@ -21,6 +21,7 @@
     export let competence = {
 		positionTasks: []
 	}
+    export let setFieldToFinished = (field, val) => {}
 
     if (!competence) competence = { positionTasks: [] }
     if (!competence.positionTasks) competence.positionTasks = []
@@ -47,23 +48,19 @@
         }
     }
 
-    const validateMandatoryData = () => {
-        // Store card validation
-        const mandatoryData = get(mandatoryCompetence)
-        mandatoryData.positionTasks = competence.positionTasks.map(t => {
-            console.log(t)
-            return {
-                department: t.positionParent ?? 'ukjent',
-                hasData: Array.isArray(t.tasks) && t.tasks.length > 0 ? true : false
+    // Check if user has completed this card, send up result to parent (remember to run in save function as well)
+    const fieldsValidated = () => {
+        for (const t of competence.positionTasks) {
+            if (!(Array.isArray(t.tasks) && t.tasks.length > 0)) {
+                setFieldToFinished('tasksCompleted', false)
+                return false
             }
-        })
-        mandatoryCompetence.set(mandatoryData)
+        }
+        setFieldToFinished('tasksCompleted', true)
+        return true
     }
+    fieldsValidated()
 
-    // Run if needed (usually at start)
-    if (get(mandatoryCompetence).positionTasks.length !== employeeData.aktiveArbeidsforhold.length) {
-        validateMandatoryData()
-    }
 
     // Store
     let editInfo = get(editingPersonalia)
@@ -144,7 +141,7 @@
             competence.positionTasks = JSON.parse(JSON.stringify(tempPositionTasks))
             competence.otherPositions = JSON.parse(JSON.stringify(tempOtherPositions))
             // Store card validation
-            validateMandatoryData()
+            fieldsValidated()
         }
 	}
 

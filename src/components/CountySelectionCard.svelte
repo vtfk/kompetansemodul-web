@@ -2,7 +2,7 @@
     import Card from "./Card.svelte"
     import { get } from 'svelte/store'
     import { saveCompetence }  from '../lib/services/useApi'
-    import { editingPersonalia, mandatoryCompetence } from '../lib/services/store'
+    import { editingPersonalia } from '../lib/services/store'
     import { countySelectionCardHelp } from '../lib/Helpers/helptexts'
 
     // Props
@@ -11,7 +11,10 @@
     export let competence = {
 		perfCounty: null
 	}
-
+    export let canEdit = true
+    export let disableInfoBox = false
+    export let setFieldToFinished = (field, val) => {}
+    
     if (!competence.perfCounty) competence.perfCounty = null
 
     // Store
@@ -20,30 +23,22 @@
         editInfo = value
     })
 
+    // Check if user has completed this card, send up result to parent (remember to run in save function as well)
+    const fieldsValidated = () => {
+        if (competence.perfCounty) setFieldToFinished('perfCountyCompleted', true)
+        else setFieldToFinished('perfCountyCompleted', false)
+    }
+    fieldsValidated()
+
     // State
     let tempPerfCounty = JSON.parse(JSON.stringify(competence.perfCounty)) // Create a copy to display correct information (and maybe alert if user has edited) if user aborts edit
 
     // Functions
-
-    const validateMandatoryData = () => {
-        // Store card validation
-        const mandatoryData = get(mandatoryCompetence)
-        mandatoryData.perfCounty = competence.perfCounty ? 'set' : 'no input'
-        mandatoryCompetence.set(mandatoryData)
-    }
-
-    // Run if needed
-    if (get(mandatoryCompetence).perfCounty === 'not checked') {
-        validateMandatoryData()
-    }
-
-
-
     const saveFunc = async () => {
         if (checkIfChanges()) {
             await saveCompetence({...competence, perfCounty: tempPerfCounty})
             competence.perfCounty = JSON.parse(JSON.stringify(tempPerfCounty))
-            validateMandatoryData()
+            fieldsValidated()
         } 
 	}
 
@@ -58,7 +53,7 @@
 
 </script>
 
-<Card title={title} saveFunc={saveFunc} cancelFunc={cancelFunc} backgroundColor={backgroundColor} editable={true} infoBox={ {content: countySelectionCardHelp} } canSave={true} >
+<Card title={title} saveFunc={saveFunc} cancelFunc={cancelFunc} backgroundColor={backgroundColor} disableInfoBox={disableInfoBox} editable={canEdit} infoBox={ {content: countySelectionCardHelp} } canSave={true} >
     {#if editInfo.isEditing && editInfo.editBlock === title}
         <div class="contentContainer">
             <div>

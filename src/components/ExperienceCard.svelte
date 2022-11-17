@@ -17,6 +17,8 @@
     export let competence = {
 		experience: []
 	}
+    export let canEdit = true
+    export let disableInfoBox = false
 
     if (!competence.experience) competence.experience = []
 
@@ -138,7 +140,7 @@
     }
 </script>
 
-<Card title={title} editable={true} backgroundColor={backgroundColor} infoBox={ {content: experienceCardHelp}} canSave={canSave} saveFunc={saveFunc} cancelFunc={cancelFunc}>
+<Card title={title} disableInfoBox={disableInfoBox} editable={canEdit} backgroundColor={backgroundColor} infoBox={ {content: experienceCardHelp}} canSave={canSave} saveFunc={saveFunc} cancelFunc={cancelFunc}>
     <div>
         {#if editInfo.isEditing && editInfo.editBlock === title}
             {#each tempExperience as tempExp, i}
@@ -188,7 +190,7 @@
                 <InnerCard emoji={'🦸‍♀️'}>
                     <div slot="first">
                         <h3>{exp.position ?? 'Ukjent verv'}</h3>
-                        <h4>🏢{exp.organization  ?? 'Ukjent organisasjon'}</h4>
+                        <h4>🏢 {exp.organization  ?? 'Ukjent organisasjon'}</h4>
                         <p>📅 {getPeriod(exp)}</p>
                     </div>
                 </InnerCard>

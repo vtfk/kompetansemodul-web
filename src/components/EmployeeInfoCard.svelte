@@ -9,7 +9,6 @@
     export let employeeData = {}
     export let disableInfoBox = false
     export let hideTextBox = false
-    export let isPrivileged = true
 
     const convertDate = (date) => {
         const dateList = date.slice(0,10).split('-')
@@ -54,7 +53,7 @@
                 <div class="value">{displayData.employedSince}</div>
             </div>
             
-            {#if isPrivileged === true}
+            {#if employeeData.isPrivileged}
                 <div class="infoPair">
                     <div class="desc">Poststed/Kommune</div>
                     <div class="value">{displayData.zipPlace}</div>

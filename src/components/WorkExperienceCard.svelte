@@ -21,6 +21,8 @@
     export let competence = {
 		workExperience: []
 	}
+    export let canEdit = true
+    export let disableInfoBox = false
 
     if (!competence.workExperience) competence.workExperience = []
 
@@ -142,7 +144,7 @@
     }
 </script>
 
-<Card title={title} backgroundColor={backgroundColor} editable={true} infoBox={ {content: workExperienceCardHelp}} canSave={canSave} saveFunc={saveFunc} cancelFunc={cancelFunc}>
+<Card title={title} backgroundColor={backgroundColor} disableInfoBox={disableInfoBox} editable={canEdit} infoBox={ {content: workExperienceCardHelp}} canSave={canSave} saveFunc={saveFunc} cancelFunc={cancelFunc}>
     <div>
         {#if editInfo.isEditing && editInfo.editBlock === title}
             {#each tempWorkExperience as tempWork, i}

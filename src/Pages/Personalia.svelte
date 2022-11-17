@@ -1,7 +1,7 @@
 <script>
 	import { getMe/* , vitnemaal */ }  from '../lib/services/useApi'
 	import { get } from 'svelte/store'
-	import { editingPersonalia, prevUnit, mandatoryCompetence } from '../lib/services/store'
+	import { editingPersonalia, prevUnit } from '../lib/services/store'
 	import EmployeeCard from '../components/EmployeeCard.svelte'
 	import IconSpinner from '../components/Icons/IconSpinner.svelte';
 	import EducationCard from '../components/EducationCard.svelte';
@@ -20,11 +20,16 @@
 	// State
 	let showInfoBox = false
 
-	let mandatoryData = get(mandatoryCompetence)
-
-	mandatoryCompetence.subscribe(value => {
-        mandatoryData = value
-    })
+	// Mandatory fields validation
+	let mandatoryFields = {
+		tasksCompleted: false,
+		perfCountyCompleted: false,
+		soloRoleCompleted: false
+	}
+	const setFieldToFinished = (field, val) => {
+		mandatoryFields[field] = val
+		mandatoryFields = mandatoryFields
+	}
 
 	const getMee = async () => {
 		const me = await getMe()
@@ -63,15 +68,13 @@
 		<div>
 			<!-- Validation of mandatory input fields -->
 			{#if res.mandatoryCompetenceInput}
-				{#each mandatoryData.positionTasks as pos}
-					{#if !pos.hasData}
-						<p class="mandatoryInfo">❗ Du har ikke fylt ut nøkkelopppaver i din stilling i {pos.department}</p>
-					{/if}
-				{/each}
-				{#if mandatoryData.perfCounty === 'no input'}
+				{#if !mandatoryFields.tasksCompleted}
+					<p class="mandatoryInfo">❗ Du har ikke fylt ut nøkkelopppaver i din stilling/stillinger</p>
+				{/if}
+				{#if !mandatoryFields.perfCountyCompleted}
 					<p class="mandatoryInfo">❗ Du har ikke valgt "Ønsket fylkeskommune / arbeidssted etter oppdeling"</p>
 				{/if}
-				{#if mandatoryData.soloRole === 'no input'}
+				{#if !mandatoryFields.soloRoleCompleted}
 					<p class="mandatoryInfo">❗ Du har ikke fylt ut "Er du den eneste med din stilling og/eller ansvarsområde i din enhet?"</p>
 				{/if}
 			{:else}
@@ -81,9 +84,9 @@
 		<!--<p style="color: var(--deepSeaGreen);"><strong>Til dagens seksjonsledermøte:</strong> Klikk her: <a href ="mailto:jorgen.thorsnes@vtfk.no;robin.ellingsen@vtfk.no?subject=Tilbakemelding på kompetanse-verktøy"> Lag tilbakemeldings-epost.</a> Skriv inn tilbakemeldinger i e-posten som åpnes, og send når du er ferdig å teste</p><br/> -->
 		<EmployeeCard employeeData={res} />
 		<EmployeeInfoCard employeeData={res} />
-		<PositionsCard employeeData={res} competence={res.competenceData} />
-		<CountySelectionCard competence={res.competenceData}/>
-		<DivCard competence={res.competenceData}/>
+		<PositionsCard employeeData={res} competence={res.competenceData} setFieldToFinished={setFieldToFinished} />
+		<CountySelectionCard competence={res.competenceData} setFieldToFinished={setFieldToFinished} />
+		<DivCard competence={res.competenceData} setFieldToFinished={setFieldToFinished} />
 		<WorkExperienceCard competence={res.competenceData} />
 		<EducationCard competence={res.competenceData} />
 		<CertificationCard competence={res.competenceData} />

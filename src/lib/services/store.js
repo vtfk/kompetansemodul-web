@@ -10,8 +10,3 @@ export const editingPersonalia = writable({
   editBlock: 'ingen akkurat nå'
 })
 export const infoOpen = writable('')
-export const mandatoryCompetence = writable({
-  positionTasks: [],
-  perfCounty: 'not checked',
-  soloRole: 'not checked'
-})

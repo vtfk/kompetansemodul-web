@@ -2,7 +2,7 @@
     import Card from "./Card.svelte"
     import { get } from 'svelte/store'
     import { saveCompetence }  from '../lib/services/useApi'
-    import { editingPersonalia, mandatoryCompetence } from '../lib/services/store'
+    import { editingPersonalia } from '../lib/services/store'
     import { divCardHelp } from '../lib/Helpers/helptexts'
 
     // Props
@@ -11,6 +11,9 @@
     export let competence = {
 		other: {}
 	}
+    export let canEdit = true
+    export let disableInfoBox = false
+    export let setFieldToFinished = (field, val) => {}
 
     if (!competence.other) competence.other = {}
 
@@ -19,6 +22,13 @@
     editingPersonalia.subscribe(value => {
         editInfo = value
     })
+
+    // Check if user has completed this card, send up result to parent (remember to run in save function as well)
+    const fieldsValidated = () => {
+        if (competence.other.soloRole) setFieldToFinished('soloRoleCompleted', true)
+        else setFieldToFinished('soloRoleCompleted', false)
+    }
+    fieldsValidated()
 
     // State
     let tempOther = JSON.parse(JSON.stringify(competence.other)) // Create a copy to display correct information (and maybe alert if user has edited) if user aborts edit
@@ -31,24 +41,11 @@
         canSave = (tempOther.soloRole === 'Nei') || (tempOther.soloRoleDescription && tempOther.soloRoleDescription.length > 0)
     }
 
-    // Functions
-    const validateMandatoryData = () => {
-        // Store card validation
-        const mandatoryData = get(mandatoryCompetence)
-        mandatoryData.soloRole = competence.other.soloRole ? 'set' : 'no input'
-        mandatoryCompetence.set(mandatoryData)
-    }
-
-    // Run if needed
-    if (get(mandatoryCompetence).soloRole === 'not checked') {
-        validateMandatoryData()
-    }
-
     const saveFunc = async () => {
         if (checkIfChanges()) {
             await saveCompetence({...competence, other: tempOther})
             competence.other = JSON.parse(JSON.stringify(tempOther))
-            validateMandatoryData()
+            fieldsValidated()
         } 
 	}
 
@@ -62,12 +59,11 @@
     }
 
     const noneSoloText = "Ikke fylt ut av ansatt"
-    const noneDescText = "Beskrivelse av solorole er ikke fylt ut av ansatt"
+    const noneDescText = "Beskrivelse er ikke fylt ut av ansatt"
 </script>
 
-<Card title={title} saveFunc={saveFunc} cancelFunc={cancelFunc} backgroundColor={backgroundColor} editable={true} infoBox={ {content: divCardHelp} } canSave={canSave} >
-    <div>
-        {#if editInfo.isEditing && editInfo.editBlock === title}
+<Card title={title} saveFunc={saveFunc} cancelFunc={cancelFunc} backgroundColor={backgroundColor} disableInfoBox={disableInfoBox} editable={canEdit} infoBox={ {content: divCardHelp} } canSave={canSave} >
+    {#if editInfo.isEditing && editInfo.editBlock === title}
         <div class="contentContainer">
             <div class="innerContainer firstContainer">
                 <label for="jaaaaa">Hvis ja, utdyp hvilke oppgaver det gjelder</label><br>
@@ -86,40 +82,25 @@
                     </div>
                 {/if}
             </div>
-            <!-- <div class="innerContainer">
-                <h4>Ønsket fylkeskommune/arbeidssted etter oppdeling</h4>
-                <select name="preferredCounty" id="preferredCounty" bind:value={tempOther.preferredCounty}>
-                    <option value="Vet ikke">Vet ikke</option>
-                    <option value="Telemark fylkeskommune">Telemark fylkeskommune</option>
-                    <option value="Vestfold fylkeskommune">Vestfold fylkeskommune</option>
-                    <option value="samma">Samma for meg hvor jeg havner(hr - gi oss innspill)</option>
-                </select>
-            </div> -->
         </div>
-        {:else}
-            <div class="contentContainer">
-                <div class="innerContainer firstContainer">
-                    <div>
-                        <div><em id = "noneSolo"> </em></div>
-                        <div><em id = "noneDesctription"> </em></div>
-                        {#if !competence.other?.soloRole}
-                            <div><em>{noneSoloText}</em></div>
-                        {:else}
-                            {competence.other.soloRole}
-                        {/if}
-                        {#if competence.other.soloRole === 'Ja'}
-                        <!-- Trenger kanskje ikke denne? Brukeren får ikke lagret om brukeren ikke fyller ut noen informasjon -->
-                        <!-- Forsalg: - {competence.other.soloRoleDescription} -->    
-                        - {competence.other.soloRoleDescription ?? noneDescText}
-                        {/if}
-                    </div>
+    {:else}
+        <div class="contentContainer">
+            <div class="innerContainer firstContainer">
+                <div>
+                    <div><em id = "noneSolo"> </em></div>
+                    <div><em id = "noneDesctription"> </em></div>
+                    {#if !competence.other?.soloRole}
+                        <div><em>{noneSoloText}</em></div>
+                    {:else}
+                        {competence.other.soloRole}
+                    {/if}
+                    {#if competence.other.soloRole === 'Ja'} 
+                    - {competence.other.soloRoleDescription ?? noneDescText}
+                    {/if}
                 </div>
-                <!-- <div class="innerContainer">
-                    <h4>Ønsket fylkeskommune/arbeidssted etter oppdeling</h4>
-                    <div>{competence.other.preferredCounty ?? 'Ikke fylt ut av ansatt'}</div>
-                </div> -->
             </div>
-        {/if}
+        </div>
+    {/if}
 </Card>
 
 <style>

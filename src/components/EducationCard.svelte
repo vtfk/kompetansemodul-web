@@ -21,6 +21,9 @@
     export let competence = {
 		education: []
 	}
+    export let canEdit = true
+    export let disableInfoBox = false
+
     if (!competence.education) competence.education = []
 
     // State
@@ -353,7 +356,7 @@
     
 </script>
 
-<Card title={title} editable={true} backgroundColor={backgroundColor} infoBox={ {content: educationCardHelp}} canSave={canSave} saveFunc={saveFunc} cancelFunc={cancelFunc}>
+<Card title={title} editable={canEdit} disableInfoBox={disableInfoBox} backgroundColor={backgroundColor} infoBox={ {content: educationCardHelp}} canSave={canSave} saveFunc={saveFunc} cancelFunc={cancelFunc}>
     <div>
         {#if editInfo.isEditing && editInfo.editBlock === title}
             {#each tempEducation as tempEdu, i}
