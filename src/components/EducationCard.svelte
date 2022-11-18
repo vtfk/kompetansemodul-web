@@ -39,7 +39,7 @@
         toYear: 2022,
         fromMonth: 'August',
         toMonth: 'Juni',
-        credit: 450
+        credit: 0
     }
 
     const customDegreeTitle = 'Spesifiser selv'
@@ -296,7 +296,7 @@
             toYear: 2022,
             fromMonth: 'August',
             toMonth: 'Juni',
-            credit: 450
+            credit: 0
         }
 	}
 
