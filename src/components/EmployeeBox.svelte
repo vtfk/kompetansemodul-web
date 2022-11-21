@@ -1,7 +1,7 @@
 <script>
     import InitialsBadge from "./InitialsBadge.svelte"
     import { getPhoto } from '../lib/services/useApi'
-    import { each } from "svelte/internal";
+    import { repackPosTitle } from '../lib/Helpers/repackPosTitle'
     
     // Props
     export let employeeData = {}
@@ -16,7 +16,7 @@
     let employeeInfo = {
         initials: `${employeeData.fornavn.slice(0,1)} ${employeeData.etternavn.slice(0,1)}`,
         name: employeeData.navn,
-        mainTitle: employeeData.stillingstittel ?? 'Ukjent tittel',
+        mainTitle: repackPosTitle(employeeData.stillingstittel, employeeData.arbeidsforholdstype),
         mainDepartment: employeeData.department,
         officeLocation: employeeData.officeLocation ?? 'Ukjent kontorplass',
         email: employeeData.userPrincipalName ?? 'Ukjent e-post',

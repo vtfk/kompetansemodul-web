@@ -114,7 +114,7 @@
     <p><strong>Info:</strong> Løsningen er under kontinuerlig utvikling - noe av det vi jobber med å få på plass nå er:</p>
     <ul style="padding-left: 24px">
         <li><em style="text-decoration: line-through;">Informasjon til ledere om hvilke ansatte som skal/har lagt inn data inne på "Min enhet"</em> ✅</li>
-        <li><em>Legge på "Konstituert" og "Midlertidig" i stillingsinformasjon der det gjelder</em></li>
+        <li><em style="text-decoration: line-through;">Legge på "Konstituert" og "Midlertidig" i stillingsinformasjon der det gjelder</em> ✅</li>
         <li><em style="text-decoration: line-through;">At leder kan se data på sine ansatte</em> ✅</li>
         <li><em>Organisajonskart/oversikt</em></li>
         <li><em>At bruker kan selv velge rekkefølge på utdanning/arbeidserfaring osv..</em></li>

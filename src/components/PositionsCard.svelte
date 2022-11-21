@@ -11,6 +11,7 @@
     import IconAdd from "./Icons/IconAdd.svelte";
     import IconDelete from "./Icons/IconDelete.svelte";
     import { positionsCardHelp } from '../lib/Helpers/helptexts'
+    import { repackPosTitle } from '../lib/Helpers/repackPosTitle'
 
     // Props
     export let title = 'Dagens stillinger og oppgaver'
@@ -244,7 +245,7 @@
             {#each displayData.positions as position, i}
                 <InnerCard emoji='💼'>
                     <div slot="first">
-                        <h3>{position.stillingstittel ?? 'Ukjent tittel'} ({Math.ceil(position.lonnsprosent/100)}%)</h3>
+                        <h3>{repackPosTitle(position.stillingstittel, position.arbeidsforholdstype)} ({Math.ceil(position.lonnsprosent/100)}%)</h3>
                         <h4>{getDepartment(position.arbeidssted.struktur).department}</h4>
                         <p>{getDepartment(position.arbeidssted.struktur).company}</p>
                         {#if position.arbeidssted.struktur.length > 2}
@@ -299,7 +300,7 @@
             {#each displayData.positions as position}
                 <InnerCard emoji='💼'>
                     <div slot="first">
-                        <h3>{position.stillingstittel ?? 'Ukjent tittel'} ({Math.ceil(position.lonnsprosent/100)}%)</h3>
+                        <h3>{repackPosTitle(position.stillingstittel, position.arbeidsforholdstype)} ({Math.ceil(position.lonnsprosent/100)}%)</h3>
                         <h4>{getDepartment(position.arbeidssted.struktur).department}</h4>
                         <p>{getDepartment(position.arbeidssted.struktur).company}</p>
                         {#if position.arbeidssted.struktur.length > 2}

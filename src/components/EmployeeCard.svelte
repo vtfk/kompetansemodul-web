@@ -4,6 +4,7 @@
     import { getPhoto } from '../lib/services/useApi'
     import { changePage } from '../lib/Helpers/changePage'
     import { environment } from '../../config'
+    import { repackPosTitle } from '../lib/Helpers/repackPosTitle'
     
     // Props
     export let employeeData = {}
@@ -14,7 +15,7 @@
     let employeeInfo = {
         initials: `${employeeData.fornavn.slice(0,1)} ${employeeData.etternavn.slice(0,1)}`,
         name: `${employeeData.fornavn} ${employeeData.etternavn}`,
-        mainTitle: mainPosition?.stillingstittel ?? 'Har ikke aktiv hovedstilling',
+        mainTitle: repackPosTitle(mainPosition?.stillingstittel, mainPosition?.arbeidsforholdstype),
         mainDepartment: mainPosition?.arbeidssted?.navn ?? 'Har ikke aktiv hovedstilling',
         officeLocation: employeeData.azureAd?.officeLocation ?? 'Ukjent kontorplass',
         email: employeeData.userPrincipalName ?? 'Ukjent e-post',
