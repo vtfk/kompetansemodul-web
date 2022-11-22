@@ -10,7 +10,6 @@
 	let filteredOrg = []
 	let employees = []
 	let employeeCategories = []
-	let structuredOrg = []
 	let adminSettings = {
 		oblig: {
 			chosenCategories: [],
@@ -20,6 +19,21 @@
 			chosenUnitsWithChildren: []
 		}
 	}
+	let overview = {
+		allOrgs: [],
+		filteredOrgs: [],
+		allEmployees: [],
+		allLeaders: [],
+		mandatoryAll: [],
+		mandatoryLeaders: [],
+		mandatoryEmployees: [],
+		hasAnsweredAll: [],
+		hasAnsweredLeaders: [],
+		hasAnsweredEmployees: [],
+		mandatoryUnits: [],
+		hasAnsweredUnitLeaders: [],
+		hasNotAnsweredUnitLeaders: []
+	}
 
 	let isSaving = false
 
@@ -28,9 +42,23 @@
 		{
 			title: "Definer hvem som må fylle inn sin kompetanse",
 			id: "oblig"
+		},
+		{
+			title: "Sjekk svaroversikt og send påminnelser",
+			id: "overview"
 		}
 	]
 	
+	const hasAnsweredMandatory = (employee) => {
+		if (!employee.perfCounty) return false
+		if (!employee.soloRole) return false
+		if (employee.positionTasks.lenght === 0) return false
+		for (const pt of employee.positionTasks) {
+			if (!Array.isArray(pt.tasks) || pt.tasks.lenght === 0) return false
+		}
+		return true
+	}
+
 	const getCategories = (unit) => {
 		for (const forhold of unit.arbeidsforhold) {
 			if (!employeeCategories.includes(forhold.personalressurskategori.navn)) employeeCategories.push(forhold.personalressurskategori.navn)
@@ -67,6 +95,30 @@
 		return true
 	}
 
+	const getOrgsOverview = async () => {
+		console.log("Prøver å hente")
+		overview.allOrgs = await getOrg('allAdmin')
+		overview.filteredOrgs = JSON.parse(JSON.stringify(overview.allOrgs))
+		// Get all employees
+		for (const unit of overview.allOrgs) {
+			for (const employee of unit.arbeidsforhold) {
+				if (!overview.allEmployees.find(e => employee.userPrincipalName === e.userPrincipalName)) overview.allEmployees.push(employee)
+			}
+		}
+		// Get all leaders
+		for (const unit of overview.allOrgs) {
+			if (!overview.allLeaders.find(l => unit.leder.userPrincipalName === l.userPrincipalName)) overview.allLeaders.push(unit.leder)
+		}
+		overview.mandatoryAll = overview.allEmployees.filter(e => e.mandatoryCompetenceInput)
+		overview.mandatoryLeaders = overview.allLeaders.filter(l => l.mandatoryCompetenceInput)
+		overview.hasAnsweredAll = overview.mandatoryAll.filter(e => hasAnsweredMandatory(e))
+		overview.hasAnsweredLeaders = overview.mandatoryLeaders.filter(l => hasAnsweredMandatory(l))
+		overview.mandatoryUnits = overview.allOrgs.filter(unit => adminSettings.oblig.chosenUnits.find(u => u.organisasjonsId === unit.organisasjonsId))
+		overview.hasAnsweredUnitLeaders = overview.mandatoryUnits.filter(u => hasAnsweredMandatory(u.leder))
+		overview.hasNotAnsweredUnitLeaders = overview.mandatoryUnits.filter(u => !hasAnsweredMandatory(u.leder))
+		return true
+	}
+
 	const toggleCategory = (cat) => {
 		if (cat) {
 			if (adminSettings.oblig.chosenCategories.includes(cat)) {
@@ -91,28 +143,6 @@
 		}
 		return res
 	}
-
-	/*
-	const chooseUnit = (unit) => {
-		let add
-		if (adminSettings.oblig.chosenUnits.find(u => u.organisasjonsId === unit.organisasjonsId)) {
-			add = false
-			adminSettings.oblig.chosenUnits = adminSettings.oblig.chosenUnits.filter(u => u.organisasjonsId !== unit.organisasjonsId)
-		}
-		else {
-			add = true
-			adminSettings.oblig.chosenUnits.push({ organisasjonsId: unit.organisasjonsId, navn: unit.navn })
-		}
-		for (const forhold of unit.arbeidsforhold) {
-			if (add) {
-				if (!adminSettings.oblig.chosenEmployees.find(emp => emp.userPrincipalName === forhold.userPrincipalName)) adminSettings.oblig.chosenEmployees.push(forhold)
-			} else {
-				adminSettings.oblig.chosenEmployees = adminSettings.oblig.chosenEmployees.filter(emp => emp.userPrincipalName !== forhold.userPrincipalName)
-			}
-		}
-		adminSettings.oblig.chosenUnits = adminSettings.oblig.chosenUnits
-		adminSettings.oblig.chosenEmployees = adminSettings.oblig.chosenEmployees
-	}*/
 
 	const chooseEmployee = (employee) => {
 		if (!adminSettings.oblig.chosenEmployees.find(emp => emp.userPrincipalName === employee.userPrincipalName)) adminSettings.oblig.chosenEmployees.push(employee)
@@ -219,6 +249,33 @@
 			<a href="mailto:{adminSettings.oblig.chosenUnits.map(u => u.leder).join(';')}">📧 Opprett e-post til ledere for valgte enheter</a>
 			<a href="mailto:{adminSettings.oblig.chosenEmployees.map(e => e.userPrincipalName).join(';')}">📧 Opprett e-post til alle valgte ansatte</a>
 			<AdminUnit unit={structurizeOrg(filteredOrg)[0]} adminSettings={adminSettings} getChosen={getChosen} chooseEmployee={chooseEmployee} addUnit={addUnit} removeUnit={removeUnit} />
+		{:catch error}
+			<p style="color: red">{error.message}</p>
+		{/await}
+	{/if}
+	{#if activeSetting === 'overview'}
+		{#await getOrgsOverview()}
+			<p><IconSpinner /></p>
+		{:then res}
+			<h2>Svaroversikt</h2>
+			<h3>Alle ansatte (inkludert ledere)</h3>
+			<p>Har svart: { overview.hasAnsweredAll.length }/{ overview.mandatoryAll.length } </p>
+			<p>Har ikke svart: { overview.mandatoryAll.length - overview.hasAnsweredAll.length }/{ overview.mandatoryAll.length }</p>
+			<p>Trenger ikke svare: { overview.allEmployees.length - overview.mandatoryAll.length }</p>
+			<br />
+			<h3>Enheter/Ledere</h3>
+			{#each overview.hasNotAnsweredUnitLeaders as unit}
+				<p><strong>{unit.navn}</strong> - Leder: {unit.leder.navn} - <em>Ikke svart</em> ❌</p>
+			{/each}
+			{#each overview.hasAnsweredUnitLeaders as unit}
+				<p><strong>{unit.navn}</strong> - Leder: {unit.leder.navn} - <em>Har svart</em> ✅</p>
+			{/each}
+			<!--
+			<h3>Ledere</h3>
+			<p>Har svart: { overview.hasAnsweredLeaders.length }/{ overview.mandatoryLeaders.length }</p>
+			<p>Har ikke svart: { overview.mandatoryLeaders.length - overview.hasAnsweredLeaders.length }/{ overview.mandatoryLeaders.length }</p>
+			<p>Trenger ikke svare: { overview.allLeaders.length - overview.mandatoryLeaders.length }</p>
+			-->
 		{:catch error}
 			<p style="color: red">{error.message}</p>
 		{/await}
