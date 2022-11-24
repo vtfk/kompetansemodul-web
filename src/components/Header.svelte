@@ -117,7 +117,7 @@
         <li><em style="text-decoration: line-through;">Legge på "Konstituert" og "Midlertidig" i stillingsinformasjon der det gjelder</em> ✅</li>
         <li><em style="text-decoration: line-through;">At leder kan se data på sine ansatte</em> ✅</li>
         <li><em>Organisajonskart/oversikt</em></li>
-        <li><em>At bruker kan selv velge rekkefølge på utdanning/arbeidserfaring osv..</em></li>
+        <li><em style="text-decoration: line-through;">At bruker kan selv velge rekkefølge på utdanning/arbeidserfaring osv..</em>✅</li>
     </ul>
     <p>Har du spørsmål om løsningen - sjekk ut "Hjelp"-siden eller <a href="mailto:delprosjektHR@vtfk.no?subject=Spørsmål-kompetanse-verktøy">send en e-post til delprosjektHR@vtfk.no</a></p>
     <br />
