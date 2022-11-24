@@ -12,6 +12,7 @@
     import IconAdd from "./Icons/IconAdd.svelte";
     import InnerCard from "./InnerCard.svelte";
     import { workExperienceCardHelp } from '../lib/Helpers/helptexts'
+    import { array_move } from '../lib/Helpers/moveArray'
 
     let positions = occupations
 
@@ -142,6 +143,14 @@
         tempWork.tasks.splice(tasksIndex, 1)        
         tempWorkExperience = tempWorkExperience
     }
+
+    const moveExperience = (old_index, new_index) => {
+        tempWorkExperience = array_move(tempWorkExperience, old_index, new_index)
+    }
+
+    const moveTask = (old_index, new_index, tempWorkIndex) => {
+        tempWorkExperience[tempWorkIndex].tasks = array_move(tempWorkExperience[tempWorkIndex].tasks, old_index, new_index)
+    }
 </script>
 
 <Card title={title} backgroundColor={backgroundColor} disableInfoBox={disableInfoBox} editable={canEdit} infoBox={ {content: workExperienceCardHelp}} canSave={canSave} saveFunc={saveFunc} cancelFunc={cancelFunc}>
@@ -201,13 +210,29 @@
                                     <input class="{!validation[i].tasks[j] ? 'required' : '' }" type="text" maxlength="45" bind:value={task} />
                                     <label for={task.toString()} class="validation">{!validation[i].tasks[j] ? '*' : '' }</label>
                                     <Button size="medium" onlyIcon={true} noBorder={true} onClick={() => removeTask(tempWork, task, j)} ><IconDelete slot="before"/></Button>
+                                    <div class="buttonContainer">
+                                        <div class="upDownButtonTask">
+                                            <Button onlyIcon={true} noBorder={true} title="Flytt Opp" removeSlots={true} buttonText="⬆" disabled={j === 0} onClick={() => moveTask(j, (j-1), i)}></Button>
+                                        </div>
+                                        <div class="upDownButtonTask">
+                                            <Button onlyIcon={true} noBorder={true} title="Flytt Ned" removeSlots={true} buttonText="⬇" disabled={j === tempWork.tasks.length-1} onClick={() => moveTask(j, (j+1), i)}></Button>
+                                        </div>
+                                    </div>
                                 </div>
                             {/each}
                             <Button size="small" buttonText="Legg til" onClick={() => addTask(i)} ><IconAdd slot="before" /></Button>
                         </div>
                     </div>
-                    <div slot="right">
+                    <div slot="right" class=slot>
                         <Button buttonText="Fjern" onClick={() => removeWorkExperience(tempWork)}><IconDelete slot="before" /></Button>
+                        <div class="buttonContainer">
+                            <div class="upDownButton">
+                                <Button onlyIcon={true} title="Flytt Opp" removeSlots={true} buttonText="⬆" disabled={i === 0} onClick={() => moveExperience(i, (i-1))}></Button>
+                            </div>
+                            <div class="upDownButton">
+                                <Button onlyIcon={true} title="Flytt Ned" removeSlots={true} buttonText="⬇" disabled={i === tempWorkExperience.length-1} onClick={() => moveExperience(i, (i+1))}></Button>
+                            </div>
+                        </div>
                     </div>
                 </InnerCard>
             {/each}
@@ -250,8 +275,25 @@
     .peroidContainer {
         display: flex;
     }
+    .buttonContainer {
+       display: flex;
+    }
+    .upDownButton {
+        padding-top: 0.5rem;
+        padding-left: 0.5rem;
+    }
     .tasks {
         margin-bottom: 0.20rem;
         display: flex;
+    }
+    @media(max-width: 885px) {
+        .slot {
+            display: flex;
+            padding-top: 0.5rem
+        }
+        .upDownButton {
+            padding-left: 0.5rem;
+            padding-top: 0rem;
+        }
     }
 </style>

@@ -6,16 +6,23 @@
     export let title = undefined
     export let noBorder = false
     export let onlyIcon = false
+    export let removeSlots = false
 
     if (!title) title = buttonText
-
+    if (disabled) onClick = () => {}
 </script>
 
 
 <button on:click={onClick} title={title} class={`${size} ${disabled ? ' disabled' : ''}${noBorder ? ' noBorder' : ''}${onlyIcon ? ' onlyIcon' : ''}`}>
-    <div class="beforeContainer"><slot name="before"></slot></div>
-    <div class="buttonText">{buttonText}</div>
-    <div class="afterContainer"><slot name="after"></slot></div>
+    {#if !removeSlots}
+            <div class="beforeContainer"><slot name="before"></slot></div>
+            <div class="buttonText">{buttonText}</div>
+            <div class="afterContainer"><slot name="after"></slot></div>
+        {:else}
+            <div class="buttonText">{buttonText}</div>
+    {/if}
+
+    
 </button>
 
 <style>
@@ -23,6 +30,7 @@
         align-self: center;
         padding: 0 0.1rem;
     }
+
     .onlyIcon .beforeContainer, .onlyIcon .buttonText, .onlyIcon .afterContainer {
         padding: 0;
     }
@@ -64,5 +72,8 @@
     button.large {
         height: 3rem;
     }
-
+    
+    button.wide {
+        width: 6rem;
+    }
 </style>

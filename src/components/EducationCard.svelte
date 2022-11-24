@@ -14,6 +14,7 @@
     import IconAdd from "./Icons/IconAdd.svelte"
     import InnerCard from "./InnerCard.svelte"
     import { educationCardHelp } from '../lib/Helpers/helptexts'
+    import { array_move } from "../lib/Helpers/moveArray"
     
     // Props
     export let title = 'Utdanning'
@@ -353,6 +354,10 @@
         }
         tempEdu.subject = ""
     }
+
+    const moveEducation = (old_index, new_index) => {
+        tempEducation = array_move(tempEducation, old_index, new_index)
+    }
     
 </script>
 
@@ -432,8 +437,16 @@
                             <input type="text" class="{!validation[i].school ? 'required' : '' }" bind:value={tempEdu.school}>
                         </div>
                     </div>
-                    <div slot="right">
+                    <div slot="right" class=slot>
                         <Button buttonText="Fjern" onClick={() => removeEducation(tempEdu)}><IconDelete slot="before" /></Button>
+                        <div class="buttonContainer">
+                            <div class="upDownButton">
+                                <Button onlyIcon={true} title="Flytt Opp" removeSlots={true} buttonText="⬆" disabled={i === 0} onClick={() => moveEducation(i, (i-1))}></Button>
+                            </div>
+                            <div class="upDownButton">
+                                <Button onlyIcon={true} title="Flytt Ned" removeSlots={true} buttonText="⬇" disabled={i === tempEducation.length-1} onClick={() => moveEducation(i, (i+1))}></Button>
+                            </div>
+                        </div>
                     </div>
                 </InnerCard>
             {/each}
@@ -472,10 +485,26 @@
     .peroidContainer {
         display: flex;
     }
-
+    .buttonContainer {
+       display: flex;
+    }
+    .upDownButton {
+        padding-top: 0.5rem;
+        padding-left: 0.5rem;
+    }
     input[type=text]:read-only {
         color: grey;
         cursor: not-allowed;
+    }
+
+    @media(max-width: 885px) {
+        .slot {
+            display: flex;
+        }
+        .upDownButton {
+            padding-left: 0.5rem;
+            padding-top: 0rem;
+        }
     }
 
 </style>

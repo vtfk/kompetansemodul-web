@@ -9,7 +9,8 @@
     import IconAdd from "./Icons/IconAdd.svelte"
     import IconDelete from "./Icons/IconDelete.svelte"
     import InnerCard from "./InnerCard.svelte"
-    import { experienceCardHelp } from "../lib/Helpers/helptexts";
+    import { experienceCardHelp } from "../lib/Helpers/helptexts"
+    import { array_move } from '../lib/Helpers/moveArray'
 
     // Props
     export let title = 'Verv'
@@ -138,6 +139,10 @@
         const from = `${exp.fromMonth ?? 'Ukjent måned'} ${exp.fromYear}`
         return !exp.isActive ? `${from} - ${exp.toMonth ?? 'Ukjent måned'} ${exp.toYear ?? 'Ukjent år'}` : `${from} - pågår`
     }
+
+    const moveExperience = (old_index, new_index) => {
+        tempExperience = array_move(tempExperience, old_index, new_index)
+    }
 </script>
 
 <Card title={title} disableInfoBox={disableInfoBox} editable={canEdit} backgroundColor={backgroundColor} infoBox={ {content: experienceCardHelp}} canSave={canSave} saveFunc={saveFunc} cancelFunc={cancelFunc}>
@@ -179,6 +184,14 @@
                     </div>
                     <div slot="right">
                         <Button buttonText="Fjern" onClick={() => removeExperience(tempExp)}><IconDelete slot="before" /></Button>
+                        <div class="buttonContainer">
+                            <div class="upDownButton">
+                                <Button onlyIcon={true} title="Flytt Opp" removeSlots={true} buttonText="⬆" disabled={i === 0} onClick={() => moveExperience(i, (i-1))}></Button>
+                            </div>
+                            <div class="upDownButton">
+                                <Button onlyIcon={true} title="Flytt Ned" removeSlots={true} buttonText="⬇" disabled={i === tempExperience.length-1} onClick={() => moveExperience(i, (i+1))}></Button>
+                            </div>
+                        </div>
                     </div>
                 </InnerCard>
             {/each}
@@ -207,6 +220,21 @@
     }
     .peroidContainer {
         display: flex;
+    }
+
+    .buttonContainer {
+       display: flex;
+    }
+    .upDownButton {
+        padding-top: 0.5rem;
+        padding-left: 0.5rem;
+    }
+
+    @media(max-width: 885px) {
+        .upDownButton {
+            padding-left: 0.5rem;
+            padding-top: 0rem;
+        }
     }
 
 </style>

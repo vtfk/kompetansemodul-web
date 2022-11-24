@@ -7,8 +7,9 @@
     import IconDelete from "./Icons/IconDelete.svelte"
     import IconAdd from "./Icons/IconAdd.svelte"
     import InnerCard from "./InnerCard.svelte"
-    import SelectYears from "./SelectYears.svelte";
-    import { certificationCardHelp } from "../lib/Helpers/helptexts";
+    import SelectYears from "./SelectYears.svelte"
+    import { certificationCardHelp } from "../lib/Helpers/helptexts"
+    import { array_move } from '../lib/Helpers/moveArray'
 
     // Props
     export let title = 'Kurs og Sertifiseringer'
@@ -95,6 +96,10 @@
     const cancelFunc = async () => {
         tempCertification = JSON.parse(JSON.stringify(competence.certifications))
     }
+
+    const moveCert = (old_index, new_index) => {
+        tempCertification = array_move(tempCertification, old_index, new_index)
+    }
 </script>
 
 <Card title={title} disableInfoBox={disableInfoBox} editable={canEdit} backgroundColor={backgroundColor} infoBox={ {content: certificationCardHelp}} canSave={canSave} saveFunc={saveFunc} cancelFunc={cancelFunc}>
@@ -134,6 +139,14 @@
                     </div>
                     <div slot="right">
                         <Button buttonText="Fjern" onClick={() => removeCertification(tempCert)}><IconDelete slot="before" /></Button>
+                        <div class="buttonContainer">
+                            <div class="upDownButton">
+                                <Button onlyIcon={true} title="Flytt Opp" removeSlots={true} buttonText="⬆" disabled={i === 0} onClick={() => moveCert(i, (i-1))}></Button>
+                            </div>
+                            <div class="upDownButton">
+                                <Button onlyIcon={true} title="Flytt Ned" removeSlots={true} buttonText="⬇" disabled={i === tempCertification.length-1} onClick={() => moveCert(i, (i+1))}></Button>
+                            </div>
+                        </div>
                     </div>
                 </InnerCard>
             {/each}
@@ -154,5 +167,19 @@
     </div>
 </Card>
 <style>
+.buttonContainer {
+       display: flex;
+}
+.upDownButton {
+    padding-top: 0.5rem;
+    padding-left: 0.5rem;
+}
+
+@media(max-width: 885px) {
+        .upDownButton {
+            padding-left: 0.5rem;
+            padding-top: 0rem;
+        }
+    }
 
 </style>
