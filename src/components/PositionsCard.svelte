@@ -1,10 +1,9 @@
 <script>
     import Card from "./Card.svelte";
     import { onMount } from 'svelte'
-    import { getZipCodeInfo } from '../lib/Helpers/zipCode'
     import InnerCard from "./InnerCard.svelte";
     import { get } from 'svelte/store'
-    import { saveCompetence, getTasks, getOrg }  from '../lib/services/useApi'
+    import { saveCompetence, getTasks }  from '../lib/services/useApi'
     import { editingPersonalia } from '../lib/services/store'
     import DataList from "./DataList.svelte";
     import Button from "./Button.svelte";
@@ -12,6 +11,7 @@
     import IconDelete from "./Icons/IconDelete.svelte";
     import { positionsCardHelp } from '../lib/Helpers/helptexts'
     import { repackPosTitle } from '../lib/Helpers/repackPosTitle'
+    import { array_move } from '../lib/Helpers/moveArray'
 
     // Props
     export let title = 'Dagens stillinger og oppgaver'
@@ -236,13 +236,30 @@
         })
         return test
     }
+
+    const moveKeyTaskMainPos = (old_index, new_index, posId) => {
+        let task = tempPositionTasks.find(pt => pt.positionId === posId)
+        task.tasks = array_move(task.tasks, old_index, new_index)
+        tempPositionTasks = tempPositionTasks
+    }
+
+    const moveRole = (old_index, new_index) => {
+        tempOtherPositions = array_move(tempOtherPositions, old_index, new_index)
+        tempOtherPositions = tempOtherPositions
+    }
+
+    const moveRoleTask = (old_index, new_index, roleTaskId) => {
+        let roleTasks = tempPositionTasks.find(pt => pt.positionId === roleTaskId)
+        roleTasks.tasks = array_move(roleTasks.tasks, old_index, new_index)
+        tempPositionTasks = tempPositionTasks
+    }
 </script>
 
 <Card title={title} backgroundColor={backgroundColor} disableInfoBox={disableInfoBox} infoBox={ {content: positionsCardHelp}} editable={canEdit} canSave={canSave} saveFunc={saveFunc} cancelFunc={cancelFunc}>
     <div class="halla">
         {#if editInfo.isEditing && editInfo.editBlock === title}
         <!-- Data fra HR -->
-            {#each displayData.positions as position, i}
+            {#each displayData.positions as position, positionIndex}
                 <InnerCard emoji='💼'>
                     <div slot="first">
                         <h3>{repackPosTitle(position.stillingstittel, position.arbeidsforholdstype)} ({Math.ceil(position.lonnsprosent/100)}%)</h3>
@@ -256,11 +273,19 @@
                         <div>
                             <label for="tasks">Nøkkeloppgaver i denne stillingen</label><br>
                             <p class="keytaskInfo">I stikkordsform</p>
-                            {#each tempPositionTasks.find(pt => pt.positionId === position.systemId).tasks as task, i}
+                            {#each tempPositionTasks.find(pt => pt.positionId === position.systemId).tasks as task, posTaskIndex}
                                 <div class="tasks">
-                                    <DataList maxLength={45} dataList={getAvailableTasks(position, tempPositionTasks)} filterFunction={(input, obj) => obj.value.toLowerCase().includes(input.toLowerCase()) || obj.category.toLowerCase().startsWith(input.toLowerCase()) } bind:inputValue={task} validation={true} validated={validation[position.systemId][i]} />
-                                    <label for={i.toString()} class="validation">{!validation[position.systemId][i] ? '*' : '' }</label>
-                                    <Button size="medium" onlyIcon={true} noBorder={true} onClick={() => removeTask(position, i)}><IconDelete slot="before"/></Button>
+                                    <DataList maxLength={45} dataList={getAvailableTasks(position, tempPositionTasks)} filterFunction={(input, obj) => obj.value.toLowerCase().includes(input.toLowerCase()) || obj.category.toLowerCase().startsWith(input.toLowerCase()) } bind:inputValue={task} validation={true} validated={validation[position.systemId][posTaskIndex]} />
+                                    <label for={posTaskIndex.toString()} class="validation">{!validation[position.systemId][posTaskIndex] ? '*' : '' }</label>
+                                    <Button size="medium" onlyIcon={true} noBorder={true} onClick={() => removeTask(position, posTaskIndex)}><IconDelete slot="before"/></Button>
+                                    <div class="buttonContainer">
+                                        <div class="upDownButtonTask">
+                                            <Button onlyIcon={true} noBorder={true} title="Flytt Opp" removeSlots={true} buttonText="⬆" disabled={posTaskIndex === 0} onClick={() => moveKeyTaskMainPos(posTaskIndex, (posTaskIndex-1), position.systemId)}></Button>
+                                        </div>
+                                        <div class="upDownButtonTask">
+                                            <Button onlyIcon={true} noBorder={true} title="Flytt Ned" removeSlots={true} buttonText="⬇" disabled={posTaskIndex === tempPositionTasks.find(pt => pt.positionId === position.systemId).tasks.length-1} onClick={() => moveKeyTaskMainPos(posTaskIndex, (posTaskIndex+1), position.systemId)}></Button>
+                                        </div>
+                                    </div>
                                 </div>
                             {/each}
                             <Button size="small" buttonText="Legg til" onClick={() => addTask(position)}><IconAdd slot="before" /></Button>
@@ -272,25 +297,41 @@
             <br />
             <h3>Andre roller og oppgaver</h3>
             <h4>Som ikke dekkes i stillingene over</h4>
-            {#each tempOtherPositions as position, i}
+            {#each tempOtherPositions as position, roleIndex}
                 <InnerCard emoji='🛠' size="medium">
                     <div slot="first">
-                        <label for="posTitle-{i}">Rolle</label><label for="subject" class="validation">{!otherValidation[i].title ? '*' : '' }</label>
-                        <input class="{!otherValidation[i].title ? 'required' : '' }" type="text" placeholder="F. eks 'Prosjektarbeid'" bind:value={position.title}  />
+                        <label for="posTitle-{roleIndex}">Rolle</label><label for="subject" class="validation">{!otherValidation[roleIndex].title ? '*' : '' }</label>
+                        <input class="{!otherValidation[roleIndex].title ? 'required' : '' }" type="text" placeholder="F. eks 'Prosjektarbeid'" bind:value={position.title}  />
                     </div>
                     <div slot="second">
                         <label for="tasks">Oppgaver</label><br>
-                        {#each tempPositionTasks.find(pt => pt.positionId === position.systemId).tasks as task, i}
+                        {#each tempPositionTasks.find(pt => pt.positionId === position.systemId).tasks as task, taskIndex}
                             <div class="tasks">
-                                <DataList maxLength={45} dataList={[]} filterFunction={(input, obj) => obj.value.toLowerCase().includes(input.toLowerCase()) || obj.category.toLowerCase().startsWith(input.toLowerCase()) } bind:inputValue={task} validation={true} validated={validation[position.systemId][i]} />
-                                    <label for={i.toString()} class="validation">{!validation[position.systemId][i] ? '*' : '' }</label>
-                                <Button size="medium" onlyIcon={true} noBorder={true} onClick={() => removeTask(position, i)}><IconDelete slot="before"/></Button>
+                                <DataList maxLength={45} dataList={[]} filterFunction={(input, obj) => obj.value.toLowerCase().includes(input.toLowerCase()) || obj.category.toLowerCase().startsWith(input.toLowerCase()) } bind:inputValue={task} validation={true} validated={validation[position.systemId][taskIndex]} />
+                                    <label for={taskIndex.toString()} class="validation">{!validation[position.systemId][taskIndex] ? '*' : '' }</label>
+                                <Button size="medium" onlyIcon={true} noBorder={true} onClick={() => removeTask(position, taskIndex)}><IconDelete slot="before"/></Button>
+                                <div class="buttonContainer">
+                                    <div class="upDownButtonTask">
+                                        <Button onlyIcon={true} noBorder={true} title="Flytt Opp" removeSlots={true} buttonText="⬆" disabled={taskIndex === 0} onClick={() => moveRoleTask(taskIndex, (taskIndex-1), position.systemId)}></Button>
+                                    </div>
+                                    <div class="upDownButtonTask">
+                                        <Button onlyIcon={true} noBorder={true} title="Flytt Ned" removeSlots={true} buttonText="⬇" disabled={taskIndex === (tempPositionTasks.find(pt => pt.positionId === position.systemId).tasks).length-1} onClick={() => moveRoleTask(taskIndex, (taskIndex+1), position.systemId)}></Button>
+                                    </div>
+                                </div>
                             </div>
                         {/each}
                         <Button size="small" buttonText="Legg til" onClick={() => addTask(position)}><IconAdd slot="before" /></Button>
                     </div>
                     <div slot="right">
                         <Button buttonText="Fjern" onClick={() => removeOtherPosition(position)}><IconDelete slot="before" /></Button>
+                        <div class="buttonContainer">
+                            <div class="upDownButton">
+                                <Button onlyIcon={true} title="Flytt Opp" removeSlots={true} buttonText="⬆" disabled={roleIndex === 0} onClick={() => moveRole(roleIndex, (roleIndex-1))}></Button>
+                            </div>
+                            <div class="upDownButton">
+                                <Button onlyIcon={true} title="Flytt Ned" removeSlots={true} buttonText="⬇" disabled={roleIndex === tempOtherPositions.length - 1} onClick={() => moveRole(roleIndex, (roleIndex+1))}></Button>
+                            </div>
+                        </div>
                     </div>
                 </InnerCard>  
             {/each}
@@ -358,8 +399,25 @@
         margin-bottom: 0.20rem;
         display: flex;
     }
+    .buttonContainer {
+       display: flex;
+    }
+    .upDownButton {
+        padding-top: 0.5rem;
+        padding-left: 0.5rem;
+    }
     .keytaskInfo {
         font-size: 0.7rem;
         font-style: italic;
+    }
+    @media(max-width: 885px) {
+        .slot {
+            display: flex;
+            padding-top: 0.5rem
+        }
+        .upDownButton {
+            padding-left: 0.5rem;
+            padding-top: 0rem;
+        }
     }
 </style>
