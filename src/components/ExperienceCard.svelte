@@ -184,14 +184,14 @@
                     </div>
                     <div slot="right">
                         <Button buttonText="Fjern" onClick={() => removeExperience(tempExp)}><IconDelete slot="before" /></Button>
-                        <div class="buttonContainer">
+                        <!-- <div class="buttonContainer">
                             <div class="upDownButton">
                                 <Button onlyIcon={true} title="Flytt Opp" removeSlots={true} buttonText="⬆" disabled={i === 0} onClick={() => moveExperience(i, (i-1))}></Button>
                             </div>
                             <div class="upDownButton">
                                 <Button onlyIcon={true} title="Flytt Ned" removeSlots={true} buttonText="⬇" disabled={i === tempExperience.length-1} onClick={() => moveExperience(i, (i+1))}></Button>
                             </div>
-                        </div>
+                        </div> -->
                     </div>
                 </InnerCard>
             {/each}
