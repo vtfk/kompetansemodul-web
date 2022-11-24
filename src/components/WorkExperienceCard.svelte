@@ -210,14 +210,14 @@
                                     <input class="{!validation[i].tasks[j] ? 'required' : '' }" type="text" maxlength="45" bind:value={task} />
                                     <label for={task.toString()} class="validation">{!validation[i].tasks[j] ? '*' : '' }</label>
                                     <Button size="medium" onlyIcon={true} noBorder={true} onClick={() => removeTask(tempWork, task, j)} ><IconDelete slot="before"/></Button>
-                                    <!-- <div class="buttonContainer">
+                                    <div class="buttonContainer">
                                         <div class="upDownButtonTask">
                                             <Button onlyIcon={true} noBorder={true} title="Flytt Opp" removeSlots={true} buttonText="⬆" disabled={j === 0} onClick={() => moveTask(j, (j-1), i)}></Button>
                                         </div>
                                         <div class="upDownButtonTask">
                                             <Button onlyIcon={true} noBorder={true} title="Flytt Ned" removeSlots={true} buttonText="⬇" disabled={j === tempWork.tasks.length-1} onClick={() => moveTask(j, (j+1), i)}></Button>
                                         </div>
-                                    </div> -->
+                                    </div>
                                 </div>
                             {/each}
                             <Button size="small" buttonText="Legg til" onClick={() => addTask(i)} ><IconAdd slot="before" /></Button>
@@ -225,14 +225,14 @@
                     </div>
                     <div slot="right" class=slot>
                         <Button buttonText="Fjern" onClick={() => removeWorkExperience(tempWork)}><IconDelete slot="before" /></Button>
-                        <!-- <div class="buttonContainer">
+                        <div class="buttonContainer">
                             <div class="upDownButton">
                                 <Button onlyIcon={true} title="Flytt Opp" removeSlots={true} buttonText="⬆" disabled={i === 0} onClick={() => moveExperience(i, (i-1))}></Button>
                             </div>
                             <div class="upDownButton">
                                 <Button onlyIcon={true} title="Flytt Ned" removeSlots={true} buttonText="⬇" disabled={i === tempWorkExperience.length-1} onClick={() => moveExperience(i, (i+1))}></Button>
                             </div>
-                        </div> -->
+                        </div>
                     </div>
                 </InnerCard>
             {/each}

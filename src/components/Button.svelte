@@ -9,11 +9,16 @@
     export let removeSlots = false
 
     if (!title) title = buttonText
-    if (disabled) onClick = () => {}
+
+    const onClickFunc = () => {
+        if(!disabled) {
+            onClick()
+        }
+    }
 </script>
 
 
-<button on:click={onClick} title={title} class={`${size} ${disabled ? ' disabled' : ''}${noBorder ? ' noBorder' : ''}${onlyIcon ? ' onlyIcon' : ''}`}>
+<button on:click={() => onClickFunc()} title={title} class={`${size} ${disabled ? ' disabled' : ''}${noBorder ? ' noBorder' : ''}${onlyIcon ? ' onlyIcon' : ''}`}>
     {#if !removeSlots}
             <div class="beforeContainer"><slot name="before"></slot></div>
             <div class="buttonText">{buttonText}</div>

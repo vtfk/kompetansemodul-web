@@ -439,14 +439,14 @@
                     </div>
                     <div slot="right" class=slot>
                         <Button buttonText="Fjern" onClick={() => removeEducation(tempEdu)}><IconDelete slot="before" /></Button>
-                        <!-- <div class="buttonContainer">
+                        <div class="buttonContainer">
                             <div class="upDownButton">
                                 <Button onlyIcon={true} title="Flytt Opp" removeSlots={true} buttonText="⬆" disabled={i === 0} onClick={() => moveEducation(i, (i-1))}></Button>
                             </div>
                             <div class="upDownButton">
                                 <Button onlyIcon={true} title="Flytt Ned" removeSlots={true} buttonText="⬇" disabled={i === tempEducation.length-1} onClick={() => moveEducation(i, (i+1))}></Button>
                             </div>
-                        </div> -->
+                        </div>
                     </div>
                 </InnerCard>
             {/each}

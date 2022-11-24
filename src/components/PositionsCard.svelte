@@ -245,7 +245,6 @@
     }
 
     const moveRole = (old_index, new_index) => {
-        console.log('hi')
         tempOtherPositions = array_move(tempOtherPositions, old_index, new_index)
         tempOtherPositions = tempOtherPositions
     }
@@ -255,12 +254,6 @@
         roleTasks.tasks = array_move(roleTasks.tasks, old_index, new_index)
         tempPositionTasks = tempPositionTasks
     }
-
-    const isEqual = (position, posTaskIndex) => {
-        const test = tempPositionTasks.find(pt => pt.positionId === position.systemId).tasks
-        console.log(test.lenght)
-    }
-
 </script>
 
 <Card title={title} backgroundColor={backgroundColor} disableInfoBox={disableInfoBox} infoBox={ {content: positionsCardHelp}} editable={canEdit} canSave={canSave} saveFunc={saveFunc} cancelFunc={cancelFunc}>
@@ -286,14 +279,14 @@
                                     <DataList maxLength={45} dataList={getAvailableTasks(position, tempPositionTasks)} filterFunction={(input, obj) => obj.value.toLowerCase().includes(input.toLowerCase()) || obj.category.toLowerCase().startsWith(input.toLowerCase()) } bind:inputValue={task} validation={true} validated={validation[position.systemId][posTaskIndex]} />
                                     <label for={posTaskIndex.toString()} class="validation">{!validation[position.systemId][posTaskIndex] ? '*' : '' }</label>
                                     <Button size="medium" onlyIcon={true} noBorder={true} onClick={() => removeTask(position, posTaskIndex)}><IconDelete slot="before"/></Button>
-                                    <!-- <div class="buttonContainer">
+                                    <div class="buttonContainer">
                                         <div class="upDownButtonTask">
                                             <Button onlyIcon={true} noBorder={true} title="Flytt Opp" removeSlots={true} buttonText="⬆" disabled={posTaskIndex === 0} onClick={() => moveKeyTaskMainPos(posTaskIndex, (posTaskIndex-1), position.systemId)}></Button>
                                         </div>
                                         <div class="upDownButtonTask">
-                                            <Button onlyIcon={true} noBorder={true} title="Flytt Ned" removeSlots={true} buttonText="⬇" onClick={() => moveKeyTaskMainPos(posTaskIndex, (posTaskIndex+1), position.systemId)} disabled={isEqual(position, posTaskIndex)}></Button>
+                                            <Button onlyIcon={true} noBorder={true} title="Flytt Ned" removeSlots={true} buttonText="⬇" onClick={() => moveKeyTaskMainPos(posTaskIndex, (posTaskIndex+1), position.systemId)} disabled={posTaskIndex === tempPositionTasks.find(pt => pt.positionId === position.systemId).tasks.length-1}></Button>
                                         </div>
-                                    </div> -->
+                                    </div>
                                 </div>
                             {/each}
                             <Button size="small" buttonText="Legg til" onClick={() => addTask(position)}><IconAdd slot="before" /></Button>
@@ -318,28 +311,28 @@
                                 <DataList maxLength={45} dataList={[]} filterFunction={(input, obj) => obj.value.toLowerCase().includes(input.toLowerCase()) || obj.category.toLowerCase().startsWith(input.toLowerCase()) } bind:inputValue={task} validation={true} validated={validation[position.systemId][taskIndex]} />
                                     <label for={taskIndex.toString()} class="validation">{!validation[position.systemId][taskIndex] ? '*' : '' }</label>
                                 <Button size="medium" onlyIcon={true} noBorder={true} onClick={() => removeTask(position, taskIndex)}><IconDelete slot="before"/></Button>
-                                <!-- <div class="buttonContainer">
+                                <div class="buttonContainer">
                                     <div class="upDownButtonTask">
                                         <Button onlyIcon={true} noBorder={true} title="Flytt Opp" removeSlots={true} buttonText="⬆" disabled={taskIndex === 0} onClick={() => moveRoleTask(taskIndex, (taskIndex-1), position.systemId)}></Button>
                                     </div>
                                     <div class="upDownButtonTask">
                                         <Button onlyIcon={true} noBorder={true} title="Flytt Ned" removeSlots={true} buttonText="⬇" disabled={taskIndex === (tempPositionTasks.find(pt => pt.positionId === position.systemId).tasks).length-1} onClick={() => moveRoleTask(taskIndex, (taskIndex+1), position.systemId)}></Button>
                                     </div>
-                                </div> -->
+                                </div>
                             </div>
                         {/each}
                         <Button size="small" buttonText="Legg til" onClick={() => addTask(position)}><IconAdd slot="before" /></Button>
                     </div>
                     <div slot="right">
                         <Button buttonText="Fjern" onClick={() => removeOtherPosition(position)}><IconDelete slot="before" /></Button>
-                        <!-- <div class="buttonContainer">
+                        <div class="buttonContainer">
                             <div class="upDownButton">
                                 <Button onlyIcon={true} title="Flytt Opp" removeSlots={true} buttonText="⬆" disabled={roleIndex === 0} onClick={() => moveRole(roleIndex, (roleIndex-1))}></Button>
                             </div>
                             <div class="upDownButton">
                                 <Button onlyIcon={true} title="Flytt Ned" removeSlots={true} buttonText="⬇" disabled={roleIndex === tempOtherPositions.length - 1} onClick={() => moveRole(roleIndex, (roleIndex+1))}></Button>
                             </div>
-                        </div> -->
+                        </div>
                     </div>
                 </InnerCard>  
             {/each}
