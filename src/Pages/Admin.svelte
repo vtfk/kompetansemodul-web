@@ -264,7 +264,7 @@
 			<p>Trenger ikke svare: { overview.allEmployees.length - overview.mandatoryAll.length }</p>
 			<br />
 			<h3>Svarprosent ledere i enheter som skal svare</h3>
-			<p>{Math.ceil(overview.hasAnsweredUnitLeaders.length / overview.mandatoryUnits.length) * 100}%</p>
+			<p>{Math.ceil(overview.hasAnsweredUnitLeaders.length / overview.mandatoryUnits.length * 100)}%</p>
 			<br />
 			<h3>Enheter/Ledere</h3>
 			{#each overview.hasNotAnsweredUnitLeaders as unit}
