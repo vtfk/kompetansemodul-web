@@ -1,9 +1,12 @@
 <script>
-	import { getOrg, getSettings, saveSettings }  from '../lib/services/useApi'
+	import { getOrg, getSettings, saveSettings, sendMail }  from '../lib/services/useApi'
     import IconSpinner from '../components/Icons/IconSpinner.svelte';
+	import { msalClientStore } from '../lib/services/store'
+	import { get } from 'svelte/store'
     import AdminUnit from '../components/AdminUnit.svelte';
     import Button from '../components/Button.svelte';
     import IconCheck from '../components/Icons/IconCheck.svelte';
+	import { welcomeMail } from '../lib/Helpers/mailTemplates'
 
 	let name = 'Administrator'
 	let org = []
@@ -35,6 +38,24 @@
 		hasNotAnsweredUnitLeaders: []
 	}
 
+	const mailStatus = {
+		welcome: {
+			isSending: false,
+			result: '',
+			failed: []
+		},
+		remind: {
+			isSending: false,
+			result: '',
+			failed: []
+		},
+		leader: {
+			isSending: false,
+			result: '',
+			failed: []
+		}
+	}
+
 	let isSaving = false
 
 	let activeSetting = null
@@ -48,6 +69,9 @@
 			id: "overview"
 		}
 	]
+
+	const msalClient = get(msalClientStore)
+	let currentUser = (msalClient.getAllAccounts())[0].username
 	
 	const hasAnsweredMandatory = (employee) => {
 		if (!employee.perfCounty) return false
@@ -201,7 +225,57 @@
 		toggleCategory('datoFilter')
 	}
 
+	const sendEmails = async (options, type) => {
+		const confirmed = confirm(`Er du sikker på du ønsker å sende e-post til ${options.receivers.length} personer`)
+		if (confirmed) {
+			mailStatus[type].isSending = true
+			mailStatus[type].failed = []
+			let res
+			try {
+				/* // To test failed
+				res = {
+					failed: [
+						{
+							error: "tt",
+							mail: {
+								to: options.receivers.slice(1,5)
+							}
+						},
+						{
+							error: "tt",
+							mail: {
+								to: options.receivers.slice(5,10)
+							}
+						}
+					]
+				} */
+				res = await sendMail({
+					receivers: options.receivers,
+					emailSubject: options.template.subject,
+					emailBody: options.template.body
+				})
+				if (res.failed.length > 0) {
+					let retries = []
+					for (const fail of res.failed) {
+						retries = [...retries, ...fail.mail.to]
+					}
+					mailStatus[type].failed = retries
+					res = `Ånei, utsendingen feilet for ${retries.length} personer!`
+				} else {
+					console.log(res)
+					res = 'E-post er på vei! :)'
+				}
+			} catch (error) {
+				res = 'Utsending feilet, prøv igjen'
+			}
+			mailStatus[type].isSending = false
+			mailStatus[type].result = res
+			console.log(res)
+		}
+	}
+	const sampleContacts = ['jorgen.thorsnes@vtfk.no','robin.ellingsen@vtfk.no','jorgen.thorsnes@gmail.com','robin-elli@hotmail.com','fytch69@gmail.com','peranox@gmail.com']
 </script>
+
 <div class="content">
 	<h1>{name}</h1>
 	{#if !activeSetting}
@@ -246,8 +320,6 @@
 				{/if}
 			</div>
 			<p>{adminSettings.oblig.chosenEmployees.length} av {employees.length} ansatte valgt</p>
-			<a href="mailto:{adminSettings.oblig.chosenUnits.map(u => u.leder).join(';')}">📧 Opprett e-post til ledere for valgte enheter</a>
-			<a href="mailto:{adminSettings.oblig.chosenEmployees.map(e => e.userPrincipalName).join(';')}">📧 Opprett e-post til alle valgte ansatte</a>
 			<AdminUnit unit={structurizeOrg(filteredOrg)[0]} adminSettings={adminSettings} getChosen={getChosen} chooseEmployee={chooseEmployee} addUnit={addUnit} removeUnit={removeUnit} />
 		{:catch error}
 			<p style="color: red">{error.message}</p>
@@ -262,6 +334,32 @@
 			<p>Har svart: { overview.hasAnsweredAll.length }/{ overview.mandatoryAll.length } </p>
 			<p>Har ikke svart: { overview.mandatoryAll.length - overview.hasAnsweredAll.length }/{ overview.mandatoryAll.length }</p>
 			<p>Trenger ikke svare: { overview.allEmployees.length - overview.mandatoryAll.length }</p>
+			<div class="mailBox">
+				{#if mailStatus.welcome.isSending}
+					<IconSpinner />
+				{:else if mailStatus.welcome.result.length > 0}
+					<div class="mailMsg">{mailStatus.welcome.result}<span class="link" on:click={() => {mailStatus.welcome.result=""}}>&nbsp Lukk &nbsp</span></div>
+					{#if mailStatus.welcome.failed.length > 0}
+						<Button removeSlots={true} buttonText="🔄 Send velkomstmail til de det feilet på" onClick={ () => { sendEmails({ receivers: mailStatus.welcome.failed, template: welcomeMail }, 'welcome') } } />
+					{/if}
+				{:else}
+					<Button removeSlots={true} buttonText="📧 Send velkomstmail" onClick={ () => { sendEmails({ receivers: sampleContacts, template: welcomeMail }, 'welcome') } } />
+					<!--<Button removeSlots={true} buttonText="📧 Send velkomstmail" onClick={ () => { sendEmails({ receivers: overview.mandatoryAll, template: welcomeMail }, 'welcome') } } />-->
+					<Button removeSlots={true} buttonText="📧 Test til deg selv: Send velkomstmail" onClick={ () => { sendEmails({ receivers: [currentUser], template: welcomeMail }, 'welcome') } } />
+				{/if}
+			</div>
+			<div class="mailBox">
+				{#if mailStatus.remind.isSending}
+					<IconSpinner />
+				{:else if mailStatus.remind.result.length > 0}
+					<div class="mailMsg">{mailStatus.welcome.result}</div>
+					<div>WHyyy</div>
+					<div on:click={() => {mailStatus.welcome.result=""}}>OKIDKOI</div>
+				{:else}
+					<Button removeSlots={true} buttonText="📧 Send velkomstmail" onClick={ () => { sendEmails({ receivers: overview.mandatoryAll, template: welcomeMail }, 'remind') } } />
+					<Button removeSlots={true} buttonText="📧 Test til deg selv: Send velkomstmail" onClick={ () => { sendEmails({ receivers: [], template: welcomeMail }, 'remind') } } />
+				{/if}
+			</div>
 			<br />
 			<h3>Svarprosent ledere i enheter som skal svare</h3>
 			<p>{Math.ceil(overview.hasAnsweredUnitLeaders.length / overview.mandatoryUnits.length * 100)}%</p>
@@ -301,5 +399,14 @@
 		display: flex;
 		align-items: center;
 		gap: 8px;
+	}
+	.mailMsg {
+		padding: 8px;
+		border: 1px solid var(--mork)
+	}
+	.mailBox {
+		display: flex;
+		gap: 8px;
+		padding: 8px 0;
 	}
 </style>

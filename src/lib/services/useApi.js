@@ -70,6 +70,9 @@ export const getSettings = async () => await apiRequest('get', 'Settings')
 // Save edited settings
 export const saveSettings = async (adminSettings) => await apiRequest('post', 'Settings', adminSettings)
 
+// Send mail to users
+export const sendMail = async (mailPayload) => await apiRequest('post', 'SendMail', mailPayload)
+
 // Get employee positions (data list)
 export const getPositions = async () => await apiRequest('get', 'GetPositions')
 
