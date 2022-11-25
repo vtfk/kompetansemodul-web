@@ -53,7 +53,7 @@
     // Check if user has completed this card, send up result to parent (remember to run in save function as well)
     const fieldsValidated = () => {
         for (const t of competence.positionTasks) {
-            if (!(Array.isArray(t.tasks) && t.tasks.length > 0)) {
+            if ((t.positionId && t.positionId.includes('--')) && (!(Array.isArray(t.tasks) && t.tasks.length > 0))) {
                 setFieldToFinished('tasksCompleted', false)
                 return false
             }
