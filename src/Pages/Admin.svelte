@@ -6,7 +6,7 @@
     import AdminUnit from '../components/AdminUnit.svelte';
     import Button from '../components/Button.svelte';
     import IconCheck from '../components/Icons/IconCheck.svelte';
-	import { welcomeMail } from '../lib/Helpers/mailTemplates'
+	import { welcomeMail, remindMail } from '../lib/Helpers/mailTemplates'
 
 	let name = 'Administrator'
 	let org = []
@@ -136,6 +136,7 @@
 		overview.mandatoryAll = overview.allEmployees.filter(e => e.mandatoryCompetenceInput)
 		overview.mandatoryLeaders = overview.allLeaders.filter(l => l.mandatoryCompetenceInput)
 		overview.hasAnsweredAll = overview.mandatoryAll.filter(e => hasAnsweredMandatory(e))
+		overview.hasNotAnsweredAll = overview.mandatoryAll.filter(e => !hasAnsweredMandatory(e))
 		overview.hasAnsweredLeaders = overview.mandatoryLeaders.filter(l => hasAnsweredMandatory(l))
 		overview.mandatoryUnits = overview.allOrgs.filter(unit => adminSettings.oblig.chosenUnits.find(u => u.organisasjonsId === unit.organisasjonsId))
 		overview.hasAnsweredUnitLeaders = overview.mandatoryUnits.filter(u => hasAnsweredMandatory(u.leder))
@@ -238,13 +239,13 @@
 						{
 							error: "tt",
 							mail: {
-								to: options.receivers.slice(1,5)
+								to: ['jij@fjdk.no']
 							}
 						},
 						{
 							error: "tt",
 							mail: {
-								to: options.receivers.slice(5,10)
+								to: ['jij@fjdkfdf.no']
 							}
 						}
 					]
@@ -270,10 +271,8 @@
 			}
 			mailStatus[type].isSending = false
 			mailStatus[type].result = res
-			console.log(res)
 		}
 	}
-	const sampleContacts = ['jorgen.thorsnes@vtfk.no','robin.ellingsen@vtfk.no','jorgen.thorsnes@gmail.com','robin-elli@hotmail.com','fytch69@gmail.com','peranox@gmail.com']
 </script>
 
 <div class="content">
@@ -332,8 +331,9 @@
 			<h2>Svaroversikt</h2>
 			<h3>Alle ansatte (inkludert ledere)</h3>
 			<p>Har svart: { overview.hasAnsweredAll.length }/{ overview.mandatoryAll.length } </p>
-			<p>Har ikke svart: { overview.mandatoryAll.length - overview.hasAnsweredAll.length }/{ overview.mandatoryAll.length }</p>
+			<p>Har ikke svart: { overview.hasNotAnsweredAll.length }/{ overview.mandatoryAll.length }</p>
 			<p>Trenger ikke svare: { overview.allEmployees.length - overview.mandatoryAll.length }</p>
+			<!--Welcome mail-->
 			<div class="mailBox">
 				{#if mailStatus.welcome.isSending}
 					<IconSpinner />
@@ -343,21 +343,22 @@
 						<Button removeSlots={true} buttonText="🔄 Send velkomstmail til de det feilet på" onClick={ () => { sendEmails({ receivers: mailStatus.welcome.failed, template: welcomeMail }, 'welcome') } } />
 					{/if}
 				{:else}
-					<Button removeSlots={true} buttonText="📧 Send velkomstmail" onClick={ () => { sendEmails({ receivers: sampleContacts, template: welcomeMail }, 'welcome') } } />
-					<!--<Button removeSlots={true} buttonText="📧 Send velkomstmail" onClick={ () => { sendEmails({ receivers: overview.mandatoryAll, template: welcomeMail }, 'welcome') } } />-->
+					<Button disabled={true} removeSlots={true} buttonText="📧 Send velkomstmail" onClick={ () => { sendEmails({ receivers: overview.mandatoryAll, template: welcomeMail }, 'welcome') } } />
 					<Button removeSlots={true} buttonText="📧 Test til deg selv: Send velkomstmail" onClick={ () => { sendEmails({ receivers: [currentUser], template: welcomeMail }, 'welcome') } } />
 				{/if}
 			</div>
+			<!--Remind mail-->
 			<div class="mailBox">
 				{#if mailStatus.remind.isSending}
 					<IconSpinner />
 				{:else if mailStatus.remind.result.length > 0}
-					<div class="mailMsg">{mailStatus.welcome.result}</div>
-					<div>WHyyy</div>
-					<div on:click={() => {mailStatus.welcome.result=""}}>OKIDKOI</div>
+					<div class="mailMsg">{mailStatus.remind.result}<span class="link" on:click={() => {mailStatus.remind.result=""}}>&nbsp Lukk &nbsp</span></div>
+					{#if mailStatus.remind.failed.length > 0}
+						<Button removeSlots={true} buttonText="🔄 Send påminnelse til de det feilet på" onClick={ () => { sendEmails({ receivers: mailStatus.remind.failed, template: remindMail }, 'remind') } } />
+					{/if}
 				{:else}
-					<Button removeSlots={true} buttonText="📧 Send velkomstmail" onClick={ () => { sendEmails({ receivers: overview.mandatoryAll, template: welcomeMail }, 'remind') } } />
-					<Button removeSlots={true} buttonText="📧 Test til deg selv: Send velkomstmail" onClick={ () => { sendEmails({ receivers: [], template: welcomeMail }, 'remind') } } />
+					<Button disabled={true} removeSlots={true} buttonText="📧 Send påminnelse til de som ikke har fylt ut" onClick={ () => { sendEmails({ receivers: overview.hasNotAnsweredAll, template: remindMail }, 'remind') } } />
+					<Button removeSlots={true} buttonText="📧 Test til deg selv: Send påminnelse til de som ikke har fylt ut" onClick={ () => { sendEmails({ receivers: [currentUser], template: remindMail }, 'remind') } } />
 				{/if}
 			</div>
 			<br />
