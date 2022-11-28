@@ -107,7 +107,7 @@
                 editingPersonalia.set({ isEditing: false, editBlock: 'ingen' })
                 await showSuccess()
             } catch (error) {
-                console.error('Aiaiaiai:', error)
+                console.error('Aiaiai:', error)
                 isSaving = false
                 saveError = error.message
                 scrollIfNeeded()

@@ -83,7 +83,7 @@
 		</div>
 		<!--<p style="color: var(--deepSeaGreen);"><strong>Til dagens seksjonsledermøte:</strong> Klikk her: <a href ="mailto:jorgen.thorsnes@vtfk.no;robin.ellingsen@vtfk.no?subject=Tilbakemelding på kompetanse-verktøy"> Lag tilbakemeldings-epost.</a> Skriv inn tilbakemeldinger i e-posten som åpnes, og send når du er ferdig å teste</p><br/> -->
 		<EmployeeCard employeeData={res} />
-		<EmployeeInfoCard employeeData={res} />
+		<EmployeeInfoCard employeeData={res} displayAddress={true} />
 		<PositionsCard employeeData={res} competence={res.competenceData} setFieldToFinished={setFieldToFinished} />
 		<CountySelectionCard competence={res.competenceData} setFieldToFinished={setFieldToFinished} />
 		<DivCard competence={res.competenceData} setFieldToFinished={setFieldToFinished} />

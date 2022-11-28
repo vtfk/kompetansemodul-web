@@ -16,7 +16,7 @@
 
     // State
     let showMenu = false
-    let showTempInfo = true
+    let showTempInfo = false
 
     // Functions
     const changePageSearch = (pageName) => {
@@ -56,7 +56,7 @@
     <div class="headerLeft">
         <SearchBar rounded={true} debounceMs={1000} showPreview={true} placeholder="Søk etter ansatt her" search={searchFunc} callback={searchCallback} previewMapper={previewMapper} />
     </div>
-    <div class="headerRight" style="cursor: pointer;">
+    <div class="headerRight">
         <div class="name">
             <p>{name}</p>
         </div>
