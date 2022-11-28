@@ -96,6 +96,9 @@
 			}
 		}
 		employees = employees
+		if (adminSettings?.oblig?.chosenEmployees) {
+			adminSettings.oblig.chosenEmployees = adminSettings.oblig.chosenEmployees.filter(emp => employees.find(e => e.userPrincipalName === emp.userPrincipalName))
+		}
 	}
 
 	const structurizeOrg = (units) => {
@@ -120,7 +123,6 @@
 	}
 
 	const getOrgsOverview = async () => {
-		console.log("Prøver å hente")
 		overview.allOrgs = await getOrg('allAdmin')
 		overview.filteredOrgs = JSON.parse(JSON.stringify(overview.allOrgs))
 		// Get all employees
@@ -263,7 +265,6 @@
 					mailStatus[type].failed = retries
 					res = `Ånei, utsendingen feilet for ${retries.length} personer!`
 				} else {
-					console.log(res)
 					res = 'E-post er på vei! :)'
 				}
 			} catch (error) {
