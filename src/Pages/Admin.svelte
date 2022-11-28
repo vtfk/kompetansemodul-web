@@ -76,9 +76,9 @@
 	const hasAnsweredMandatory = (employee) => {
 		if (!employee.perfCounty) return false
 		if (!employee.soloRole) return false
-		if (employee.positionTasks.lenght === 0) return false
+		if (employee.positionTasks.length === 0) return false
 		for (const pt of employee.positionTasks) {
-			if (!Array.isArray(pt.tasks) || pt.tasks.lenght === 0) return false
+			if (!Array.isArray(pt.tasks) || pt.tasks.length === 0) return false
 		}
 		return true
 	}
