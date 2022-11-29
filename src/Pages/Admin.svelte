@@ -7,6 +7,7 @@
     import Button from '../components/Button.svelte';
     import IconCheck from '../components/Icons/IconCheck.svelte';
 	import { welcomeMail, remindMail } from '../lib/Helpers/mailTemplates'
+	import { structurizeOrg } from '../lib/Helpers/organizationTools'
 
 	let name = 'Administrator'
 	let org = []
@@ -78,9 +79,9 @@
 		if (!employee.soloRole) return false
 		if (employee.positionTasks.length === 0) return false
 		for (const pt of employee.positionTasks) {
-			if (!Array.isArray(pt.tasks) || pt.tasks.length === 0) return false
+			if (Array.isArray(pt.tasks) && pt.tasks.length > 0) return true
 		}
-		return true
+		return false
 	}
 
 	const getCategories = (unit) => {
@@ -100,16 +101,6 @@
 			adminSettings.oblig.chosenEmployees = adminSettings.oblig.chosenEmployees.filter(emp => employees.find(e => e.userPrincipalName === emp.userPrincipalName))
 		}
 	}
-
-	const structurizeOrg = (units) => {
-		for (const unit of units) {
-			unit.underordnet = unit.underordnet.map(child => {
-				if (!units.find((u => u.organisasjonsId === child.organisasjonsId))) return null // These are unit with gyldighetsperiode slutt
-				return units.find(u => u.organisasjonsId === child.organisasjonsId)
-			}).filter(u => u !== null) // Filter out units with gyldighetsperiode slutt
-		}
-		return [units.find(unit => unit.organisasjonsId === 'hoved')]
-	} 
 
 	const getOrgs = async () => {
 		org = await getOrg('all')
