@@ -62,6 +62,8 @@
 					{#if !mandatoryFields.soloRoleCompleted}
 						<p>❗ <span class="mandatoryInfo">Har ikke fylt ut "Er du den eneste med din stilling og/eller ansvarsområde i din enhet?"</span></p>
 					{/if}
+				{:else if res.isPrivileged}
+					<p><span class="mandatoryInfo"><p>Det er ikke obligatorisk for denne ansatte å fylle ut sin kompetanse</span></p>
 				{/if}
 			</div>
 			<EmployeeCard employeeData={res} />
