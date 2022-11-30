@@ -221,6 +221,8 @@
 
 	const sendEmails = async (options, type) => {
 		const confirmed = confirm(`Er du sikker på du ønsker å sende e-post til ${options.receivers.length} personer`)
+
+
 		if (confirmed) {
 			mailStatus[type].isSending = true
 			mailStatus[type].failed = []
@@ -326,6 +328,24 @@
 			<p>Har ikke svart: { overview.hasNotAnsweredAll.length }/{ overview.mandatoryAll.length }</p>
 			<p>Trenger ikke svare: { overview.allEmployees.length - overview.mandatoryAll.length }</p>
 			<!--Welcome mail-->
+			<!--
+			{#each [0,50,100,150,200,250,300,350,400,450,500,650,700,750,800] as sliceIndex}
+				<div class="mailBox">
+					{#if mailStatus.welcome.isSending}
+						<IconSpinner />
+					{:else if mailStatus.welcome.result.length > 0}
+						<div class="mailMsg">{mailStatus.welcome.result}<span class="link" on:click={() => {mailStatus.welcome.result=""}}>&nbsp Lukk &nbsp</span></div>
+						{#if mailStatus.welcome.failed.length > 0}
+							<Button removeSlots={true} buttonText="🔄 Send velkomstmail til de det feilet på" onClick={ () => { sendEmails({ receivers: mailStatus.welcome.failed, template: welcomeMail }, 'welcome') } } />
+						{/if}
+					{:else}
+						<Button removeSlots={true} buttonText="📧 Send velkomstmail" onClick={ () => { sendEmails({ receivers: overview.mandatoryAll.slice(sliceIndex, sliceIndex+50), template: welcomeMail }, 'welcome') } } />
+						<Button removeSlots={true} buttonText="📧 Test til deg selv: Send velkomstmail" onClick={ () => { sendEmails({ receivers: [currentUser], template: welcomeMail }, 'welcome') } } />
+					{/if}
+				</div>
+				<p>{overview.mandatoryAll.slice(sliceIndex, sliceIndex+50).ma}</p>
+			{/each}
+			-->
 			<div class="mailBox">
 				{#if mailStatus.welcome.isSending}
 					<IconSpinner />
@@ -335,10 +355,11 @@
 						<Button removeSlots={true} buttonText="🔄 Send velkomstmail til de det feilet på" onClick={ () => { sendEmails({ receivers: mailStatus.welcome.failed, template: welcomeMail }, 'welcome') } } />
 					{/if}
 				{:else}
-					<Button removeSlots={true} buttonText="📧 Send velkomstmail" onClick={ () => { sendEmails({ receivers: overview.mandatoryAll, template: welcomeMail }, 'welcome') } } />
+					<Button removeSlots={true} buttonText="📧 Send velkomstmail" onClick={ () => { sendEmails({ receivers: overview.mandatoryAll.map(emp => emp.userPrincipalName), template: welcomeMail }, 'welcome') } } />
 					<Button removeSlots={true} buttonText="📧 Test til deg selv: Send velkomstmail" onClick={ () => { sendEmails({ receivers: [currentUser], template: welcomeMail }, 'welcome') } } />
 				{/if}
 			</div>
+			<p>{overview.mandatoryAll.map(emp => emp.userPrincipalName)}</p>
 			<!--Remind mail-->
 			<div class="mailBox">
 				{#if mailStatus.remind.isSending}
