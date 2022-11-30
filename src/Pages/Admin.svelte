@@ -335,7 +335,7 @@
 						<Button removeSlots={true} buttonText="🔄 Send velkomstmail til de det feilet på" onClick={ () => { sendEmails({ receivers: mailStatus.welcome.failed, template: welcomeMail }, 'welcome') } } />
 					{/if}
 				{:else}
-					<Button disabled={true} removeSlots={true} buttonText="📧 Send velkomstmail" onClick={ () => { sendEmails({ receivers: overview.mandatoryAll, template: welcomeMail }, 'welcome') } } />
+					<Button removeSlots={true} buttonText="📧 Send velkomstmail" onClick={ () => { sendEmails({ receivers: overview.mandatoryAll, template: welcomeMail }, 'welcome') } } />
 					<Button removeSlots={true} buttonText="📧 Test til deg selv: Send velkomstmail" onClick={ () => { sendEmails({ receivers: [currentUser], template: welcomeMail }, 'welcome') } } />
 				{/if}
 			</div>
