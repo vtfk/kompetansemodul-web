@@ -53,7 +53,7 @@
             if (!positionTask.positionParent || positionTask.positionParent !== forhold.arbeidssted.struktur[level]) {
                 positionTask.positionParent = forhold.arbeidssted.struktur[level].kortnavn
             }
-            if (positionTask.positionId !== forhold.systemId) positionTask.positionId = getPositionId(forhold.systemId)
+            positionTask.positionId = getPositionId(forhold.systemId)
         }
     }
 
