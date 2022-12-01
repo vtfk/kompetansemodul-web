@@ -16,7 +16,7 @@
 
     // State
     let showMenu = false
-    let showTempInfo = false
+    let showTempInfo = true
 
     // Functions
     const changePageSearch = (pageName) => {
@@ -111,15 +111,10 @@
 </div>
 {#if showTempInfo}
 <div class="tempInfo">
-    <p><strong>Info:</strong> Løsningen er under kontinuerlig utvikling - noe av det vi jobber med å få på plass nå er:</p>
-    <ul style="padding-left: 24px">
-        <li><em style="text-decoration: line-through;">Informasjon til ledere om hvilke ansatte som skal/har lagt inn data inne på "Min enhet"</em> ✅</li>
-        <li><em style="text-decoration: line-through;">Legge på "Konstituert" og "Midlertidig" i stillingsinformasjon der det gjelder</em> ✅</li>
-        <li><em style="text-decoration: line-through;">At leder kan se data på sine ansatte</em> ✅</li>
-        <li><em>Organisajonskart/oversikt</em></li>
-        <li><em style="text-decoration: line-through;">At bruker kan selv velge rekkefølge på utdanning/arbeidserfaring osv..</em>✅</li>
-    </ul>
-    <p>Har du spørsmål om løsningen - sjekk ut "Hjelp"-siden eller <a href="mailto:delprosjektHR@vtfk.no?subject=Spørsmål-kompetanse-verktøy">send en e-post til delprosjektHR@vtfk.no</a></p>
+    <p><strong>Info: Det er oppdaget en feil i integrasjonen mot HR-systemet</strong></p>
+    <p>Noen vil oppleve å ikke få opp nøkkeloppgavene de har fylt ut - vi jobber med å rette dette, du trenger ikke fylle de inn på nytt.</p>
+    <!--<p>Har du spørsmål om løsningen - sjekk ut "Hjelp"-siden eller <a href="mailto:delprosjektHR@vtfk.no?subject=Spørsmål-kompetanse-verktøy">send en e-post til delprosjektHR@vtfk.no</a></p>
+    -->
     <br />
     <p class="link" on:click={() => {showTempInfo = false}}>Lukk info</p>
 </div>
