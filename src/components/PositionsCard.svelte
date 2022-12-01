@@ -12,7 +12,6 @@
     import { positionsCardHelp } from '../lib/Helpers/helptexts'
     import { repackPosTitle } from '../lib/Helpers/repackPosTitle'
     import { array_move } from '../lib/Helpers/moveArray'
-  import { to_number } from "svelte/internal";
 
     // Props
     export let title = 'Dagens stillinger og oppgaver'
@@ -28,25 +27,33 @@
     if (!competence) competence = { positionTasks: [] }
     if (!competence.positionTasks) competence.positionTasks = []
     if (!competence.otherPositions) competence.otherPositions = []
-    
-   
 
     // state
     let availableTasks = {}
 
-    // Add tasks if needed
+    // Get correct stillingsid / systemid - the last part sometimes changes
+    const getPositionId = (systemId) => {
+        if (systemId.indexOf('--') === -1) return systemId
+        if (systemId.split('--').length === 3) return systemId.substring(0, systemId.lastIndexOf('--'))
+        return systemId
+    }
+
+    // Add tasks and convert format if needed
     for (const forhold of employeeData.aktiveArbeidsforhold) {
-        const positionTask = competence.positionTasks.find(task => task.positionId === forhold.systemId)
+        const positionTask = competence.positionTasks.find(task => getPositionId(task.positionId) === getPositionId(forhold.systemId))
         const level = forhold.arbeidssted.struktur.length > 4 ? forhold.arbeidssted.struktur.length - 4 : 0
         availableTasks[forhold.arbeidssted.struktur[level].kortnavn] = []
         if (!positionTask) {
             competence.positionTasks.push({
-                positionId: forhold.systemId,
+                positionId: getPositionId(forhold.systemId),
                 positionParent: forhold.arbeidssted.struktur[level].kortnavn,
                 tasks: []
             })
-        } else if (!positionTask.positionParent || positionTask.positionParent !== forhold.arbeidssted.struktur[level]) {
-            positionTask.positionParent = forhold.arbeidssted.struktur[level].kortnavn
+        } else {
+            if (!positionTask.positionParent || positionTask.positionParent !== forhold.arbeidssted.struktur[level]) {
+                positionTask.positionParent = forhold.arbeidssted.struktur[level].kortnavn
+            }
+            if (positionTask.positionId !== forhold.systemId) positionTask.positionId = getPositionId(forhold.systemId)
         }
     }
 
@@ -164,13 +171,13 @@
     }
 
     const addTask = async (position) => {
-		tempPositionTasks.find(task => task.positionId === position.systemId).tasks.push('')
+		tempPositionTasks.find(task => task.positionId === getPositionId(position.systemId)).tasks.push('')
         tempPositionTasks = tempPositionTasks
         await updateAvailableTasks(true)
 	}
 
     const removeTask = (position, i) => {
-        tempPositionTasks.find(task => task.positionId === position.systemId).tasks.splice(i, 1)
+        tempPositionTasks.find(task => task.positionId === getPositionId(position.systemId)).tasks.splice(i, 1)
         tempPositionTasks = tempPositionTasks
     }
 
@@ -234,7 +241,7 @@
     // Reactive validation of otherTasks
 
     const getAvailableTasks = (position, tempPT) => {
-        const tempTask = tempPT.find(pt => pt.positionId === position.systemId)
+        const tempTask = tempPT.find(pt => pt.positionId === getPositionId(position.systemId))
         const test = availableTasks[tempTask.positionParent].filter(task => {
             return !tempTask.tasks.some(t => {
                 return t === task.value
@@ -244,7 +251,7 @@
     }
 
     const moveKeyTaskMainPos = (old_index, new_index, posId) => {
-        let task = tempPositionTasks.find(pt => pt.positionId === posId)
+        let task = tempPositionTasks.find(pt => pt.positionId === getPositionId(posId))
         task.tasks = array_move(task.tasks, old_index, new_index)
         tempPositionTasks = tempPositionTasks
     }
@@ -279,17 +286,17 @@
                         <div>
                             <label for="tasks">Nøkkeloppgaver i denne stillingen</label><br>
                             <p class="keytaskInfo">I stikkordsform</p>
-                            {#each tempPositionTasks.find(pt => pt.positionId === position.systemId).tasks as task, posTaskIndex}
+                            {#each tempPositionTasks.find(pt => pt.positionId === getPositionId(position.systemId)).tasks as task, posTaskIndex}
                                 <div class="tasks">
-                                    <DataList maxLength={45} dataList={getAvailableTasks(position, tempPositionTasks)} filterFunction={(input, obj) => obj.value.toLowerCase().includes(input.toLowerCase()) || obj.category.toLowerCase().startsWith(input.toLowerCase()) } bind:inputValue={task} validation={true} validated={validation[position.systemId][posTaskIndex]} />
-                                    <label for={posTaskIndex.toString()} class="validation">{!validation[position.systemId][posTaskIndex] ? '*' : '' }</label>
+                                    <DataList maxLength={45} dataList={getAvailableTasks(position, tempPositionTasks)} filterFunction={(input, obj) => obj.value.toLowerCase().includes(input.toLowerCase()) || obj.category.toLowerCase().startsWith(input.toLowerCase()) } bind:inputValue={task} validation={true} validated={validation[getPositionId(position.systemId)][posTaskIndex]} />
+                                    <label for={posTaskIndex.toString()} class="validation">{!validation[getPositionId(position.systemId)][posTaskIndex] ? '*' : '' }</label>
                                     <Button size="medium" onlyIcon={true} noBorder={true} onClick={() => removeTask(position, posTaskIndex)}><IconDelete slot="before"/></Button>
                                     <div class="buttonContainer">
                                         <div class="upDownButtonTask">
-                                            <Button onlyIcon={true} noBorder={true} title="Flytt Opp" removeSlots={true} buttonText="⬆" disabled={posTaskIndex === 0} onClick={() => moveKeyTaskMainPos(posTaskIndex, (posTaskIndex-1), position.systemId)}></Button>
+                                            <Button onlyIcon={true} noBorder={true} title="Flytt Opp" removeSlots={true} buttonText="⬆" disabled={posTaskIndex === 0} onClick={() => moveKeyTaskMainPos(posTaskIndex, (posTaskIndex-1), getPositionId(position.systemId))}></Button>
                                         </div>
                                         <div class="upDownButtonTask">
-                                            <Button onlyIcon={true} noBorder={true} title="Flytt Ned" removeSlots={true} buttonText="⬇" onClick={() => moveKeyTaskMainPos(posTaskIndex, (posTaskIndex+1), position.systemId)} disabled={posTaskIndex === tempPositionTasks.find(pt => pt.positionId === position.systemId).tasks.length-1}></Button>
+                                            <Button onlyIcon={true} noBorder={true} title="Flytt Ned" removeSlots={true} buttonText="⬇" onClick={() => moveKeyTaskMainPos(posTaskIndex, (posTaskIndex+1), getPositionId(position.systemId))} disabled={posTaskIndex === tempPositionTasks.find(pt => pt.positionId === getPositionId(position.systemId)).tasks.length-1}></Button>
                                         </div>
                                     </div>
                                 </div>
@@ -356,10 +363,10 @@
                     </div>
                     <div slot="second">
                         <label for="keytasks">Nøkkeloppgaver i denne stillingen</label>
-                        {#if !(competence.positionTasks.find(pt => pt.positionId === position.systemId)).tasks.find(t => t.length > 0)}
+                        {#if !(competence.positionTasks.find(pt => pt.positionId === getPositionId(position.systemId))).tasks.find(t => t.length > 0)}
                             <div><em>Ingen nøkkeloppgaver lagt inn</em></div>
                         {:else}
-                            {#each competence.positionTasks.find(pt => pt.positionId === position.systemId).tasks as task}
+                            {#each competence.positionTasks.find(pt => pt.positionId === getPositionId(position.systemId)).tasks as task}
                                 <div>{task}</div>
                             {/each}
                         {/if}

@@ -51,7 +51,7 @@
 			<p><IconSpinner width="2rem" /></p>
 		{:then res}
 			<div>
-				<!-- Validation of mandatory input fields -->
+				<!-- Validation of mandatory input fields if privileged -->
 				{#if res.mandatoryCompetenceInput && res.isPrivileged}
 					{#if !mandatoryFields.tasksCompleted}
 						<p>❗ <span class="mandatoryInfo">Har ikke fylt ut nøkkelopppaver i sin stilling/stillinger</span></p>
