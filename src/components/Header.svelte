@@ -16,7 +16,7 @@
 
     // State
     let showMenu = false
-    let showTempInfo = true
+    let showTempInfo = false
 
     // Functions
     const changePageSearch = (pageName) => {
