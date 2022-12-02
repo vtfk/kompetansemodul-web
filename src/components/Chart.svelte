@@ -8,92 +8,167 @@
     export let type
     export let labelPos
     export let titlePos
+    export let dataChange = false
 
-    // const data = datasets
-    let config
+   
     let chart
+    let ctx
+
+    console.log(datasets)
+
     const data = {
             labels: labels,
             datasets: datasets
         };
+    
+    
+    $: if (chart){
+        chart.data = data
+        chart.update()
+    }
 
-    if(type === 'pie') {
-        config = {
-            type: 'pie',
-            data: data,
-            options: {
-                borderRadius: '10',
-                responsive: true,
-                cutout: '1%',
-                spacing: 1,
-                plugins: {
-                    legend: {
-                        position: labelPos,
-                        display: true,
-                        labels: {
-                            usePointStyle: true,
-                            padding: 20,
-                            font: {
-                                size: 14
+
+    // if(type === 'pie') {
+    //     config = {
+    //         type: 'pie',
+    //         data: data,
+    //         options: {
+    //             borderRadius: '10',
+    //             responsive: true,
+    //             cutout: '1%',
+    //             spacing: 1,
+    //             plugins: {
+    //                 legend: {
+    //                     position: labelPos,
+    //                     display: true,
+    //                     labels: {
+    //                         usePointStyle: true,
+    //                         padding: 20,
+    //                         font: {
+    //                             size: 14
+    //                         }
+    //                     }
+    //                 },
+    //                 title: {
+    //                     display: true,
+    //                     text: title,
+    //                     position: titlePos
+    //                 }
+    //             }
+    //         }
+    //     }
+    // }
+
+    // if(type === 'stackedBar') {
+    //     config = {
+    //         type: 'bar',
+    //         data: data,
+    //         options: {
+    //             indexAxis: 'y',
+    //             elements: {
+    //                 bar: {
+    //                     borderWidth: 2,
+    //                 }
+    //             },
+    //             responsive: true,
+    //             scales: {
+    //                 x: {
+    //                     display:false,
+    //                     stacked: true,
+    //                 },
+    //                 y: {
+    //                     display: false,
+    //                     stacked: true
+    //                 },
+                    
+    //             },
+    //             plugins: {
+    //                 legend: {
+    //                     position: labelPos,
+    //                 },
+    //                 title: {
+    //                     display: true,
+    //                     text: title,
+    //                     position: titlePos
+    //                 }
+    //             }
+    //         }
+    //     }
+    // }
+
+    onMount(async ()=> {
+        // Initialize chart using default config set
+        if(type === 'pie') {
+            chart = new Chart(ctx, {
+                type: 'pie',
+                data: data,
+                options: {
+                    responsive: true,
+                    cutout: '1%',
+                    spacing: 1,
+                    plugins: {
+                        legend: {
+                            position: labelPos,
+                            display: true,
+                            labels: {
+                                usePointStyle: true,
+                                padding: 20,
+                                font: {
+                                    size: 14
+                                }
                             }
+                        },
+                        title: {
+                            display: true,
+                            text: title,
+                            position: titlePos
+                        }
+                    }
+                }
+            });
+        }
+        if(type === 'stackedBar') {
+            chart = new Chart(ctx, {
+                type: 'bar',
+                data: data,
+                options: {
+                    indexAxis: 'y',
+                    elements: {
+                        bar: {
+                            borderWidth: 2,
                         }
                     },
-                    title: {
-                        display: true,
-                        text: title,
-                        position: titlePos
+                    responsive: true,
+                    scales: {
+                        x: {
+                            display:false,
+                            stacked: true,
+                        },
+                        y: {
+                            display: false,
+                            stacked: true
+                        },
+                        
+                    },
+                    plugins: {
+                        legend: {
+                            position: labelPos,
+                        },
+                        title: {
+                            display: true,
+                            text: title,
+                            position: titlePos
+                        }
                     }
                 }
-            }
+            })
         }
-    }
-
-    if(type === 'stackedBar') {
-        config = {
-            type: 'bar',
-            data: data,
-            options: {
-                indexAxis: 'y',
-                elements: {
-                    bar: {
-                        borderWidth: 2,
-                    }
-                },
-                responsive: true,
-                scales: {
-                    x: {
-                        display:false,
-                        stacked: true,
-                    },
-                    y: {
-                        display: false,
-                        stacked: true
-                    },
-                    
-                },
-                plugins: {
-                    legend: {
-                        position: labelPos,
-                    },
-                    title: {
-                        display: true,
-                        text: title,
-                        position: titlePos
-                    }
-                }
-            }
-        }
-    }
-
-    onMount(()=> {
-        const ctx = chart.getContext('2d');
-        // Initialize chart using default config set
-        var myChart = new Chart(ctx, config);
     })
 </script>
 
 <div class="chart">
-    <canvas bind:this={chart}></canvas>
+    <canvas id="chart" bind:this={ctx}></canvas>
+    <p>{title}</p>
 </div>
 
 <style>

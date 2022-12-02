@@ -16,7 +16,11 @@
 	let toggleValue = false
 	let group = 1
 	let selection = []
-
+	let filteredStatsAllUnits = []
+	let filteredList = []
+	let allStats = []
+	
+	// Colors
 	const colorVestfold = '#7ABED3'
 	const colorTelemark = '#AD879E'
 	const colorNoReply = '#EB8380'
@@ -59,109 +63,121 @@
 			tasks: ['Leder']
 		}
 	}
-
+	
 	const getStats = async (orgId) => {
 		const res = await getOrg(`report-${orgId}`)
-		// console.log(res)
+		allStats = res
+		filteredStatsAllUnits = JSON.parse(JSON.stringify(allStats))
+		filteredList.push(filteredStatsAllUnits.find(org => orgId === org.organisasjonsId))
+		
+		return true
+	}
 
-		let unitsData = []
-
-		res.forEach(org => {
-			let noReply = 0
-			let yes = 0
-			let no = 0
-			let notMandatory = 0
-			let vestfold = 0
-			let telemark = 0
-			let dunno = 0
-			let both = 0
-			let noReplyOffice = 0
-			let vestfoldToday = 0
-			let telemarkToday = 0
-			let otherToday = 0
-
-			org.arbeidsforhold.forEach(employee => {
-				if(employee.mandatoryCompetenceInput === false) {
-					notMandatory++
-				} else {
-					// SoloRole stats
-					if(!employee.soloRole ) noReply++
-					if(employee.soloRole === 'Ja' ) yes++
-					if(employee.soloRole === 'Nei' ) no++
-					
-					//OfficelocationToday stats
-					if(employee.officeLocation === 'Fylkeshuset i Tønsberg') vestfoldToday++
-					if(employee.officeLocation === 'Fylkessenter Seljord' || employee.officeLocation === 'Fylkeshuset T18 Skien' || employee.officeLocation === 'Fylkesbakken Skien' ) telemarkToday++
-					if(employee.officeLocation !== 'Fylkeshuset i Tønsberg' && employee.officeLocation !== 'Fylkessenter Seljord' && employee.officeLocation !== 'Fylkeshuset T18 Skien' && employee.officeLocation !== 'Fylkesbakken Skien' ) otherToday++
-
-					//OfficelocationPref stats
-					if(!employee.perfCounty ) noReplyOffice++
-					if(employee.perfCounty === 'Vet ikke') dunno++
-					if(employee.perfCounty === 'Telemark fylkeskommune') telemark++
-					if(employee.perfCounty === 'Vestfold fylkeskommune') vestfold++
-					if(employee.perfCounty === 'Begge alternativene er like gode for meg') both++
-				}
-			});
-			let stat = {
-				unit: org.navn,
-				soloRole: {
-					noReply: noReply,
-					yes: yes,
-					no: no,
-				},
-				officeLocationPref: {
-					vestfold: vestfold,
-					telemark: telemark,
-					dunno: dunno,
-					both: both,
-					noReply: noReplyOffice,
-				},
-				officeLocationToday: {
-					vestfold: vestfoldToday,
-					telemark: telemarkToday,
-					other: otherToday
-				},
-				notMandatory: notMandatory
-			}
-			unitsData.push(stat)
-		})
+	const generateStats = (units, isChecked) => {
+		console.log('æasdas')
 		const stats = {
-			units: unitsData
+			soloRoleStats: {
+				soloRoleNoReply: 0,
+				soloRoleYes: 0,
+				soloRoleNo: 0,
+			},
+			perfCountyStats: {
+				perfVestfold: 0,
+				perfTelemark: 0,
+				perfDunno: 0,
+				perfBoth: 0,
+				perfNoReply: 0,
+			},
+			currentCountyStats: {
+				officeVestfold: 0,
+				officeTelemark:0,
+				officeOther: 0
+			},
+			notMandatory: 0,
 		}
-		// stats = {
-		// 	units: unitsData,
-		// 	soloRole: {
-		// 		noReply: noReply,
-		// 		yes: yes,
-		// 		no: no,
-		// 	},
-		// 	officeLocationPref: {
-		// 		vestfold: vestfold,
-		// 		telemark: telemark,
-		// 		dunno: dunno,
-		// 		both: both,
-		// 		noReply: noReplyOffice,
-		// 	},
-		// 	officeLocationToday: {
-		// 		vestfold: vestfoldToday,
-		// 		telemark: telemarkToday,
-		// 		other: otherToday
-		// 	},
-		// 	notMandatory: notMandatory
-		// }
+
+		if(isChecked === true) {
+			filteredList.forEach(org => {
+				org.arbeidsforhold.forEach(employee => {
+					if(employee.mandatoryCompetenceInput === false) {
+						stats.notMandatory++
+					} else {
+						// SoloRole stats
+						if(!employee.soloRole ) stats.soloRoleStats.soloRoleNoReply++
+						if(employee.soloRole === 'Ja' ) stats.soloRoleStats.soloRoleYes++
+						if(employee.soloRole === 'Nei' ) stats.soloRoleStats.soloRoleNo++
+						
+						//OfficelocationToday stats
+						if(employee.officeLocation === 'Fylkeshuset i Tønsberg') stats.currentCountyStats.officeVestfold++
+						if(employee.officeLocation === 'Fylkessenter Seljord' || employee.officeLocation === 'Fylkeshuset T18 Skien' || employee.officeLocation === 'Fylkesbakken Skien' ) stats.currentCountyStats.officeTelemark++
+						if(employee.officeLocation !== 'Fylkeshuset i Tønsberg' && employee.officeLocation !== 'Fylkessenter Seljord' && employee.officeLocation !== 'Fylkeshuset T18 Skien' && employee.officeLocation !== 'Fylkesbakken Skien' ) stats.currentCountyStats.officeOther++
+
+						//OfficelocationPref stats
+						if(!employee.perfCounty ) stats.perfCountyStats.perfNoReply++
+						if(employee.perfCounty === 'Vet ikke') stats.perfCountyStats.perfDunno++
+						if(employee.perfCounty === 'Telemark fylkeskommune') stats.perfCountyStats.perfTelemark++
+						if(employee.perfCounty === 'Vestfold fylkeskommune') stats.perfCountyStats.perfVestfold++
+						if(employee.perfCounty === 'Begge alternativene er like gode for meg') stats.perfCountyStats.perfBoth++
+					}
+				})
+			})
+		} 
+		if(isChecked === false) {
+			filteredStatsAllUnits.forEach(org => {
+				org.arbeidsforhold.forEach(employee => {
+					if(employee.mandatoryCompetenceInput === false) {
+						stats.notMandatory++
+					} else {
+						// SoloRole stats
+						if(!employee.soloRole ) stats.soloRoleStats.soloRoleNoReply++
+						if(employee.soloRole === 'Ja' ) stats.soloRoleStats.soloRoleYes++
+						if(employee.soloRole === 'Nei' ) stats.soloRoleStats.soloRoleNo++
+						
+						//OfficelocationToday stats
+						if(employee.officeLocation === 'Fylkeshuset i Tønsberg') stats.currentCountyStats.officeVestfold++
+						if(employee.officeLocation === 'Fylkessenter Seljord' || employee.officeLocation === 'Fylkeshuset T18 Skien' || employee.officeLocation === 'Fylkesbakken Skien' ) stats.currentCountyStats.officeTelemark++
+						if(employee.officeLocation !== 'Fylkeshuset i Tønsberg' && employee.officeLocation !== 'Fylkessenter Seljord' && employee.officeLocation !== 'Fylkeshuset T18 Skien' && employee.officeLocation !== 'Fylkesbakken Skien' ) stats.currentCountyStats.officeOther++
+
+						//OfficelocationPref stats
+						if(!employee.perfCounty ) stats.perfCountyStats.perfNoReply++
+						if(employee.perfCounty === 'Vet ikke') stats.perfCountyStats.perfDunno++
+						if(employee.perfCounty === 'Telemark fylkeskommune') stats.perfCountyStats.perfTelemark++
+						if(employee.perfCounty === 'Vestfold fylkeskommune') stats.perfCountyStats.perfVestfold++
+						if(employee.perfCounty === 'Begge alternativene er like gode for meg') stats.perfCountyStats.perfBoth++
+					}
+				})
+			})
+		}
+		
+		const results = {
+			soloRoleData: {
+				no: stats.soloRoleStats.soloRoleNo, 
+				yes: stats.soloRoleStats.soloRoleYes, 
+				noReply: stats.soloRoleStats.soloRoleNoReply, 
+				notMandatory: stats.notMandatory,
+			},
+			perfCountyData: {
+				vestfold: stats.perfCountyStats.perfVestfold,
+				telemark: stats.perfCountyStats.perfTelemark,
+				dunno: stats.perfCountyStats.perfDunno,
+				both: stats.perfCountyStats.perfBoth,
+				noReply: stats.perfCountyStats.perfNoReply
+			},
+			currentCountyData: {
+				vestfold: stats.currentCountyStats.officeVestfold,
+				telemark: stats.currentCountyStats.officeTelemark,
+				other: stats.currentCountyStats.officeOther,
+			},
+			notMandatory: stats.notMandatory
+		}
 		isShowStats = true
-		return stats
+		return results
 	}
 
 	const hideStats = () => {
 		isShowStats = false
 	}
 	
-	const combineData = (selection, stats) => {
-		console.log(stats)
-		
-		return selection
-	}
 </script>
 
 <div class="content">
@@ -194,6 +210,12 @@
 						<div class="unitHeader flexMe">
 							<h3>Statistikk</h3>
 						</div>
+					</div>
+					{#await getStats(unit.organisasjonsId)}
+						<div class="centerButton">
+							<Button onlyIcon={true} size="large" buttonText="Laster... "><IconSpinner slot="after"  width="2rem"/></Button>
+						</div>
+					{:then}
 						<div class="centerButton">
 							{#if isShowStats === true}
 								<Button buttonText="Lukk statistikk" removeSlots={true} size="large" onClick={() => hideStats()}></Button>
@@ -201,175 +223,172 @@
 								<Button buttonText="Hent statistikk" removeSlots={true} size="large" onClick={() => isShowStats = true}></Button>
 							{/if}
 						</div>
-					</div>
-					{#if isShowStats === true}
-						{#await getStats(unit.organisasjonsId)}
-						<div class="centerSpinner">
-							<IconSpinner width="3rem" />
-						</div>
-						{:then stats}
-						{#each stats.units as unitFilter, i}
-							{#if unit.navn === unitFilter.unit}
+						{#if isShowStats === true}
+							{#if unit.underordnet.length > 1 }
 								<div class="toggleFilterContainer">
-									<label class="toggleFilter" for={unitFilter.unit}>Ikke inkluder underenheter i statistikk</label><input id={unitFilter.unit} type="checkbox" value={unitFilter.unit} bind:group={selection} >
+									<label class="toggleFilter" for={unit}>Ikke inkluder underenheter i statistikk</label><input id={unit} type="checkbox" on:click={() => toggleValue = !toggleValue} >
 								</div>
 							{/if}
-						{/each}
-						{#await combineData(selection, stats)}
-							<div class="centerSpinner">
-								<IconSpinner width="3rem" />
-							</div>
-						{:then selectionData} 
-							<!-- <div class=charts>
-								<div class="chartbox">
-									<div class="pieChart">
-										<Chart 
-											datasets={[{
-												label: "Antall",
-												data: [stats.units[0].soloRole.no, stats.units[0].soloRole.yes, stats.units[0].soloRole.noReply, stats.units[0].notMandatory],
-												backgroundColor: [
-												colorTelemark,
-												colorSame,
-												colorNoReply,
-												colorNotMandatory
-												],
-												hoverOffset: 4
-											}]}
-											labels={[
-												`Har ikke kritiske oppgaver (${stats.units[0].soloRole.no})`,
-												`Har kritiske oppgaver (${stats.units[0].soloRole.yes})`,
-												`Har ikke svart (${stats.units[0].soloRole.noReply})`,
-												`Skal ikke svare (${stats.units[0].notMandatory})`
-											]}
-											title="Svar oversikt kritiske oppgaver" 
-											type='pie'
-											labelPos="bottom"
-											titlePos="top"
-										/>
+							{#await generateStats(unit.organisasjonsId, toggleValue)}
+								<div class="centerSpinner">
+									<IconSpinner width="3rem" />
+								</div>
+							{:then data}
+							{console.log([data.soloRoleData.no, data.soloRoleData.yes, data.soloRoleData.noReply, data.soloRoleData.notMandatory])}
+								<div class=charts>
+									<div class="chartbox">
+										<div class="pieChart">
+											<Chart 
+												datasets={[{
+													label: "Antall",
+													data: [data.soloRoleData.no, data.soloRoleData.yes, data.soloRoleData.noReply, data.soloRoleData.notMandatory],
+													backgroundColor: [
+													colorTelemark,
+													colorSame,
+													colorNoReply,
+													colorNotMandatory
+													],
+													hoverOffset: 4
+												}]}
+												labels={[
+													`Har ikke kritiske oppgaver (${data.soloRoleData.no})`,
+													`Har kritiske oppgaver (${data.soloRoleData.yes})`,
+													`Har ikke svart (${data.soloRoleData.noReply})`,
+													`Skal ikke svare (${data.soloRoleData.notMandatory})`
+												]}
+												title='{toggleValue} asdasd'
+												type='pie'
+												labelPos="bottom"
+												titlePos="top"
+											/>
+										</div>
+									</div>
+									<div class="chartbox">
+										<div class="stackedBarTop">
+											<Chart
+												datasets={[
+													{
+														label: `Vestfold (${data.perfCountyData.vestfold})`,
+														barThickness:100,
+														data: [data.perfCountyData.vestfold],
+														backgroundColor: [
+															colorVestfold,
+														],
+														hoverOffset:4
+													},
+													{
+														label: `Telemark (${data.perfCountyData.telemark})`,
+														barThickness:100,
+														data: [data.perfCountyData.telemark],
+														backgroundColor: [
+															colorTelemark
+														],
+														hoverOffset:4
+													},
+													{
+														label: `Vet ikke (${data.perfCountyData.dunno})`,
+														barThickness:100,
+														data: [data.perfCountyData.dunno],
+														backgroundColor: [
+															colorDunno
+														],
+														hoverOffset:4
+													},
+													{
+														label: `Begge alternativene (${data.perfCountyData.both})`,
+														barThickness:100,
+														data: [data.perfCountyData.both],
+														backgroundColor: [
+															colorSame
+														],
+														hoverOffset:4
+													},
+													{
+														label: `Har ikke svart (${data.perfCountyData.noReply})`,
+														barThickness:100,
+														data: [data.perfCountyData.noReply],
+														backgroundColor: [
+															colorNoReply
+														],
+														hoverOffset:4
+													},
+													{
+														label: `Skal ikke svare (${data.notMandatory})`,
+														barThickness:100,
+														data: [data.notMandatory],
+														backgroundColor: [
+															colorNotMandatory
+														],
+														hoverOffset:4
+													}
+												]}
+												labels={[
+													''
+												]}
+												title="Ønsket arbeidsted"
+												type="stackedBar"
+												labelPos="top"
+												titlePos="top"
+											/>
+										</div>
+										<div class="stackedBarBottom">
+											<Chart
+												datasets={[
+													{
+														label: `Vestfold (${data.currentCountyData.vestfold})`,
+														barThickness:100,
+														data: [data.currentCountyData.vestfold],
+														backgroundColor: [
+															colorVestfold,
+														],
+														hoverOffset:4
+													},
+													{
+														label: `Telemark (${data.currentCountyData.telemark})`,
+														barThickness:100,
+														data: [data.currentCountyData.telemark],
+														backgroundColor: [
+															colorTelemark
+														],
+														hoverOffset:4
+													},
+													{
+														label: `Annen lokasjon enn et fylkeshus (${data.currentCountyData.other})`,
+														barThickness:100,
+														data: [data.currentCountyData.other],
+														backgroundColor: [
+															colorOther
+														],
+														hoverOffset:4
+													},
+													{
+														label: `Skal ikke svare (${data.notMandatory})`,
+														barThickness:100,
+														data: [data.notMandatory],
+														backgroundColor: [
+															colorNotMandatory
+														],
+														hoverOffset:4
+													},
+												]}
+												labels={[
+													''
+												]}
+												title="Dagens arbeidsted"
+												type="stackedBar"
+												labelPos="bottom"
+												titlePos="bottom"
+											/>
+										</div>
 									</div>
 								</div>
-								<div class="chartbox">
-									<div class="stackedBarTop">
-										<Chart
-											datasets={[
-												{
-													label: `Vestfold (${stats.units[0].officeLocationPref.vestfold})`,
-													barThickness:100,
-													data: [stats.units[0].officeLocationPref.vestfold],
-													backgroundColor: [
-														colorVestfold,
-													],
-													hoverOffset:4
-												},
-												{
-													label: `Telemark (${stats.units[0].officeLocationPref.telemark})`,
-													barThickness:100,
-													data: [stats.units[0].officeLocationPref.telemark],
-													backgroundColor: [
-														colorTelemark
-													],
-													hoverOffset:4
-												},
-												{
-													label: `Vet ikke (${stats.units[0].officeLocationPref.dunno})`,
-													barThickness:100,
-													data: [stats.units[0].officeLocationPref.dunno],
-													backgroundColor: [
-														colorDunno
-													],
-													hoverOffset:4
-												},
-												{
-													label: `Begge alternativene (${stats.units[0].officeLocationPref.both})`,
-													barThickness:100,
-													data: [stats.units[0].officeLocationPref.both],
-													backgroundColor: [
-														colorSame
-													],
-													hoverOffset:4
-												},
-												{
-													label: `Har ikke svart (${stats.units[0].officeLocationPref.noReply})`,
-													barThickness:100,
-													data: [stats.units[0].officeLocationPref.noReply],
-													backgroundColor: [
-														colorNoReply
-													],
-													hoverOffset:4
-												},
-												{
-													label: `Skal ikke svare (${stats.units[0].notMandatory})`,
-													barThickness:100,
-													data: [stats.units[0].notMandatory],
-													backgroundColor: [
-														colorNotMandatory
-													],
-													hoverOffset:4
-												}
-											]}
-											labels={[
-												''
-											]}
-											title="Ønsket arbeidsted"
-											type="stackedBar"
-											labelPos="top"
-											titlePos="top"
-										/>
-									</div>
-									<div class="stackedBarBottom">
-										<Chart
-											datasets={[
-												{
-													label: `Vestfold (${stats.units[0].officeLocationToday.vestfold})`,
-													barThickness:100,
-													data: [stats.units[0].officeLocationToday.vestfold],
-													backgroundColor: [
-														colorVestfold,
-													],
-													hoverOffset:4
-												},
-												{
-													label: `Telemark (${stats.units[0].officeLocationToday.telemark})`,
-													barThickness:100,
-													data: [stats.units[0].officeLocationToday.telemark],
-													backgroundColor: [
-														colorTelemark
-													],
-													hoverOffset:4
-												},
-												{
-													label: `Annen lokasjon enn et fylkeshus (${stats.units[0].officeLocationToday.other})`,
-													barThickness:100,
-													data: [stats.units[0].officeLocationToday.other],
-													backgroundColor: [
-														colorOther
-													],
-													hoverOffset:4
-												},
-												{
-													label: `Skal ikke svare (${stats.units[0].notMandatory})`,
-													barThickness:100,
-													data: [stats.units[0].notMandatory],
-													backgroundColor: [
-														colorNotMandatory
-													],
-													hoverOffset:4
-												},
-											]}
-											labels={[
-												''
-											]}
-											title="Dagens arbeidsted"
-											type="stackedBar"
-											labelPos="bottom"
-											titlePos="bottom"
-										/>
-									</div>
-								</div>
-							</div> -->
-						{/await}
-						{/await}
-					{/if}
+							{:catch error} 
+								<p>{error}</p>
+							{/await}
+						{/if}
+					{:catch error}
+						<p>{error}</p>
+					{/await}
 				{/if}
 				{#if unit.arbeidsforhold.length > 0 || unit.leder.userPrincipalName}
 					<div class="unitHeader flexMe">
@@ -435,6 +454,11 @@
 
 	.chartbox {
 		padding-top: 2rem;
+	}
+
+	.pieChart {
+		margin-bottom: 15rem;
+		margin-top: 2rem
 	}
 
 	.stackedBarBottom {
