@@ -28,6 +28,12 @@
         letter-spacing: -1px;
         user-select: none;
     }
+    .initialsBadge.xSmall {
+        width: 21px;
+        height: 21px;
+        font-size: 12px;
+        letter-spacing: -1px;
+    }
     .initialsBadge.small {
         width: 40px;
         height: 40px;

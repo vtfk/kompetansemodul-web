@@ -10,3 +10,5 @@ export const editingPersonalia = writable({
   editBlock: 'ingen akkurat nå'
 })
 export const infoOpen = writable('')
+export const allOrgStore = writable(null)
+export const orgOpenStore = writable({ 'hoved': true, '6': true })

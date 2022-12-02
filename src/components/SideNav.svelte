@@ -10,6 +10,7 @@
     import { adminRole } from '../../config'
     import IconSettings from './Icons/IconSettings.svelte';
     import IconClasses from './Icons/IconClasses.svelte';
+    import IconOrg from './Icons/IconOrg.svelte';
     
     // Props
     export let roles = []
@@ -56,16 +57,14 @@
                     <p>Finn ansatt</p>
                 </button>
             </div>
-            <!--
-            <div class="sideNavItem disabled">
-                <button on:click={() => { } } class={`disabled${currentPage === 'organisasjon' ? ' siteNavItemActive' : ''}`}>
+            <div class="sideNavItem">
+                <button on:click={() => { changePage('organisasjon') } } class={`${currentPage === 'organisasjon' ? ' siteNavItemActive' : ''}`}>
                     <div class="icon">
                         <IconOrg />
                     </div>
-                    <p>Organisasjon (ikke laget enda)</p>
+                    <p>Organisasjon</p>
                 </button>
             </div>
-            -->
             {#if roles.includes(adminRole)}
                 <div class="sideNavItem">
                     <button on:click={() => { changePage('admin')} } class={currentPage === 'admin' ? 'siteNavItemActive' : ''}>

@@ -96,8 +96,8 @@
         <div class="menuOption{currentPage === 'personalia' ? ' active' : ''}" on:click={() => {changePageSearch('personalia')}}>Meg</div>
         <div class="menuOption{currentPage === 'minenhet' ? ' active' : ''}" on:click={() => {changePage('minenhet', { setUnit: 'myUnit' })}}>Min enhet</div>
         <div class="menuOption{currentPage === 'person' ? ' active' : ''}" on:click={() => {changePageSearch('person')}}>Finn ansatt</div>
+        <div class="menuOption{currentPage === 'organisasjon' ? ' active' : ''}" on:click={() => {changePageSearch('organisasjon')}}>Organisasjon</div>
         <div class="menuOption{currentPage === 'hjelp' ? ' active' : ''}" on:click={() => {changePageSearch('hjelp')}}>Hjelp</div>
-        <div class="menuOption">Logg ut</div>
         <div class="menuOption" on:click={() => {showMenu = false}}>Lukk meny</div>
     </div>
     <div class="mobileSearchBar">
