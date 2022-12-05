@@ -74,7 +74,6 @@
 	}
 
 	const generateStats = (units, isChecked) => {
-		console.log('æasdas')
 		const stats = {
 			soloRoleStats: {
 				soloRoleNoReply: 0,
@@ -175,6 +174,7 @@
 	}
 
 	const hideStats = () => {
+		toggleValue = false
 		isShowStats = false
 	}
 	
@@ -234,7 +234,7 @@
 									<IconSpinner width="3rem" />
 								</div>
 							{:then data}
-							{console.log([data.soloRoleData.no, data.soloRoleData.yes, data.soloRoleData.noReply, data.soloRoleData.notMandatory])}
+							<!-- {console.log([data.soloRoleData.no, data.soloRoleData.yes, data.soloRoleData.noReply, data.soloRoleData.notMandatory])} -->
 								<div class=charts>
 									<div class="chartbox">
 										<div class="pieChart">
@@ -256,10 +256,11 @@
 													`Har ikke svart (${data.soloRoleData.noReply})`,
 													`Skal ikke svare (${data.soloRoleData.notMandatory})`
 												]}
-												title='{toggleValue} asdasd'
+												title='Kritiske oppgaver'
 												type='pie'
 												labelPos="bottom"
 												titlePos="top"
+												dataChange={toggleValue}
 											/>
 										</div>
 									</div>
@@ -329,6 +330,7 @@
 												type="stackedBar"
 												labelPos="top"
 												titlePos="top"
+												dataChange={toggleValue}
 											/>
 										</div>
 										<div class="stackedBarBottom">
@@ -378,6 +380,7 @@
 												type="stackedBar"
 												labelPos="bottom"
 												titlePos="bottom"
+												dataChange={toggleValue}
 											/>
 										</div>
 									</div>

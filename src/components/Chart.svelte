@@ -8,25 +8,42 @@
     export let type
     export let labelPos
     export let titlePos
-    export let dataChange = false
+    export let dataChange
 
    
     let chart
     let ctx
-
-    console.log(datasets)
 
     const data = {
             labels: labels,
             datasets: datasets
         };
     
-    
-    $: if (chart){
-        chart.data = data
-        chart.update()
-    }
+    // $: if (chart){
+    //     // console.log(chart.data.datasets)
+    //     // console.log(chart)
+    //     chart.data.datasets.data = [data.datasets]
+    //     chart.update()
+    // }
 
+    $: if((dataChange == true) || (dataChange == false) && chart) {
+        if(type === 'pie') {
+            chart.data.labels = labels
+            chart.data.datasets[0].data = datasets[0].data
+            chart.update()
+        }
+        if (type === 'stackedBar') {
+            chart.data.datasets = datasets
+            chart.update()
+        }
+        
+        // console.log(chart.data.datasets[0])
+        // chart.data.datasets[0].data = datasets[0].data
+        // chart.update()
+    }
+        // chart.data.datasets.data = [data.datasets]
+        
+    
 
     // if(type === 'pie') {
     //     config = {
@@ -168,7 +185,6 @@
 
 <div class="chart">
     <canvas id="chart" bind:this={ctx}></canvas>
-    <p>{title}</p>
 </div>
 
 <style>
