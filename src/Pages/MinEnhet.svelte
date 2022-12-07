@@ -1,20 +1,25 @@
 <script>
 	import { getOrg }  from '../lib/services/useApi'
 	import { changePage }  from '../lib/Helpers/changePage'
+	import { structurizeOrg } from '../lib/Helpers/organizationTools'
+	import OrgUnit from '../components/OrgUnit.svelte'
 	import IconSpinner from '../components/Icons/IconSpinner.svelte';
     import EmployeeBox from '../components/EmployeeBox.svelte';
-	import { msalClientStore, unitParameter } from '../lib/services/store'
+	import { msalClientStore, unitParameter, allOrgStore } from '../lib/services/store'
 	import { get } from 'svelte/store'
 
 	// State
 	let activeUnit
 	let chosenUnit
 	let expandedView = false
+	let allOrg = []
+	let structOrg = {}
 
 	unitParameter.subscribe(value => {
 		activeUnit = value
 	})
 
+	// Functions
 	const getMyOrgUnit = async (unit) => {
 		let res
 		if (unit === 'myUnit') {
@@ -25,6 +30,16 @@
 			res = await getOrg(unit)
 		}
 		return res
+	}
+
+	const getAllOrg = async () => {
+		if (!get(allOrgStore)) {
+			allOrg = await getOrg('allSmall')
+			allOrgStore.set(allOrg)
+		} else {
+			allOrg = get(allOrgStore)
+		}
+		structOrg = structurizeOrg(allOrg)
 	}
 
 	const isUnitLeader = (leaderUpn) => {
@@ -49,47 +64,62 @@
 </script>
 
 <div class="content">
-	{#await getMyOrgUnit(activeUnit)}
-		<p><IconSpinner width="2rem" /></p>
-	{:then units}
-		{#if units.length > 1 && !chosenUnit}
-			<h3>Du er tilknyttet flere enheter, vennligst velg den du ønsker å se</h3>
-			{#each units as unit}
-				<p class="link" on:click={() => {changePage('minenhet', { setUnit: unit.organisasjonsId })}}>
-					{unit.navn}<strong>{isUnitLeader(unit.leder.userPrincipalName) ? ' (Leder)' : ''}</strong>
-				</p>
-			{/each}
-		{:else}
-			{#each units as unit}
-				{#if unit.overordnet && unit.overordnet.organisasjonsId !== unit.organisasjonsId}
-					<p class="link center" on:click={() => {changePage('minenhet', { setUnit: unit.overordnet.organisasjonsId })}}>{unit.overordnet.navn}</p>
-				{/if}
-				<h2 class="unitHeader center">{unit.navn}</h2>
-				{#if unit.underordnet.length > 0}
-					<h3 class="center">Underenheter</h3>
-					<div class="center childrenContainer">
-						{#each unit.underordnet as kid}
-							<p class="link center" on:click={() => {changePage('minenhet', { setUnit: kid.organisasjonsId })}}>{kid.navn}</p>
+	{#if activeUnit === "hoved"}
+		<!-- TOP LEVEL show org structure -->
+		{#await getAllOrg()}
+			<p><IconSpinner /></p>
+		{:then}
+			<OrgUnit unit={structOrg[0]} />
+		{:catch error}
+			<p style="color: red">{error.message}</p>
+		{/await}
+	{:else}
+		<!-- Not top level, show unit -->
+		{#await getMyOrgUnit(activeUnit)}
+			<p><IconSpinner width="2rem" /></p>
+		{:then units}
+			{#if units.length > 1 && !chosenUnit}
+				<h3>Du er tilknyttet flere enheter, vennligst velg den du ønsker å se</h3>
+				{#each units as unit}
+					<p class="link" on:click={() => {changePage('minenhet', { setUnit: unit.organisasjonsId })}}>
+						{unit.navn}<strong>{isUnitLeader(unit.leder.userPrincipalName) ? ' (Leder)' : ''}</strong>
+					</p>
+				{/each}
+			{:else}
+				{#each units as unit}
+					{#if unit.overordnet && unit.overordnet.organisasjonsId !== unit.organisasjonsId}
+						{#each unit.struktur.slice(1).reverse() as overordnet, i}
+							<p class="link center" style="font-size: {i+1*16}px;" on:click={() => {changePage('minenhet', { setUnit: overordnet.organisasjonsId })}}>{overordnet.navn}</p>
 						{/each}
-					</div>
-				{/if}
-				{#if unit.arbeidsforhold.length > 0 || unit.leder.userPrincipalName}
-					<div class="unitHeader flexMe">
-						<h3>Ansatte</h3>
-						<div class="toggleView"><div class="toggleContainer"><label for="toggle">Utvidet visning</label><input id="toggle" type="checkbox" bind:checked={expandedView} /></div></div>
-					</div>
-					<div class="employeeContainer">
-						<EmployeeBox expandedView={expandedView} onClick={() => changePage('person', { setPerson: unit.leder.ansattnummer, setPrevious: { activeUnit, name: unit.navn } } )} employeeData={{ ...getLeaderEmployeeData(unit), isPrivileged: unit.isPrivileged, department: unit.navn}} />
-						{#each unit.arbeidsforhold.filter(employee => employee.userPrincipalName !== unit.leder.userPrincipalName) as emp, i}
-							<EmployeeBox expandedView={expandedView} onClick={() => changePage('person', { setPerson: emp.userPrincipalName, setPrevious: { activeUnit, name: unit.navn } })} employeeData={{...emp, department: unit.navn, isPrivileged: unit.isPrivileged}} />
-						{/each}
-					</div>
-				{/if}
-			{/each}
-		{/if}
-	{:catch error}
-		<p style="color: red">{error.message}</p>
-	{/await}
+						<!--<p class="link center" on:click={() => {changePage('minenhet', { setUnit: unit.overordnet.organisasjonsId })}}>{unit.overordnet.navn}</p>-->
+					{/if}
+					<h2 class="unitHeader center">{unit.navn}</h2>
+					{#if unit.underordnet.length > 0}
+						<h3 class="center">Underenheter</h3>
+						<div class="center childrenContainer">
+							{#each unit.underordnet as kid}
+								<p class="link center" on:click={() => {changePage('minenhet', { setUnit: kid.organisasjonsId })}}>{kid.navn}</p>
+							{/each}
+						</div>
+					{/if}
+					{#if unit.arbeidsforhold.length > 0 || unit.leder.userPrincipalName}
+						<div class="unitHeader flexMe">
+							<h3>Ansatte</h3>
+							<div class="toggleView"><div class="toggleContainer"><label for="toggle">Utvidet visning</label><input id="toggle" type="checkbox" bind:checked={expandedView} /></div></div>
+						</div>
+						<div class="employeeContainer">
+							<EmployeeBox expandedView={expandedView} onClick={() => changePage('person', { setPerson: unit.leder.ansattnummer, setPrevious: { activeUnit, name: unit.navn } } )} employeeData={{ ...getLeaderEmployeeData(unit), isPrivileged: unit.isPrivileged, department: unit.navn}} />
+							{#each unit.arbeidsforhold.filter(employee => employee.userPrincipalName !== unit.leder.userPrincipalName) as emp, i}
+								<EmployeeBox expandedView={expandedView} onClick={() => changePage('person', { setPerson: emp.userPrincipalName, setPrevious: { activeUnit, name: unit.navn } })} employeeData={{...emp, department: unit.navn, isPrivileged: unit.isPrivileged}} />
+							{/each}
+						</div>
+					{/if}
+				{/each}
+			{/if}
+		{:catch error}
+			<p style="color: red">{error.message}</p>
+		{/await}
+	{/if}
 </div>
 
 <style>
