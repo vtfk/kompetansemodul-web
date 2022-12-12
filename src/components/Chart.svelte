@@ -9,6 +9,7 @@
     export let labelPos
     export let titlePos
     export let dataChange
+    export let disabled = []
 
    
     let chart
@@ -73,9 +74,10 @@
                     }
                 }
             });
-            // Lag en foreach som tar et array og setter de til visible/hidden. Trenger en prop som heter noe lurt og ekponeres i chart.
-            // chart.toggleDataVisibility(0)
-            // chart.update();
+            for (const disableIndex of disabled) {
+                chart.toggleDataVisibility(disableIndex)
+                chart.update()
+            }
         }
         if(type === 'stackedBar') {
             chart = new Chart(ctx, {
