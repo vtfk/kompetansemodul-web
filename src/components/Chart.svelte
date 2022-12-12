@@ -15,18 +15,11 @@
     let ctx
 
     const data = {
-            labels: labels,
-            datasets: datasets
-        };
-    
-    // $: if (chart){
-    //     // console.log(chart.data.datasets)
-    //     // console.log(chart)
-    //     chart.data.datasets.data = [data.datasets]
-    //     chart.update()
-    // }
-
-    $: if((dataChange == true) || (dataChange == false) && chart) {
+        labels: labels,
+        datasets: datasets,
+    }
+    console.log(datasets)
+    $: if((dataChange == true && chart) || (dataChange == false && chart)) {
         if(type === 'pie') {
             chart.data.labels = labels
             chart.data.datasets[0].data = datasets[0].data
@@ -36,82 +29,19 @@
             chart.data.datasets = datasets
             chart.update()
         }
-        
-        // console.log(chart.data.datasets[0])
-        // chart.data.datasets[0].data = datasets[0].data
-        // chart.update()
-    }
-        // chart.data.datasets.data = [data.datasets]
-        
-    
+    }   
 
-    // if(type === 'pie') {
-    //     config = {
-    //         type: 'pie',
-    //         data: data,
-    //         options: {
-    //             borderRadius: '10',
-    //             responsive: true,
-    //             cutout: '1%',
-    //             spacing: 1,
-    //             plugins: {
-    //                 legend: {
-    //                     position: labelPos,
-    //                     display: true,
-    //                     labels: {
-    //                         usePointStyle: true,
-    //                         padding: 20,
-    //                         font: {
-    //                             size: 14
-    //                         }
-    //                     }
-    //                 },
-    //                 title: {
-    //                     display: true,
-    //                     text: title,
-    //                     position: titlePos
-    //                 }
-    //             }
-    //         }
-    //     }
-    // }
-
-    // if(type === 'stackedBar') {
-    //     config = {
-    //         type: 'bar',
-    //         data: data,
-    //         options: {
-    //             indexAxis: 'y',
-    //             elements: {
-    //                 bar: {
-    //                     borderWidth: 2,
-    //                 }
-    //             },
-    //             responsive: true,
-    //             scales: {
-    //                 x: {
-    //                     display:false,
-    //                     stacked: true,
-    //                 },
-    //                 y: {
-    //                     display: false,
-    //                     stacked: true
-    //                 },
-                    
-    //             },
-    //             plugins: {
-    //                 legend: {
-    //                     position: labelPos,
-    //                 },
-    //                 title: {
-    //                     display: true,
-    //                     text: title,
-    //                     position: titlePos
-    //                 }
-    //             }
-    //         }
-    //     }
-    // }
+    Chart.register({
+        id: 'custom_canvas_background_if_no_data',
+        beforeDraw: (chart) => {
+            const {ctx} = chart;
+            ctx.save();
+            ctx.font = '22px, Arial';
+            ctx.fillStyle = 'grey';
+            ctx.fillText('Ingen data', chart.chartArea.width, chart.chartArea.height);
+            ctx.restore();
+        }
+    })
 
     onMount(async ()=> {
         // Initialize chart using default config set
@@ -139,10 +69,13 @@
                             display: true,
                             text: title,
                             position: titlePos
-                        }
+                        },
                     }
                 }
             });
+            // Lag en foreach som tar et array og setter de til visible/hidden. Trenger en prop som heter noe lurt og ekponeres i chart.
+            // chart.toggleDataVisibility(0)
+            // chart.update();
         }
         if(type === 'stackedBar') {
             chart = new Chart(ctx, {
@@ -179,8 +112,9 @@
                     }
                 }
             })
-        }
+        } 
     })
+    
 </script>
 
 <div class="chart">

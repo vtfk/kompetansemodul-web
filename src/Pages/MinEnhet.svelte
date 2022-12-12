@@ -34,6 +34,7 @@
 	})
 
 	const getMyOrgUnit = async (unit) => {
+		hideStats()
 		let res
 		if (unit === 'myUnit') {
 			const msalClient = get(msalClientStore)
@@ -170,6 +171,12 @@
 			notMandatory: stats.notMandatory
 		}
 		isShowStats = true
+		for(const prop in results) {
+			console.log(prop)
+			if(results.hasOwnProperty(prop)) {
+				console.log(results.hasOwnProperty(prop))
+			}
+		}
 		return results
 	}
 
@@ -211,37 +218,38 @@
 							<h3>Statistikk</h3>
 						</div>
 					</div>
-					{#await getStats(unit.organisasjonsId)}
+					<!-- {#await getStats(unit.organisasjonsId)}
 						<div class="centerButton">
 							<Button onlyIcon={true} size="large" buttonText="Laster... "><IconSpinner slot="after"  width="2rem"/></Button>
 						</div>
-					{:then}
-						<div class="centerButton">
-							{#if isShowStats === true}
+					{:then} -->
+					{#if isShowStats === true}
+						{#await getStats(unit.organisasjonsId)}
+							<div class="centerButton">
+								<Button onlyIcon={true} size="large" buttonText="Laster... "><IconSpinner slot="after"  width="2rem"/></Button>
+							</div>
+						{:then}
+							<div class="centerButton">
 								<Button buttonText="Lukk statistikk" removeSlots={true} size="large" onClick={() => hideStats()}></Button>
-							{:else}
-								<Button buttonText="Hent statistikk" removeSlots={true} size="large" onClick={() => isShowStats = true}></Button>
-							{/if}
-						</div>
-						{#if isShowStats === true}
+							</div>
 							{#if unit.underordnet.length > 1 }
 								<div class="toggleFilterContainer">
 									<label class="toggleFilter" for={unit}>Ikke inkluder underenheter i statistikk</label><input id={unit} type="checkbox" on:click={() => toggleValue = !toggleValue} >
 								</div>
 							{/if}
+							
 							{#await generateStats(unit.organisasjonsId, toggleValue)}
 								<div class="centerSpinner">
 									<IconSpinner width="3rem" />
 								</div>
 							{:then data}
-							<!-- {console.log([data.soloRoleData.no, data.soloRoleData.yes, data.soloRoleData.noReply, data.soloRoleData.notMandatory])} -->
 								<div class=charts>
 									<div class="chartbox">
 										<div class="pieChart">
 											<Chart 
 												datasets={[{
 													label: "Antall",
-													data: [data.soloRoleData.no, data.soloRoleData.yes, data.soloRoleData.noReply, data.soloRoleData.notMandatory],
+													data: [data.soloRoleData.no, data.soloRoleData.yes, data.soloRoleData.noReply],
 													backgroundColor: [
 													colorTelemark,
 													colorSame,
@@ -254,7 +262,6 @@
 													`Har ikke kritiske oppgaver (${data.soloRoleData.no})`,
 													`Har kritiske oppgaver (${data.soloRoleData.yes})`,
 													`Har ikke svart (${data.soloRoleData.noReply})`,
-													`Skal ikke svare (${data.soloRoleData.notMandatory})`
 												]}
 												title='Kritiske oppgaver'
 												type='pie'
@@ -274,15 +281,6 @@
 														data: [data.perfCountyData.vestfold],
 														backgroundColor: [
 															colorVestfold,
-														],
-														hoverOffset:4
-													},
-													{
-														label: `Telemark (${data.perfCountyData.telemark})`,
-														barThickness:100,
-														data: [data.perfCountyData.telemark],
-														backgroundColor: [
-															colorTelemark
 														],
 														hoverOffset:4
 													},
@@ -311,14 +309,15 @@
 														backgroundColor: [
 															colorNoReply
 														],
-														hoverOffset:4
+														hoverOffset:4,
+														hidden: true
 													},
 													{
-														label: `Skal ikke svare (${data.notMandatory})`,
+														label: `Telemark (${data.perfCountyData.telemark})`,
 														barThickness:100,
-														data: [data.notMandatory],
+														data: [data.perfCountyData.telemark],
 														backgroundColor: [
-															colorNotMandatory
+															colorTelemark
 														],
 														hoverOffset:4
 													}
@@ -361,17 +360,9 @@
 														backgroundColor: [
 															colorOther
 														],
-														hoverOffset:4
-													},
-													{
-														label: `Skal ikke svare (${data.notMandatory})`,
-														barThickness:100,
-														data: [data.notMandatory],
-														backgroundColor: [
-															colorNotMandatory
-														],
-														hoverOffset:4
-													},
+														hoverOffset:4,
+														hidden: true
+													}
 												]}
 												labels={[
 													''
@@ -385,13 +376,15 @@
 										</div>
 									</div>
 								</div>
-							{:catch error} 
-								<p>{error}</p>
+								{:catch error}
+									<p>{error}</p>
+								{/await}
 							{/await}
-						{/if}
-					{:catch error}
-						<p>{error}</p>
-					{/await}
+					{:else}
+						<div class="centerButton">
+							<Button buttonText="Hent statistikk" removeSlots={true} size="large" onClick={() => isShowStats = true}></Button>
+						</div>
+					{/if}
 				{/if}
 				{#if unit.arbeidsforhold.length > 0 || unit.leder.userPrincipalName}
 					<div class="unitHeader flexMe">
@@ -465,7 +458,7 @@
 	}
 
 	.stackedBarBottom {
-		margin-top: -17rem;
+		margin-top: -16rem;
 	}
 
 	.stackedBarTop {
