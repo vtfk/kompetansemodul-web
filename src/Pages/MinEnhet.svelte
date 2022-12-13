@@ -8,6 +8,7 @@
   	import Button from '../components/Button.svelte'
     import SoloRoleStats from '../components/SoloRoleStats.svelte'
 	import CountyStats from '../components/CountyStats.svelte'
+	import Table from '../components/Table.svelte'
 
 	// State
 	let activeUnit
@@ -17,6 +18,9 @@
 	let useOnlyUnitStats = false
 	let allStats = []
 	let onlyUnitStats = []
+	let showSoloRole = false
+	let resList = []
+	let soloRoleList = []
 
 	unitParameter.subscribe(value => {
 		activeUnit = value
@@ -32,6 +36,9 @@
 		} else {
 			res = await getOrg(unit)
 		}
+		resList.push(res[0])
+		getSoloRoles()
+		resList = []
 		return res
 	}
 
@@ -65,6 +72,24 @@
 	const hideStats = () => {
 		useOnlyUnitStats = false
 		showStats = false
+	}
+
+	const getSoloRoles = async () => {
+		soloRoleList = []
+		resList[0].arbeidsforhold.forEach(s => {
+			const obj = {
+				'Navn': s.navn,
+				'Har Kritisk Oppgave': s.soloRole,
+				'Beskrivelse av Kritisk Oppgave': s.soloRoleDescription,
+				'Er Oppgaven Kritisk': null
+			}
+			soloRoleList.push(obj)
+		});
+		showSoloRole = true
+	}
+	
+	const hideSoloRoles = () => {
+		showSoloRole = false
 	}
 	
 </script>
@@ -119,6 +144,17 @@
 							<div class="charts">
 								<SoloRoleStats data={ { allStats, onlyUnitStats } } useOnlyUnitStats={useOnlyUnitStats} />
 								<CountyStats data={ { allStats, onlyUnitStats } } useOnlyUnitStats={useOnlyUnitStats} />
+							</div>
+							<div>
+								<div class="unitHeader flexMe">
+									<h3>Liste over kritiske oppgaver</h3>
+								</div>
+								<div class="table">
+									<Table tableData={soloRoleList} isChecked={false}/>
+								</div>
+								<div class="centerButton">
+									<Button buttonText="Lagre" removeSlots={true} size="medium" onClick={() => hideSoloRoles()}></Button>
+								</div>
 							</div>
 						{/await}
 					{:else}
@@ -202,10 +238,11 @@
 		padding-right:0.5rem;
 	}
 
+	.table {
+		margin-bottom: 1rem;
+	}
+
 	@media(max-width: 1183px) { 
-		.stackedBarTop {
-			padding-top: 12rem;
-		}
 		.charts {
 			justify-content: space-around;
 		}

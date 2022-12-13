@@ -19,7 +19,7 @@
         labels: labels,
         datasets: datasets,
     }
-    console.log(datasets)
+
     $: if((dataChange == true && chart) || (dataChange == false && chart)) {
         if(type === 'pie') {
             chart.data.labels = labels
@@ -32,6 +32,7 @@
         }
     }   
 
+    // Global plugin test
     Chart.register({
         id: 'custom_canvas_background_if_no_data',
         beforeDraw: (chart) => {
