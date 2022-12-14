@@ -277,6 +277,14 @@
                     canSave = false
                 }
             }
+
+            if(edu.fromYear === edu.toYear) {
+                const monthsToRestrict = ['Januar', 'Februar', 'Mars', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Desember']
+                if(monthsToRestrict.findIndex(i => i === edu.fromMonth) > monthsToRestrict.findIndex(i => i === edu.toMonth)) {
+                    valid.toMonth = false
+                    canSave = false
+                }
+            }
             /*
             if (higherDegrees.includes(edu.degree) && (!edu.specialization || edu.specialization.length < 1)) {
                 valid.specialization = false
@@ -421,7 +429,11 @@
                             <div>
                                 <label for="to">Til</label><label for="to" class='validation'>{!validation[i].toMonth || !validation[i].toYear ? '*' : '' }<br>
                                 <div class="peroidContainer">
-                                <SelectMonth bind:monthValue={tempEdu.toMonth} validation={true} validated={validation[i].toMonth} />
+                                    {#if tempEdu.toYear === tempEdu.fromYear}
+                                        <SelectMonth bind:monthValue={tempEdu.toMonth} validation={true} validated={validation[i].toMonth} fromMonth={tempEdu.fromMonth}/>
+                                    {:else}
+                                        <SelectMonth bind:monthValue={tempEdu.toMonth} validation={true} validated={validation[i].toMonth} />
+                                    {/if}
                                     {#if newEducation.fromYear}
                                         <SelectYears startYear={tempEdu.fromYear} bind:yearValue={tempEdu.toYear} validation={true} validated={validation[i].toYear}/>
                                     {/if}

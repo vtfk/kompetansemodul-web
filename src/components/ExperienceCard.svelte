@@ -79,11 +79,19 @@
                     canSave = false
                 }
             }
+            if(exp.fromYear === exp.toYear) {
+                const monthsToRestrict = ['Januar', 'Februar', 'Mars', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Desember']
+                if(monthsToRestrict.findIndex(i => i === exp.fromMonth) > monthsToRestrict.findIndex(i => i === exp.toMonth)) {
+                    valid.toMonth = false
+                    canSave = false
+                }
+            }
 
             tempValidation.push(valid)
         }
         validation = JSON.parse(JSON.stringify(tempValidation))
     }
+
 
     // Reactive state changes
     $: {
@@ -143,6 +151,7 @@
     const moveExperience = (old_index, new_index) => {
         tempExperience = array_move(tempExperience, old_index, new_index)
     }
+
 </script>
 
 <Card title={title} disableInfoBox={disableInfoBox} editable={canEdit} backgroundColor={backgroundColor} infoBox={ {content: experienceCardHelp}} canSave={canSave} saveFunc={saveFunc} cancelFunc={cancelFunc}>
@@ -174,10 +183,14 @@
                             <div>
                                 <label for="to">Til</label><label for="to" class='validation'>{!validation[i].toMonthOrYear ? '*' : '' }</label><br>
                                 <div class="peroidContainer">
-                                    <SelectMonth bind:monthValue={tempExp.toMonth} validation={true} validated={validation[i].toMonth} />
-                                        {#if newExperience.fromYear}
-                                            <SelectYears startYear={tempExp.fromYear} bind:yearValue={tempExp.toYear} validation={true} validated={validation[i].toYear} />
-                                        {/if}
+                                    {#if tempExp.toYear === tempExp.fromYear}
+                                        <SelectMonth bind:monthValue={tempExp.toMonth} validation={true} validated={validation[i].toMonth} fromMonth={tempExp.fromMonth}/>
+                                    {:else}
+                                        <SelectMonth bind:monthValue={tempExp.toMonth} validation={true} validated={validation[i].toMonth} />
+                                    {/if}
+                                    {#if newExperience.fromYear}
+                                        <SelectYears startYear={tempExp.fromYear} bind:yearValue={tempExp.toYear} validation={true} validated={validation[i].toYear} />
+                                    {/if}
                                 </div>
                             </div>
                         {/if}
