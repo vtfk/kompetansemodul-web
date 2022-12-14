@@ -174,7 +174,7 @@
                         <div>
                             <div>
                                 <label for="employer">Arbeidsgiver</label><label for="employer" class="validation">{!validation[i].employer ? '*' : '' }</label><br>
-                                <input class="{!validation[i].employer ? 'required' : '' }" id="employer" type="text" bind:value={tempWork.employer}>
+                                <input class="{!validation[i].employer ? 'required' : '' }" id="employer" type="text" maxlength="60" bind:value={tempWork.employer}>
                             </div>
                         </div>
                         <div>

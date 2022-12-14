@@ -314,7 +314,7 @@
                 <InnerCard emoji='🛠' size="medium">
                     <div slot="first">
                         <label for="posTitle-{roleIndex}">Rolle</label><label for="subject" class="validation">{!otherValidation[roleIndex].title ? '*' : '' }</label>
-                        <input class="{!otherValidation[roleIndex].title ? 'required' : '' }" type="text" placeholder="F. eks 'Prosjektarbeid'" bind:value={position.title}  />
+                        <input class="{!otherValidation[roleIndex].title ? 'required' : '' }" type="text" placeholder="F. eks 'Prosjektarbeid'" bind:value={position.title} maxlength="30" />
                     </div>
                     <div slot="second">
                         <label for="tasks">Oppgaver</label><br>

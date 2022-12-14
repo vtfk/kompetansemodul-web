@@ -394,7 +394,7 @@
                         {#if tempEdu.degree && degreeInfo.find(degree => degree.name === tempEdu.degree).custom}
                         <div>
                             <label for="customDegree">Grad</label><label for="customDegree" class="validation">{!validation[i].customDegree ? '*' : '' }</label><br>
-                            <input type="text" class="{!validation[i].customDegree ? 'required' : '' }" bind:value={tempEdu.customDegree}>
+                            <input type="text" maxlength="45" class="{!validation[i].customDegree ? 'required' : '' }" bind:value={tempEdu.customDegree}>
                         </div>
                         {/if}
                         {#if tempEdu.degree && (degreeInfo.find(degree => degree.name === tempEdu.degree).score || degreeInfo.find(degree => degree.name === tempEdu.degree).custom)}
@@ -412,7 +412,7 @@
                         {#if higherDegrees.includes(tempEdu.degree)}
                         <div>
                             <label for="specialization">Fordypning</label><br>
-                            <input type="text" bind:value={tempEdu.specialization} />
+                            <input type="text" maxlength="60" bind:value={tempEdu.specialization} />
                         </div>
                         {/if}
                         <div>
@@ -446,7 +446,7 @@
                         </div>
                         <div>
                             <label for="school">Skole</label><label for="school" class="validation">{!validation[i].school ? '*' : '' }</label><br>
-                            <input type="text" class="{!validation[i].school ? 'required' : '' }" bind:value={tempEdu.school}>
+                            <input type="text" maxlength="60"class="{!validation[i].school ? 'required' : '' }" bind:value={tempEdu.school}>
                         </div>
                     </div>
                     <div slot="right" class=slot>
