@@ -1,4 +1,6 @@
 <script>
+    import DataTable, {Head, Body, Row, Cell}from '@smui/data-table'
+
     export let tableData = [
         {
             'Navn': 'Geir',
@@ -21,72 +23,44 @@
             'Kritisk Oppgave': 'Test data test data'
         }
     ]
+    let selected = [];
     
-    export let isChecked = false
-    export let selectedValue = null
-    const callback = (id) => {
-        let rows2 = document.querySelectorAll('tr')
-
-        const table = document.getElementById('datatable')
-        for(let i=0;i<table.children[1].childElementCount;i++) {
-            const tableRow = table.children[1].children[i]
-            console.log(tableRow)
-            // for(var j=0;j<tableRow.childElementCount;j++) {
-            //     var tableColumn = tableRow.children[j];
-            //     console.log('Cell ['+i+','+j+'] value: '+tableColumn.innerHTML);
-            // }
-        }
-        // const tbody = table.getElementsByTagName('tbody')
-        // const rows = tbody.item(0).getElementsByTagName('tr')
-        // // const cells = rows.item(0).getElementsByTagName('td')
-        // // const test = [...cells]
-
-        // const test2 = [...rows2]
-        // test2.forEach(r => {
-        //     const test3 = [...r.getElementsByTagName('td')]
-        //     console.log(...test3)
-        // });
-        
-        // test.forEach(r => {
-        //     console.log(r)
-        // });
-    }
 </script>
-
-<table id="datatable">
-    <thead>
-        <tr>
-            {#each Object.keys(tableData[0]) as columnName}
-                <th>
-                    {columnName}
-                </th>
-            {/each}
-        </tr>
-    </thead>
-    <tbody>
-        {#each Object.values(tableData) as row}
-            <tr on:click={() => callback()}>
-                {#each Object.values(row) as cell}
-                    <td contenteditable="true" bind:innerHTML={cell} />
-                {/each}
-            </tr>
+<DataTable style="width: 100%; border:1px solid var(--noytral-3);">
+    <Head>
+        <Row>
+        {#each Object.keys(tableData[0]) as columnName}
+        <Cell style="width:100vw; border-left: 1px solid var(--noytral-3); text-align: left; padding: 8px;">{columnName}</Cell>
         {/each}
-    </tbody>
-</table>
+        <Cell style="width:100vw; border-left: 1px solid var(--noytral-3); text-align: left; padding: 8px;">Er oppgaven Kritisk?</Cell>
+        </Row>
+    </Head>
+    <Body>
+        {#each tableData as row}
+            {#if row['Har Kritisk Oppgave'] === 'Ja'}
+                <Row>
+                    {#each Object.values(row) as cell}
+                        {#if cell === null}
+                            <Cell style="border-top: 1px solid var(--noytral-3); border-left: 1px solid var(--noytral-3); text-align: left; padding: 8px;">{''}</Cell>
+                        {:else}
+                            <Cell style="border-top: 1px solid var(--noytral-3); border-left: 1px solid var(--noytral-3); text-align: left; padding: 8px;">{cell}</Cell>
+                        {/if}
+                    {/each}
+                    <Cell checkbox style="border-top: 1px solid var(--noytral-3); border-left: 1px solid var(--noytral-3); text-align: center; padding: 8px;">
+                        <input type="checkbox"
+                        bind:group={selected}
+                        value={row}
+                        />
+                    </Cell>
+                </Row>
+            {/if}
+        {/each}
+    </Body>
+</DataTable>
+
+<pre>
+    De som faktisk har kritiske oppgaver: {selected.map((tableData) => tableData.Navn).join(', ')}
+</pre>
 
 <style>
-    table {
-		border-collapse: collapse;
-		width: 100%;
-	}
-
-	td, th {
-		border: 1px solid var(--noytral-3);
-		text-align: left;
-		padding: 8px;
-	}
-
-	tr:nth-child(even) {
-		background-color: var(--noytral-1);
-	}
 </style>

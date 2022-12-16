@@ -81,7 +81,7 @@
                         colorNoReply
                     ],
                     hoverOffset:4,
-                    hidden: false
+                    hidden: true
                 },
                 {
                     label: `Telemark (${countyStats.telemark})`,
@@ -150,8 +150,8 @@
             ]}
             title="Dagens arbeidsted"
             type="stackedBar"
-            labelPos="bottom"
-            titlePos="bottom"
+            labelPos="top"
+            titlePos="top"
             dataChange={useOnlyUnitStats}
         />
     </div>

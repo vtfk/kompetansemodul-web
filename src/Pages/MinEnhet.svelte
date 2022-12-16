@@ -9,6 +9,7 @@
     import SoloRoleStats from '../components/SoloRoleStats.svelte'
 	import CountyStats from '../components/CountyStats.svelte'
 	import Table from '../components/Table.svelte'
+  	import CountyStatsPie from '../components/CountyStatsPie.svelte';
 
 	// State
 	let activeUnit
@@ -77,11 +78,12 @@
 	const getSoloRoles = async () => {
 		soloRoleList = []
 		resList[0].arbeidsforhold.forEach(s => {
+			console.log(s)
 			const obj = {
 				'Navn': s.navn,
 				'Har Kritisk Oppgave': s.soloRole,
-				'Beskrivelse av Kritisk Oppgave': s.soloRoleDescription,
-				'Er Oppgaven Kritisk': null
+				'Beskrivelse': s.soloRoleDescription,
+				'Dagens arbeidssted': s.officeLocation
 			}
 			soloRoleList.push(obj)
 		});
@@ -142,8 +144,11 @@
 
 							<!-- Her kan vi putte inn komponenter for statistikk -->
 							<div class="charts">
-								<SoloRoleStats data={ { allStats, onlyUnitStats } } useOnlyUnitStats={useOnlyUnitStats} />
+								<CountyStatsPie data={ { allStats, onlyUnitStats } } useOnlyUnitStats={useOnlyUnitStats} />
 								<CountyStats data={ { allStats, onlyUnitStats } } useOnlyUnitStats={useOnlyUnitStats} />
+							</div>
+							<div class="chartSolo">
+								<SoloRoleStats data={ { allStats, onlyUnitStats } } useOnlyUnitStats={useOnlyUnitStats} />
 							</div>
 							<div>
 								<div class="unitHeader flexMe">
@@ -222,6 +227,12 @@
 	.charts {
 		display: flex;
 		justify-content: space-between;
+		flex-wrap: wrap;
+	}
+
+	.chartSolo {
+		display: flex;
+		justify-content: center;
 		flex-wrap: wrap;
 	}
 

@@ -32,18 +32,18 @@
         }
     }   
 
-    // Global plugin test
-    Chart.register({
-        id: 'custom_canvas_background_if_no_data',
-        beforeDraw: (chart) => {
-            const {ctx} = chart;
-            ctx.save();
-            ctx.font = '22px, Arial';
-            ctx.fillStyle = 'grey';
-            ctx.fillText('Ingen data', chart.chartArea.width, chart.chartArea.height);
-            ctx.restore();
-        }
-    })
+    // // Global plugin test
+    // Chart.register({
+    //     id: 'custom_canvas_background_if_no_data',
+    //     beforeDraw: (chart) => {
+    //         const {ctx} = chart;
+    //         ctx.save();
+    //         ctx.font = '22px, Arial';
+    //         ctx.fillStyle = 'grey';
+    //         ctx.fillText('Ingen data', chart.chartArea.width, chart.chartArea.height);
+    //         ctx.restore();
+    //     }
+    // })
 
     onMount(async ()=> {
         // Initialize chart using default config set
@@ -70,7 +70,10 @@
                         title: {
                             display: true,
                             text: title,
-                            position: titlePos
+                            position: titlePos,
+                            font: {
+                                size: 20
+                            }
                         },
                     }
                 }
@@ -99,9 +102,8 @@
                         },
                         y: {
                             display: false,
-                            stacked: true
-                        },
-                        
+                            stacked: true,
+                        }
                     },
                     plugins: {
                         legend: {
@@ -110,9 +112,12 @@
                         title: {
                             display: true,
                             text: title,
-                            position: titlePos
+                            position: titlePos,
+                            font: {
+                                size: 20
+                            }
                         }
-                    }
+                    },
                 }
             })
         } 

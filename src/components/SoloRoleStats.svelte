@@ -60,7 +60,7 @@
             labelPos="bottom"
             titlePos="top"
             dataChange={useOnlyUnitStats}
-            disabled={[3]}
+            disabled={[3,2]}
         />
     </div>
 </div>
