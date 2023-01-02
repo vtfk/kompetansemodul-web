@@ -78,7 +78,6 @@
 	const getSoloRoles = async () => {
 		soloRoleList = []
 		resList[0].arbeidsforhold.forEach(s => {
-			console.log(s)
 			const obj = {
 				'Navn': s.navn,
 				'Har Kritisk Oppgave': s.soloRole,
@@ -144,18 +143,18 @@
 
 							<!-- Her kan vi putte inn komponenter for statistikk -->
 							<div class="charts">
-								<CountyStatsPie data={ { allStats, onlyUnitStats } } useOnlyUnitStats={useOnlyUnitStats} />
+								<!-- <CountyStatsPie data={ { allStats, onlyUnitStats } } useOnlyUnitStats={useOnlyUnitStats} /> -->
 								<CountyStats data={ { allStats, onlyUnitStats } } useOnlyUnitStats={useOnlyUnitStats} />
 							</div>
 							<div class="chartSolo">
-								<SoloRoleStats data={ { allStats, onlyUnitStats } } useOnlyUnitStats={useOnlyUnitStats} />
+								<!-- <SoloRoleStats data={ { allStats, onlyUnitStats } } useOnlyUnitStats={useOnlyUnitStats} /> -->
 							</div>
 							<div>
 								<div class="unitHeader flexMe">
 									<h3>Liste over kritiske oppgaver</h3>
 								</div>
 								<div class="table">
-									<Table tableData={soloRoleList} isChecked={false}/>
+									<Table tableData={soloRoleList} />
 								</div>
 								<div class="centerButton">
 									<Button buttonText="Lagre" removeSlots={true} size="medium" onClick={() => hideSoloRoles()}></Button>

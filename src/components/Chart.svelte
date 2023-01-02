@@ -1,6 +1,7 @@
 <script>
-    import Chart from 'chart.js/auto';
+    import Chart, { Colors } from 'chart.js/auto';
     import { onMount } from 'svelte';
+    import ChartDataLabels from 'chartjs-plugin-datalabels';
 
     export let datasets
     export let labels
@@ -14,6 +15,8 @@
    
     let chart
     let ctx
+
+    Chart.register(ChartDataLabels)
 
     const data = {
         labels: labels,
@@ -56,6 +59,36 @@
                     cutout: '1%',
                     spacing: 1,
                     plugins: {
+                        datalabels: {
+                            labels: {
+                               index: {
+                                align: 'center',
+                                color: 'black',
+                                backgroundColor: 'white',
+                                borderColor: 'white',
+                                borderRadius: 5, 
+                                borderWidth: 1
+                               }
+                            },
+                            font: {
+                                size: 15,
+                            },
+                            // Returns percentage value of the pie based of the total value of all the pies present in the piechart.
+                            formatter: (value, context) => {
+                                const datapoints = context.chart.data.datasets[0].data
+                                function sumArray(total, datapoint) {
+                                    return total + datapoint 
+                                }
+                                const totalValue = datapoints.reduce(sumArray, 0)
+                                const percentageValue = (value / totalValue * 100).toFixed(1)
+                                
+                                return `${percentageValue}%`
+                            },
+                            // Boolean value (display: true/false)
+                            display: function(context) {
+                                return context.dataset.data[context.dataIndex] !== 0   
+                            }    
+                        },
                         legend: {
                             position: labelPos,
                             display: true,
@@ -65,7 +98,8 @@
                                 font: {
                                     size: 14
                                 }
-                            }
+                            },
+                            
                         },
                         title: {
                             display: true,
@@ -75,7 +109,7 @@
                                 size: 20
                             }
                         },
-                    }
+                    },
                 }
             });
             for (const disableIndex of disabled) {
@@ -106,6 +140,41 @@
                         }
                     },
                     plugins: {
+                        datalabels: {
+                            labels: {
+                               index: {
+                                align: 'center',
+                                color: 'black',
+                                backgroundColor: 'white',
+                                borderColor: 'white',
+                                borderRadius: 5, 
+                                borderWidth: 1
+                               }
+                            },
+                            font: {
+                                size: 15,
+                            },
+                            // Returns percentage value of the bar based of the total value of all the bars present in the stackedbar chart.
+                            formatter: (value, context) => {
+                                let total = 0
+
+                                for (let i = 0; i < context.chart.data.datasets.length; i++) {
+                                    const datapoints = context.chart.data.datasets[i].data
+                                    function sumArray(total, datapoint) {
+                                        return total + datapoint 
+                                    }
+                                    const totalValue = datapoints.reduce(sumArray, 0)
+                                    total += totalValue
+                                }
+                                const percentageValue = (value / total * 100).toFixed(1)    
+        
+                                return `${percentageValue}%`
+                            },
+                            // Boolean value (display: true/false)
+                            display: function(context) {
+                                return context.dataset.data[context.dataIndex] !== 0   
+                            }         
+                        },
                         legend: {
                             position: labelPos,
                         },
