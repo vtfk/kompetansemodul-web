@@ -143,11 +143,11 @@
 
 							<!-- Her kan vi putte inn komponenter for statistikk -->
 							<div class="charts">
-								<!-- <CountyStatsPie data={ { allStats, onlyUnitStats } } useOnlyUnitStats={useOnlyUnitStats} /> -->
+								<CountyStatsPie data={ { allStats, onlyUnitStats } } useOnlyUnitStats={useOnlyUnitStats} />
 								<CountyStats data={ { allStats, onlyUnitStats } } useOnlyUnitStats={useOnlyUnitStats} />
 							</div>
 							<div class="chartSolo">
-								<!-- <SoloRoleStats data={ { allStats, onlyUnitStats } } useOnlyUnitStats={useOnlyUnitStats} /> -->
+								<SoloRoleStats data={ { allStats, onlyUnitStats } } useOnlyUnitStats={useOnlyUnitStats} />
 							</div>
 							<div>
 								<div class="unitHeader flexMe">
