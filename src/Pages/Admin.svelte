@@ -79,7 +79,7 @@
 		if (!employee.soloRole) return false
 		if (employee.positionTasks.length === 0) return false
 		for (const pt of employee.positionTasks) {
-			if (Array.isArray(pt.tasks) && pt.tasks.length > 0) return true
+			if (Array.isArray(pt.tasks) && pt.positionId.includes('--') && pt.tasks.length > 0) return true
 		}
 		return false
 	}
