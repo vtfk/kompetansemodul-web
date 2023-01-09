@@ -7,11 +7,11 @@
 	import PositionsCard from '../components/PositionsCard.svelte';
 	import EmployeeInfoCard from '../components/EmployeeInfoCard.svelte';
 	import { changePage } from '../lib/Helpers/changePage'
-    import CountySelectionCard from '../components/CountySelectionCard.svelte';
-    import WorkExperienceCard from '../components/WorkExperienceCard.svelte';
-    import EducationCard from '../components/EducationCard.svelte';
-    import CertificationCard from '../components/CertificationCard.svelte';
-    import ExperienceCard from '../components/ExperienceCard.svelte';
+  import CountySelectionCard from '../components/CountySelectionCard.svelte';
+  import WorkExperienceCard from '../components/WorkExperienceCard.svelte';
+  import EducationCard from '../components/EducationCard.svelte';
+  import CertificationCard from '../components/CertificationCard.svelte';
+  import ExperienceCard from '../components/ExperienceCard.svelte';
 	import DivCard from '../components/DivCard.svelte';
 
 	let personParameter
@@ -66,6 +66,9 @@
 					<p><span class="mandatoryInfo"><p>Det er ikke obligatorisk for denne ansatte å fylle ut sin kompetanse</span></p>
 				{/if}
 			</div>
+			{#if res.isPrivileged}
+				<a class="action" href="https://internskjema.vtfk.no/skjema/VTFK0236/Kartleggingssamtale?employeeUpn={res.userPrincipalName}" target="_blank">Opprett kartleggingssamtale for {res.navn}</a>
+			{/if}
 			<EmployeeCard employeeData={res} />
 			{#if res.isPrivileged}
 				<EmployeeInfoCard employeeData={res} disableInfoBox={true} hideTextBox={true} />
@@ -92,4 +95,19 @@
 	.mandatoryInfo:last-child {
 		margin-bottom: 24px;
 	}
+	.action {
+		display: block;
+		border: 2px solid black;
+		cursor: pointer;
+		border-radius: 0.5rem; /* Skal vi ha border radius???? */
+		text-decoration: none;
+		color: black;
+		padding: 8px;
+		margin: 8px 0;
+		max-width: 400px;
+		text-align: center;
+  }
+  .action:hover {
+    background-color: var(--lightBlue);
+  }
 </style>
