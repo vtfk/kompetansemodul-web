@@ -1,5 +1,6 @@
 export const api = {
-  url: import.meta.env.VITE_API_URL ?? 'uriSomewhere',
+  // url: import.meta.env.VITE_API_URL ?? 'uriSomewhere',
+  url: import.meta.env.VITE_API_URL_LOCAL, // Local API
   scopes: (import.meta.env.VITE_API_SCOPES && import.meta.env.VITE_API_SCOPES.split(',')) ?? ['et skikkelig skup']
 }
 export const authConfig = {

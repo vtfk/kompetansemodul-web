@@ -1,5 +1,5 @@
 <script>
-	import { getOrg }  from '../lib/services/useApi'
+	import { getOrg, getCritical, saveCritical }  from '../lib/services/useApi'
 	import { changePage }  from '../lib/Helpers/changePage'
 	import IconSpinner from '../components/Icons/IconSpinner.svelte'
     import EmployeeBox from '../components/EmployeeBox.svelte'
@@ -22,6 +22,11 @@
 	let showSoloRole = false
 	let resList = []
 	let soloRoleList = []
+	let criticalList = []
+
+	let criticalTable = []
+	let nonCriticalTable = []
+	let combinedTable = []
 
 	unitParameter.subscribe(value => {
 		activeUnit = value
@@ -68,7 +73,7 @@
 		onlyUnitStats = JSON.parse(JSON.stringify(res.filter(org => orgId === org.organisasjonsId)))		
 		return true
 	}
-
+	
 	// Reset stats when changing org unit
 	const hideStats = () => {
 		useOnlyUnitStats = false
@@ -88,9 +93,28 @@
 		});
 		showSoloRole = true
 	}
+
+	const getMyCriticalTasksUnit = async (unit) => {
+		console.log(unit)
+		criticalList = []
+		let res = await getCritical(unit)
+		if(res.length === 0) {
+			criticalList = []
+		} else {
+			criticalList.push(res[0].unitCriticalData)
+			console.log(criticalList)
+		}
+	}
 	
-	const hideSoloRoles = () => {
-		showSoloRole = false
+
+	const saveCriticalTasks = async () => {
+		combinedTable = criticalTable.concat(nonCriticalTable)
+		let criticalObj = {
+			unitId: onlyUnitStats[0].organisasjonsId,
+			unitCriticalData: combinedTable
+		}
+		await saveCritical(criticalObj, onlyUnitStats[0].organisasjonsId)
+		console.log(await getMyCriticalTasksUnit(onlyUnitStats[0].organisasjonsId))
 	}
 	
 </script>
@@ -127,7 +151,7 @@
 						</div>
 					</div>
 					{#if showStats === true}
-						{#await getStats(unit.organisasjonsId)}
+						{#await getStats(unit.organisasjonsId) && getMyCriticalTasksUnit(unit.organisasjonsId)}
 							<div class="centerButton">
 								<Button onlyIcon={true} size="large" buttonText="Laster... "><IconSpinner slot="after"  width="2rem"/></Button>
 							</div>
@@ -140,24 +164,20 @@
 									<label class="toggleFilter" for={unit}>Ikke inkluder underenheter i statistikk</label><input id={unit} type="checkbox" on:click={() => useOnlyUnitStats = !useOnlyUnitStats} >
 								</div>
 							{/if}
-
-							<!-- Her kan vi putte inn komponenter for statistikk -->
-							<div class="charts">
-								<CountyStatsPie data={ { allStats, onlyUnitStats } } useOnlyUnitStats={useOnlyUnitStats} />
-								<CountyStats data={ { allStats, onlyUnitStats } } useOnlyUnitStats={useOnlyUnitStats} />
-							</div>
-							<div class="chartSolo">
-								<SoloRoleStats data={ { allStats, onlyUnitStats } } useOnlyUnitStats={useOnlyUnitStats} />
-							</div>
-							<div>
-								<div class="unitHeader flexMe">
-									<h3>Liste over kritiske oppgaver</h3>
+								<!-- Her kan vi putte inn komponenter for statistikk -->
+								<div class="charts">
+									<CountyStatsPie data={ { allStats, onlyUnitStats } } useOnlyUnitStats={useOnlyUnitStats} />
+									<CountyStats data={ { allStats, onlyUnitStats } } useOnlyUnitStats={useOnlyUnitStats} />
 								</div>
+								<div class="chartSolo">
+									<SoloRoleStats data={ { allStats, onlyUnitStats } } useOnlyUnitStats={useOnlyUnitStats} />
+								</div>
+								<div>
 								<div class="table">
-									<Table tableData={soloRoleList} />
+									<Table tableData={soloRoleList} tableCritical={criticalList} isCritical={true} bind:selected={criticalTable} /> 
 								</div>
 								<div class="centerButton">
-									<Button buttonText="Lagre" removeSlots={true} size="medium" onClick={() => hideSoloRoles()}></Button>
+									<Button buttonText="Lagre" removeSlots={true} size="medium" onClick={() => saveCriticalTasks()}></Button>
 								</div>
 							</div>
 						{/await}
