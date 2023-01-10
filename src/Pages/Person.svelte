@@ -68,7 +68,7 @@
 				{/if}
 			</div>
 			{#if res.isPrivileged}
-				<a class="action" href="https://internskjema.vtfk.no/skjema/VTFK0236/Kartleggingssamtale?employeeUpn={res.userPrincipalName}&prosessId={acosFlowProcessId}" target="_blank">Opprett kartleggingssamtale for {res.navn}</a>
+				<a class="action" href="https://internskjema.vtfk.no/skjema/VTFK0236/?prosessId={acosFlowProcessId}&employeeUpn={res.userPrincipalName}" target="_blank">Opprett kartleggingssamtale for {res.navn}</a>
 			{/if}
 			<EmployeeCard employeeData={res} />
 			{#if res.isPrivileged}
