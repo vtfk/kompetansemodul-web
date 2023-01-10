@@ -1,7 +1,6 @@
 <script>
     import DataTable, {Head, Body, Row, Cell}from '@smui/data-table'
 
-    export let isCritical = true
     export let tableCritical = [
         {
             unitId: '000',
@@ -77,9 +76,9 @@
     }   
     
 </script>
-{#if getCriticalTasks(tableData, tableCritical[0]).length !== 0}
+{#if tableData.length !== 0}
     <div class="unitHeader flexMe">
-        <h3>Evaluerte Kritiske oppgaver</h3>
+        <h3>Kritiske oppgaver</h3>
     </div>
     <DataTable style="width: 100%; border:1px solid var(--noytral-3);">
         <Head>
@@ -92,8 +91,8 @@
         </Head>
         <Body>
             <!-- {console.log(getCriticalTasks(tableData, tableCritical[0]).length)} -->
-            {#each getCriticalTasks(tableData, tableCritical[0]) as row}
-                {#if isCritical}
+            {#each tableData as row}
+                {#if row['Har Kritisk Oppgave'] === 'Ja'}
                     <Row>
                         {#each Object.values(row) as cell}
                             {#if cell === null}
@@ -114,7 +113,7 @@
         </Body>
     </DataTable>
 {/if}
-{#if getChangeByKey(tableCritical[0], tableData, "Beskrivelse").length !== 0}
+<!-- {#if getChangeByKey(tableData, tableCritical[0], "Beskrivelse").length !== 0}
     <div class="unitHeader flexMe">
         <h3>Endringer i de kritiske oppgavene siden sist!</h3>
     </div>
@@ -149,9 +148,9 @@
             {/each}
         </Body>
     </DataTable>
-{/if}
-{#if tableData.length !== 0 || getChangeByKey(tableCritical[0], tableData, "Navn").length !== 0}
-    <!-- {#each getChangeByKey(tableCritical[0], tableData, "Navn") as row} -->
+{/if} -->
+<!-- {#if tableData.length !== 0 || getChangeByKey(tableCritical[0], tableData, "Navn").length !== 0}
+{#each getChangeByKey(tableCritical[0], tableData, "Navn") as row}
         <div class="unitHeader flexMe">
             <h3>Kritiske oppgaver som ikke er evaluert av leder</h3>
         </div>
@@ -165,7 +164,6 @@
                 </Row>
             </Head>
             <Body>
-                <!-- {console.log(tableData)} -->
                 {#if getChangeByKey(tableCritical[0], tableData, "Navn").length !== 0}
                     {#each getChangeByKey(tableCritical[0], tableData, "Navn") as row}
                         {#if row['Har Kritisk Oppgave'] === 'Ja'}
@@ -208,8 +206,8 @@
                     {/each}
                 {/if}
             </Body>
-        </DataTable>
-{/if}
+        </DataTable> 
+{/if} -->
 
 <style>
     .unitHeader {

@@ -22,8 +22,8 @@
         }
         for (const org of stats) {
             const onlyMandatory = org.arbeidsforhold.filter(forhold => forhold.mandatoryCompetenceInput)
-            soloRoleStats.notMandatory += org.arbeidsforhold.filter(forhold => !forhold.mandatoryCompetenceInput).length
-            soloRoleStats.noReply += onlyMandatory.filter(forhold => !forhold.soloRole).length
+            // soloRoleStats.notMandatory += org.arbeidsforhold.filter(forhold => !forhold.mandatoryCompetenceInput).length
+            // soloRoleStats.noReply += onlyMandatory.filter(forhold => !forhold.soloRole).length
             soloRoleStats.yes += onlyMandatory.filter(forhold => forhold.soloRole === 'Ja').length
             soloRoleStats.no += onlyMandatory.filter(forhold => forhold.soloRole === 'Nei').length
         }
@@ -32,8 +32,8 @@
             labels: [
                 `Har ikke kritiske oppgaver (${soloRoleStats.no})`,
                 `Har kritiske oppgaver (${soloRoleStats.yes})`,
-                `Har ikke svart (${soloRoleStats.noReply})`,
-                `Skal ikke svare (${soloRoleStats.notMandatory})`,
+                // `Har ikke svart (${soloRoleStats.noReply})`,
+                // `Skal ikke svare (${soloRoleStats.notMandatory})`,
             ]
         }
     }
@@ -49,8 +49,8 @@
                 backgroundColor: [
                 colorTelemark,
                 colorSame,
-                colorNoReply,
-                colorNotMandatory
+                // colorNoReply,
+                // colorNotMandatory
                 ],
                 hoverOffset: 4
             }]}

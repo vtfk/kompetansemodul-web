@@ -174,7 +174,7 @@
 								</div>
 								<div>
 								<div class="table">
-									<Table tableData={soloRoleList} tableCritical={criticalList} isCritical={true} bind:selected={criticalTable} /> 
+									<Table tableData={soloRoleList} tableCritical={criticalList} bind:selected={criticalTable} /> 
 								</div>
 								<div class="centerButton">
 									<Button buttonText="Lagre" removeSlots={true} size="medium" onClick={() => saveCriticalTasks()}></Button>
