@@ -1,7 +1,7 @@
 <script>
 	import { getPerson }  from '../lib/services/useApi'
 	import { get } from 'svelte/store'
-	import { searchParameter, prevUnit }  from '../lib/services/store'
+	import { searchParameter, prevUnit, clickedAcosLogon }  from '../lib/services/store'
 	import EmployeeCard from '../components/EmployeeCard.svelte'
 	import IconSpinner from '../components/Icons/IconSpinner.svelte';
 	import PositionsCard from '../components/PositionsCard.svelte';
@@ -16,6 +16,12 @@
 	import { acosFlowProcessId } from '../../config'
 
 	let personParameter
+
+	let clickedAcos = get(clickedAcosLogon)
+
+	clickedAcosLogon.subscribe(value => {
+		clickedAcos = value
+	})
 
 	// Mandatory fields validation
 	let mandatoryFields = {
@@ -68,7 +74,17 @@
 				{/if}
 			</div>
 			{#if res.isPrivileged}
-				<a class="action" href="https://internskjema.vtfk.no/skjema/VTFK0236/?prosessId={acosFlowProcessId}&employeeUpn={res.userPrincipalName}" target="_blank">Opprett kartleggingssamtale for {res.navn}</a>
+			<div class="kartleggingsContainer">
+				<h3>Lederverktøy: Kartleggingssamtale</h3>
+				<br />
+				{#if clickedAcos}
+					<a class="action" href="https://internskjema.vtfk.no/skjema/VTFK0236/?prosessId={acosFlowProcessId}&employeeUpn={res.userPrincipalName}" target="_blank">Opprett kartleggingssamtale for {res.navn}</a>
+				{:else}
+					<p><strong>OBS!</strong> For å kunne overføre data til det digitale skjemaet for kartleggingssamtale, må du først logge på skjemaløsningen. Klikk på knappen under, logg på, og gå tilbake til denne fanen, når du har logget på - da vil du kunne opprette kartleggingssamtale.</p>
+					<a on:click={() => clickedAcosLogon.set(true)} class="action" href="https://internskjema.vtfk.no" target="_blank">Logg på internskjema.vtfk.no</a>
+					<p class="action disabled">Logg på først for å opprette kartleggingssamtale for {res.navn}</p>
+				{/if}
+			</div>
 			{/if}
 			<EmployeeCard employeeData={res} />
 			{#if res.isPrivileged}
@@ -107,8 +123,24 @@
 		margin: 8px 0;
 		max-width: 400px;
 		text-align: center;
+		background-color: white;
   }
+	.action.disabled {
+		cursor: not-allowed;
+		background-color: var(--lightGrey);
+	}
+	.action.disabled:hover {
+		background-color: var(--lightGrey);
+	}
+
   .action:hover {
     background-color: var(--lightBlue);
   }
+	.kartleggingsContainer {
+		padding: 16px;
+		margin: 32px 0;
+		background-color: var(--catSkillWhite);
+		border-radius: 16px;
+	}
+
 </style>
