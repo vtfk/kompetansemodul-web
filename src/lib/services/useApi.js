@@ -76,11 +76,8 @@ export const sendMail = async (mailPayload) => await apiRequest('post', 'SendMai
 // Get employee positions (data list)
 export const getPositions = async () => await apiRequest('get', 'GetPositions')
 
-// Get critical tasks (saved by the unit leader)
-export const getCritical = async (parameter) => await apiRequest('get', `CriticalTask/${parameter}`)
-
 // Save Critical Tasks (filtered by the unit leader)
-export const saveCritical = async (criticalTasks, parameter) => await apiRequest('post', `CriticalTask/${parameter}`, criticalTasks)
+export const saveCritical = async (criticalTasks) => await apiRequest('post', `CriticalTask`, criticalTasks)
 
 // Get chucky
 export const getChuck = async () => {

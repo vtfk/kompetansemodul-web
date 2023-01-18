@@ -1,5 +1,5 @@
 <script>
-	import { getOrg, getCritical, saveCritical }  from '../lib/services/useApi'
+	import { getOrg, saveCritical }  from '../lib/services/useApi'
 	import { changePage }  from '../lib/Helpers/changePage'
 	import IconSpinner from '../components/Icons/IconSpinner.svelte'
     import EmployeeBox from '../components/EmployeeBox.svelte'
@@ -10,23 +10,30 @@
 	import CountyStats from '../components/CountyStats.svelte'
 	import Table from '../components/Table.svelte'
   	import CountyStatsPie from '../components/CountyStatsPie.svelte';
-
+    import InfoBox from '../components/InfoBox.svelte';
+	import IconHelp from '../components/Icons/IconHelp.svelte'
+	import { statistikk } from '../lib/Helpers/helptexts'
+	
 	// State
 	let activeUnit
 	let chosenUnit
+
+	let saveCriticalTaskResult = ''
+
+	let tempCriticalTasks = []
+	let allStats = []
+	let criticalTasks = []
+	let onlyUnitStats = []
+	let competenceList = []
+
+	let showInfoBox = false
+	let isSavingCriticalTasks = false
+	let isError = false
 	let expandedView = false
 	let showStats = false
 	let useOnlyUnitStats = false
-	let allStats = []
-	let onlyUnitStats = []
-	let showSoloRole = false
-	let resList = []
-	let soloRoleList = []
-	let criticalList = []
 
-	let criticalTable = []
-	let nonCriticalTable = []
-	let combinedTable = []
+	const content = statistikk
 
 	unitParameter.subscribe(value => {
 		activeUnit = value
@@ -42,9 +49,11 @@
 		} else {
 			res = await getOrg(unit)
 		}
-		resList.push(res[0])
-		getSoloRoles()
-		resList = []
+		if (res.length > 0) {
+			competenceList = getSoloRoles(res[0])
+		} else {
+			competenceList = []
+		}
 		return res
 	}
 
@@ -66,11 +75,26 @@
 			tasks: ['Leder']
 		}
 	}
+
+	const getSoloRoles = (resList) => {
+		console.log(resList)
+		return resList.arbeidsforhold.map(forhold => {
+			return {
+				'ansattnummer': forhold.ansattnummer,
+				'navn': forhold.navn,
+				'kritiskOppgave': forhold.soloRole,
+				'beskrivelse': forhold.soloRoleDescription,
+				'arbeidssted': forhold.officeLocation
+			}
+		})
+	}
 	
 	const getStats = async (orgId) => {
 		const res = await getOrg(`report-${orgId}`)
-		allStats = JSON.parse(JSON.stringify(res))
-		onlyUnitStats = JSON.parse(JSON.stringify(res.filter(org => orgId === org.organisasjonsId)))		
+		criticalTasks = JSON.parse(JSON.stringify(res.criticalTasks))
+		allStats = JSON.parse(JSON.stringify(res.report))
+		onlyUnitStats = JSON.parse(JSON.stringify(res.report.filter(org => orgId === org.organisasjonsId)))
+
 		return true
 	}
 	
@@ -79,44 +103,30 @@
 		useOnlyUnitStats = false
 		showStats = false
 	}
-
-	const getSoloRoles = async () => {
-		soloRoleList = []
-		resList[0].arbeidsforhold.forEach(s => {
-			const obj = {
-				'Navn': s.navn,
-				'Har Kritisk Oppgave': s.soloRole,
-				'Beskrivelse': s.soloRoleDescription,
-				'Dagens arbeidssted': s.officeLocation
-			}
-			soloRoleList.push(obj)
-		});
-		showSoloRole = true
-	}
-
-	const getMyCriticalTasksUnit = async (unit) => {
-		console.log(unit)
-		criticalList = []
-		let res = await getCritical(unit)
-		if(res.length === 0) {
-			criticalList = []
-		} else {
-			criticalList.push(res[0].unitCriticalData)
-			console.log(criticalList)
-		}
-	}
 	
-
 	const saveCriticalTasks = async () => {
-		combinedTable = criticalTable.concat(nonCriticalTable)
-		let criticalObj = {
-			unitId: onlyUnitStats[0].organisasjonsId,
-			unitCriticalData: combinedTable
+		isSavingCriticalTasks = true
+		try {
+			const newCriticalTasks = await saveCritical(tempCriticalTasks[0])
+			setTimeout( () => {
+				isSavingCriticalTasks = false
+			}, 1000)
+			criticalTasks = JSON.parse(JSON.stringify(newCriticalTasks))
+			saveCriticalTaskResult = 'Lagret 👌'
+			setTimeout( () => {
+				saveCriticalTaskResult = ''
+			}, 3000)
+		} catch (error) {
+			isError = true
+			isSavingCriticalTasks = false
+			saveCriticalTaskResult = 'Feilet, prøv på nytt.'
 		}
-		await saveCritical(criticalObj, onlyUnitStats[0].organisasjonsId)
-		console.log(await getMyCriticalTasksUnit(onlyUnitStats[0].organisasjonsId))
 	}
-	
+
+	const handleInfoClick = () => {
+        showInfoBox = !showInfoBox
+	}
+
 </script>
 
 <div class="content">
@@ -147,17 +157,23 @@
 				{#if unit.isPrivileged}
 					<div>
 						<div class="unitHeader flexMe">
-							<h3>Statistikk</h3>
+							<h3>Statistikk</h3> 
+							{#if showStats === true}
+								<div class="helpIconContainer" on:click={() => handleInfoClick()}><IconHelp /></div>
+							{/if}
 						</div>
 					</div>
 					{#if showStats === true}
-						{#await getStats(unit.organisasjonsId) && getMyCriticalTasksUnit(unit.organisasjonsId)}
+						{#await getStats(unit.organisasjonsId)}
 							<div class="centerButton">
 								<Button onlyIcon={true} size="large" buttonText="Laster... "><IconSpinner slot="after"  width="2rem"/></Button>
 							</div>
 						{:then}
 							<div class="centerButton">
 								<Button buttonText="Lukk statistikk" removeSlots={true} size="large" onClick={() => hideStats()}></Button>
+							</div>
+							<div class="infoBox">
+								<InfoBox content={content} html={true} open={showInfoBox} onClose={() => {handleInfoClick()}}></InfoBox>
 							</div>
 							{#if unit.underordnet.length > 1 }
 								<div class="toggleFilterContainer">
@@ -174,10 +190,9 @@
 								</div>
 								<div>
 								<div class="table">
-									<Table tableData={soloRoleList} tableCritical={criticalList} bind:selected={criticalTable} /> 
-								</div>
-								<div class="centerButton">
-									<Button buttonText="Lagre" removeSlots={true} size="medium" onClick={() => saveCriticalTasks()}></Button>
+									{#key criticalTasks}
+										<Table competenceList={competenceList} criticalTasks={criticalTasks} saveCriticalTasks={saveCriticalTasks} isSaving={isSavingCriticalTasks} savedMsg={saveCriticalTaskResult} error={isError} bind:criticalTasksToSave={tempCriticalTasks}/> 
+									{/key}
 								</div>
 							</div>
 						{/await}
@@ -270,7 +285,18 @@
 
 	.table {
 		margin-bottom: 1rem;
+		width: 100%;
 	}
+
+	.infoBox {
+		margin-top: 1rem;
+	}
+
+	.helpIconContainer {
+        width: 1.3rem;
+        flex-shrink: 0;
+		margin-left: 0.5rem;
+    }
 
 	@media(max-width: 1183px) { 
 		.charts {
