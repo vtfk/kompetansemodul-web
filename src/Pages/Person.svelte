@@ -108,7 +108,8 @@
 					<div class="kartlegginsgsHistory">
 						<h3>Historikk</h3>
 						{#if res.kartleggingsSamtaler.length === 0}
-							<em>Ingen tidligere kartleggingssamtaler registrert</em>
+							<p><em>Ingen tidligere kartleggingssamtaler registrert</em></p>
+							<p><em>(det kan ta opptil 15 minutter før du ser registrerte samtaler her)</em></p>
 						{/if}
 						{#each mapKartlegginssamtaler(res.kartleggingsSamtaler) as samtale}
 							<div class="samtale">
