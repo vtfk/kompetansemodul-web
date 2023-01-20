@@ -16,9 +16,11 @@
 
     let selectedCriticalTasks = []
     let dialog
+    let employee
     let modalError = ''
     let descCrit = ''
     let navnCrit = ''
+    let disableDialogButton = false
     let tempCriticalTasks = JSON.parse(JSON.stringify(criticalTasks))
 
     onMount(() => {
@@ -64,13 +66,15 @@
         return result
     }
 
-    const addToSelected = (array) => {
-        if(array !== undefined) {
+    const addToSelected = (array, object) => {
+        if(array !== undefined && Array.isArray(array)) {
             for(const row of array) {
                 if(row.hasCriticalTask === true) {
                     selectedCriticalTasks.push(row)
                 }
             }
+        } else if (object !== undefined){
+            selectedCriticalTasks.push(object)
         }
     }
     // Combines the two arraies before displaying it 
@@ -81,13 +85,26 @@
     
     addToSelected(combinedData)
 
-    const dataToSave = (data) => {
-        const test = combinedData.filter(s => {
+    const findDiff = (combinedList, arrayToCheckAgainst, valToSearch) => {
+        const array = combinedList.filter(s => {
             return s.beskrivelse !== null
         })
+        if(valToSearch === 'ansattnummer') {
+            const diff = array.filter(({ ansattnummer: val1 }) => !arrayToCheckAgainst.some(({ ansattnummer: val2 }) => val2 === val1))
+            return diff
+        }
+        if(valToSearch === 'navn') {
+            const diff = array.filter(({ navn: val1 }) => !arrayToCheckAgainst.some(({ navn: val2 }) => val2 === val1))
+            return diff
+        }
+        if(valToSearch === 'hasCriticalTask') {
+            const diff = array.filter(({ hasCriticalTask: val1 }) => !arrayToCheckAgainst.some(({ hasCriticalTask: val2 }) => val2 === val1))
+            return diff
+        }
+    }
 
-        const diff = test.filter(({ ansattnummer: val1 }) => !data.some(({ ansattnummer: val2 }) => val2 === val1));
-        
+    const dataToSave = (data) => {
+        const diff = findDiff(combinedData, data, 'ansattnummer')
         const isCritical = data.map(s => {
             return {
                 ansattnummer: s.ansattnummer,
@@ -111,13 +128,20 @@
         saveCriticalTasks()
     }
 
-    const showDialog = (asModal = true, desc, navn) => {
+    const showDialog = (asModal = true, ansattnummer) => {
+        disableDialogButton = false
+
+        if(selectedCriticalTasks.find(s => s.ansattnummer === ansattnummer) === undefined) {
+            disableDialogButton = true
+        }
+        employee = combinedData.find(s => s.ansattnummer === ansattnummer)
+        // console.log(combinedData.find(s => s.navn === navn))
         // Dissable scrolling in background when dialog is open
         document.querySelector("body").style.overflow = 'hidden'
-        descCrit = desc
-        navnCrit = navn
+        descCrit = employee.beskrivelse
+        navnCrit = employee.navn
 		try {
-			dialog[asModal ? 'showModal' : 'show']();
+			dialog[asModal ? 'showModal' : 'show']()
 		} catch(e) {
 			modalError = e.message
 		}  
@@ -129,22 +153,24 @@
         dialog.close()
     }
 
-    const isCriticalCloseDialog = () => {
-        // Oppgaven markeres som kritiks og dialogen lukkes. 
-        //Enable scrolling when dialog is closed
-        document.querySelector("body").style.overflow = 'visible'
-        dialog.close()
-    }
+    // const isCriticalCloseDialog = () => {
+    //     // Oppgaven markeres som kritiks og dialogen lukkes. 
+    //     //Enable scrolling when dialog is closed
+    //     document.querySelector("body").style.overflow = 'visible'
+    //     // console.log(employee)
+    //     addToSelected(undefined, employee)
+    //     dialog.close()
+    // }
     
-    const isNotCriticalCloseDialog = () => {
-        //Enable scrolling when dialog is closed
-        // Oppgaven markeres som IKKE kritiks og dialogen lukkes. 
-        document.querySelector("body").style.overflow = 'visible'
-        dialog.close()
-    }
+    // const isNotCriticalCloseDialog = () => {
+    //     // Oppgaven markeres som IKKE kritiks og dialogen lukkes. 
+    //     //Enable scrolling when dialog is closed
+    //     document.querySelector("body").style.overflow = 'visible'
+    //     dialog.close()
+    // }
 
 </script>
-
+<!-- {console.log(selectedCriticalTasks)} -->
 <div class="table">
     <div class="criticalHeader">
         <div class="col">Navn</div>
@@ -162,7 +188,9 @@
                     {#if criticalTask.beskrivelse.length < 50}
                         {criticalTask.beskrivelse}
                     {:else}
-                        <Button size="small" removeSlots={true} buttonText="Åpne beskrivelsen" onClick={ () => showDialog(true, criticalTask.beskrivelse, criticalTask.navn)}></Button>
+                    <div class="descButton">
+                        <Button size="small" removeSlots={true} buttonText="Se beskrivelsen" onClick={ () => showDialog(true, criticalTask.ansattnummer)}></Button>
+                    </div>
                     {/if}
                 </div>
                 <div class="col" style="justify-content:center;">
@@ -180,7 +208,7 @@
         <div class="noDataTable">
             <p>Ingen kritiske oppgaver knyttet til denne enheten</p>
         </div> 
-    {/if} 
+    {/if}
 </div>
 
 {#if isSaving === true}
@@ -189,9 +217,11 @@
     </div>
 {:else}
     {#if noCriticalDesc.includes(false)}
-        <div class="centerButton">
-            <Button buttonText="Lagre" removeSlots={true} size="medium" onClick={() => {dataToSave(selectedCriticalTasks)}}></Button>
-        </div>
+        {#if findDiff(combinedData, selectedCriticalTasks, 'hasCriticalTask')}
+            <div class="centerButton">
+                <Button buttonText="Lagre" removeSlots={true} size="medium" onClick={() => {dataToSave(selectedCriticalTasks)}}></Button>
+            </div>
+        {/if}          
     {/if}
 {/if}
 <div class="centerButton">
@@ -213,14 +243,18 @@
 
 <dialog id="desc-dialog">
     <h2>Beskrivelse av kristisk oppgave for: <br><strong>{navnCrit}</strong></h2>
+    <br>
+    <h3>Status for den kritiske Oppgaven: <strong>{disableDialogButton === true ? 'Oppgaven er ikke Kritisk' : 'Oppgaven er kristik'}</strong> </h3>
     <div class="dialogContent">
         <p>{descCrit}</p>
     </div>
-    <div class="dialogButtons">
-        <Button buttonText="Oppgaven er kritisk" removeSlots={true} size="medium" onClick={() => {isCriticalCloseDialog()}}></Button>
-        &nbsp&nbsp
-        <Button buttonText="Oppgaven er ikke kritisk" removeSlots={true} size="medium" onClick={() => {isNotCriticalCloseDialog()}}></Button>
-    </div>
+    <!-- <div class="dialogButtons">
+        {#if disableDialogButton === false}
+            <Button buttonText="Oppgaven er ikke kritisk" removeSlots={true} size="medium" onClick={() => {isNotCriticalCloseDialog()}}></Button>
+        {:else}
+            <Button buttonText="Oppgaven er kritisk" removeSlots={true} size="medium" onClick={() => {isCriticalCloseDialog()}}></Button>
+        {/if}
+    </div> -->
     <div class="dialogButtons">
         <Button buttonText="Lukk" removeSlots={true} size="medium" onClick={() => {closeDialog()}}></Button>
     </div>
@@ -317,5 +351,29 @@
         font-size: 1.2rem;
         background: #eee;
 	    padding: 20px;
+    }
+
+    @media(max-width: 915px) {
+        .descButton {
+            font-size: 0.8rem;
+        }
+
+        dialog {
+            left: calc(50% - 15rem);
+            width: 40rem;
+            height: 28rem;
+        }
+    }
+
+    @media(max-width: 670px) {
+        .descButton {
+            font-size: 0.6rem;
+        }
+
+        dialog {
+            left: calc(50% - 13rem);
+            width: 35rem;
+            height: 28rem;
+        }
     }
 </style>
