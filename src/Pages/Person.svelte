@@ -46,6 +46,21 @@
 		const p = await getPerson(personParameter)
 		return p[0]
 	}
+	const mapKartlegginssamtaler = (samtaler) => {
+		const allSamtaler = samtaler.filter(samtale => samtale.type === 'kartleggingssamtale-out')
+		const res = allSamtaler.map(samtale => {
+			const signedSamtale = samtaler.find(s => s.type === 'kartleggingssamtale-in' && s.managerApprovedTimestamp === samtale.timestamp)
+			const signedStatus = signedSamtale?.approved ?? false
+			return {
+				...samtale,
+				signedStatus: signedStatus === "Ja" ? '✅ Signert og godkjent av ansatt' : signedStatus === 'Nei' ? '❌ Signert, men ikke godkjent av ansatt' : 'Venter på godkjenning...',
+				documentUrl: signedSamtale ? signedSamtale.documentUrl : samtale.documentUrl,
+				documentNumber: signedSamtale ? signedSamtale.documentNumber : samtale.documentNumber,
+			}
+		})
+		return res
+	}
+
 </script>
 
 <div class="content">
@@ -73,18 +88,44 @@
 					<p><span class="mandatoryInfo"><p>Det er ikke obligatorisk for denne ansatte å fylle ut sin kompetanse</span></p>
 				{/if}
 			</div>
+			<!-- Kartleggings-tools -->
 			{#if res.isPrivileged}
 			<div class="kartleggingsContainer">
 				<h3>Lederverktøy: Kartleggingssamtale</h3>
 				<br />
-				{#if clickedAcos}
-					<a class="action" href="https://internskjema.vtfk.no/skjema/VTFK0236/?prosessId={acosFlowProcessId}&employeeUpn={res.userPrincipalName}" target="_blank">Opprett kartleggingssamtale for {res.navn}</a>
-				{:else}
-					<p><strong>OBS!</strong> For å kunne overføre data til det digitale skjemaet for kartleggingssamtale, må du først logge på skjemaløsningen. Klikk på knappen under, logg på, og gå tilbake til denne fanen, når du har logget på - da vil du kunne opprette kartleggingssamtale.</p>
-					<a on:click={() => clickedAcosLogon.set(true)} class="action" href="https://internskjema.vtfk.no" target="_blank">Logg på internskjema.vtfk.no</a>
-					<p class="action disabled">Logg på først for å opprette kartleggingssamtale for {res.navn}</p>
+				{#if !clickedAcos}
+					<p class="notification"><strong>OBS!</strong> For å kunne overføre data til det digitale skjemaet for kartleggingssamtale, må du først logge på skjemaløsningen. Klikk på knappen under, logg på, og gå tilbake til denne fanen når du har logget på - da vil du kunne opprette kartleggingssamtale.</p>
 				{/if}
+				<div class="kartleggingsInfo">
+					<div class="buttonContainer">
+						{#if clickedAcos}
+							<a class="action" href="https://internskjema.vtfk.no/skjema/VTFK0236/?prosessId={acosFlowProcessId}&employeeUpn={res.userPrincipalName}" target="_blank">Opprett kartleggingssamtale for {res.navn}</a>
+						{:else}
+							<a on:click={() => clickedAcosLogon.set(true)} class="action" href="https://internskjema.vtfk.no" target="_blank">Logg på internskjema.vtfk.no</a>
+							<p class="action disabled">Logg på først for å opprette kartleggingssamtale for {res.navn}</p>
+						{/if}
+					</div>
+					<div class="kartlegginsgsHistory">
+						<h3>Historikk</h3>
+						{#if res.kartleggingsSamtaler.length === 0}
+							<em>Ingen tidligere kartleggingssamtaler registrert</em>
+						{/if}
+						{#each mapKartlegginssamtaler(res.kartleggingsSamtaler) as samtale}
+							<div class="samtale">
+								<p><strong>{samtale.schemaName} - {samtale.timestamp.substring(0,10)}</strong></p>
+								<p><strong>Status: </strong>{samtale.signedStatus}</p>
+								<p><strong>Ansvarlig for samtalen: </strong>{samtale.manager}</p>
+								{#if samtale.documentUrl.startsWith('https://')}
+									<p><a href="{samtale.documentUrl}" target="_blank">Klikk her for å åpne dokument {samtale.documentNumber} i Public 360 {'->'}</a></p>
+								{:else}
+									<p>Arkivstatus: {samtale.documentUrl}</p>
+								{/if}
+							</div>	
+						{/each}
+					</div>
+				</div>
 			</div>
+			<!-- End Kartleggings-tools -->
 			{/if}
 			<EmployeeCard employeeData={res} />
 			{#if res.isPrivileged}
@@ -120,14 +161,14 @@
 		text-decoration: none;
 		color: black;
 		padding: 8px;
-		margin: 8px 0;
+		margin-bottom: 8px;
 		max-width: 400px;
 		text-align: center;
-		background-color: white;
   }
 	.action.disabled {
 		cursor: not-allowed;
 		background-color: var(--lightGrey);
+		color: grey;
 	}
 	.action.disabled:hover {
 		background-color: var(--lightGrey);
@@ -141,6 +182,23 @@
 		margin: 32px 0;
 		background-color: var(--catSkillWhite);
 		border-radius: 16px;
+	}
+	.kartleggingsInfo {
+		margin-top: 8px;
+		display: flex;
+		gap: 64px;
+		flex-wrap: wrap;
+	}
+	.notification {
+		border: 1px solid black;
+		padding: 16px;
+		margin-bottom: 32px;
+		background-color: var(--ecruWhite);
+	}
+	.samtale {
+		padding: 4px 0;
+		margin-bottom: 16px;
+		border-bottom: 1px solid black;
 	}
 
 </style>
