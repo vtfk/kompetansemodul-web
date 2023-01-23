@@ -1,7 +1,7 @@
 <script>
 	import { getPerson }  from '../lib/services/useApi'
 	import { get } from 'svelte/store'
-	import { searchParameter, prevUnit, clickedAcosLogon }  from '../lib/services/store'
+	import { searchParameter, prevUnit, clickedAcosLogon, msalClientStore }  from '../lib/services/store'
 	import EmployeeCard from '../components/EmployeeCard.svelte'
 	import IconSpinner from '../components/Icons/IconSpinner.svelte';
 	import PositionsCard from '../components/PositionsCard.svelte';
@@ -46,6 +46,10 @@
 		const p = await getPerson(personParameter)
 		return p[0]
 	}
+	const msalClient = get(msalClientStore)
+	const accounts = msalClient.getAllAccounts()
+	const currentUser = accounts[0].username
+
 	const mapKartlegginssamtaler = (samtaler) => {
 		const allSamtaler = samtaler.filter(samtale => samtale.type === 'kartleggingssamtale-out')
 		const res = allSamtaler.map(samtale => {
@@ -89,7 +93,7 @@
 				{/if}
 			</div>
 			<!-- Kartleggings-tools -->
-			{#if res.isPrivileged}
+			{#if res.isPrivileged && currentUser !== res.userPrincipalName}
 			<div class="kartleggingsContainer">
 				<h3>Lederverktøy: Kartleggingssamtale</h3>
 				<br />
