@@ -10,3 +10,4 @@ export const editingPersonalia = writable({
   editBlock: 'ingen akkurat nå'
 })
 export const infoOpen = writable('')
+export const clickedAcosLogon = writable(false)
