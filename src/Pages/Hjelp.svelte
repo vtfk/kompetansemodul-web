@@ -96,13 +96,33 @@
 		<dt>2. Ansattinformasjon siden</dt>
 			<dd>Når du har trykket på den personen du ønsker å utføre en kartleggingssamtale med vil du bli sendt videre til personen sin "Ansattinformasjon" side.</dd>
 			<dd>Der vil du se en lyseblå boks med overskriften "Lederverktøy: Kartleggingssamtale" som vist på bilde under.</dd>
-			<dd>I denne boksen finner du litt informasjon og to knapper.</dd>
+			<dd>I denne boksen finner du litt informasjon og to knapper og oversikt over historikken til den ansatte.</dd>
+			<br>
+			<dl>Historikken vil vise følgende:
+				<dd>1. Når kartleggingssamtalen ble gjennomført.</dd>
+				<dd>2. Status på kartleggingssamtalen. Status kan enten være "Godkjent", "Ikke godkjent" eller "Venter på signering"</dd>
+				<dd>3. Hvem som er ansvarlig for kartleggingssamtalen.</dd>
+				<dd>4. Arkivstatus for kartleggingssamtalen. Her kan kartleggingssamtalen enten være manuelt arkivert eller automatisk arkivert. Normalt vil samtalen automatisk arkiveres.</dd>
+			</dl>
 			<br>
 			<dd>For å starte en kartleggingssamtale må du først logge på skjemaløsningen, dette gjør du ved å trykke på knappen "Logg på internskjema.vtfk.no"</dd>
 	</dl>
 	<br>
 	<div>
-		<img src="ansattinformasjon2.png" alt="kartleggingssamtale2"/>
+		<img src="ansattinformasjon2v2.png" alt="kartleggingssamtale2"/>
+	</div>
+	<br>
+	<h3>Historikk eksempler</h3>
+	<div class="historyImg">
+		<div>
+			<img src="historikkGodkjent.png" alt="historikk1"/>
+		</div> 
+		<div>
+			<img src="historikkIkkeGodkjent.png" alt="historikk3"/>
+		</div>
+		<div>
+			<img src="historikkVenter.png" alt="historikk2"/>
+		</div>
 	</div>
 	<br>
 	<hr/>
@@ -134,29 +154,34 @@
 
 
 <style>
-	dt {
-		font-size: 18px;
-		line-height: 24px;
-		min-height: 24px;	
-	}
-	
-	dd  {
-		font-size: 16px;
-		line-height: 24px;
-		min-height: 24px;
-		margin-left: 2rem;
-	}
-
-	img {
-		width: 100%;
-	}
-
-	hr {
-		display: block;
-		height: 1px;
-		border: 0;
-		border-top: 1px solid #ccc;
-		margin: 1em 0;
-		padding: 0;
+dt {
+	font-size: 18px;
+	line-height: 24px;
+	min-height: 24px;	
 }
+
+dd  {
+	font-size: 16px;
+	line-height: 24px;
+	min-height: 24px;
+	margin-left: 2rem;
+}
+
+img {
+	width: 100%;
+}
+
+.historyImg {
+	display: flex;
+	justify-content:space-around;
+}
+
+hr {
+	display: block;
+	height: 1px;
+	border: 0;
+	border-top: 1px solid #ccc;
+	margin: 1em 0;
+	padding: 0;
+}	
 </style>
