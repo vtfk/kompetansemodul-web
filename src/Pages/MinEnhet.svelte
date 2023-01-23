@@ -77,7 +77,6 @@
 	}
 
 	const getSoloRoles = (resList) => {
-		console.log(resList)
 		return resList.arbeidsforhold.map(forhold => {
 			return {
 				'ansattnummer': forhold.ansattnummer,
@@ -158,9 +157,9 @@
 					<div>
 						<div class="unitHeader flexMe">
 							<h3>Statistikk</h3> 
-							{#if showStats === true}
+							<!-- {#if showStats === true}
 								<div class="helpIconContainer" on:click={() => handleInfoClick()}><IconHelp /></div>
-							{/if}
+							{/if} -->
 						</div>
 					</div>
 					{#if showStats === true}
