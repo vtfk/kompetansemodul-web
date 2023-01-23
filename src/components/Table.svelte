@@ -77,6 +77,8 @@
             selectedCriticalTasks.push(object)
         }
     }
+
+    const tempSelectedCriticalTasks = selectedCriticalTasks
     // Combines the two arraies before displaying it 
     const combinedData = (combineData(tempCriticalTasks, competenceList))
 
@@ -153,6 +155,10 @@
         dialog.close()
     }
 
+
+    // const addedToCritical = findDiff(selectedCriticalTasks, tempSelectedCriticalTasks, 'ansattnummer')
+    // const removedFromCritical = findDiff(tempSelectedCriticalTasks, selectedCriticalTasks, 'ansattnummer')
+
     // const isCriticalCloseDialog = () => {
     //     // Oppgaven markeres som kritiks og dialogen lukkes. 
     //     //Enable scrolling when dialog is closed
@@ -170,7 +176,6 @@
     // }
 
 </script>
-<!-- {console.log(selectedCriticalTasks)} -->
 <div class="table">
     <div class="criticalHeader">
         <div class="col">Navn</div>
@@ -218,9 +223,15 @@
 {:else}
     {#if noCriticalDesc.includes(false)}
         {#if findDiff(combinedData, selectedCriticalTasks, 'hasCriticalTask')}
+            {#if findDiff(selectedCriticalTasks, tempSelectedCriticalTasks, 'ansattnummer').length > 0 || findDiff(tempSelectedCriticalTasks, selectedCriticalTasks, 'ansattnummer').length > 0 }
+                <div class="centerButton">
+                    <Button buttonText="Lagre" removeSlots={true} size="medium" onClick={() => {dataToSave(selectedCriticalTasks)}}></Button>
+                </div>
+            {:else}
             <div class="centerButton">
-                <Button buttonText="Lagre" removeSlots={true} size="medium" onClick={() => {dataToSave(selectedCriticalTasks)}}></Button>
+                <p class="mandatoryInfo">❗Det er ikke gjort noen endringer</p>
             </div>
+            {/if}
         {/if}          
     {/if}
 {/if}
