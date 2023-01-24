@@ -32,6 +32,7 @@
 	<Card title={merTitle} editable={false} backgroundColor={merBackgroundColor}>
 		{moreCard} <a href="https://vtfk.sharepoint.com/sites/innsida-varorganisasjon/SitePages/Vibyggernyefylker.aspx">her.</a>
 	</Card>
+	<hr/>
 	<Card title={veilederTitle} editable={false} backgroundColor={veilederBackgroundColor}>
 		<div>
 			<img src="veileder.png" alt="veileder"/>
@@ -75,23 +76,113 @@
 			<dd>Om sjekkboksen ikke er krysset av må du velge en slutt dato.</dd><br>
 		</dl>		
 	</Card>
+
+	<hr/>
+	<br>
+
+	<!-- Guide for leder ved kartleggingssamtale -->
+	<h2>Hvordan utføre en kartleggingssamtale</h2> <br>
+	<dl>
+		<dt>1. Naviger til min enhet</dt>
+			<dd>Naviger til "Min enhet" ved å trykke på knappen som er markert på bilde under.</dd>
+			<dd>Derreter trykker du på den personen du ønsker å utføre en kartleggingssamtale med.</dd>
+	</dl>
+	<br>
+	<div style="width: 500px; margin-left:3rem;">
+		<img height="600" src="minEnhetNavigasjon.png" alt="kartleggingssamtale1"/>
+	</div>
+	<br>
+	<hr/>
+	<dl>
+		<dt>2. Ansattinformasjon siden</dt>
+			<dd>Når du har trykket på den personen du ønsker å utføre en kartleggingssamtale med vil du bli sendt videre til personen sin "Ansattinformasjon" side.</dd>
+			<dd>Der vil du se en lyseblå boks med overskriften "Lederverktøy: Kartleggingssamtale" som vist på bilde under.</dd>
+			<dd>I denne boksen finner du litt informasjon og to knapper og oversikt over historikken til den ansatte.</dd>
+			<br>
+			<dl>Historikken vil vise følgende:
+				<dd>1. Når kartleggingssamtalen ble gjennomført.</dd>
+				<dd>2. Status på kartleggingssamtalen. Status kan enten være "Godkjent", "Ikke godkjent" eller "Venter på signering"</dd>
+				<dd>3. Hvem som er ansvarlig for kartleggingssamtalen.</dd>
+				<dd>4. Arkivstatus for kartleggingssamtalen. Her kan kartleggingssamtalen enten være manuelt arkivert eller automatisk arkivert. Normalt vil samtalen automatisk arkiveres.</dd>
+			</dl>
+			<br>
+			<dd>For å starte en kartleggingssamtale må du først logge på skjemaløsningen, dette gjør du ved å trykke på knappen "Logg på internskjema.vtfk.no"</dd>
+	</dl>
+	<br>
+	<div>
+		<img src="ansattinformasjon2v2.png" alt="kartleggingssamtale2"/>
+	</div>
+	<br>
+	<h3>Historikk eksempler</h3>
+	<div class="historyImg">
+		<div>
+			<img src="historikkGodkjent.png" alt="historikk1"/>
+		</div> 
+		<div>
+			<img src="historikkIkkeGodkjent.png" alt="historikk3"/>
+		</div>
+		<div>
+			<img src="historikkVenter.png" alt="historikk2"/>
+		</div>
+	</div>
+	<br>
+	<hr/>
+	<dl>
+		<dt>3. Skjemaløsningen</dt>
+			<dd>Når du har gjort dette vil du bli videresendt til en side som ser slik ut som på bildet under.</dd>
+			<dd>Denne siden kan du bare krysse ut. (NB! Ikke logg ut!)</dd>
+	</dl>
+	<br>
+	<div>
+		<img src="acosSkjemaliste.png" alt="kartleggingssamtale3"/>
+	</div>
+	<br>
+	<hr/>
+	<dl>
+		<dt>4. Tilbake i kompetansemodulen</dt>
+		<dd>Tilbake i kompetansemodulen vil du se at boksen som du så tidligere har endret seg. Se bilde under.</dd>
+		<dd>Boksen har nå fått en ny knapp "Opprett kartleggingssamtale for 'Navn på ansatt'" </dd>
+		<dd>Dette betyr at du kan starte en kartleggingssamtale for den ansatte ved å trykke på denne kanppen</dd>
+	</dl>
+	<br>
+	<div>
+		<img src="ansattinformasjonEndret.png" alt="kartleggingssamtale4"/>
+	</div>
+	<br>
+	<hr/>
 </div>
 
-<style>
-	dt {
-		font-size: 18px;
-		line-height: 24px;
-		min-height: 24px;	
-	}
-	
-	dd  {
-		font-size: 16px;
-		line-height: 24px;
-		min-height: 24px;
-		margin-left: 2rem;
-	}
 
-	img {
-		width: 100%;
-	}
+
+<style>
+dt {
+	font-size: 18px;
+	line-height: 24px;
+	min-height: 24px;	
+}
+
+dd  {
+	font-size: 16px;
+	line-height: 24px;
+	min-height: 24px;
+	margin-left: 2rem;
+}
+
+img {
+	width: 100%;
+}
+
+.historyImg {
+	display: flex;
+	justify-content:space-around;
+}
+
+hr {
+	display: block;
+	height: 1px;
+	border: 0;
+	border-top: 1px solid #ccc;
+	margin: 1em 0;
+	padding: 0;
+}	
 </style>

@@ -55,3 +55,6 @@ export const dataCard = "Opplysningene beskrevet under formål 2.A i personverne
 
 // Vil du lese mer? 
 export const moreCard = "Du finner mer informasjon på innsida under «vi bygger nye fylkeskommuner», eller ved å trykke"
+
+// Statistikk 
+export const statistikk = "<h3>Statistikk</h3><p>Generell forklaring</p><br><h4>Ønsket Arbeidssted Kakediagram</h4><p>En forklaring av grafen</p><br><h4>Ønsket Arbeidssted Liggende stolpediagram</h4><p>En forklaring av grafen</p><br><h4>Kritiske oppgaver Kakediagram</h4><p>En forklaring av grafen</p><br><h4>Kritiske oppgaver Tabell</h4><p>En forklaring av tabellen</p><br></br>"
