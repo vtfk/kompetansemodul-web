@@ -120,7 +120,7 @@
     {#if employeesOpen}
         <div class="employees">
             {#each unit.arbeidsforhold as employee}
-                <div class="employee" on:click={() => chooseEmployee(employee)}><label for="kudd">{employee.navn}</label> <input id={employee.userPrincipalName} type="checkbox" class="empCheck" checked={empIsChosen(adminSettings.oblig.chosenEmployees, employee)}  /> </div> 
+                <div class="employee" on:click={() => chooseEmployee(employee)}><label for="kudd">{employee.navn} - {employee.stillingstittel}</label> <input id={employee.userPrincipalName} type="checkbox" class="empCheck" checked={empIsChosen(adminSettings.oblig.chosenEmployees, employee)}  /> </div> 
             {/each}
         </div>
     {/if}
@@ -170,7 +170,7 @@
         align-items: center;
         justify-content: space-between;
         gap: 8px;
-        width: 200px;
+        width: 300px;
     }
     .level-0 .title {
         font-size: 24px;

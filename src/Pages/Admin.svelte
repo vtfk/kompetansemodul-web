@@ -7,6 +7,7 @@
     import Button from '../components/Button.svelte';
     import IconCheck from '../components/Icons/IconCheck.svelte';
 	import { welcomeMail, remindMail } from '../lib/Helpers/mailTemplates'
+	import { structurizeOrg } from '../lib/Helpers/organizationTools'
 
 	let name = 'Administrator'
 	let org = []
@@ -78,9 +79,9 @@
 		if (!employee.soloRole) return false
 		if (employee.positionTasks.length === 0) return false
 		for (const pt of employee.positionTasks) {
-			if (!Array.isArray(pt.tasks) || pt.tasks.length === 0) return false
+			if (Array.isArray(pt.tasks) && pt.positionId.includes('--') && pt.tasks.length > 0) return true
 		}
-		return true
+		return false
 	}
 
 	const getCategories = (unit) => {
@@ -100,16 +101,6 @@
 			adminSettings.oblig.chosenEmployees = adminSettings.oblig.chosenEmployees.filter(emp => employees.find(e => e.userPrincipalName === emp.userPrincipalName))
 		}
 	}
-
-	const structurizeOrg = (units) => {
-		for (const unit of units) {
-			unit.underordnet = unit.underordnet.map(child => {
-				if (!units.find((u => u.organisasjonsId === child.organisasjonsId))) return null // These are unit with gyldighetsperiode slutt
-				return units.find(u => u.organisasjonsId === child.organisasjonsId)
-			}).filter(u => u !== null) // Filter out units with gyldighetsperiode slutt
-		}
-		return [units.find(unit => unit.organisasjonsId === 'hoved')]
-	} 
 
 	const getOrgs = async () => {
 		org = await getOrg('all')
@@ -230,6 +221,8 @@
 
 	const sendEmails = async (options, type) => {
 		const confirmed = confirm(`Er du sikker på du ønsker å sende e-post til ${options.receivers.length} personer`)
+
+
 		if (confirmed) {
 			mailStatus[type].isSending = true
 			mailStatus[type].failed = []
@@ -344,7 +337,7 @@
 						<Button removeSlots={true} buttonText="🔄 Send velkomstmail til de det feilet på" onClick={ () => { sendEmails({ receivers: mailStatus.welcome.failed, template: welcomeMail }, 'welcome') } } />
 					{/if}
 				{:else}
-					<Button disabled={true} removeSlots={true} buttonText="📧 Send velkomstmail" onClick={ () => { sendEmails({ receivers: overview.mandatoryAll, template: welcomeMail }, 'welcome') } } />
+					<Button disabled={true} removeSlots={true} buttonText="📧 Send velkomstmail" onClick={ () => { sendEmails({ receivers: overview.mandatoryAll.map(emp => emp.userPrincipalName), template: welcomeMail }, 'welcome') } } />
 					<Button removeSlots={true} buttonText="📧 Test til deg selv: Send velkomstmail" onClick={ () => { sendEmails({ receivers: [currentUser], template: welcomeMail }, 'welcome') } } />
 				{/if}
 			</div>
@@ -358,7 +351,7 @@
 						<Button removeSlots={true} buttonText="🔄 Send påminnelse til de det feilet på" onClick={ () => { sendEmails({ receivers: mailStatus.remind.failed, template: remindMail }, 'remind') } } />
 					{/if}
 				{:else}
-					<Button disabled={true} removeSlots={true} buttonText="📧 Send påminnelse til de som ikke har fylt ut" onClick={ () => { sendEmails({ receivers: overview.hasNotAnsweredAll, template: remindMail }, 'remind') } } />
+					<Button disabled={true} removeSlots={true} buttonText="📧 Send påminnelse til de som ikke har fylt ut" onClick={ () => { sendEmails({ receivers: overview.hasNotAnsweredAll.map(emp => emp.userPrincipalName), template: remindMail }, 'remind') } } />
 					<Button removeSlots={true} buttonText="📧 Test til deg selv: Send påminnelse til de som ikke har fylt ut" onClick={ () => { sendEmails({ receivers: [currentUser], template: remindMail }, 'remind') } } />
 				{/if}
 			</div>

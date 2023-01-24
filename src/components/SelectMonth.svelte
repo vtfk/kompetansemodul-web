@@ -2,17 +2,31 @@
     export let monthValue
     export let validation = false
     export let validated = false
+    export let fromMonth = undefined
     
     const months = ['Januar', 'Februar', 'Mars', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Desember']
+
+    const restrictList = (fromMonth) => {
+        const monthsToRestrict = ['Januar', 'Februar', 'Mars', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Desember']
+        return monthsToRestrict.splice(monthsToRestrict.findIndex(i => i === fromMonth))
+    }
 
 </script>
 
 <select class="customSelect{(validation && !validated) ? ' required' : ''}" bind:value={monthValue}>
-    {#each months as month }
-    <option value={month}>
-        {month}
-    </option>
-    {/each}
+    {#if fromMonth === undefined}
+        {#each months as month }
+        <option value={month}>
+            {month}
+        </option>
+        {/each}
+    {:else}
+        {#each restrictList(fromMonth) as month}
+            <option value={month}>
+                {month}
+            </option>
+        {/each}
+    {/if}
 </select>
 
 <style>

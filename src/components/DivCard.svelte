@@ -38,7 +38,11 @@
 
     // Reactive validation
     $: {
-        canSave = (tempOther.soloRole === 'Nei') || (tempOther.soloRoleDescription && tempOther.soloRoleDescription.length > 0)
+        if ((tempOther.soloRole === 'Nei') || (tempOther.soloRoleDescription && tempOther.soloRoleDescription.length > 0)) {
+            canSave = true
+        } else {
+            canSave = false
+        }
     }
 
     const saveFunc = async () => {

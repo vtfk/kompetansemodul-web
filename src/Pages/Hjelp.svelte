@@ -23,7 +23,8 @@
 		{infoCard}
 	</Card>
 	<Card title={personvernTitle} editable={false} backgroundColor={personvernBackgroundColor}>
-		{gdprCard} <a href="https://vtfk.sharepoint.com/:w:/s/BDK-BNFHR/ESD8OQFbBr9Ph-9aEzFZBlYBg26I2JJjKgAF9_WuTueWZQ?e=2AqMbD">Personvernerklæring</a>
+		<!--{gdprCard} <a href="https://vtfk.sharepoint.com/:w:/s/BDK-BNFHR/ESD8OQFbBr9Ph-9aEzFZBlYBg26I2JJjKgAF9_WuTueWZQ?e=2AqMbD">Personvernerklæring</a>-->
+		{gdprCard} <a href="./kompetansePersonvern.pdf" download="kompetansePersonvern.pdf">Personvernerklæring</a>
 	</Card>
 	<Card title={dataTitle} editable={false} backgroundColor={dataBackgroundColor}>
 		{dataCard}

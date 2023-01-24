@@ -1,0 +1,10 @@
+on:
+  release:
+    types: [published]
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - run: curl -X POST -d {} ${{ secrets.DEPLOY_PROD_HOOK }}
