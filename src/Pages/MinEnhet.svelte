@@ -157,9 +157,9 @@
 					<div>
 						<div class="unitHeader flexMe">
 							<h3>Statistikk</h3> 
-							<!-- {#if showStats === true}
+							{#if showStats === true}
 								<div class="helpIconContainer" on:click={() => handleInfoClick()}><IconHelp /></div>
-							{/if} -->
+							{/if}
 						</div>
 					</div>
 					{#if showStats === true}
@@ -189,6 +189,10 @@
 								</div>
 								<div>
 								<div class="table">
+									<div class="tableInfo">
+										<h4>❗NB: Tabellen under reflekterer ikke dataen som vises i kakediagrammet "Kritiske Oppgaver", tabellen er ment som et lederverktøy for å organisere hvilke oppgaver som faktisk er kritiske i den enheten.</h4>
+									</div>
+									<br>
 									{#key criticalTasks}
 										<Table competenceList={competenceList} criticalTasks={criticalTasks} saveCriticalTasks={saveCriticalTasks} isSaving={isSavingCriticalTasks} savedMsg={saveCriticalTaskResult} error={isError} bind:criticalTasksToSave={tempCriticalTasks}/> 
 									{/key}
@@ -296,6 +300,11 @@
         flex-shrink: 0;
 		margin-left: 0.5rem;
     }
+
+	.tableInfo {
+		padding: 1.2rem;
+		background-color: var(--siv-2);
+	}
 
 	@media(max-width: 1183px) { 
 		.charts {
