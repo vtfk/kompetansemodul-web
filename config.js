@@ -17,3 +17,4 @@ export const authConfig = {
 export const environment = import.meta.env.VITE_ENV ?? 'test'
 export const adminRole = import.meta.env.VITE_ADMIN_ROLE ?? 'hubbabubbabububub'
 export const acosFlowProcessId = import.meta.env.VITE_ACOS_FLOW_PROCESS_ID ?? 'tullball'
+
