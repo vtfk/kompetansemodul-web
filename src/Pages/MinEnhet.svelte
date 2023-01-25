@@ -107,9 +107,7 @@
 		isSavingCriticalTasks = true
 		try {
 			const newCriticalTasks = await saveCritical(tempCriticalTasks[0])
-			setTimeout( () => {
-				isSavingCriticalTasks = false
-			}, 1000)
+			isSavingCriticalTasks = false
 			criticalTasks = JSON.parse(JSON.stringify(newCriticalTasks))
 			saveCriticalTaskResult = 'Lagret 👌'
 			setTimeout( () => {
@@ -227,7 +225,8 @@
 <style>
 	.employeeContainer {
 		display: flex;
-		gap: 23px;
+		justify-content: flex-start; /* center/space-around/between? */
+		gap: 1.4rem;
 		flex-wrap: wrap;
 	}
 	.childrenContainer {
@@ -241,7 +240,7 @@
 	.unitHeader.flexMe {
 		display: flex;
 		justify-content: center;
-		padding-top: 16px;
+		padding-top: 1rem;
 	}
 	.center {
 		text-align: center;
@@ -253,7 +252,7 @@
 	.toggleContainer {
 		display: flex;
 		align-items: center;
-		gap: 8px;
+		gap: 0.5rem;
 	}
 
 	.toggleView {
