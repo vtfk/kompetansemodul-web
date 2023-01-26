@@ -55,7 +55,7 @@
                 hoverOffset: 4
             }]}
             labels={useOnlyUnitStats ? generateStats(data.onlyUnitStats).labels : generateStats(data.allStats).labels}
-            title='Ønsket arbeidsted'
+            title='Ønsket arbeidssted'
             type='pie'
             labelPos="bottom"
             titlePos="top"

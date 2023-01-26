@@ -135,7 +135,7 @@
             labels={[
                 ''
             ]}
-            title="Ønsket arbeidsted"
+            title="Ønsket arbeidssted"
             type="stackedBar"
             labelPos="top"
             titlePos="top"
@@ -148,7 +148,7 @@
             labels={[
                 ''
             ]}
-            title="Dagens arbeidsted"
+            title="Dagens arbeidssted"
             type="stackedBar"
             labelPos="top"
             titlePos="top"
