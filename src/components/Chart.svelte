@@ -34,19 +34,46 @@
             chart.update()
         }
     }   
+    // Plugins
+    const noDataStackedBar = {
+        id: 'noDataStackedBar',
+        beforeDraw: (chart) => {
+            const {ctx} = chart
+            const width = ctx.canvas.width
+            const height = ctx.canvas.height
+            let data = []
+            for (let i = 0; i < chart.data.datasets.length; i++) {
+                data.push(chart.data.datasets[i].data[0])
+            }
+            if(data.reduce((a, b) => a + b, 0) === 0) {
+                ctx.font = "22px Nunito Sans"
+                ctx.fillStyle = 'grey'
+                ctx.textAlign = 'center'
+                ctx.textBaseline = 'middle'
+                ctx.fillText('Ingen data', width/2, height/1.5)
+                ctx.restore()
+            }
+        }
+    }
 
-    // // Global plugin test
-    // Chart.register({
-    //     id: 'custom_canvas_background_if_no_data',
-    //     beforeDraw: (chart) => {
-    //         const {ctx} = chart;
-    //         ctx.save();
-    //         ctx.font = '22px, Arial';
-    //         ctx.fillStyle = 'grey';
-    //         ctx.fillText('Ingen data', chart.chartArea.width, chart.chartArea.height);
-    //         ctx.restore();
-    //     }
-    // })
+    const noDataPieChart = {
+        id: 'noDataPieChart',
+        beforeDraw: (chart) => {
+            const {ctx} = chart
+            const width = ctx.canvas.width
+            const height = ctx.canvas.height
+            chart.data.datasets.forEach(chart => {
+                if(chart.data.reduce((a, b) => a + b, 0) === 0) {
+                    ctx.font = "22px Nunito Sans"
+                    ctx.fillStyle = 'grey'
+                    ctx.textAlign = 'center'
+                    ctx.textBaseline = 'middle'
+                    ctx.fillText('Ingen data', width/2, height/2)
+                    ctx.restore()
+                }
+            })
+        }
+    }
 
     onMount(async ()=> {
         // Initialize chart using default config set
@@ -77,7 +104,7 @@
                             formatter: (value, context) => {
                                 const datapoints = context.chart.data.datasets[0].data
                                 function sumArray(total, datapoint) {
-                                    return total + datapoint 
+                                    return total + datapoint
                                 }
                                 const totalValue = datapoints.reduce(sumArray, 0)
                                 const percentageValue = (value / totalValue * 100).toFixed(1)
@@ -110,8 +137,9 @@
                             }
                         },
                     },
-                }
-            });
+                },
+                plugins: [noDataPieChart]
+            })
             for (const disableIndex of disabled) {
                 chart.toggleDataVisibility(disableIndex)
                 chart.update()
@@ -187,7 +215,8 @@
                             }
                         }
                     },
-                }
+                },
+                plugins: [noDataStackedBar]
             })
         } 
     })
