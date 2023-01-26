@@ -33,9 +33,6 @@
 	let showStats = false
 	let useOnlyUnitStats = false
 
-	// FOR TESTING ONLY 
-	let acc
-
 	const content = statistikk
 
 	unitParameter.subscribe(value => {
@@ -48,7 +45,6 @@
 		if (unit === 'myUnit') {
 			const msalClient = get(msalClientStore)
 			const accounts = msalClient.getAllAccounts()
-			acc = accounts[0].username
 			res = await getOrg(accounts[0].username)
 		} else {
 			res = await getOrg(unit)
@@ -155,7 +151,7 @@
 						{/each}
 					</div>
 				{/if}
-				{#if unit.isPrivileged && acc === 'robin.ellingsen@vtfk.no'}
+				{#if unit.isPrivileged}
 					<div>
 						<div class="unitHeader flexMe">
 							<h3>Statistikk</h3> 
