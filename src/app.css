@@ -326,6 +326,12 @@ input.required {
   border: 2px solid var(--red) !important;
 }
 
+.centerSpinner {
+  display: flex;
+  justify-content: space-around;
+  margin: 1rem;
+}
+
 @media (prefers-color-scheme: light) {
   :root {
     color: #213547;
