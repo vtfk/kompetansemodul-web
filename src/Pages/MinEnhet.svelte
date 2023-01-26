@@ -174,7 +174,8 @@
 							</div>
 							{#if unit.underordnet.length > 1 }
 								<div class="toggleFilterContainer">
-									<label class="toggleFilter" for={unit}>Ikke inkluder underenheter i statistikk</label><input id={unit} type="checkbox" on:click={() => useOnlyUnitStats = !useOnlyUnitStats} >
+									<label class="toggleFilter" for={unit}>Ikke inkluder underenheter i statistikk</label>
+									<input id={unit} type="checkbox" on:click={() => useOnlyUnitStats = !useOnlyUnitStats} >
 								</div>
 							{/if}
 								<!-- Her kan vi putte inn komponenter for statistikk -->
@@ -188,7 +189,7 @@
 								<div>
 								<div class="table">
 									<div class="tableInfo">
-										<h4>❗NB: Tabellen under reflekterer ikke dataen som vises i kakediagrammet "Kritiske Oppgaver", tabellen er ment som et lederverktøy for å organisere hvilke oppgaver som faktisk er kritiske i den enheten.</h4>
+										<h4>❗NB: Tabellen under reflekterer ikke dataen som vises i kakediagrammet "Kritiske Oppgaver", tabellen er ment som et lederverktøy for å organisere hvilke oppgaver som faktisk er kritiske i denne enheten.</h4>
 									</div>
 									<br>
 									{#key criticalTasks}
@@ -275,7 +276,7 @@
 	.toggleFilterContainer {
 		display:flex;
 		flex-wrap: wrap;
-		align-items: flex-end;
+		align-items: center;
 		justify-content: center;
 		padding-top: 1rem;
 	}
@@ -299,6 +300,10 @@
         flex-shrink: 0;
 		margin-left: 0.5rem;
     }
+	.helpIconContainer:hover {
+		cursor: pointer;
+		transform: scale(1.2);
+	}
 
 	.tableInfo {
 		padding: 1.2rem;
