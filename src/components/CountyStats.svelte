@@ -55,24 +55,24 @@
                     ],
                     hoverOffset:4
                 },
-                // {
-                //     label: `Vet ikke (${countyStats.dunno})`,
-                //     barThickness:100,
-                //     data: [countyStats.dunno],
-                //     backgroundColor: [
-                //         colorDunno
-                //     ],
-                //     hoverOffset:4
-                // },
-                // {
-                //     label: `Begge alternativene (${countyStats.both})`,
-                //     barThickness:100,
-                //     data: [countyStats.both],
-                //     backgroundColor: [
-                //         colorSame
-                //     ],
-                //     hoverOffset:4
-                // },
+                {
+                    label: `Vet ikke (${countyStats.dunno})`,
+                    barThickness:100,
+                    data: [countyStats.dunno],
+                    backgroundColor: [
+                        colorDunno
+                    ],
+                    hoverOffset:4
+                },
+                {
+                    label: `Fleksibel (${countyStats.both})`,
+                    barThickness:100,
+                    data: [countyStats.both],
+                    backgroundColor: [
+                        colorSame
+                    ],
+                    hoverOffset:4
+                },
                 // {
                 //     label: `Har ikke svart (${countyStats.noReply})`,
                 //     barThickness:100,
