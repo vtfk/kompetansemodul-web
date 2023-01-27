@@ -148,6 +148,9 @@
 			<p><IconSpinner /></p>
 		{:then}
 			<OrgUnit unit={structOrg[0]} />
+			<br />
+			<br />
+			<br />
 		{:catch error}
 			<p style="color: red">{error.message}</p>
 		{/await}
@@ -167,7 +170,7 @@
 				{#each units as unit}
 					{#if unit.overordnet && unit.overordnet.organisasjonsId !== unit.organisasjonsId}
 						{#each unit.struktur.slice(1).reverse() as overordnet, i}
-							<p class="link center" style="font-size: {i+1*16}px;" on:click={() => {changePage('minenhet', { setUnit: overordnet.organisasjonsId })}}>{overordnet.navn}</p>
+							<p class="link center" style="" on:click={() => {changePage('minenhet', { setUnit: overordnet.organisasjonsId })}}>{overordnet.navn}</p>
 						{/each}
 						<!--<p class="link center" on:click={() => {changePage('minenhet', { setUnit: unit.overordnet.organisasjonsId })}}>{unit.overordnet.navn}</p>-->
 					{/if}

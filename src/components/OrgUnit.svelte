@@ -78,10 +78,10 @@
 
 </script>
 
-<div class="unit level-{level+1}" style="margin-left: {1 * 24}px;">
+<div class="unit level-6" style="margin-left: {1 * 40}px;">
 <!--<div class="unit level-{level+1}">-->
     <div class="unitContainer">
-        <div class="title"><span title="Utvid enhet" class="expandable" on:click={toggleOpen}>{open ? '↘ ' : '➡ '}</span><span title="Gå til enhet" class="unitLink" on:click={() => changePage('minenhet', { setUnit: unit.organisasjonsId })}>{unit.navn}</span></div>
+        <div class="title {open ? ' open' : ''}"><span title="Utvid enhet" class="expandable" on:click={toggleOpen}>{open ? '↘ ' : '➡ '}</span><span title="Gå til enhet" class="unitLink" on:click={() => changePage('minenhet', { setUnit: unit.organisasjonsId })}>{unit.navn}</span></div>
     </div>
     {#if open}
         <div class="employees">
@@ -110,7 +110,7 @@
         cursor: pointer;
     }
     .employees {
-        margin-left: 24px;
+        margin-left: 40px;
     }
     .unit {
         padding: 0px;
@@ -138,6 +138,9 @@
     .title {
         display: flex;
         gap: 8px;
+    }
+    .title.open {
+        font-weight: bold;
     }
     .level-0 .title {
         font-size: 48px;
