@@ -57,6 +57,7 @@
                     <p>Finn ansatt</p>
                 </button>
             </div>
+            <!--
             <div class="sideNavItem">
                 <button on:click={() => { changePage('organisasjon') } } class={`${currentPage === 'organisasjon' ? ' siteNavItemActive' : ''}`}>
                     <div class="icon">
@@ -65,6 +66,7 @@
                     <p>Organisasjon</p>
                 </button>
             </div>
+            -->
             {#if roles.includes(adminRole)}
                 <div class="sideNavItem">
                     <button on:click={() => { changePage('admin')} } class={currentPage === 'admin' ? 'siteNavItemActive' : ''}>
