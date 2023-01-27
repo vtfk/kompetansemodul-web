@@ -1,5 +1,6 @@
 export const api = {
   url: import.meta.env.VITE_API_URL ?? 'uriSomewhere',
+  // url: import.meta.env.VITE_API_URL_LOCAL, // Local API
   scopes: (import.meta.env.VITE_API_SCOPES && import.meta.env.VITE_API_SCOPES.split(',')) ?? ['et skikkelig skup']
 }
 export const authConfig = {
@@ -15,3 +16,5 @@ export const authConfig = {
 }
 export const environment = import.meta.env.VITE_ENV ?? 'test'
 export const adminRole = import.meta.env.VITE_ADMIN_ROLE ?? 'hubbabubbabububub'
+export const acosFlowProcessId = import.meta.env.VITE_ACOS_FLOW_PROCESS_ID ?? 'tullball'
+

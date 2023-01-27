@@ -84,6 +84,14 @@
                 }
             }
 
+            if(exp.fromYear === exp.toYear) {
+                const monthsToRestrict = ['Januar', 'Februar', 'Mars', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Desember']
+                if(monthsToRestrict.findIndex(i => i === exp.fromMonth) > monthsToRestrict.findIndex(i => i === exp.toMonth)) {
+                    valid.toMonth = false
+                    canSave = false
+                }
+            }
+
             const tempTaskValidation = []
             for(const task of exp.tasks) {
                 if (!task || task < 1) {
@@ -166,7 +174,7 @@
                         <div>
                             <div>
                                 <label for="employer">Arbeidsgiver</label><label for="employer" class="validation">{!validation[i].employer ? '*' : '' }</label><br>
-                                <input class="{!validation[i].employer ? 'required' : '' }" id="employer" type="text" bind:value={tempWork.employer}>
+                                <input class="{!validation[i].employer ? 'required' : '' }" id="employer" type="text" maxlength="60" bind:value={tempWork.employer}>
                             </div>
                         </div>
                         <div>
@@ -190,10 +198,14 @@
                             <div>
                                 <label for="to">Til</label> <label for="to" class='validation'>{!validation[i].toMonth || !validation[i].toYear ? '*' : '' }
                                 <div class="peroidContainer">
-                                    <SelectMonth bind:monthValue={tempWork.toMonth} validation={true} validated={validation[i].toMonth}/>
-                                        {#if newWorkExperience.fromYear}
-                                            <SelectYears startYear={tempWork.fromYear} validation={true} validated={validation[i].toYear} bind:yearValue={tempWork.toYear}/>
-                                        {/if}
+                                    {#if tempWork.toYear === tempWork.fromYear}
+                                        <SelectMonth bind:monthValue={tempWork.toMonth} validation={true} validated={validation[i].toMonth} fromMonth={tempWork.fromMonth}/>
+                                    {:else}
+                                        <SelectMonth bind:monthValue={tempWork.toMonth} validation={true} validated={validation[i].toMonth}/>
+                                    {/if}
+                                    {#if newWorkExperience.fromYear}
+                                        <SelectYears startYear={tempWork.fromYear} validation={true} validated={validation[i].toYear} bind:yearValue={tempWork.toYear}/>
+                                    {/if}
                                 </div>
                             </div>
                             {:else}

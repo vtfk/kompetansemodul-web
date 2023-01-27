@@ -277,6 +277,14 @@
                     canSave = false
                 }
             }
+
+            if(edu.fromYear === edu.toYear) {
+                const monthsToRestrict = ['Januar', 'Februar', 'Mars', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Desember']
+                if(monthsToRestrict.findIndex(i => i === edu.fromMonth) > monthsToRestrict.findIndex(i => i === edu.toMonth)) {
+                    valid.toMonth = false
+                    canSave = false
+                }
+            }
             /*
             if (higherDegrees.includes(edu.degree) && (!edu.specialization || edu.specialization.length < 1)) {
                 valid.specialization = false
@@ -386,7 +394,7 @@
                         {#if tempEdu.degree && degreeInfo.find(degree => degree.name === tempEdu.degree).custom}
                         <div>
                             <label for="customDegree">Grad</label><label for="customDegree" class="validation">{!validation[i].customDegree ? '*' : '' }</label><br>
-                            <input type="text" class="{!validation[i].customDegree ? 'required' : '' }" bind:value={tempEdu.customDegree}>
+                            <input type="text" maxlength="45" class="{!validation[i].customDegree ? 'required' : '' }" bind:value={tempEdu.customDegree}>
                         </div>
                         {/if}
                         {#if tempEdu.degree && (degreeInfo.find(degree => degree.name === tempEdu.degree).score || degreeInfo.find(degree => degree.name === tempEdu.degree).custom)}
@@ -404,7 +412,7 @@
                         {#if higherDegrees.includes(tempEdu.degree)}
                         <div>
                             <label for="specialization">Fordypning</label><br>
-                            <input type="text" bind:value={tempEdu.specialization} />
+                            <input type="text" maxlength="60" bind:value={tempEdu.specialization} />
                         </div>
                         {/if}
                         <div>
@@ -421,7 +429,11 @@
                             <div>
                                 <label for="to">Til</label><label for="to" class='validation'>{!validation[i].toMonth || !validation[i].toYear ? '*' : '' }<br>
                                 <div class="peroidContainer">
-                                <SelectMonth bind:monthValue={tempEdu.toMonth} validation={true} validated={validation[i].toMonth} />
+                                    {#if tempEdu.toYear === tempEdu.fromYear}
+                                        <SelectMonth bind:monthValue={tempEdu.toMonth} validation={true} validated={validation[i].toMonth} fromMonth={tempEdu.fromMonth}/>
+                                    {:else}
+                                        <SelectMonth bind:monthValue={tempEdu.toMonth} validation={true} validated={validation[i].toMonth} />
+                                    {/if}
                                     {#if newEducation.fromYear}
                                         <SelectYears startYear={tempEdu.fromYear} bind:yearValue={tempEdu.toYear} validation={true} validated={validation[i].toYear}/>
                                     {/if}
@@ -434,7 +446,7 @@
                         </div>
                         <div>
                             <label for="school">Skole</label><label for="school" class="validation">{!validation[i].school ? '*' : '' }</label><br>
-                            <input type="text" class="{!validation[i].school ? 'required' : '' }" bind:value={tempEdu.school}>
+                            <input type="text" maxlength="60"class="{!validation[i].school ? 'required' : '' }" bind:value={tempEdu.school}>
                         </div>
                     </div>
                     <div slot="right" class=slot>

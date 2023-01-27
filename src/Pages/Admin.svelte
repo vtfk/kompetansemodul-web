@@ -79,7 +79,7 @@
 		if (!employee.soloRole) return false
 		if (employee.positionTasks.length === 0) return false
 		for (const pt of employee.positionTasks) {
-			if (Array.isArray(pt.tasks) && pt.tasks.length > 0) return true
+			if (Array.isArray(pt.tasks) && pt.positionId.includes('--') && pt.tasks.length > 0) return true
 		}
 		return false
 	}
@@ -351,7 +351,7 @@
 						<Button removeSlots={true} buttonText="🔄 Send påminnelse til de det feilet på" onClick={ () => { sendEmails({ receivers: mailStatus.remind.failed, template: remindMail }, 'remind') } } />
 					{/if}
 				{:else}
-					<Button disabled={true} removeSlots={true} buttonText="📧 Send påminnelse til de som ikke har fylt ut" onClick={ () => { sendEmails({ receivers: overview.hasNotAnsweredAll, template: remindMail }, 'remind') } } />
+					<Button disabled={true} removeSlots={true} buttonText="📧 Send påminnelse til de som ikke har fylt ut" onClick={ () => { sendEmails({ receivers: overview.hasNotAnsweredAll.map(emp => emp.userPrincipalName), template: remindMail }, 'remind') } } />
 					<Button removeSlots={true} buttonText="📧 Test til deg selv: Send påminnelse til de som ikke har fylt ut" onClick={ () => { sendEmails({ receivers: [currentUser], template: remindMail }, 'remind') } } />
 				{/if}
 			</div>

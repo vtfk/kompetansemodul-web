@@ -32,7 +32,7 @@ export const welcomeMail = {
     + '<br><br>'
     + '<u><strong>Vil du lese mer?</u></strong>'
     + '<br>'
-    + 'Du finner mer informasjon på innsida under <a href="https://vtfk.sharepoint.com/sites/innsida-varorganisasjon/sitepages/NyefylkerHR.aspx?xsdata=MDN8MDF8fDA0NmJmZTkyZGY3MDQ3ZThhMTgyNThjYmZiZDU4OGEwfDA4ZjM4MTNjOWYyOTQ4MmY5YWVjMTZlZjdjYmY0NzdhfDB8MHw2Mzc4NDc0MDc2MDYyMjc3NzZ8R29vZHxWR1ZoYlhOVFpXTjFjbWwwZVZObGNuWnBZMlY4ZXlKV0lqb2lNQzR3TGpBd01EQWlMQ0pRSWpvaVYybHVNeklpTENKQlRpSTZJazkwYUdWeUlpd2lWMVFpT2pFeGZRPT0%3D&sdata=SzVsd29NS0cxT3MvWDYyUHEzV2tYSHFzTFJhcTdkd1JoWSsvK041eENBND0%3D&ovuser=08f3813c-9f29-482f-9aec-16ef7cbf477a%2ccharlotte.erikstad%40vtfk.no&OR=Teams-HL&CT=1649143975552&params=eyJBcHBOYW1lIjoiVGVhbXMtRGVza3RvcCIsIkFwcFZlcnNpb24iOiIyNy8yMjAzMDcwMTYxMCJ9">«Vi bygger nye fylkeskommuner – Aktuelt nå: Kompetansekartlegging».</a> Det er også informasjon inne i selve kompetansemodulen under fanen «Hjelp».'
+    + 'Du finner mer informasjon på innsida under <a href="https://vtfk.sharepoint.com/sites/innsida-varorganisasjon/sitepages/NyefylkerHR.aspx?xsdata=MDN8MDF8fDA0NmJmZTkyZGY3MDQ3ZThhMTgyNThjYmZiZDU4OGEwfDA4ZjM4MTNjOWYyOTQ4MmY5YWVjMTZlZjdjYmY0NzdhfDB8MHw2Mzc4NDc0MDc2MDYyMjc3NzZ8R29vZHxWR1ZoYlhOVFpXTjFjbWwwZVZObGNuWnBZMlY4ZXlKV0lqb2lNQzR3TGpBd01EQWlMQ0pRSWpvaVYybHVNeklpTENKQlRpSTZJazkwYUdWeUlpd2lWMVFpT2pFeGZRPT0%3D&sdata=SzVsd29NS0cxT3MvWDYyUHEzV2tYSHFzTFJhcTdkd1JoWSsvK041eENBND0%3D&ovuser=08f3813c-9f29-482f-9aec-16ef7cbf477a%2ccharlotte.erikstad%40vtfk.no&OR=Teams-HL&CT=1649143975552&params=eyJBcHBOYW1lIjoiVGVhbXMtRGVza3RvcCIsIkFwcFZlcnNpb24iOiIyNy8yMjAzMDcwMTYxMCJ9">«Vi bygger nye fylkeskommuner - Aktuelt nå: Kompetansekartlegging».</a> Det er også informasjon inne i selve kompetansemodulen under fanen «Hjelp».'
     + '<br><br>'
     + '<u><strong>Har du spørsmål?</u></strong>'
     + '<br>'
@@ -40,6 +40,20 @@ export const welcomeMail = {
 }
 
 export const remindMail = {
-    subject: 'Har du husket å registrere din kompetanse?',
-    body: '<strong>Husk å registrere din kompetanse innen fredag 16.12.22</strong><br>Det gjør du her: <a href="https://kompetanse.vtfk.no">https://kompetanse.vtfk.no</a><br /><br />Har du spørsmål, spør Oda og Una'
+    subject: 'Påminnelse om kompetansekartlegging',
+    body: 'Hei,'
+    + '<br><br>'
+    + 'I dag går fristen for å svare på kompetansekartleggingen ut for medarbeidere i fylkesadministrasjonen. Vi kan ikke se at du har lagt inn informasjon i modulen ennå eller mangler å fylle ut deler av kartleggingen. Dette er en vennlig påminnelse om å fullføre kompetansekartleggingen.'
+    + '<br><br>'
+    + '<strong>Her finner dere lenken til kompetansemodulen:</strong> <a href="https://kompetanse.vtfk.no">Kompetanse (vtfk.no)</a>'
+    + '<br><br>'
+    + 'De som skal gjennomføre kompetansekartleggingen er alle faste ansatte i fylkesadministrasjonen inkludert OT og PPT, samt midlertidig ansatte i fylkesadministrasjonen inkludert OT og PPT med kontrakt <strong>utover 01.01.24.</strong>'
+    + '<br><br>'
+    + "Ansatte i virksomhetene, ansatte som har sluttet til 1.1.24, midlertidige ansatte som ikke skal være med videre etter 1.1.24, vikarer, lærlinger og trainee'er eller innleide konsulenter skal ikke besvare kartleggingen. Du finner mer informasjon på Innsida under <a href='https://vtfk.sharepoint.com/sites/innsida-varorganisasjon/sitepages/NyefylkerHR.aspx?xsdata=MDN8MDF8fDA0NmJmZTkyZGY3MDQ3ZThhMTgyNThjYmZiZDU4OGEwfDA4ZjM4MTNjOWYyOTQ4MmY5YWVjMTZlZjdjYmY0NzdhfDB8MHw2Mzc4NDc0MDc2MDYyMjc3NzZ8R29vZHxWR1ZoYlhOVFpXTjFjbWwwZVZObGNuWnBZMlY4ZXlKV0lqb2lNQzR3TGpBd01EQWlMQ0pRSWpvaVYybHVNeklpTENKQlRpSTZJazkwYUdWeUlpd2lWMVFpT2pFeGZRPT0%3D&sdata=SzVsd29NS0cxT3MvWDYyUHEzV2tYSHFzTFJhcTdkd1JoWSsvK041eENBND0%3D&ovuser=08f3813c-9f29-482f-9aec-16ef7cbf477a%2ccharlotte.erikstad%40vtfk.no&OR=Teams-HL&CT=1649143975552&params=eyJBcHBOYW1lIjoiVGVhbXMtRGVza3RvcCIsIkFwcFZlcnNpb24iOiIyNy8yMjAzMDcwMTYxMCJ9'>«Vi bygger nye fylkeskommuner - Aktuelt nå: Kompetansekartlegging».</a>"
+    + '<br><br><br>'
+    + '<strong>Har du spørsmål?</strong>'
+    + '<br>'
+    + 'Dersom du har spørsmål eller noe er uklart kan du ta kontakt med din nærmeste leder.'
+    + '<br>'
+    + "Du finner også informasjon på Innsida under <a href='https://vtfk.sharepoint.com/sites/innsida-varorganisasjon/sitepages/NyefylkerHR.aspx?xsdata=MDN8MDF8fDA0NmJmZTkyZGY3MDQ3ZThhMTgyNThjYmZiZDU4OGEwfDA4ZjM4MTNjOWYyOTQ4MmY5YWVjMTZlZjdjYmY0NzdhfDB8MHw2Mzc4NDc0MDc2MDYyMjc3NzZ8R29vZHxWR1ZoYlhOVFpXTjFjbWwwZVZObGNuWnBZMlY4ZXlKV0lqb2lNQzR3TGpBd01EQWlMQ0pRSWpvaVYybHVNeklpTENKQlRpSTZJazkwYUdWeUlpd2lWMVFpT2pFeGZRPT0%3D&sdata=SzVsd29NS0cxT3MvWDYyUHEzV2tYSHFzTFJhcTdkd1JoWSsvK041eENBND0%3D&ovuser=08f3813c-9f29-482f-9aec-16ef7cbf477a%2ccharlotte.erikstad%40vtfk.no&OR=Teams-HL&CT=1649143975552&params=eyJBcHBOYW1lIjoiVGVhbXMtRGVza3RvcCIsIkFwcFZlcnNpb24iOiIyNy8yMjAzMDcwMTYxMCJ9'>«Vi bygger nye fylkeskommuner - Aktuelt nå: Kompetansekartlegging».</a> 🎅"
 }
