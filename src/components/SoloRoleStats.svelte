@@ -55,7 +55,7 @@
                 hoverOffset: 4
             }]}
             labels={useOnlyUnitStats ? generateStats(data.onlyUnitStats).labels : generateStats(data.allStats).labels}
-            title='Kritiske oppgaver'
+            title='Andel ansatte som har svart at de er den eneste med sin stilling og/eller ansvarsområde i enheten'
             type='pie'
             labelPos="bottom"
             titlePos="top"
