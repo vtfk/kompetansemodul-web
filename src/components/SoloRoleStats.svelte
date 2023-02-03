@@ -1,5 +1,7 @@
 <script>
+    import { getLabel } from '../lib/Helpers/generateLabel';
     import Chart from '../components/Chart.svelte';
+
     export let useOnlyUnitStats = false
     export let data = {
         allStats: [],
@@ -27,11 +29,13 @@
             soloRoleStats.yes += onlyMandatory.filter(forhold => forhold.soloRole === 'Ja').length
             soloRoleStats.no += onlyMandatory.filter(forhold => forhold.soloRole === 'Nei').length
         }
+        const total = soloRoleStats.yes + soloRoleStats.no
+        const percentage = 10
         return {
             dataList: [soloRoleStats.no, soloRoleStats.yes, soloRoleStats.noReply, soloRoleStats.notMandatory],
             labels: [
-                `Har ikke kritiske oppgaver (${soloRoleStats.no})`,
-                `Har kritiske oppgaver (${soloRoleStats.yes})`,
+                getLabel(total, percentage, 'Har ikke kritiske oppgaver', soloRoleStats.no),
+                getLabel(total, percentage, 'Har kritiske oppgaver', soloRoleStats.yes),
                 // `Har ikke svart (${soloRoleStats.noReply})`,
                 // `Skal ikke svare (${soloRoleStats.notMandatory})`,
             ]

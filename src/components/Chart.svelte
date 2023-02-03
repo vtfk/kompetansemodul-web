@@ -1,5 +1,5 @@
 <script>
-    import Chart, { Colors } from 'chart.js/auto';
+    import Chart, { Colors, controllers } from 'chart.js/auto';
     import { onMount } from 'svelte';
     import ChartDataLabels from 'chartjs-plugin-datalabels';
 
@@ -15,6 +15,7 @@
    
     let chart
     let ctx
+    let total = 0
 
     Chart.register(ChartDataLabels)
 
@@ -173,6 +174,8 @@
                                index: {
                                 align: 'center',
                                 color: 'black',
+                                anchor: 'center',
+                                clamp: true,
                                 backgroundColor: 'white',
                                 borderColor: 'white',
                                 borderRadius: 5, 
@@ -184,8 +187,7 @@
                             },
                             // Returns percentage value of the bar based of the total value of all the bars present in the stackedbar chart.
                             formatter: (value, context) => {
-                                let total = 0
-
+                                total = 0
                                 for (let i = 0; i < context.chart.data.datasets.length; i++) {
                                     const datapoints = context.chart.data.datasets[i].data
                                     function sumArray(total, datapoint) {
@@ -198,9 +200,18 @@
         
                                 return `${percentageValue}%`
                             },
-                            // Boolean value (display: true/false)
+                            // Boolean value (display: true/false), shows the labels if true.
                             display: function(context) {
-                                return context.dataset.data[context.dataIndex] !== 0   
+                                const value = context.dataset.data[context.dataIndex]
+                                const percentage = ( value / total * 100)
+                                // Hide labels if the percentage value is less than 10%
+                                if(percentage < 10) {
+                                    return false
+                                } else {
+                                    return true
+                                    // return context.dataset.data[context.dataIndex] !== 0
+                                }
+                                   
                             }         
                         },
                         legend: {

@@ -1,5 +1,7 @@
 <script>
     import Chart from '../components/Chart.svelte';
+    import { getLabel } from '../lib/Helpers/generateLabel';
+
     export let useOnlyUnitStats = false
     export let data = {
         allStats: [],
@@ -9,6 +11,8 @@
     // Colors
 	const colorVestfold = '#7ABED3'
 	const colorTelemark = '#AD879E'
+    const colorSame = '#90BC7F'
+	const colorDunno = '#F0E1BD'
 
     const generateStats = (stats) => {
     // Generate stats for soloRole
@@ -31,11 +35,16 @@
         countyStats.both += onlyMandatory.filter(forhold => forhold.perfCounty === 'Begge alternativene er like gode for meg').length
         countyStats.noReply += onlyMandatory.filter(forhold => !forhold.perfCounty).length
     }
+    const total = countyStats.telemark + countyStats.dunno + countyStats.both + countyStats.vestfold
+    const percentage = 10
+
     return {
-        dataList: [countyStats.telemark, countyStats.vestfold],
+        dataList: [countyStats.telemark, countyStats.dunno, countyStats.both, countyStats.vestfold],
         labels: [
-            `Telemark (${countyStats.telemark})`,
-            `Vestfold (${countyStats.vestfold})`,
+            getLabel(total, percentage, 'Telemark', countyStats.telemark),
+            getLabel(total, percentage, 'Vet ikke', countyStats.dunno),
+            getLabel(total, percentage, 'Fleksibel', countyStats.both),
+            getLabel(total, percentage, 'Vestfold', countyStats.vestfold)
         ]
     }
 }
@@ -50,6 +59,8 @@
                 data: useOnlyUnitStats ? generateStats(data.onlyUnitStats).dataList : generateStats(data.allStats).dataList,
                 backgroundColor: [
                 colorTelemark,
+                colorDunno,
+                colorSame,
                 colorVestfold
                 ],
                 hoverOffset: 4
