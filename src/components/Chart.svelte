@@ -196,14 +196,13 @@
                                     const totalValue = datapoints.reduce(sumArray, 0)
                                     total += totalValue
                                 }
-                                const percentageValue = (value / total * 100).toFixed(1)    
-        
-                                return `${percentageValue}%`
+                                const percentageValue = (value / total * 100)   
+                                return `${percentageValue.toFixed(1)}%`
                             },
                             // Boolean value (display: true/false), shows the labels if true.
                             display: function(context) {
                                 const value = context.dataset.data[context.dataIndex]
-                                const percentage = ( value / total * 100)
+                                const percentage = (Number(value) / total * 100)
                                 // Hide labels if the percentage value is less than 10%
                                 if(percentage < 10) {
                                     return false
