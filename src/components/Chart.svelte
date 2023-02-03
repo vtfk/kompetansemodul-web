@@ -203,7 +203,6 @@
                             display: function(context) {
                                 const value = context.dataset.data[context.dataIndex]
                                 const percentage = (Number(value) / total * 100)
-                                
                                 // Hide labels if the percentage value is less than 10%
                                 if(percentage < 10) {
                                     return false
