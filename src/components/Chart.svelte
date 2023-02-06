@@ -103,18 +103,30 @@
                             },
                             // Returns percentage value of the pie based of the total value of all the pies present in the piechart.
                             formatter: (value, context) => {
+                                total = 0
                                 const datapoints = context.chart.data.datasets[0].data
                                 function sumArray(total, datapoint) {
                                     return total + datapoint
                                 }
                                 const totalValue = datapoints.reduce(sumArray, 0)
+                                total = totalValue
+                                
                                 const percentageValue = (value / totalValue * 100).toFixed(1)
                                 
                                 return `${percentageValue}%`
                             },
                             // Boolean value (display: true/false)
                             display: function(context) {
-                                return context.dataset.data[context.dataIndex] !== 0   
+                                // return context.dataset.data[context.dataIndex] !== 0   
+                                const value = context.dataset.data[context.dataIndex]
+                                const percentage = (Number(value) / total * 100)
+                                // Hide labels if the percentage value is less than 10%
+                                if(percentage < 10) {
+                                    return false
+                                } else {
+                                    return true
+                                    // return context.dataset.data[context.dataIndex] !== 0
+                                }
                             }    
                         },
                         legend: {
@@ -210,7 +222,6 @@
                                     return true
                                     // return context.dataset.data[context.dataIndex] !== 0
                                 }
-                                   
                             }         
                         },
                         legend: {
