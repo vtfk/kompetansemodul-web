@@ -184,7 +184,7 @@
     <div class="criticalHeader">
         <div class="col">Navn</div>
         <div class="col">Lokasjon</div>
-        <div class="col">Kritisk Oppgave</div>
+        <div class="col">Beskrivelse av solorolle</div>
         <div class="col">Er Oppgaven Kritisk?</div>
         <div class="col">Lagret av</div>
     </div>  
