@@ -34,8 +34,8 @@
         return {
             dataList: [soloRoleStats.no, soloRoleStats.yes, soloRoleStats.noReply, soloRoleStats.notMandatory],
             labels: [
-                getLabel(total, percentage, 'Har ikke kritiske oppgaver', soloRoleStats.no),
-                getLabel(total, percentage, 'Har kritiske oppgaver', soloRoleStats.yes),
+                getLabel(total, percentage, 'Har svart nei', soloRoleStats.no),
+                getLabel(total, percentage, 'Har svart ja', soloRoleStats.yes),
                 // `Har ikke svart (${soloRoleStats.noReply})`,
                 // `Skal ikke svare (${soloRoleStats.notMandatory})`,
             ]
