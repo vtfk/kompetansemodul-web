@@ -1,5 +1,5 @@
 <script>
-	import { getOrg, getSettings, saveSettings, sendMail }  from '../lib/services/useApi'
+	import { getOrg, getSettings, saveSettings, sendMail, getCriticalTasks }  from '../lib/services/useApi'
     import IconSpinner from '../components/Icons/IconSpinner.svelte';
 	import { msalClientStore } from '../lib/services/store'
 	import { get } from 'svelte/store'
@@ -8,7 +8,8 @@
     import IconCheck from '../components/Icons/IconCheck.svelte';
 	import { welcomeMail, remindMail } from '../lib/Helpers/mailTemplates'
 	import { structurizeOrg } from '../lib/Helpers/organizationTools'
-
+    import CollapsibleUnit, { createCollapsibleContext } from '../components/CollapsibleUnit.svelte';
+	
 	let name = 'Administrator'
 	let org = []
 	let filteredOrg = []
@@ -59,6 +60,11 @@
 
 	let isSaving = false
 
+	let criticalTasks = []
+	let employeesInUnit = []
+
+	// showContent = payload === showContent ? '' : payload
+
 	let activeSetting = null
 	const settings = [
 		{
@@ -68,6 +74,10 @@
 		{
 			title: "Sjekk svaroversikt og send påminnelser",
 			id: "overview"
+		},
+		{
+			title: "Se hvilke oppgaver lederene har satt som kritiske",
+			id: "criticalTasks"
 		}
 	]
 
@@ -89,6 +99,7 @@
 			if (!employeeCategories.includes(forhold.personalressurskategori.navn)) employeeCategories.push(forhold.personalressurskategori.navn)
 		}
 	}
+
 	const getEmployees = (units) => {
 		employees = []
 		for (const unit of units) {
@@ -222,7 +233,6 @@
 	const sendEmails = async (options, type) => {
 		const confirmed = confirm(`Er du sikker på du ønsker å sende e-post til ${options.receivers.length} personer`)
 
-
 		if (confirmed) {
 			mailStatus[type].isSending = true
 			mailStatus[type].failed = []
@@ -267,6 +277,48 @@
 			mailStatus[type].result = res
 		}
 	}
+
+	const getEmployeesInUnit = async (orgId) => {
+		employeesInUnit = []
+		const res = await getOrg(`report-${orgId}`)
+		res.report.forEach(unit => {
+			unit.arbeidsforhold.forEach(subUnit => {
+				employeesInUnit.push(subUnit)
+			})
+		})
+		
+		return await getSoloRoles(employeesInUnit) 
+	}
+	const getSoloRoles = async (employees) => {
+		const res = await getCriticalTasks()
+
+		const result = res.filter((obj1) => {
+			return employees.some((obj2) => {
+				return obj1.ansattnummer === obj2.ansattnummer
+			})
+		})
+		if(result.length > 0) {
+			const data = res.map(criticalEmp => {
+				const index = employees.findIndex(emp => emp.ansattnummer === criticalEmp.ansattnummer)
+				const mergedData = {
+					...criticalEmp,
+					...employees[index]
+				}
+				delete mergedData.soloRole
+				delete mergedData.mandatoryCompetenceInput
+				delete mergedData.ansattnummer
+				delete mergedData.perfCounty 
+
+				return mergedData
+			})
+			console.log(data)
+			return data
+		} else {
+			return false 
+		}		
+	}
+
+	createCollapsibleContext()
 </script>
 
 <div class="content">
@@ -376,9 +428,163 @@
 			<p style="color: red">{error.message}</p>
 		{/await}
 	{/if}
+	{#if activeSetting === 'criticalTasks'}
+	{#await getOrgs()}
+		<p>Loading...</p>
+	{:then}
+		{#each structurizeOrg(filteredOrg)[0].underordnet[1].underordnet as unit}
+			<div class="collapsible">
+				<CollapsibleUnit>
+					<div slot="head">
+						<h3>{unit.navn}</h3>
+					</div>
+					<div slot="details">
+						{#if unit.underordnet.length > 0}
+							{#each unit.underordnet as subUnit}
+								<CollapsibleUnit>
+									<div slot="head">
+										<div class="unitContent">
+											{subUnit.navn}
+										</div>
+									</div>
+									<div slot="details">
+										{#await getEmployeesInUnit(subUnit.organisasjonsId)}
+											<div class="subUnitContent">
+												<p>Henter Ansatte med kritiske oppgaver</p>
+											</div>
+										{:then res}	
+											{#if res !== false}
+												{#each res as employee}
+													<CollapsibleUnit>
+														<div slot="head">
+															<div class="subUnitContent">
+																<h4>{employee.navn}, Lokasjon: {employee.officeLocation}</h4>
+															</div>
+														</div>
+														<div slot="details">
+															<div class="soloRoleDesc">
+																{employee.other.soloRoleDescription}
+															</div>
+														</div>
+													</CollapsibleUnit>
+												{/each}
+											{:else}
+												<div class="subUnitNoContent-level3">
+													<strong><p>Fant ingen med kritiske oppgaver i denne enheten</p></strong>
+												</div>
+											{/if}
+										{/await}
+									</div>
+								</CollapsibleUnit>
+							{/each}
+							{:else if unit.arbeidsforhold.length > 0} <!-- Enheten har ingen underenheter, men arbeidsforhold -->
+								{#await getEmployeesInUnit(unit.organisasjonsId)}
+									<div class="unitContent">
+										<p>Henter Ansatte med kritiske oppgaver</p>
+									</div>
+								{:then res}	
+									{#if res !== false}
+										{#each res as employee}
+											<CollapsibleUnit>
+												<div slot="head">
+													<div class="subUnitContent">
+														<h4>{employee.navn}, Lokasjon: {employee.officeLocation}</h4>
+													</div>
+												</div>
+												<div slot="details">
+													<div class="soloRoleDesc">
+														{employee.other.soloRoleDescription}
+													</div>
+												</div>
+											</CollapsibleUnit>
+										{/each}
+									{:else}
+										<div class="subUnitNoContent-level2">
+											<strong><p>Fant ingen med kritiske oppgaver i denne enheten</p></strong>
+										</div>
+									{/if}
+								{/await}
+							{:else} <!-- Enheten har verken arbeidsforhold eller underenheter. Hva har den da? Det ser vi når noen sier ifra at noe er feil (っ °Д °;)っ -->
+								<div class="subUnitNoContent-level2">
+									<strong><p>Enheten har verken arbeidsforhold eller underenheter</p></strong>
+								</div>
+						{/if}
+					</div>
+				</CollapsibleUnit>
+			</div>
+		{/each}
+	{/await}
+		
+	{/if}
 </div>
 
 <style>
+	.collapsible {
+		cursor: pointer;
+		padding: 0.5rem;
+		margin: 0.1rem;
+		padding-left: 2rem;
+		width: 100%;
+		border: none;
+		text-align: left;
+		outline: none;
+	}
+
+	.collapsible:nth-child(odd) {
+		background-color: var(--sand-2);
+	}
+	.collapsible:nth-child(even) {
+		background-color: var(--sand-1);
+	}
+
+	.unitContent {
+		width: 100%;
+		cursor: pointer;
+		margin-left: 1rem;
+		padding: 0.3rem;
+		border-left: 2px solid var(--mork);
+		text-align: left;
+		outline: none;
+	}
+
+	.subUnitContent {
+		width: 100%;
+		cursor: pointer;
+		padding: 0.3rem;
+		margin-left: 2rem;
+		border-left: 2px solid var(--mork);
+		text-align: left;
+		outline: none;
+	}
+
+	.subUnitNoContent-level3 {
+		width: 100%;
+		color: var(--red);
+		padding: 0.3rem;
+		margin-left: 2rem;
+		border-left: 2px solid var(--mork);
+		text-align: left;
+		outline: none;
+	}
+	.subUnitNoContent-level2 {
+		width: 100%;
+		color: var(--red);
+		padding: 0.3rem;
+		margin-left: 1rem;
+		border-left: 2px solid var(--mork);
+		text-align: left;
+		outline: none;
+	}
+
+	.soloRoleDesc {
+		width: 70%;
+		padding: 0.4rem;
+		margin-left: 3rem;
+		border-left: 2px solid var(--mork);
+		text-align: left;
+		outline: none;
+	}
+
 	.chooseAndSave {
 		display: flex;
 		justify-content: space-between;

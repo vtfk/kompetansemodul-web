@@ -79,6 +79,9 @@ export const getPositions = async () => await apiRequest('get', 'GetPositions')
 // Save Critical Tasks (filtered by the unit leader)
 export const saveCritical = async (criticalTasks) => await apiRequest('post', `CriticalTask`, criticalTasks)
 
+// Get the critical tasks filtered by the unit leader
+export const getCriticalTasks = async () => await apiRequest('get', 'GetSoloRoles')
+
 // Get chucky
 export const getChuck = async () => {
   const res = (await axios.get('https://api.chucknorris.io/jokes/categories')).data
