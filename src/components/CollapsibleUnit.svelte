@@ -17,7 +17,7 @@
 	import { quadInOut } from 'svelte/easing'
 	import { slide } from 'svelte/transition'
 
-	export let open = false
+	export let open = true
 
 	const { current } = getCollapsibleContext()
 	const currentKey = {}

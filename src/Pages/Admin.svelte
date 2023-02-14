@@ -1,7 +1,7 @@
 <script>
 	import { getOrg, getSettings, saveSettings, sendMail, getCriticalTasks }  from '../lib/services/useApi'
     import IconSpinner from '../components/Icons/IconSpinner.svelte';
-	import { msalClientStore } from '../lib/services/store'
+	import { msalClientStore, criticalTasksStore } from '../lib/services/store'
 	import { get } from 'svelte/store'
     import AdminUnit from '../components/AdminUnit.svelte';
     import Button from '../components/Button.svelte';
@@ -60,10 +60,8 @@
 
 	let isSaving = false
 
-	let criticalTasks = []
+	let criticalTasks = {}
 	let employeesInUnit = []
-
-	// showContent = payload === showContent ? '' : payload
 
 	let activeSetting = null
 	const settings = [
@@ -122,6 +120,15 @@
 		}
 		toggleCategory(null)
 		return true
+	}
+
+	const getcriticalTasks = async () => {
+		if (!get(criticalTasksStore)) {
+			criticalTasks = await getCriticalTasks()
+			criticalTasksStore.set(criticalTasks)
+		} else {
+			criticalTasks = get(criticalTasksStore)
+		}
 	}
 
 	const getOrgsOverview = async () => {
@@ -278,44 +285,26 @@
 		}
 	}
 
-	const getEmployeesInUnit = async (orgId) => {
-		employeesInUnit = []
-		const res = await getOrg(`report-${orgId}`)
-		res.report.forEach(unit => {
-			unit.arbeidsforhold.forEach(subUnit => {
-				employeesInUnit.push(subUnit)
-			})
-		})
-		
-		return await getSoloRoles(employeesInUnit) 
-	}
 	const getSoloRoles = async (employees) => {
-		const res = await getCriticalTasks()
-
-		const result = res.filter((obj1) => {
-			return employees.some((obj2) => {
-				return obj1.ansattnummer === obj2.ansattnummer
-			})
-		})
-		if(result.length > 0) {
-			const data = res.map(criticalEmp => {
-				const index = employees.findIndex(emp => emp.ansattnummer === criticalEmp.ansattnummer)
-				const mergedData = {
-					...criticalEmp,
-					...employees[index]
-				}
-				delete mergedData.soloRole
-				delete mergedData.mandatoryCompetenceInput
-				delete mergedData.ansattnummer
-				delete mergedData.perfCounty 
-
-				return mergedData
-			})
-			console.log(data)
-			return data
+		const result = criticalTasks.filter(ansatt => ansatt.ansattnummer === employees)
+		if (result.length > 0) {
+			return result
 		} else {
-			return false 
-		}		
+			return false
+		}
+	}
+
+	let arr = []
+
+	const isFalse = (res, index, length, orgId) => {
+		// console.log(`Index: ${index+1}`, `Length: ${length}`, `Res: ${res}`, `OrgId: ${orgId}`)
+		const obj = {
+			orgId: orgId,
+			length: length,
+			index: index+1
+		}
+		arr.push(obj)
+		return ''
 	}
 
 	createCollapsibleContext()
@@ -433,92 +422,135 @@
 		<p>Loading...</p>
 	{:then}
 		{#each structurizeOrg(filteredOrg)[0].underordnet[1].underordnet as unit}
-			<div class="collapsible">
-				<CollapsibleUnit>
-					<div slot="head">
-						<h3>{unit.navn}</h3>
-					</div>
-					<div slot="details">
-						{#if unit.underordnet.length > 0}
+			{#await getcriticalTasks()}
+				<div class="collapsible">
+					<h3>Henter kritiske oppgaver</h3>
+				</div>
+			{:then} 
+				<div class="collapsible">
+					<CollapsibleUnit open={false}>
+						<div slot="head">
+							<h3 on:click={() => arr = []}>{unit.navn}</h3>
+						</div>
+						<div slot="details">
+							{#each unit.arbeidsforhold as arbeidsforhold, i}
+								{#await getSoloRoles(arbeidsforhold.ansattnummer)}
+									<p>Loading...</p>
+								{:then res}
+									{#if res === false}
+										<div>{isFalse(res, i, unit.arbeidsforhold.length, unit.organisasjonsId)}</div>
+									{:else}
+										<CollapsibleUnit>
+											<div slot="head">
+												<div class="unitContent">
+													<strong on:click={() => arr = []}>{res[0].navn}</strong> - <strong>{`Lokasjon: ${res[0].azureAd.officeLocation}`} </strong> 
+													<strong>{`Ønsket Lokasjon: ${res[0].perfCounty}`}</strong>
+												</div>
+											</div>
+											<div slot="details">
+												<div class="subUnitContentDesc-level2">
+													<p>{res[0].other.soloRoleDescription}</p>
+												</div>
+											</div>
+										</CollapsibleUnit>
+									{/if} 
+								{/await}
+							{/each}
 							{#each unit.underordnet as subUnit}
 								<CollapsibleUnit>
 									<div slot="head">
-										<div class="unitContent">
-											{subUnit.navn}
+										<div class="subUnitContent">
+											<strong on:click={() => arr = []}>{subUnit.navn}</strong>
 										</div>
 									</div>
 									<div slot="details">
-										{#await getEmployeesInUnit(subUnit.organisasjonsId)}
-											<div class="subUnitContent">
-												<p>Henter Ansatte med kritiske oppgaver</p>
-											</div>
-										{:then res}	
-											{#if res !== false}
-												{#each res as employee}
+										{#each subUnit.arbeidsforhold as arbeidsforhold, i}	
+											{#await getSoloRoles(arbeidsforhold.ansattnummer)}
+												<p>Loading...</p>
+											{:then res}
+												{#if res === false}
+													<div>{isFalse(res, i, subUnit.arbeidsforhold.length, subUnit.organisasjonsId)}</div>
+												{:else}
 													<CollapsibleUnit>
 														<div slot="head">
-															<div class="subUnitContent">
-																<h4>{employee.navn}, Lokasjon: {employee.officeLocation}</h4>
+															<div class="subUnitContent-level2">
+																<strong on:click={() => arr = []}>{res[0].navn}</strong> - <strong>{`Lokasjon: ${res[0].azureAd.officeLocation}`} </strong> 
+																<strong>{`Ønsket Lokasjon: ${res[0].perfCounty}`}</strong>
 															</div>
 														</div>
 														<div slot="details">
-															<div class="soloRoleDesc">
-																{employee.other.soloRoleDescription}
+															<div class="subUnitContentDesc-level3">
+																<p>{res[0].other.soloRoleDescription}</p>
 															</div>
 														</div>
 													</CollapsibleUnit>
-												{/each}
-											{:else}
-												<div class="subUnitNoContent-level3">
-													<strong><p>Fant ingen med kritiske oppgaver i denne enheten</p></strong>
-												</div>
-											{/if}
-										{/await}
-									</div>
-								</CollapsibleUnit>
-							{/each}
-							{:else if unit.arbeidsforhold.length > 0} <!-- Enheten har ingen underenheter, men arbeidsforhold -->
-								{#await getEmployeesInUnit(unit.organisasjonsId)}
-									<div class="unitContent">
-										<p>Henter Ansatte med kritiske oppgaver</p>
-									</div>
-								{:then res}	
-									{#if res !== false}
-										{#each res as employee}
+												{/if}
+											{/await}
+										{/each}
+										{#each subUnit.underordnet as subUnit1}
 											<CollapsibleUnit>
 												<div slot="head">
-													<div class="subUnitContent">
-														<h4>{employee.navn}, Lokasjon: {employee.officeLocation}</h4>
+													<div class="subUnitContent-level2">
+														<h4 on:click={() => arr = []}>{subUnit1.navn}</h4>
 													</div>
 												</div>
 												<div slot="details">
-													<div class="soloRoleDesc">
-														{employee.other.soloRoleDescription}
-													</div>
+													<CollapsibleUnit>
+														<div slot="head">
+															{#each subUnit1.arbeidsforhold as arbeidsforhold, i}
+																{#await getSoloRoles(arbeidsforhold.ansattnummer)}
+																	<p>Loading...</p>
+																{:then res} 
+																	{#if res === false}
+																		<div>{isFalse(res, i, subUnit1.arbeidsforhold.length, subUnit1.organisasjonsId)}</div>
+																	{:else}
+																	<CollapsibleUnit>
+																		<div slot="head">
+																			<div class="subUnitContent-level3">
+																				<strong on:click={() => arr = []}>{res[0].navn}</strong> - <strong>{`Lokasjon: ${res[0].azureAd.officeLocation}`} </strong> 
+																				<strong>{`Ønsket Lokasjon: ${res[0].perfCounty}`}</strong>
+																			</div>
+																		</div>
+																		<div slot="details">
+																			<div class="subUnitContentDesc-level4">
+																				<p>{res[0].other.soloRoleDescription}</p>
+																			</div>
+																		</div>
+																	</CollapsibleUnit>
+																	{/if} 
+																{/await}
+															{/each}
+														</div>
+													</CollapsibleUnit>
 												</div>
 											</CollapsibleUnit>
 										{/each}
-									{:else}
-										<div class="subUnitNoContent-level2">
-											<strong><p>Fant ingen med kritiske oppgaver i denne enheten</p></strong>
-										</div>
-									{/if}
-								{/await}
-							{:else} <!-- Enheten har verken arbeidsforhold eller underenheter. Hva har den da? Det ser vi når noen sier ifra at noe er feil (っ °Д °;)っ -->
-								<div class="subUnitNoContent-level2">
-									<strong><p>Enheten har verken arbeidsforhold eller underenheter</p></strong>
-								</div>
-						{/if}
-					</div>
-				</CollapsibleUnit>
-			</div>
+									</div>
+								</CollapsibleUnit>
+							{/each}
+						</div>
+					</CollapsibleUnit>
+				</div>
+			{/await}
 		{/each}
 	{/await}
-		
 	{/if}
 </div>
 
 <style>
+
+
+
+.employee {
+        font-weight: 400;
+        font-size: 0.9rem;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+
+
 	.collapsible {
 		cursor: pointer;
 		padding: 0.5rem;
@@ -538,49 +570,94 @@
 	}
 
 	.unitContent {
-		width: 100%;
+		width: 46.5vh;
 		cursor: pointer;
 		margin-left: 1rem;
-		padding: 0.3rem;
+		padding: 0.5rem;
 		border-left: 2px solid var(--mork);
 		text-align: left;
 		outline: none;
 	}
 
 	.subUnitContent {
-		width: 100%;
+		width: 47.7vh;
 		cursor: pointer;
-		padding: 0.3rem;
+		padding: 0.5rem;
 		margin-left: 2rem;
 		border-left: 2px solid var(--mork);
+		border-bottom-left-radius: 0.5rem;
+		border-bottom: 2px solid var(--mork);
+		text-align: left;
+		outline: none;
+	}
+
+	.subUnitContent-level2 {
+		width: 46.3vh;
+		cursor: pointer;
+		padding: 0.4rem;
+		margin-left: 3rem;
+		border-left: 2px solid var(--mork);
+		border-bottom-left-radius: 0.5rem;
+		border-bottom: 2px solid var(--mork);
+		text-align: left;
+		outline: none;
+	}
+	.subUnitContent-level3 {
+		width: 45vh;
+		cursor: pointer;
+		padding: 0.3rem;
+		margin-left: 4rem;
+		border-left: 2px solid var(--mork);
+		border-bottom-left-radius: 0.5rem;
+		border-bottom: 2px solid var(--mork);
+		text-align: left;
+		outline: none;
+	}
+
+	.subUnitContentDesc-level4 {
+		width: 43.7vh;
+		cursor: pointer;
+		padding: 0.3rem;
+		margin-left: 5rem;
+		border-left: 2px solid var(--mork);
+		border-bottom-left-radius: 0.5rem;
+		border-bottom: 2px solid var(--mork);
+		border-right: 2px solid var(--mork);
+		border-bottom-right-radius: 0.5rem;
 		text-align: left;
 		outline: none;
 	}
 
 	.subUnitNoContent-level3 {
-		width: 100%;
+		width: 45vh;
 		color: var(--red);
 		padding: 0.3rem;
 		margin-left: 2rem;
 		border-left: 2px solid var(--mork);
+		border-bottom-left-radius: 0.5rem;
+		border-bottom: 2px solid var(--mork);
 		text-align: left;
 		outline: none;
 	}
 	.subUnitNoContent-level2 {
-		width: 100%;
+		width: 90%;
 		color: var(--red);
 		padding: 0.3rem;
 		margin-left: 1rem;
 		border-left: 2px solid var(--mork);
+		border-bottom-left-radius: 0.5rem;
+		border-bottom: 2px solid var(--mork);
 		text-align: left;
 		outline: none;
 	}
 
 	.soloRoleDesc {
-		width: 70%;
+		width: 40vh;
 		padding: 0.4rem;
 		margin-left: 3rem;
 		border-left: 2px solid var(--mork);
+		border-bottom-left-radius: 0.5rem;
+		border-bottom: 2px solid var(--mork);
 		text-align: left;
 		outline: none;
 	}
@@ -590,24 +667,24 @@
 		justify-content: space-between;
 	}
 	h2 {
-		padding-top: 16px;
+		padding-top: 1rem;
 		border-bottom: 1px solid var(--mork);
 	}
 	.content {
-		padding-bottom: 32px;
+		padding-bottom: 2rem;
 	}
 	.option {
 		display: flex;
 		align-items: center;
-		gap: 8px;
+		gap: 0.5rem;
 	}
 	.mailMsg {
-		padding: 8px;
+		padding: 0.5rem;
 		border: 1px solid var(--mork)
 	}
 	.mailBox {
 		display: flex;
-		gap: 8px;
-		padding: 8px 0;
+		gap: 0.5rem;
+		padding: 0.5rem 0;
 	}
 </style>
