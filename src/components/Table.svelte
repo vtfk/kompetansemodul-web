@@ -84,9 +84,9 @@
     const combinedData = (combineData(tempCriticalTasks, competenceList))
 
     // Returns array of true/false for easier handling when chosing what to show the user and not.
-   
-    const noCriticalDesc = combinedData.map(criticalDesk => criticalDesk.hasCriticalTask === false)
-   
+    
+    const noCriticalDesc = combinedData.map(criticalDesk => criticalDesk.beskrivelse === null && criticalDesk.hasCriticalTask === false)
+ 
     addToSelected(combinedData)
 
     const findDiff = (combinedList, arrayToCheckAgainst, valToSearch) => {
