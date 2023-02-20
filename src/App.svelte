@@ -12,6 +12,7 @@
   import SideNav from './components/SideNav.svelte';
   import MinEnhet from './Pages/MinEnhet.svelte';
   import Admin from './Pages/Admin.svelte';
+  import Innplassering from './Pages/Innplassering.svelte'
 
 
   let page = get(displayedPage)
@@ -51,6 +52,8 @@
                   <Person />
               { :else if page === 'organisasjon' }
                   <Orgstruktur />
+              { :else if page === 'innplassering' }
+                  <Innplassering />
               { :else if page === 'admin' }
                   <Admin />
               { :else if page === 'hjelp' }
