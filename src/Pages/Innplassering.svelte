@@ -84,6 +84,7 @@
 		{#if canInnplassere}
 			<Card title="Dine gjennomførte samtaler ✔" backgroundColor="--korn-2">
 				<div>
+					<p><em>Det kan ta opptil en time før gjennomførte samtaler dukker opp her</em></p>
 					{#if myInnplasseringer.length > 0}
 						{#each myInnplasseringer as ip}
 							<p>{ip.employeeName} - {ip.timestamp} - {ip.newUnit} - {ip.newCounty}</p>
@@ -110,6 +111,7 @@
 									<InnerCard size="small" emoji={`${emp.fornavn.substring(0,1)}${emp.etternavn.substring(0,1)}`}>
 										<div slot="first">
 											<h4>{emp.navn}</h4>
+											<p><em>{(emp.aktiveArbeidsforhold.find(forhold => forhold.hovedstilling))?.stillingstittel ?? 'Ansatt'}</em></p>
 											<p>{(emp.aktiveArbeidsforhold.find(forhold => forhold.hovedstilling))?.arbeidssted.navn ?? 'Ukjent enhet'}</p>
 											<p>{(emp.aktiveArbeidsforhold.find(forhold => forhold.hovedstilling))?.arbeidssted.kortnavn ?? 'Ukjent enhet'}</p>
 										</div>
