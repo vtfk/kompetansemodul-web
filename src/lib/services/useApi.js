@@ -70,6 +70,9 @@ export const getSettings = async () => await apiRequest('get', 'Settings')
 // Save edited settings
 export const saveSettings = async (adminSettings) => await apiRequest('post', 'Settings', adminSettings)
 
+// Save edited settings
+export const innplasseringSettings = async (allowInnplassering) => await apiRequest('post', 'Settings', allowInnplassering)
+
 // Send mail to users
 export const sendMail = async (mailPayload) => await apiRequest('post', 'SendMail', mailPayload)
 
