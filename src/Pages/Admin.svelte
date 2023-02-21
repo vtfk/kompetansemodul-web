@@ -1,13 +1,14 @@
 <script>
 	import { getOrg, getSettings, saveSettings, sendMail }  from '../lib/services/useApi'
-    import IconSpinner from '../components/Icons/IconSpinner.svelte';
+  import IconSpinner from '../components/Icons/IconSpinner.svelte';
 	import { msalClientStore } from '../lib/services/store'
 	import { get } from 'svelte/store'
-    import AdminUnit from '../components/AdminUnit.svelte';
-    import Button from '../components/Button.svelte';
-    import IconCheck from '../components/Icons/IconCheck.svelte';
+  import AdminUnit from '../components/AdminUnit.svelte';
+  import Button from '../components/Button.svelte';
+  import IconCheck from '../components/Icons/IconCheck.svelte';
 	import { welcomeMail, remindMail } from '../lib/Helpers/mailTemplates'
 	import { structurizeOrg } from '../lib/Helpers/organizationTools'
+	import AllowInnplassering from '../components/AllowInnplassering.svelte';
 
 	let name = 'Administrator'
 	let org = []
@@ -68,6 +69,10 @@
 		{
 			title: "Sjekk svaroversikt og send påminnelser",
 			id: "overview"
+		},
+		{
+			title: "Definer hvem som har lov til å innplassere",
+			id: "allowInnplassering"
 		}
 	]
 
@@ -375,6 +380,9 @@
 		{:catch error}
 			<p style="color: red">{error.message}</p>
 		{/await}
+	{/if}
+	{#if activeSetting === 'allowInnplassering'}
+		<AllowInnplassering />
 	{/if}
 </div>
 
