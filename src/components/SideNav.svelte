@@ -57,6 +57,7 @@
                     <p>Finn ansatt</p>
                 </button>
             </div>
+            <!--
             <div class="sideNavItem">
                 <button on:click={() => { changePage('innplassering') } } class={`${currentPage === 'innplassering' ? ' siteNavItemActive' : ''}`}>
                     <div class="icon">
@@ -65,6 +66,7 @@
                     <p>Innplassering</p>
                 </button>
             </div>
+            -->
             <!--
             <div class="sideNavItem">
                 <button on:click={() => { changePage('organisasjon') } } class={`${currentPage === 'organisasjon' ? ' siteNavItemActive' : ''}`}>

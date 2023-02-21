@@ -75,7 +75,7 @@
 				<p>Du hadde innplasseringssamtale den: {innplasseringsdata.timestamp}. Ansvarlig for samtalen var {innplasseringsdata.responsibleName}.</p>
 				<br>
 				<p><strong>Nytt fylke: </strong>{innplasseringsdata.newCounty}</p>
-				<p><strong>Ny enhet: </strong>{innplasseringsdata.newUnit}</p>
+				<p><strong>Ny seksjon: </strong>{innplasseringsdata.newSection}</p>
 			{:else}
 				<p>Du har ikke hatt innplasseringssamtale enda.</p>
 			{/if}
@@ -87,7 +87,7 @@
 					<p><em>Det kan ta opptil en time før gjennomførte samtaler dukker opp her</em></p>
 					{#if myInnplasseringer.length > 0}
 						{#each myInnplasseringer as ip}
-							<p>{ip.employeeName} - {ip.timestamp} - {ip.newUnit} - {ip.newCounty}</p>
+							<p>{ip.employeeName} - {ip.timestamp} - {ip.newSection ?? ip.newUnit ?? 'Ukjent enhet'} - {ip.newCounty}</p>
 						{/each}
 					{:else}
 						<p><em>Du har ikke gjennomført noen samtaler enda</em></p>
@@ -117,7 +117,7 @@
 										</div>
 										<div slot="second">
 											<p title={getInnplasseringsStatus(emp).title}>{getInnplasseringsStatus(emp).status}</p>
-											<a class="link" href="https://internskjema.vtfk.no/skjema/VTFK0242/Innplasseringssamtale?employeeUpn={emp.userPrincipalName}" target="_blank">Opprett innplasseringssamtale</a>
+											<a class="link" href="https://internskjema.vtfk.no/skjema/VTFK0242/Innplasseringssamtale?employeeUpn={emp.userPrincipalName}" target="_blank">Opprett innplasseringssamtale ▶</a>
 										</div>
 									</InnerCard>
 							{/each}
