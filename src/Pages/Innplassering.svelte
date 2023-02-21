@@ -101,7 +101,13 @@
 				<p>Du har ikke tilgang til å opprette innplasseringssamtaler. Om du mener dette er feil, ta kontakt med HR.</p>
 			{:else}
 				<div class="section">
-					<label for="navnesok">Søk etter ansatt her</label>
+					<div>
+						<em>
+							For å opprette en innplasseringssamtale, søker du først opp en ansatt ved navn, eller navn på enhet. Deretter klikker du på "Opprett innplasseringssamtale", dette vil åpne en ny fane med innplasseringsskjema for den ansatte. Merk at det kan ta opptil <strong>en time</strong> før samtalestatusen oppdateres i listen nedenfor.
+						</em>
+					</div>
+					<br>
+					<label for="navnesok"><strong>Søk etter ansatt her</strong></label>
 					<input id="navnesok" type="text" bind:value={searchValue} placeholder="Skriv inn navn på ansatt eller enhet her" />
 					<div class="tableContainer">
 							{#if showEmployees.length === 0}
